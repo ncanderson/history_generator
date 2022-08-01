@@ -1,0 +1,10 @@
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/bin/g++ 
+Build flags: 
+Id flags: -c;--target=x86_64-linux-gnu 
+
+The output was:
+1
+g++: error: unrecognized command line option ‘--target=x86_64-linux-gnu’
+
+
