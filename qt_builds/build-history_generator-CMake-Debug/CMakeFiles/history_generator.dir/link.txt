@@ -1,1 +1,0 @@
-/usr/bin/g++ --sysroot=/usr/bin -g CMakeFiles/history_generator.dir/main.cpp.o -o history_generator 
