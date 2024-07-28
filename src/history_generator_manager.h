@@ -1,10 +1,14 @@
+#include <defs/history_generator_defs.h>
+
 #ifndef HISTORY_GENERATOR_MANAGER_H
 #define HISTORY_GENERATOR_MANAGER_H
 
 namespace his_gen
 {
 /**
- * @brief Backend manager for gss_ec_coverage application
+ * @brief Application manager
+ * @details Manage the application state, allowing main() to delete
+ * the Run function and tracking the overall place in generation.
  */
 class History_generator_manager
 {
@@ -34,6 +38,7 @@ protected:
 
 private:
   // Attributes
+  his_gen::Era m_current_era;
 
   // Implementation
 
