@@ -1,7 +1,12 @@
+// Standard libs
 #include <iostream>
 #include <chrono>
 #include <csignal>
 #include <thread>
+
+// Application files
+#include <utils/history_manager_utils.h>
+#include <history_generator_manager.h>
 
 ///////////////////////////////////////////////////////////////////////
 // Global Variables
@@ -22,6 +27,11 @@ const std::chrono::milliseconds m_err_sleep_ms(50);
  */
 bool m_application_quit = false;
 
+/**
+ * @brief Current era being processed
+ */
+his_gen::Era m_generation_era;
+
 ///////////////////////////////////////////////////////////////////////
 // Function Declarations
 ///////////////////////////////////////////////////////////////////////
@@ -35,26 +45,24 @@ void handle_sigint(int signal)
   m_application_quit = true;
 };
 
-void print_to_cout(std::string log_message)
-{
-  std::cout << "Log Message:" << log_message << std::endl;
-}
-
 ///////////////////////////////////////////////////////////////////////
 // Main
 ///////////////////////////////////////////////////////////////////////
 
 int main()
 {
+  // Initialize Manager
+  his_gen::History_generator_manager mngr = his_gen::History_generator_manager();
+
   // Handle SIGINT
   std::signal(SIGINT, &handle_sigint);
 
   // Run until and unless application receives SIGINT
-  while(!m_application_quit)
+  while(!m_application_quit && m_generation_era != his_gen::Era::ERA_Terminate)
   {
     try
     {
-      print_to_cout("running");
+      m_generation_era = mngr.Run();
     }
     // Catch any errors bubbling up from the main run function
     catch(const std::exception& e)

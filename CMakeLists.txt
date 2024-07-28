@@ -18,3 +18,14 @@ set(headers ${headers} ${glob_headers})
 ######################################
 # Define the binary we're building
 add_executable(${project_name} ${sources} ${headers})
+
+######################################
+# Include directories
+
+# Headers from our application
+set(include_dirs ${CMAKE_CURRENT_SOURCE_DIR}/src ${include_dirs})
+
+# Include Boost
+set(include_dirs ${include_dirs} ${Boost_INCLUDE_DIRS})
+
+target_include_directories(${project_name} PRIVATE ${include_dirs})
