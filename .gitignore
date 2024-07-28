@@ -1,1 +1,4 @@
 qt_builds/
+build/
+
+*.user
