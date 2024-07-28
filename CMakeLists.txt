@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
 set(project_name history_generator)
+project(${project_name})
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Generator for the history of everything")
 
 set(CMAKE_CXX_STANDARD 11)

@@ -53,7 +53,7 @@ int main()
   {
     try
     {
-      //Run();
+      print_to_cout("running");
     }
     catch(const std::exception& e)
     {
