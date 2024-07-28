@@ -7,7 +7,6 @@ set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Generator for the history of everything")
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-
 ######################################
 # Locations of files for this project
 file(GLOB_RECURSE glob_headers src/[a-z]*.h)

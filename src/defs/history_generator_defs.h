@@ -10,9 +10,10 @@ namespace his_gen
  */
 enum Era
 {
-  ERA_Mythology,  ///< Age of mythology, especially gods
-  ERA_History,    ///< Age of history, mostly humans
-  ERA_Terminate   ///< Any wrap-up or post-generation tasks
+  ERA_Unknown   = -1, ///< Unknown/init state
+  ERA_Mythology = 0,  ///< Age of mythology, especially gods
+  ERA_History   = 1,  ///< Age of history, mostly humans
+  ERA_Terminate = 2   ///< Any wrap-up or post-generation tasks
 };
 
 /**

@@ -29,7 +29,7 @@ public:
   /**
    * @brief Run the application state machine
    */
-  void Run();
+  his_gen::Era Run();
 
 protected:
   // Attributes
