@@ -8,7 +8,7 @@
 
 void his_gen::Print_to_cout(std::string log_message)
 {
-  std::cout << "Log Message:" << log_message << std::endl;
+  std::cout << "Log Message: " << log_message << std::endl;
 }
 
 ///////////////////////////////////////////////////////////////////////

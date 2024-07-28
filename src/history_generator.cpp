@@ -27,6 +27,11 @@ const std::chrono::milliseconds m_err_sleep_ms(50);
  */
 bool m_application_quit = false;
 
+/**
+ * @brief Current era being processed
+ */
+his_gen::Era m_generation_era;
+
 ///////////////////////////////////////////////////////////////////////
 // Function Declarations
 ///////////////////////////////////////////////////////////////////////
@@ -53,11 +58,11 @@ int main()
   std::signal(SIGINT, &handle_sigint);
 
   // Run until and unless application receives SIGINT
-  while(!m_application_quit)
+  while(!m_application_quit && m_generation_era != his_gen::Era::ERA_Terminate)
   {
     try
     {
-      mngr.Run();
+      m_generation_era = mngr.Run();
     }
     // Catch any errors bubbling up from the main run function
     catch(const std::exception& e)

@@ -28,15 +28,17 @@ his_gen::Era his_gen::History_generator_manager::Run()
 
     case his_gen::Era::ERA_History:
       his_gen::Print_to_cout("in History");
+      m_current_era = his_gen::Era::ERA_End_times;
+      break;
+
+    case his_gen::Era::ERA_End_times:
+      his_gen::Print_to_cout("in End times");
       m_current_era = his_gen::Era::ERA_Terminate;
       break;
 
-    case his_gen::Era::ERA_Terminate:
-      his_gen::Print_to_cout("in Term");
-      break;
-
     default:
-      m_current_era = his_gen::Era::ERA_Unknown;
+      // Exit application if we don't know where we are
+      m_current_era = his_gen::Era::ERA_Terminate;
   }
 
   return m_current_era;
