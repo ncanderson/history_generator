@@ -1,10 +1,14 @@
 #include <iostream>
+#include <chrono>
 
-using namespace std;
+/**
+ * @brief Main thread sleep interval, ms
+ */
+const std::chrono::milliseconds m_main_sleep_ms(10);
 
 int main()
 {
-  cout << "Hello World!" << endl;
+  std::cout << "Hello World!" << std::endl;
   return 0;
 }
 
