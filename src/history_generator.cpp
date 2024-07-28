@@ -49,17 +49,18 @@ int main()
   // Handle SIGINT
   std::signal(SIGINT, &handle_sigint);
 
+  // Run until and unless application receives SIGINT
   while(!m_application_quit)
   {
     try
     {
       print_to_cout("running");
     }
+    // Catch any errors bubbling up from the main run function
     catch(const std::exception& e)
     {
       std::this_thread::sleep_for(m_err_sleep_ms);
     }
-
     std::this_thread::sleep_for(m_main_sleep_ms);
   }
 
