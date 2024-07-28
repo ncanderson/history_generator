@@ -1,7 +1,12 @@
+// Standard libs
 #include <iostream>
 #include <chrono>
 #include <csignal>
 #include <thread>
+
+// Application files
+#include <utils/history_manager_utils.h>
+#include <history_generator_manager.h>
 
 ///////////////////////////////////////////////////////////////////////
 // Global Variables
@@ -35,17 +40,15 @@ void handle_sigint(int signal)
   m_application_quit = true;
 };
 
-void print_to_cout(std::string log_message)
-{
-  std::cout << "Log Message:" << log_message << std::endl;
-}
-
 ///////////////////////////////////////////////////////////////////////
 // Main
 ///////////////////////////////////////////////////////////////////////
 
 int main()
 {
+  // Initialize Manager
+  his_gen::History_generator_manager mngr = his_gen::History_generator_manager();
+
   // Handle SIGINT
   std::signal(SIGINT, &handle_sigint);
 
@@ -54,7 +57,7 @@ int main()
   {
     try
     {
-      print_to_cout("running");
+      mngr.Run();
     }
     // Catch any errors bubbling up from the main run function
     catch(const std::exception& e)
