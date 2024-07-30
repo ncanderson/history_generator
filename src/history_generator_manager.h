@@ -35,6 +35,9 @@ public:
 
   /**
    * @brief Run the application state machine
+   * @details This function will loop until all generators have completed. Each
+   * loop will trigger the Run() function for the current generator; those
+   * generators will all maintain their generation state internally.
    */
   his_gen::Era Run();
 

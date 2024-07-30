@@ -11,7 +11,7 @@ namespace his_gen
  * @details Either the apocalypse of the setting, or an arbitrary
  * stopping point defined elsewhere.
  */
-class End_times_generator : Generator_base
+class End_times_generator : public Generator_base
 {
 public:
   // Attributes

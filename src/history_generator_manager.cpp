@@ -17,10 +17,6 @@ his_gen::History_generator_manager::History_generator_manager()
 
 his_gen::Era his_gen::History_generator_manager::Run()
 {
-  bool myth_gen_complete = false;
-  bool history_gen_complete = false;
-  bool end_times_gen_complete = false;
-
   switch(m_current_era)
   {
     case his_gen::Era::ERA_Unknown:
@@ -31,6 +27,9 @@ his_gen::Era his_gen::History_generator_manager::Run()
     case his_gen::Era::ERA_Mythology:
       his_gen::Print_to_cout("Begin Mythology Generation");
 
+      // Run through one generation iteration
+      m_myth_gen->Run();
+
       if(m_myth_gen->Get_generation_complete())
       {
         m_current_era = his_gen::Era::ERA_History;
@@ -40,7 +39,10 @@ his_gen::Era his_gen::History_generator_manager::Run()
     case his_gen::Era::ERA_History:
       his_gen::Print_to_cout("Begin History Generation");
 
-      if(history_gen_complete)
+      // Run through one generation iteration
+      m_hist_gen->Run();
+
+      if(m_hist_gen->Get_generation_complete())
       {
         m_current_era = his_gen::Era::ERA_End_times;
       }
@@ -49,7 +51,10 @@ his_gen::Era his_gen::History_generator_manager::Run()
     case his_gen::Era::ERA_End_times:
       his_gen::Print_to_cout("Begin End Times Generation");
 
-      if(end_times_gen_complete)
+      // Run through one generation iteration
+      m_end_times_gen->Run();
+
+      if(m_end_times_gen->Get_generation_complete())
       {
         m_current_era = his_gen::Era::ERA_Terminate;
       }

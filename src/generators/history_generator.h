@@ -10,7 +10,7 @@ namespace his_gen
  * @brief Generate history
  * @details The history of mortals after the reign of the gods is over
  */
-class History_generator : Generator_base
+class History_generator : public Generator_base
 {
 public:
   // Attributes
