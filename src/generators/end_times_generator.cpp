@@ -5,7 +5,7 @@
 
 his_gen::End_times_generator::End_times_generator()
     :
-    m_current_stage(his_gen::Stage::STAGE_Init)
+    his_gen::Generator_base(false, his_gen::Stage::STAGE_Init)
 {
 
 }

@@ -11,7 +11,7 @@ namespace his_gen
  * @details Create gods, let them much around, and determine
  * how time gives way to the age of mortals
  */
-class Mythology_generator : Generator_base
+class Mythology_generator : public Generator_base
 {
 public:
   // Attributes
@@ -39,7 +39,6 @@ protected:
 
 private:
   // Attributes
-  his_gen::Stage m_current_stage;
 
   // Implementation
 

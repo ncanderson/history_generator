@@ -5,7 +5,7 @@
 
 his_gen::Mythology_generator::Mythology_generator()
     :
-    m_current_stage(his_gen::Stage::STAGE_Init)
+    his_gen::Generator_base(false, his_gen::Stage::STAGE_Init)
 {
 
 }
@@ -16,6 +16,20 @@ void his_gen::Mythology_generator::Run()
 {
 
 }
+
+///////////////////////////////////////////////////////////////////////
+
+//bool his_gen::Mythology_generator::Get_generation_complete()
+//{
+//  return m_generation_complete;
+//}
+//
+/////////////////////////////////////////////////////////////////////////
+//
+//void his_gen::Mythology_generator::Set_generation_complete(bool generation_complete)
+//{
+//  m_generation_complete = generation_complete;
+//}
 
 ///////////////////////////////////////////////////////////////////////
 // END OF FILE
