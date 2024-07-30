@@ -65,6 +65,11 @@ private:
    */
   std::shared_ptr<his_gen::End_times_generator> m_end_times_gen;
 
+  /**
+   * @brief Number of iterations through this classes Run() function
+   */
+  uint32_t m_num_iterations;
+
   // Implementation
 
 }; // class History_generator_manager

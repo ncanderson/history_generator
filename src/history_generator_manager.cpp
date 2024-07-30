@@ -8,7 +8,8 @@ his_gen::History_generator_manager::History_generator_manager()
     m_current_era(his_gen::Era::ERA_Unknown),
     m_myth_gen(std::make_shared<his_gen::Mythology_generator>()),
     m_hist_gen(std::make_shared<his_gen::History_generator>()),
-    m_end_times_gen(std::make_shared<his_gen::End_times_generator>())
+    m_end_times_gen(std::make_shared<his_gen::End_times_generator>()),
+    m_num_iterations(0)
 {
 
 }
@@ -64,6 +65,10 @@ his_gen::Era his_gen::History_generator_manager::Run()
       // Exit application if we don't know where we are
       m_current_era = his_gen::Era::ERA_Terminate;
   }
+
+  // Iterate the counter
+  // TODO: pass this to the child run functions?
+  m_num_iterations++;
 
   return m_current_era;
 }
