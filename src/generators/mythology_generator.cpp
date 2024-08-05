@@ -18,12 +18,13 @@ void his_gen::Mythology_generator::Run()
   {
     case STAGE_Init:
       his_gen::Print_to_cout("Begin stage init");
-      // Yes
+      // Yes, do this
       // load some definitions about the generation from external config
       // Establish end state for the Age of Mythology
       // Generate the progenitor deity
       // Establish means by which this deity will reproduce
-      // Maybe
+
+      // Maybe do this
       // figure out what the divine language looks like?
 
       m_current_stage = STAGE_Run;
