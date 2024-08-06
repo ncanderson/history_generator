@@ -7,13 +7,20 @@ set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Generator for the history of everything")
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+
 ######################################
 # Locations of files for this project
+
+# src
 file(GLOB_RECURSE glob_headers src/[a-z]*.h)
 file(GLOB_RECURSE glob_sources src/[a-z]*.cpp)
 
+# deps
+file(GLOB_RECURSE glob_deps deps/[a-z]*.hpp)
+
+# set 'em
 set(sources ${sources} ${glob_sources})
-set(headers ${headers} ${glob_headers})
+set(headers ${headers} ${glob_headers} ${glob_deps})
 
 ######################################
 # Define the binary we're building

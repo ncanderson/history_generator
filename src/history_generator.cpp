@@ -2,13 +2,15 @@
 #include <chrono>
 #include <csignal>
 #include <thread>
+#include <iostream>
 #include <boost/program_options.hpp>
-
-#include<iostream>
 
 // Application files
 #include <utils/history_manager_utils.h>
 #include <history_generator_manager.h>
+
+// JSON
+#include <deps/json.hpp>
 
 ///////////////////////////////////////////////////////////////////////
 // Global Variables
@@ -57,9 +59,12 @@ int main(int argc, char *argv[])
   // Config defaults
   std::string app_cfg = "config/app_config.json";
 
+
+  namespace po = boost::program_options;
+  using json = nlohmann::json;
+
   //////////////////////////////////////////////////////
   // Set up the program options
-  namespace po = boost::program_options;
 
   // Declare the supported options.
   po::options_description desc("Application options");
@@ -71,21 +76,18 @@ int main(int argc, char *argv[])
   po::store(po::parse_command_line(argc, argv, desc), vm);
   po::notify(vm);
 
-  if (vm.count("help")) {
-    //his_gen::Print_to_cout(desc);
+  if(vm.count("help"))
+  {
     std::cout << desc << "\n";
     return 1;
   }
 
-  //if (vm.count("compression"))
-  //{
-  //  cout << "Compression level was set to "
-  //       << vm["compression"].as<int>() << ".\n";
-  //}
-  //else
-  //{
-  //  cout << "Compression level was not set.\n";
-  //}
+  if(vm.count("app_cfg"))
+  {
+
+  }
+
+
 
   // Initialize Manager
   his_gen::History_generator_manager mngr = his_gen::History_generator_manager();
