@@ -1,8 +1,10 @@
 // Standard libs
-#include <iostream>
 #include <chrono>
 #include <csignal>
 #include <thread>
+#include <boost/program_options.hpp>
+
+#include<iostream>
 
 // Application files
 #include <utils/history_manager_utils.h>
@@ -41,7 +43,7 @@ his_gen::Era m_generation_era;
  */
 void handle_sigint(int signal)
 {
-  std::cout<< "Signal " << signal << " caught..." << std::endl;
+  his_gen::Print_to_cout("Signal " + std::to_string(signal) + " caught...");
   m_application_quit = true;
 };
 
@@ -49,8 +51,37 @@ void handle_sigint(int signal)
 // Main
 ///////////////////////////////////////////////////////////////////////
 
-int main()
+int main(int argc, char *argv[])
 {
+  //////////////////////////////////////////////////////
+  // Set up the program options
+  namespace po = boost::program_options;
+  // Declare the supported options.
+  po::options_description desc("Application options");
+  desc.add_options()
+      ("help", "Produce help message")
+      ("compression", po::value<int>(), "set compression level");
+
+  po::variables_map vm;
+  po::store(po::parse_command_line(argc, argv, desc), vm);
+  po::notify(vm);
+
+  if (vm.count("help")) {
+    //his_gen::Print_to_cout(desc);
+    std::cout << desc << "\n";
+    return 1;
+  }
+
+  //if (vm.count("compression"))
+  //{
+  //  cout << "Compression level was set to "
+  //       << vm["compression"].as<int>() << ".\n";
+  //}
+  //else
+  //{
+  //  cout << "Compression level was not set.\n";
+  //}
+
   // Initialize Manager
   his_gen::History_generator_manager mngr = his_gen::History_generator_manager();
 

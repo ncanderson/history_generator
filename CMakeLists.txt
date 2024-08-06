@@ -26,6 +26,8 @@ add_executable(${project_name} ${sources} ${headers})
 set(include_dirs ${CMAKE_CURRENT_SOURCE_DIR}/src ${include_dirs})
 
 # Include Boost
-set(include_dirs ${include_dirs} ${Boost_INCLUDE_DIRS})
+find_package(Boost COMPONENTS program_options REQUIRED)
+include_directories(${Boost_INCLUDE_DIRS})
+target_link_libraries(${project_name} ${Boost_LIBRARIES})
 
 target_include_directories(${project_name} PRIVATE ${include_dirs})
