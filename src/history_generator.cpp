@@ -54,13 +54,18 @@ void handle_sigint(int signal)
 int main(int argc, char *argv[])
 {
   //////////////////////////////////////////////////////
+  // Config defaults
+  std::string app_cfg = "config/app_config.json";
+
+  //////////////////////////////////////////////////////
   // Set up the program options
   namespace po = boost::program_options;
+
   // Declare the supported options.
   po::options_description desc("Application options");
   desc.add_options()
       ("help", "Produce help message")
-      ("compression", po::value<int>(), "set compression level");
+      ("app_cfg", po::value(&app_cfg)->default_value(app_cfg), "Main application config file");
 
   po::variables_map vm;
   po::store(po::parse_command_line(argc, argv, desc), vm);
