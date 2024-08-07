@@ -5,17 +5,19 @@
 #include <iostream>
 #include <fstream>
 #include <boost/program_options.hpp>
-
 // Application files
 #include <utils/history_manager_utils.h>
 #include <history_generator_manager.h>
-
+#include <utils/history_generator_config.h>
 // JSON
 #include <deps/json.hpp>
 
 ///////////////////////////////////////////////////////////////////////
 // Global Variables
 ///////////////////////////////////////////////////////////////////////
+
+// JSON scope helper
+using json = nlohmann::json;
 
 /**
  * @brief Main thread sleep interval, ms
@@ -36,6 +38,16 @@ bool m_application_quit = false;
  * @brief Current era being processed
  */
 his_gen::Era m_generation_era;
+
+/**
+ * @brief App config loaded from file
+ */
+his_gen::History_generator_config m_app_cfg;
+
+/**
+ * @brief Generator manager
+ */
+his_gen::History_generator_manager m_his_gen_mngr;
 
 ///////////////////////////////////////////////////////////////////////
 // Function Declarations
@@ -60,12 +72,9 @@ int main(int argc, char *argv[])
   // Config defaults
   std::string app_cfg = "config/app_config.json";
 
-
-  namespace po = boost::program_options;
-  using json = nlohmann::json;
-
   //////////////////////////////////////////////////////
   // Set up the program options
+  namespace po = boost::program_options;
 
   // Declare the supported options.
   po::options_description desc("Application options");
@@ -87,19 +96,17 @@ int main(int argc, char *argv[])
   {  
     std::ifstream app_cfg_file(app_cfg);
     json data = json::parse(app_cfg_file);
-    //his_gen::Print_to_cout( data["pi"] );
-    std::cout << data.at("pi");
-    std::cout << data.at("happy");
-    std::cout << data.at("string");
-    //his_gen::Print_to_cout( data["happy"] );
-    //his_gen::Print_to_cout( data["string"] );
-
+    m_app_cfg = his_gen::History_generator_config(data);
+  }
+  else
+  {
+    // Error, exit
+    his_gen::Print_to_cout("No config found, exiting");
+    return 1;
   }
 
-
-
   // Initialize Manager
-  his_gen::History_generator_manager mngr = his_gen::History_generator_manager();
+  m_his_gen_mngr = his_gen::History_generator_manager(&m_app_cfg);
 
   // Handle SIGINT
   std::signal(SIGINT, &handle_sigint);
@@ -109,7 +116,7 @@ int main(int argc, char *argv[])
   {
     try
     {
-      m_generation_era = mngr.Run();
+      m_generation_era = m_his_gen_mngr.Run();
     }
     // Catch any errors bubbling up from the main run function
     catch(const std::exception& e)

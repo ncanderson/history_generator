@@ -3,8 +3,9 @@
 
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::History_generator_manager::History_generator_manager()
+his_gen::History_generator_manager::History_generator_manager(his_gen::History_generator_config &his_gen_config)
   :
+    m_his_gen_config(his_gen_config),
     m_current_era(his_gen::Era::ERA_Unknown),
     m_myth_gen(std::make_shared<his_gen::Mythology_generator>()),
     m_hist_gen(std::make_shared<his_gen::History_generator>()),

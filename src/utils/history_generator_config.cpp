@@ -1,3 +1,19 @@
-#include "history_generator_config_base.h"
+#include <utils/history_generator_config.h>
 
-history_generator_config::history_generator_config() {}
+///////////////////////////////////////////////////////////////////////
+
+his_gen::History_generator_config::History_generator_config()
+  :
+    Myth_gen_ticks(0)
+{
+
+}
+
+///////////////////////////////////////////////////////////////////////
+
+his_gen::History_generator_config::History_generator_config(json from_json)
+{
+  Myth_gen_ticks = from_json.at("myth_gen_ticks");
+}
+
+///////////////////////////////////////////////////////////////////////

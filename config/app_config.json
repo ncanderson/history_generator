@@ -1,5 +1,3 @@
 {
-  "pi": 3.141,
-  "happy": true,
-  "string": "TEST ME PLEASE"  
+  "myth_gen_ticks": 200
 }

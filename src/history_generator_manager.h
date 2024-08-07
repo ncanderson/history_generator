@@ -5,7 +5,7 @@
 #include <generators/history_generator.h>
 #include <generators/end_times_generator.h>
 #include <defs/history_generator_defs.h>
-
+#include <utils/history_generator_config.h>
 
 #ifndef HISTORY_GENERATOR_MANAGER_H
 #define HISTORY_GENERATOR_MANAGER_H
@@ -26,7 +26,7 @@ public:
   /**
    * @brief Constructor.
    */
-  History_generator_manager();
+  History_generator_manager(his_gen::History_generator_config &his_gen_config);
 
   /**
    * @brief Destructor.
@@ -38,7 +38,7 @@ public:
    * @details This function will loop until all generators have completed. Each
    * loop will trigger the Run() function for the current generator; those
    * generators will all maintain their generation state internally.
-   */
+     */
   his_gen::Era Run();
 
 protected:
@@ -48,6 +48,15 @@ protected:
 
 private:
   // Attributes
+
+  /**
+   * @brief m_his_gen_config Application configuration
+   */
+  his_gen::History_generator_config &m_his_gen_config;
+
+  /**
+   * @brief m_current_era Variable to track the generator's current era
+   */
   his_gen::Era m_current_era;
 
   /**
