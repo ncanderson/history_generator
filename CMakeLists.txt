@@ -24,7 +24,8 @@ set(headers ${headers} ${glob_headers} ${glob_deps})
 
 ######################################
 # Define the binary we're building
-add_executable(${project_name} ${sources} ${headers})
+add_executable(${project_name} ${sources} ${headers}
+  src/utils/history_generator_config_base.h src/utils/history_generator_config_base.cpp)
 
 ######################################
 # Include directories
