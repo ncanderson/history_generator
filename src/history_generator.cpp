@@ -3,6 +3,7 @@
 #include <csignal>
 #include <thread>
 #include <iostream>
+#include <fstream>
 #include <boost/program_options.hpp>
 
 // Application files
@@ -83,7 +84,15 @@ int main(int argc, char *argv[])
   }
 
   if(vm.count("app_cfg"))
-  {
+  {  
+    std::ifstream app_cfg_file(app_cfg);
+    json data = json::parse(app_cfg_file);
+    //his_gen::Print_to_cout( data["pi"] );
+    std::cout << data.at("pi");
+    std::cout << data.at("happy");
+    std::cout << data.at("string");
+    //his_gen::Print_to_cout( data["happy"] );
+    //his_gen::Print_to_cout( data["string"] );
 
   }
 
