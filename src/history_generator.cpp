@@ -8,7 +8,7 @@
 // Application files
 #include <utils/history_generator_utils.h>
 #include <history_generator_manager.h>
-#include <utils/history_generator_config.h>
+#include <utils/history_generator_root_config.h>
 // JSON
 #include <deps/json.hpp>
 
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
   //////////////////////////////////////////////////////
   // Set up the program options
   namespace po = boost::program_options;
-  his_gen::History_generator_config m_app_cfg;
+  his_gen::History_generator_root_config m_app_cfg;
 
   // Declare the supported options.
   po::options_description desc("Application options");
@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
   {
     std::ifstream app_cfg_file(app_cfg);
     json data = json::parse(app_cfg_file);
-    m_app_cfg = his_gen::History_generator_config(data);
+    m_app_cfg = his_gen::History_generator_root_config(data);
   }
   else
   {

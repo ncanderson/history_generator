@@ -1,8 +1,8 @@
-#include <utils/history_generator_config.h>
+#include <utils/history_generator_root_config.h>
 
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::History_generator_config::History_generator_config()
+his_gen::History_generator_root_config::History_generator_root_config()
   :
     Myth_gen_ticks(0)
 {
@@ -11,7 +11,7 @@ his_gen::History_generator_config::History_generator_config()
 
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::History_generator_config::History_generator_config(json from_json)
+his_gen::History_generator_root_config::History_generator_root_config(json from_json)
 {
   Myth_gen_ticks = from_json.at("myth_gen_ticks");
 }

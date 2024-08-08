@@ -5,7 +5,7 @@
 #include <generators/historical_era_generator.h>
 #include <generators/end_times_era_generator.h>
 #include <defs/history_generator_defs.h>
-#include <utils/history_generator_config.h>
+#include <utils/history_generator_root_config.h>
 
 #ifndef HISTORY_GENERATOR_MANAGER_H
 #define HISTORY_GENERATOR_MANAGER_H
@@ -31,7 +31,7 @@ public:
   /**
    * @brief JSON constructor.
    */
-  History_generator_manager(his_gen::History_generator_config &his_gen_config);
+  History_generator_manager(his_gen::History_generator_root_config &his_gen_config);
 
   /**
    * @brief Destructor.
@@ -57,7 +57,7 @@ private:
   /**
    * @brief m_his_gen_config Application configuration
    */
-  his_gen::History_generator_config &m_his_gen_config;
+  his_gen::History_generator_root_config &m_his_gen_config;
 
   /**
    * @brief m_current_era Variable to track the generator's current era
