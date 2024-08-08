@@ -26,6 +26,11 @@ public:
   /**
    * @brief Constructor.
    */
+  History_generator_manager();
+
+  /**
+   * @brief JSON constructor.
+   */
   History_generator_manager(his_gen::History_generator_config &his_gen_config);
 
   /**

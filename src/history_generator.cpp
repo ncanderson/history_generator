@@ -44,11 +44,6 @@ his_gen::Era m_generation_era;
  */
 his_gen::History_generator_config m_app_cfg;
 
-/**
- * @brief Generator manager
- */
-his_gen::History_generator_manager m_his_gen_mngr;
-
 ///////////////////////////////////////////////////////////////////////
 // Function Declarations
 ///////////////////////////////////////////////////////////////////////
@@ -93,7 +88,7 @@ int main(int argc, char *argv[])
   }
 
   if(vm.count("app_cfg"))
-  {  
+  {
     std::ifstream app_cfg_file(app_cfg);
     json data = json::parse(app_cfg_file);
     m_app_cfg = his_gen::History_generator_config(data);
@@ -106,7 +101,7 @@ int main(int argc, char *argv[])
   }
 
   // Initialize Manager
-  m_his_gen_mngr = his_gen::History_generator_manager(&m_app_cfg);
+  his_gen::History_generator_manager m_his_gen_mngr = his_gen::History_generator_manager(m_app_cfg);
 
   // Handle SIGINT
   std::signal(SIGINT, &handle_sigint);
