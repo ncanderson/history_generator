@@ -11,7 +11,7 @@ namespace his_gen
  * @details Create gods, let them much around, and determine
  * how time gives way to the age of mortals
  */
-class Mythology_generator : public Generator_base
+class Mythological_era_generator : public Generator_base
 {
 public:
   // Attributes
@@ -20,12 +20,12 @@ public:
   /**
    * @brief Constructor.
    */
-  Mythology_generator();
+  Mythological_era_generator();
 
   /**
    * @brief Destructor.
    */
-  virtual ~Mythology_generator(){}
+  virtual ~Mythological_era_generator(){}
 
   /**
    * @brief Run the generator

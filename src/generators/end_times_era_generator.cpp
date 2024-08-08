@@ -1,9 +1,9 @@
-#include <generators/end_times_generator.h>
+#include <generators/end_times_era_generator.h>
 #include <utils/history_generator_utils.h>
 
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::End_times_generator::End_times_generator()
+his_gen::End_times_era_generator::End_times_era_generator()
     :
     his_gen::Generator_base(false, his_gen::Stage::STAGE_Init)
 {
@@ -12,7 +12,7 @@ his_gen::End_times_generator::End_times_generator()
 
 ///////////////////////////////////////////////////////////////////////
 
-void his_gen::End_times_generator::Run()
+void his_gen::End_times_era_generator::Run()
 {
   switch(m_current_stage)
   {

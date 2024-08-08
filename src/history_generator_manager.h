@@ -1,9 +1,9 @@
 // Standard libs
 #include <memory>
 // Application files
-#include <generators/mythology_generator.h>
-#include <generators/history_generator.h>
-#include <generators/end_times_generator.h>
+#include <generators/mythological_era_generator.h>
+#include <generators/historical_era_generator.h>
+#include <generators/end_times_era_generator.h>
 #include <defs/history_generator_defs.h>
 #include <utils/history_generator_config.h>
 
@@ -67,7 +67,7 @@ private:
   /**
    * @brief m_myth_gen Shared pointer to the Mythology generator
    */
-  std::shared_ptr<his_gen::Mythology_generator> m_myth_gen;
+  std::shared_ptr<his_gen::Mythological_era_generator> m_myth_gen;
 
   /**
    * @brief m_myth_gen Shared pointer to the History generator
@@ -77,7 +77,7 @@ private:
   /**
    * @brief m_myth_gen Shared pointer to the End times generator
    */
-  std::shared_ptr<his_gen::End_times_generator> m_end_times_gen;
+  std::shared_ptr<his_gen::End_times_era_generator> m_end_times_gen;
 
   /**
    * @brief Number of iterations through this classes Run() function

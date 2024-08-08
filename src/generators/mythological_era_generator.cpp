@@ -1,9 +1,9 @@
-#include <generators/mythology_generator.h>
+#include <generators/mythological_era_generator.h>
 #include <utils/history_generator_utils.h>
 
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::Mythology_generator::Mythology_generator()
+his_gen::Mythological_era_generator::Mythological_era_generator()
     :
     his_gen::Generator_base(false, his_gen::Stage::STAGE_Init)
 {
@@ -12,7 +12,7 @@ his_gen::Mythology_generator::Mythology_generator()
 
 ///////////////////////////////////////////////////////////////////////
 
-void his_gen::Mythology_generator::Run()
+void his_gen::Mythological_era_generator::Run()
 {
   switch(m_current_stage)
   {

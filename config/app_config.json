@@ -1,22 +1,15 @@
 {
-  // Global config
   "global_config_placeholder": true,
-
-  // Myth era generator config
   "myth_gen_config": 
   {    
     "myth_gen_ticks": 200,
     "max_entity_per_tick": 20
   },
-  
-  // Historical era generator config
   "hist_gen_config": 
   {
     "hist_gen_ticks": 200,
     "max_entity_per_tick": 5000
   },
-  
-  // End times era generator config
   "end_times_gen_config": 
   {
     "end_times_gen_ticks": 200,
