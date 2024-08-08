@@ -1,5 +1,5 @@
 #include <generators/history_generator.h>
-#include <utils/history_manager_utils.h>
+#include <utils/history_generator_utils.h>
 
 ///////////////////////////////////////////////////////////////////////
 
