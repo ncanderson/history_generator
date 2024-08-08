@@ -8,7 +8,7 @@ his_gen::History_generator_manager::History_generator_manager(his_gen::History_g
     m_his_gen_config(his_gen_config),
     m_current_era(his_gen::Era::ERA_Unknown),
     m_myth_gen(std::make_shared<his_gen::Mythology_generator>()),
-    m_hist_gen(std::make_shared<his_gen::History_generator>()),
+    m_hist_gen(std::make_shared<his_gen::Historical_era_generator>()),
     m_end_times_gen(std::make_shared<his_gen::End_times_generator>()),
     m_num_iterations(0)
 {

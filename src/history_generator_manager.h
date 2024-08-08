@@ -72,7 +72,7 @@ private:
   /**
    * @brief m_myth_gen Shared pointer to the History generator
    */
-  std::shared_ptr<his_gen::History_generator> m_hist_gen;
+  std::shared_ptr<his_gen::Historical_era_generator> m_hist_gen;
 
   /**
    * @brief m_myth_gen Shared pointer to the End times generator

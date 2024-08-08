@@ -3,7 +3,7 @@
 
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::History_generator::History_generator()
+his_gen::Historical_era_generator::Historical_era_generator()
     :
     his_gen::Generator_base(false, his_gen::Stage::STAGE_Init)
 {
@@ -12,7 +12,7 @@ his_gen::History_generator::History_generator()
 
 ///////////////////////////////////////////////////////////////////////
 
-void his_gen::History_generator::Run()
+void his_gen::Historical_era_generator::Run()
 {
   switch(m_current_stage)
   {
