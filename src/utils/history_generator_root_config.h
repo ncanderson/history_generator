@@ -1,7 +1,6 @@
 #ifndef HISTORY_GENERATOR_ROOT_CONFIG_H
 #define HISTORY_GENERATOR_ROOT_CONFIG_H
 
-#include <stdint.h>
 // JSON
 #include <deps/json.hpp>
 
@@ -19,7 +18,10 @@ class History_generator_root_config
 {
 public:
   // Attributes
-  uint32_t Myth_gen_ticks;
+  /**
+   * @brief Global_config_placeholder
+   */
+  bool Global_config_placeholder;
 
   // Implementation
   /**

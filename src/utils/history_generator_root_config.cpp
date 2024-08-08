@@ -4,7 +4,7 @@
 
 his_gen::History_generator_root_config::History_generator_root_config()
   :
-    Myth_gen_ticks(0)
+    Global_config_placeholder(false)
 {
 
 }
@@ -12,8 +12,10 @@ his_gen::History_generator_root_config::History_generator_root_config()
 ///////////////////////////////////////////////////////////////////////
 
 his_gen::History_generator_root_config::History_generator_root_config(json from_json)
+  :
+    Global_config_placeholder(from_json.at("global_config_placeholder"))
 {
-  Myth_gen_ticks = from_json.at("myth_gen_ticks");
+
 }
 
 ///////////////////////////////////////////////////////////////////////
