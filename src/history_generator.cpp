@@ -39,11 +39,6 @@ bool m_application_quit = false;
  */
 his_gen::Era m_generation_era;
 
-/**
- * @brief App config loaded from file
- */
-his_gen::History_generator_config m_app_cfg;
-
 ///////////////////////////////////////////////////////////////////////
 // Function Declarations
 ///////////////////////////////////////////////////////////////////////
@@ -70,6 +65,7 @@ int main(int argc, char *argv[])
   //////////////////////////////////////////////////////
   // Set up the program options
   namespace po = boost::program_options;
+  his_gen::History_generator_config m_app_cfg;
 
   // Declare the supported options.
   po::options_description desc("Application options");
