@@ -15,6 +15,15 @@ class Mythological_era_config
 {
 public:
   // Attributes
+  /**
+   * @brief Generator ticks to run in the mythological era
+   */
+  uint32_t Myth_gen_ticks;
+
+  /**
+   * @brief Entities to generate per tick
+   */
+  uint32_t Max_entity_per_tick;
 
   // Implementation
   /**

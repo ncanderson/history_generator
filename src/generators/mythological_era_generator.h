@@ -20,7 +20,7 @@ public:
   /**
    * @brief Constructor.
    */
-  Mythological_era_generator();
+  Mythological_era_generator(his_gen::History_generator_root_config &his_gen_config);
 
   /**
    * @brief Destructor.

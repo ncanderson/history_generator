@@ -1,6 +1,10 @@
 #ifndef HISTORY_GENERATOR_ROOT_CONFIG_H
 #define HISTORY_GENERATOR_ROOT_CONFIG_H
 
+// Child Config
+#include <utils/mythological_era_config.h>
+#include <utils/historical_era_config.h>
+#include <utils/end_times_era_config.h>
 // JSON
 #include <deps/json.hpp>
 
@@ -22,6 +26,21 @@ public:
    * @brief Global_config_placeholder
    */
   bool Global_config_placeholder;
+
+  /**
+   * @brief Config specific to the mythological era
+   */
+  his_gen::Mythological_era_config Myth_era_config;
+
+  /**
+   * @brief Config specific to the historical era
+   */
+  his_gen::Historical_era_config Hist_era_config;
+
+  /**
+   * @brief Config specific to the end times era
+   */
+  his_gen::End_times_era_config End_times_era_config;
 
   // Implementation
   /**

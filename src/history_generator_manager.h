@@ -29,7 +29,7 @@ public:
   History_generator_manager();
 
   /**
-   * @brief JSON constructor.
+   * @brief Constructor with conifg
    */
   History_generator_manager(his_gen::History_generator_root_config &his_gen_config);
 

@@ -7,9 +7,9 @@ his_gen::History_generator_manager::History_generator_manager(his_gen::History_g
   :
     m_his_gen_config(his_gen_config),
     m_current_era(his_gen::Era::ERA_Unknown),
-    m_myth_gen(std::make_shared<his_gen::Mythological_era_generator>()),
-    m_hist_gen(std::make_shared<his_gen::Historical_era_generator>()),
-    m_end_times_gen(std::make_shared<his_gen::End_times_era_generator>()),
+    m_myth_gen(std::make_shared<his_gen::Mythological_era_generator>(his_gen_config)),
+    m_hist_gen(std::make_shared<his_gen::Historical_era_generator>(his_gen_config)),
+    m_end_times_gen(std::make_shared<his_gen::End_times_era_generator>(his_gen_config)),
     m_num_iterations(0)
 {
 
@@ -19,16 +19,16 @@ his_gen::History_generator_manager::History_generator_manager(his_gen::History_g
 
 his_gen::Era his_gen::History_generator_manager::Run()
 {
+  his_gen::Print_to_cout("Current Era: " +
+                         his_gen::Get_current_era(m_current_era));
+
   switch(m_current_era)
   {
     case his_gen::Era::ERA_Unknown:
-      his_gen::Print_to_cout("Initialize generation");
       m_current_era = his_gen::Era::ERA_Mythology;
       break;
 
-    case his_gen::Era::ERA_Mythology:
-      his_gen::Print_to_cout("Begin Mythology Generation");
-
+    case his_gen::Era::ERA_Mythology:    
       // Run through one generation iteration
       m_myth_gen->Run();
 
@@ -39,8 +39,6 @@ his_gen::Era his_gen::History_generator_manager::Run()
       break;
 
     case his_gen::Era::ERA_History:
-      his_gen::Print_to_cout("Begin History Generation");
-
       // Run through one generation iteration
       m_hist_gen->Run();
 
@@ -51,8 +49,6 @@ his_gen::Era his_gen::History_generator_manager::Run()
       break;
 
     case his_gen::Era::ERA_End_times:
-      his_gen::Print_to_cout("Begin End Times Generation");
-
       // Run through one generation iteration
       m_end_times_gen->Run();
 

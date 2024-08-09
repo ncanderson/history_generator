@@ -20,7 +20,7 @@ public:
   /**
    * @brief Constructor.
    */
-  End_times_era_generator();
+  End_times_era_generator(his_gen::History_generator_root_config &his_gen_config);
 
   /**
    * @brief Destructor.
@@ -39,7 +39,6 @@ protected:
 
 private:
   // Attributes
-  his_gen::Stage m_current_stage;
 
   // Implementation
 

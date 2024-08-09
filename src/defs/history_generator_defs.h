@@ -1,6 +1,8 @@
 #ifndef HISTORY_GENERATOR_DEFS_H
 #define HISTORY_GENERATOR_DEFS_H
 
+#include <string>
+
 namespace his_gen
 {
 
@@ -18,6 +20,13 @@ enum Era
 };
 
 /**
+ * @brief Get the current era
+ * @param current_era The current era
+ * @return The string representation of the current era
+ */
+std::string Get_current_era(Era current_era);
+
+/**
  * @brief The Stage enum
  * @details Track steps taken within each generation era
  */
@@ -27,6 +36,13 @@ enum Stage
   STAGE_Run,       ///< Execution of era generation
   STAGE_Terminate  ///< Wrap-up and transition
 };
+
+/**
+ * @brief Get the current stage
+ * @param current_stage The current stage
+ * @return The string representation of the current stage
+ */
+std::string Get_current_stage(Stage current_stage);
 
 }  // namespace his_gen
 

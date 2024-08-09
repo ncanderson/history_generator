@@ -13,6 +13,7 @@
   "end_times_gen_config": 
   {
     "end_times_gen_ticks": 200,
-    "max_entity_per_tick": 5000
+    "max_entity_per_tick": 5000,
+    "violent_end_times": false
   }
 }

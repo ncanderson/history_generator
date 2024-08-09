@@ -1,7 +1,8 @@
-#include <defs/history_generator_defs.h>
-
 #ifndef GENERATOR_BASE_H
 #define GENERATOR_BASE_H
+
+#include <defs/history_generator_defs.h>
+#include <utils/history_generator_root_config.h>
 
 namespace his_gen
 {
@@ -21,10 +22,12 @@ public:
    * @param current_stage
    */
   Generator_base(bool generation_complete,
-                 his_gen::Stage current_stage)
+                 his_gen::Stage current_stage,
+                 his_gen::History_generator_root_config &his_gen_config)
       :
       m_generation_complete(generation_complete),
-      m_current_stage(current_stage)
+      m_current_stage(current_stage),
+      m_his_gen_config(his_gen_config)
   {
 
   }
@@ -63,6 +66,11 @@ protected:
    * @brief m_current_stage Current stage for this generator
    */
   his_gen::Stage m_current_stage;
+
+  /**
+   * @brief m_his_gen_config Application configuration
+   */
+  his_gen::History_generator_root_config &m_his_gen_config;
 
   // Implementation
 

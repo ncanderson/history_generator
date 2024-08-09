@@ -15,6 +15,15 @@ class Historical_era_config
 {
 public:
   // Attributes
+  /**
+   * @brief Generator ticks to run in the historical era
+   */
+  uint32_t Hist_gen_ticks;
+
+  /**
+   * @brief Entities to generate per tick
+   */
+  uint32_t Max_entity_per_tick;
 
   // Implementation
   /**

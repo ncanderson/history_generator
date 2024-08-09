@@ -3,9 +3,9 @@
 
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::Mythological_era_generator::Mythological_era_generator()
+his_gen::Mythological_era_generator::Mythological_era_generator(his_gen::History_generator_root_config &his_gen_config)
     :
-    his_gen::Generator_base(false, his_gen::Stage::STAGE_Init)
+    his_gen::Generator_base(false, his_gen::Stage::STAGE_Init, his_gen_config)
 {
 
 }
@@ -14,10 +14,13 @@ his_gen::Mythological_era_generator::Mythological_era_generator()
 
 void his_gen::Mythological_era_generator::Run()
 {
+  his_gen::Print_to_cout("Current Stage: " +
+                         his_gen::Get_current_stage(m_current_stage));
+
   switch(m_current_stage)
   {
     case STAGE_Init:
-      his_gen::Print_to_cout("Begin stage init");
+
       // Yes, do this
       // load some definitions about the generation from external config
       // Establish end state for the Age of Mythology
@@ -31,8 +34,6 @@ void his_gen::Mythological_era_generator::Run()
       break;
 
     case STAGE_Run:
-      his_gen::Print_to_cout("Begin stage run");
-
       // Generate
       // Every runtick:
       // - Generate entities
@@ -41,8 +42,6 @@ void his_gen::Mythological_era_generator::Run()
       break;
 
     case STAGE_Terminate:
-      his_gen::Print_to_cout("Begin stage terminate");
-
       // Define the sentients that will be created for later phases
       // establish how gods remove themselves from the world
 

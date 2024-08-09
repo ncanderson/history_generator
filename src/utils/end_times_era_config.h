@@ -15,6 +15,22 @@ class End_times_era_config
 {
 public:
   // Attributes
+  /**
+   * @brief Generator ticks to run in the end times era
+   */
+  uint32_t End_times_gen_ticks;
+
+  /**
+   * @brief Entities to generate per tick
+   */
+  uint32_t Max_entity_per_tick;
+
+  /**
+   * @brief If true, the world will face a major catastrophe and either emerge
+   * relatively intact. If false, history will simply progress and the world's
+   * history will fade to grey.
+   */
+  bool Violent_end_times;
 
   // Implementation
   /**
