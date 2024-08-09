@@ -27,21 +27,6 @@ public:
    */
   bool Global_config_placeholder;
 
-  /**
-   * @brief Config specific to the mythological era
-   */
-  his_gen::Mythological_era_config Myth_era_config;
-
-  /**
-   * @brief Config specific to the historical era
-   */
-  his_gen::Historical_era_config Hist_era_config;
-
-  /**
-   * @brief Config specific to the end times era
-   */
-  his_gen::End_times_era_config End_times_era_config;
-
   // Implementation
   /**
    * @brief Constructor
@@ -67,6 +52,20 @@ protected:
 private:
   // Attributes
 
+  /**
+   * @brief Config specific to the mythological era
+   */
+  his_gen::Mythological_era_config m_myth_era_config;
+
+  /**
+   * @brief Config specific to the historical era
+   */
+  his_gen::Historical_era_config m_hist_era_config;
+
+  /**
+   * @brief Config specific to the end times era
+   */
+  his_gen::End_times_era_config m_end_times_era_config;
   // Implementation
 
 }; // class History_generator_root_config
