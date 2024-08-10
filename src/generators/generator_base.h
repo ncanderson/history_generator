@@ -1,3 +1,7 @@
+/**
+ * Copyright (C) 2024 Nate Anderson - All Rights Reserved
+ */
+
 #ifndef GENERATOR_BASE_H
 #define GENERATOR_BASE_H
 

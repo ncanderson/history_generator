@@ -1,3 +1,7 @@
+/**
+ * Copyright (C) 2024 Nate Anderson - All Rights Reserved
+ */
+
 #ifndef HISTORY_GENERATOR_UTILS_H
 #define HISTORY_GENERATOR_UTILS_H
 

@@ -1,3 +1,7 @@
+/**
+ * Copyright (C) 2024 Nate Anderson - All Rights Reserved
+ */
+
 #include <history_generator_manager.h>
 #include <utils/history_generator_utils.h>
 
