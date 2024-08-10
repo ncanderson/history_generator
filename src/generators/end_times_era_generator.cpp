@@ -1,3 +1,7 @@
+/**
+ * Copyright (C) 2024 Nate Anderson - All Rights Reserved
+ */
+
 #include <generators/end_times_era_generator.h>
 #include <utils/history_generator_utils.h>
 

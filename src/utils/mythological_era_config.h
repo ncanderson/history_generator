@@ -1,3 +1,7 @@
+/**
+ * Copyright (C) 2024 Nate Anderson - All Rights Reserved
+ */
+
 #ifndef MYTHOLOGICAL_ERA_CONFIG_H
 #define MYTHOLOGICAL_ERA_CONFIG_H
 

@@ -1,3 +1,7 @@
+/**
+ * Copyright (C) 2024 Nate Anderson - All Rights Reserved
+ */
+
 #ifndef HISTORICAL_ERA_CONFIG_H
 #define HISTORICAL_ERA_CONFIG_H
 
