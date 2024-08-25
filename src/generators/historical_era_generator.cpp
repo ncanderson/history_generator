@@ -42,4 +42,12 @@ void his_gen::Historical_era_generator::Run()
 }
 
 ///////////////////////////////////////////////////////////////////////
+
+models::Entity his_gen::Historical_era_generator::create_entity()
+{
+  models::Entity new_entity = models::Entity("TEST name history");
+  return new_entity;
+}
+
+///////////////////////////////////////////////////////////////////////
 // END OF FILE

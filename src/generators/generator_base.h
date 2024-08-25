@@ -10,6 +10,8 @@
 // Application files
 #include <defs/history_generator_defs.h>
 #include <utils/history_generator_root_config.h>
+
+// Models
 #include <models/entity.h>
 
 namespace his_gen

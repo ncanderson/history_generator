@@ -62,7 +62,7 @@ void his_gen::Mythological_era_generator::Run()
 
 models::Entity his_gen::Mythological_era_generator::create_entity()
 {
-  models::Entity new_entity = models::Entity("TEST name");
+  models::Entity new_entity = models::Entity("TEST name myth");
   return new_entity;
 }
 

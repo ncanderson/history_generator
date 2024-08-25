@@ -43,4 +43,12 @@ void his_gen::End_times_era_generator::Run()
 }
 
 ///////////////////////////////////////////////////////////////////////
+
+models::Entity his_gen::End_times_era_generator::create_entity()
+{
+  models::Entity new_entity = models::Entity("TEST name end times");
+  return new_entity;
+}
+
+///////////////////////////////////////////////////////////////////////
 // END OF FILE

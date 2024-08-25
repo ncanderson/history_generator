@@ -11,9 +11,6 @@
 #include <defs/history_generator_defs.h>
 #include <generators/generator_base.h>
 
-// Models
-#include <models/entity.h>
-
 namespace his_gen
 {
 /**

@@ -40,6 +40,10 @@ protected:
   // Attributes
 
   // Implementation
+  /**
+   * @brief Create a new entity
+   */
+  models::Entity create_entity();
 
 private:
   // Attributes
