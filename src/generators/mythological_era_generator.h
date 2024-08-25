@@ -2,11 +2,17 @@
  * Copyright (C) 2024 Nate Anderson - All Rights Reserved
  */
 
+#ifndef MYTHOLOGY_GENERATOR_H
+#define MYTHOLOGY_GENERATOR_H
+
+// Standard libraries
+
+// Application files
 #include <defs/history_generator_defs.h>
 #include <generators/generator_base.h>
 
-#ifndef MYTHOLOGY_GENERATOR_H
-#define MYTHOLOGY_GENERATOR_H
+// Models
+#include <models/entity.h>
 
 namespace his_gen
 {
@@ -40,6 +46,10 @@ protected:
   // Attributes
 
   // Implementation
+  /**
+   * @brief Create a new entity
+   */
+  models::Entity create_entity();
 
 private:
   // Attributes

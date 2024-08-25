@@ -9,10 +9,16 @@
 #include <iostream>
 #include <fstream>
 #include <boost/program_options.hpp>
+
 // Application files
 #include <utils/history_generator_utils.h>
 #include <history_generator_manager.h>
 #include <utils/history_generator_root_config.h>
+
+// Data access layer
+#include <data_access/data_access_dao_base.h>
+#include <data_access/data_access_dao_file.h>
+
 // JSON
 #include <deps/json.hpp>
 
@@ -62,6 +68,11 @@ void handle_sigint(int signal)
 
 int main(int argc, char *argv[])
 {
+
+  // dal test
+  //his_gen::Data_access_dao_base test = new his_gen::Data_access_dao_file();
+
+
   //////////////////////////////////////////////////////
   // Config defaults
   std::string app_cfg = "config/app_config.json";

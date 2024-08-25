@@ -59,4 +59,12 @@ void his_gen::Mythological_era_generator::Run()
 }
 
 ///////////////////////////////////////////////////////////////////////
+
+models::Entity his_gen::Mythological_era_generator::create_entity()
+{
+  models::Entity new_entity = models::Entity("TEST name");
+  return new_entity;
+}
+
+///////////////////////////////////////////////////////////////////////
 // END OF FILE

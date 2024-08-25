@@ -2,11 +2,11 @@
  * Copyright (C) 2024 Nate Anderson - All Rights Reserved
  */
 
-#include <defs/history_generator_defs.h>
-#include <generators/generator_base.h>
-
 #ifndef END_TIMES_GENERATOR_H
 #define END_TIMES_GENERATOR_H
+
+#include <defs/history_generator_defs.h>
+#include <generators/generator_base.h>
 
 namespace his_gen
 {

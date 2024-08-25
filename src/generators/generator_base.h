@@ -5,8 +5,12 @@
 #ifndef GENERATOR_BASE_H
 #define GENERATOR_BASE_H
 
+// Standar libraries
+
+// Application files
 #include <defs/history_generator_defs.h>
 #include <utils/history_generator_root_config.h>
+#include <models/entity.h>
 
 namespace his_gen
 {
@@ -77,6 +81,10 @@ protected:
   his_gen::History_generator_root_config &m_his_gen_config;
 
   // Implementation
+  /**
+   * @brief Virtual base class for entity creation
+   */
+  virtual models::Entity create_entity() = 0;
 
 private:
   // Attributes
