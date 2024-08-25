@@ -24,7 +24,7 @@ void his_gen::Mythological_era_generator::Run()
   switch(m_current_stage)
   {
     case STAGE_Init:
-
+    {
       // Yes, do this
       // load some definitions about the generation from external config
       // Establish end state for the Age of Mythology
@@ -34,27 +34,37 @@ void his_gen::Mythological_era_generator::Run()
       // Maybe do this
       // figure out what the divine language looks like?
 
+      // Create a new ultimate parent entity
+      models::Entity new_entity = create_entity();
+
       m_current_stage = STAGE_Run;
+    }
       break;
 
     case STAGE_Run:
+    {
       // Generate
       // Every runtick:
       // - Generate entities
 
       m_current_stage = STAGE_Terminate;
+    }
       break;
 
     case STAGE_Terminate:
+    {
       // Define the sentients that will be created for later phases
       // establish how gods remove themselves from the world
 
       // TODO make this conditional?
       Set_generation_complete(true);
-
+    }
       break;
+
     default:
+    {
       his_gen::Print_to_cout("Default");
+    }
   }
 }
 

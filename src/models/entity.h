@@ -35,7 +35,7 @@ public:
   /**
    * @brief Destructor
    */
-  ~Entity();
+  ~Entity() {};
 
 protected:
   // Attributes
