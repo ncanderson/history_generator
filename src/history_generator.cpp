@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
 {
 
   // dal test
-  //his_gen::Data_access_dao_base test = new his_gen::Data_access_dao_file();
+  his_gen::Data_access_dao_base test = new his_gen::Data_access_dao_file();
 
 
   //////////////////////////////////////////////////////

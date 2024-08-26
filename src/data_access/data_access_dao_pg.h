@@ -15,6 +15,20 @@ namespace his_gen
  */
 class Data_access_dao_sql : Data_access_dao_base
 {
+public:
+  // Attributes
+
+  // Implementation
+
+protected:
+  // Attributes
+
+  // Implementation
+
+private:
+  // Attributes
+
+  // Implementation
 
 }; // class Data_access_dao_base
 }  // namespace his_gen

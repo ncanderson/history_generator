@@ -48,7 +48,34 @@ enum Stage
  */
 std::string Get_current_stage(Stage current_stage);
 
-struct
+/**
+ * @brief Struct to hold the details necessary to create a file data connection
+ */
+struct DAL_file_params
+{
+  /**
+   * @brief Data file name
+   */
+  std::string filename;
+
+  /**
+   * @brief Path to data file to load
+   */
+  std::string file_path;
+}; // struct DAL_file_details
+
+/**
+ * @brief Struct to hold the details necessary to create a PostgreSQL data
+ * connection
+ */
+struct DAL_PG_params
+{
+  /**
+   * @brief Database name
+   */
+  std::string db_name;
+
+}; // struct DAL_PG_details
 
 }  // namespace his_gen
 
