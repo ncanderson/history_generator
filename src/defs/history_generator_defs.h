@@ -48,6 +48,8 @@ enum Stage
  */
 std::string Get_current_stage(Stage current_stage);
 
+struct
+
 }  // namespace his_gen
 
 #endif // HISTORY_GENERATOR_DEFS_H
