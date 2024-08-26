@@ -1,3 +1,31 @@
-#include <data_access/data_access_manager.h>
+/**
+ * Copyright (C) 2024 Nate Anderson - All Rights Reserved
+ */
 
-Data_access_manager::Data_access_manager() {}
+// Standard libraries
+
+// Application files
+#include <data_access/data_access_manager.h>
+#include <data_access/data_access_dao_file.h>
+#include <data_access/data_access_dao_pg.h>
+
+///////////////////////////////////////////////////////////////////////
+
+his_gen::Data_access_manager::Data_access_manager(const his_gen::DAL_file_params& params)
+  :
+    m_txport(new his_gen::Data_access_dao_file(params))
+{
+
+}
+
+///////////////////////////////////////////////////////////////////////
+
+his_gen::Data_access_manager::Data_access_manager(const his_gen::DAL_PG_params& params)
+    :
+    m_txport(new his_gen::Data_access_dao_pg(params))
+{
+
+}
+
+///////////////////////////////////////////////////////////////////////
+// END OF FILE

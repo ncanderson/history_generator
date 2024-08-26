@@ -68,11 +68,6 @@ void handle_sigint(int signal)
 
 int main(int argc, char *argv[])
 {
-
-  // dal test
-  his_gen::Data_access_dao_base test = new his_gen::Data_access_dao_file();
-
-
   //////////////////////////////////////////////////////
   // Config defaults
   std::string app_cfg = "config/app_config.json";

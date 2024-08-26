@@ -7,6 +7,7 @@
 
 // Application files
 #include <data_access/data_access_dao_base.h>
+#include <defs/history_generator_defs.h>
 
 namespace his_gen
 {
@@ -22,17 +23,12 @@ public:
   /**
    * @brief Constructor
    */
-  Data_access_dao_file()
-    :
-      Data_access_dao_base()
-  {
-
-  }
+  Data_access_dao_file(const DAL_file_params& params);
 
   /**
    * @brief Destructor
    */
-  ~Data_access_dao_file();
+  ~Data_access_dao_file(){};
 
   /**
    * @brief Create an entity
@@ -49,7 +45,7 @@ private:
 
   // Implementation
 
-}; // class Data_access_dao_base
+}; // class Data_access_dao_file
 }  // namespace his_gen
 
 #endif // DATA_ACCESS_DAO_FILE_H

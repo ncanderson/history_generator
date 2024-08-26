@@ -19,7 +19,7 @@ public:
   /**
    * @brief Destructor
    */
-  ~Data_access_dao_base();
+  virtual ~Data_access_dao_base() = 0;
 
   /**
    * @brief Virtual base for entity creation functions
