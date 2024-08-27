@@ -29,7 +29,7 @@ public:
     :
       m_name(entity_name)
   {
-    his_gen::Print_to_cout(m_name);
+    // NOOP
   }
 
   /**

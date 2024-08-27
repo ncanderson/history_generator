@@ -7,9 +7,11 @@
 
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::End_times_era_generator::End_times_era_generator(his_gen::History_generator_root_config &his_gen_config)
+his_gen::End_times_era_generator::End_times_era_generator(his_gen::History_generator_root_config &his_gen_config,
+                                                          models::Generated_history &generated_history)
     :
-    his_gen::Generator_base(false, his_gen::Stage::STAGE_Init, his_gen_config)
+    his_gen::Generator_base(false, his_gen::Stage::STAGE_Init, his_gen_config),
+    m_generated_history(generated_history)
 {
 
 }

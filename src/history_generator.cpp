@@ -10,6 +10,9 @@
 #include <fstream>
 #include <boost/program_options.hpp>
 
+// JSON
+#include <deps/json.hpp>
+
 // Application files
 #include <utils/history_generator_utils.h>
 #include <history_generator_manager.h>
@@ -19,9 +22,8 @@
 // Data access layer
 #include <data_access/data_access_dao_base.h>
 #include <data_access/data_access_dao_file.h>
-
-// JSON
-#include <deps/json.hpp>
+#include <data_access/data_access_dao_pg.h>
+#include <models/generated_history.h>
 
 ///////////////////////////////////////////////////////////////////////
 // Global Variables
@@ -56,7 +58,17 @@ his_gen::Era m_generation_era;
 std::string m_data_access_type;
 
 /**
- * @brief Data access manager
+ * @brief Application configuration
+ */
+his_gen::History_generator_root_config m_app_cfg;
+
+/**
+ * @brief The history being generated
+ */
+models::Generated_history m_generated_history;
+
+/**
+ * @brief Runtime data access manager
  */
 std::shared_ptr<his_gen::Data_access_manager> m_data_access_manager;
 
@@ -72,6 +84,38 @@ void handle_sigint(int signal)
   his_gen::Print_to_cout("Signal " + std::to_string(signal) + " caught...");
   m_application_quit = true;
 };
+
+///////////////////////////////////////////////////////////////////////
+
+/**
+ * @brief Instantiate data access manager based on data access type
+ * @param data_access_type Enumerated data access type
+ * @throws std::exception Thrown if the data access type is 'unknown'
+ */
+void initialize_data_access(his_gen::Data_access_type data_access_type)
+{
+  switch(data_access_type)
+  {
+    case his_gen::DATA_ACCESS_TYPE_File:
+    {
+      his_gen::DAL_file_params file_params = his_gen::DAL_file_params();
+      m_data_access_manager = std::make_shared<his_gen::Data_access_manager>(file_params);
+    }
+    break;
+    case his_gen::DATA_ACCESS_TYPE_Postgres:
+    {
+      his_gen::DAL_PG_params pg_params = his_gen::DAL_PG_params();
+      m_data_access_manager = std::make_shared<his_gen::Data_access_manager>(pg_params);
+    }
+    break;
+    case his_gen::DATA_ACCESS_TYPE_Unknown:
+    {
+      throw std::exception();
+    }
+  }
+
+
+}
 
 ///////////////////////////////////////////////////////////////////////
 
@@ -98,7 +142,6 @@ int main(int argc, char *argv[])
   //////////////////////////////////////////////////////
   // Set up the program options
   namespace po = boost::program_options;
-  his_gen::History_generator_root_config m_app_cfg;
 
   // Declare the supported options.
   po::options_description desc("Application options");
@@ -147,11 +190,15 @@ int main(int argc, char *argv[])
   //////////////////////////////////////////////////////
   // Set up Runtime Objects
 
-  // Set up transport
-  m_data_access_manager = std::make_shared<his_gen::Data_access_manager>(his_gen::Get_data_access_type_from_string(m_app_cfg.Data_access_type));
+  // Initialize data repository
+  m_generated_history = models::Generated_history();
+
+  // Set up data access manager
+  initialize_data_access(his_gen::Get_data_access_type_from_string(m_app_cfg.Data_access_type));
 
   // Initialize Runtime Manager
-  his_gen::History_generator_manager m_his_gen_mngr = his_gen::History_generator_manager(m_app_cfg);
+  his_gen::History_generator_manager m_his_gen_mngr = his_gen::History_generator_manager(m_app_cfg,
+                                                                                         m_generated_history);
 
   // Run until and unless application receives SIGINT
   while(!m_application_quit && m_generation_era != his_gen::Era::ERA_Terminate)
