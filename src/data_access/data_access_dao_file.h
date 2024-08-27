@@ -35,6 +35,11 @@ public:
    */
   void Create_entity();
 
+  /**
+   * @brief Simple function to test this DAO class
+   */
+  void Test_write();
+
 protected:
   // Attributes
 

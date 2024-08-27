@@ -26,6 +26,11 @@ public:
    */
   virtual void Create_entity() = 0;
 
+  /**
+   * @brief Simple function to test this DAO class
+   */
+  virtual void Test_write() = 0;
+
 protected:
   // Attributes
 
