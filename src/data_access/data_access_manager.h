@@ -36,6 +36,11 @@ public:
    */
   Data_access_manager(const his_gen::DAL_PG_params& params);
 
+  /**
+   * @brief Destructor
+   */
+  ~Data_access_manager(){};
+
 protected:
   // Attributes
 

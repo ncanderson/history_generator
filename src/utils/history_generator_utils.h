@@ -17,6 +17,14 @@ namespace his_gen
  */
 void Print_to_cout(std::string log_message);
 
+// TODO: figure out a better way to do this
+/**
+ * @brief Print key value pair for strings
+ * @param key_name Name of key
+ * @param value Value associated with key
+ */
+void Print_key_value_string(std::string key_name, std::string value);
+
 /**
  * @brief Print key value pair
  * @tparam T The numeric class to print

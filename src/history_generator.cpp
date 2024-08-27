@@ -13,6 +13,7 @@
 // Application files
 #include <utils/history_generator_utils.h>
 #include <history_generator_manager.h>
+#include <data_access/data_access_manager.h>
 #include <utils/history_generator_root_config.h>
 
 // Data access layer
@@ -54,6 +55,11 @@ his_gen::Era m_generation_era;
  */
 std::string m_data_access_type;
 
+/**
+ * @brief Data access manager
+ */
+std::shared_ptr<his_gen::Data_access_manager> m_data_access_manager;
+
 ///////////////////////////////////////////////////////////////////////
 // Function Declarations
 ///////////////////////////////////////////////////////////////////////
@@ -67,9 +73,13 @@ void handle_sigint(int signal)
   m_application_quit = true;
 };
 
-void parse_data_access_type()
-{
+///////////////////////////////////////////////////////////////////////
 
+void validate_json_config(his_gen::History_generator_root_config app_config)
+{
+  // ensure data access type is file or postgres
+
+  // more steps as we learn them
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -100,12 +110,15 @@ int main(int argc, char *argv[])
   po::store(po::parse_command_line(argc, argv, desc), vm);
   po::notify(vm);
 
+  //////////////////////////////////////////////////////
+  // Parse options
   if(vm.count("help"))
   {
     std::cout << desc << "\n";
     return 1;
   }
 
+  //////////////////////////////////////////////////////
   // Load config
   if(vm.count("app_cfg"))
   {
@@ -129,11 +142,13 @@ int main(int argc, char *argv[])
     return 1;
   }
 
+  validate_json_config(m_app_cfg);
+
   //////////////////////////////////////////////////////
   // Set up Runtime Objects
 
   // Set up transport
-
+  m_data_access_manager = std::make_shared<his_gen::Data_access_manager>(his_gen::Get_data_access_type_from_string(m_app_cfg.Data_access_type));
 
   // Initialize Runtime Manager
   his_gen::History_generator_manager m_his_gen_mngr = his_gen::History_generator_manager(m_app_cfg);

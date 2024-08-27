@@ -2,8 +2,8 @@
  * Copyright (C) 2024 Nate Anderson - All Rights Reserved
  */
 
-#ifndef ENTITY_H
-#define ENTITY_H
+#ifndef RELATIONSHIP_TYPE_H
+#define RELATIONSHIP_TYPE_H
 
 // Standard libs
 #include <string>
@@ -14,9 +14,9 @@
 namespace models
 {
 /**
- * @brief A generated entity
+ * @brief The type of relationship between entities
  */
-class Entity
+class Relationship_type
 {
 public:
   // Attributes
@@ -25,17 +25,12 @@ public:
   /**
    * @brief Constructor
    */
-  Entity(std::string entity_name)
-    :
-      m_name(entity_name)
-  {
-    his_gen::Print_to_cout(m_name);
-  }
+  Relationship_type(){}
 
   /**
    * @brief Destructor
    */
-  ~Entity() {};
+  ~Relationship_type() {};
 
 protected:
   // Attributes
@@ -44,14 +39,10 @@ protected:
 
 private:
   // Attributes
-  /**
-   * @brief Entity name
-   */
-  std::string m_name;
 
   // Implementation
 
-}; // class Entity
+}; // class Relationship_type
 }  // namespace models
 
-#endif // ENTITY_H
+#endif // RELATIONSHIP_TYPE_H

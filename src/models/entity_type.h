@@ -2,8 +2,8 @@
  * Copyright (C) 2024 Nate Anderson - All Rights Reserved
  */
 
-#ifndef ENTITY_H
-#define ENTITY_H
+#ifndef ENTITY_TYPE_H
+#define ENTITY_TYPE_H
 
 // Standard libs
 #include <string>
@@ -14,9 +14,9 @@
 namespace models
 {
 /**
- * @brief A generated entity
+ * @brief The type of entity
  */
-class Entity
+class Entity_type
 {
 public:
   // Attributes
@@ -25,17 +25,12 @@ public:
   /**
    * @brief Constructor
    */
-  Entity(std::string entity_name)
-    :
-      m_name(entity_name)
-  {
-    his_gen::Print_to_cout(m_name);
-  }
+  Entity_type(){}
 
   /**
    * @brief Destructor
    */
-  ~Entity() {};
+  ~Entity_type() {};
 
 protected:
   // Attributes
@@ -44,14 +39,10 @@ protected:
 
 private:
   // Attributes
-  /**
-   * @brief Entity name
-   */
-  std::string m_name;
 
   // Implementation
 
-}; // class Entity
+}; // class Entity_type
 }  // namespace models
 
-#endif // ENTITY_H
+#endif // ENTITY_TYPE_H

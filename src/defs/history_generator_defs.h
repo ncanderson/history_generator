@@ -54,7 +54,7 @@ std::string Get_current_stage(Stage current_stage);
  */
 enum Data_access_type
 {
-  DATA_ACCES_TYPE_Unknown,   ///< Unknown data access type
+  DATA_ACCESS_TYPE_Unknown,  ///< Unknown data access type
   DATA_ACCESS_TYPE_File,     ///< File
   DATA_ACCESS_TYPE_Postgres  ///< PostgreSQL database
 };
@@ -65,6 +65,13 @@ enum Data_access_type
  * @return The string representation of the access type
  */
 std::string Get_data_access_type(Data_access_type data_access_type);
+
+/**
+ * @brief Get enumerated data access type from a string
+ * @param data_access_type The string representation of the access type
+ * @return String access type enumeration
+ */
+his_gen::Data_access_type Get_data_access_type_from_string(std::string data_access_type);
 
 /**
  * @brief Struct to hold the details necessary to create a file data connection

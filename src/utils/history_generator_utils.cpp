@@ -16,4 +16,11 @@ void his_gen::Print_to_cout(std::string log_message)
 }
 
 ///////////////////////////////////////////////////////////////////////
+
+void his_gen::Print_key_value_string(std::string key_name, std::string value)
+{
+  std::cout << "Log Message: " << key_name << " : " << value << std::endl;
+}
+
+///////////////////////////////////////////////////////////////////////
 // END OF FILE

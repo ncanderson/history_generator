@@ -22,7 +22,7 @@ his_gen::History_generator_root_config::History_generator_root_config(json from_
     m_end_times_era_config(from_json.at("end_times_gen_config"))
 {
   his_gen::Print_to_cout("Global generator config");
-  his_gen::Print_key_value("data_access_type", Data_access_type);
+  his_gen::Print_key_value_string("data_access_type", Data_access_type);
   his_gen::Print_to_cout("===============");
 }
 
