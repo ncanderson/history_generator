@@ -35,7 +35,7 @@ void Print_key_value_string(std::string key_name, std::string value);
 template <typename T>
 void Print_key_value(std::string key_name, T value)
 {
-  std::cout << "Log Message: " << key_name << " :" << std::to_string(value) << std::endl;
+  std::cout << "Log Message: " << key_name << ": " << std::to_string(value) << std::endl;
 }
 
 }  // namespace his_gen
