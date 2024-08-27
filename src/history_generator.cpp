@@ -49,6 +49,11 @@ bool m_application_quit = false;
  */
 his_gen::Era m_generation_era;
 
+/**
+ * @brief Data access type
+ */
+std::string m_data_access_type;
+
 ///////////////////////////////////////////////////////////////////////
 // Function Declarations
 ///////////////////////////////////////////////////////////////////////
@@ -62,12 +67,20 @@ void handle_sigint(int signal)
   m_application_quit = true;
 };
 
+void parse_data_access_type()
+{
+
+}
+
 ///////////////////////////////////////////////////////////////////////
 // Main
 ///////////////////////////////////////////////////////////////////////
 
 int main(int argc, char *argv[])
-{
+{  
+  // Handle SIGINT
+  std::signal(SIGINT, &handle_sigint);
+
   //////////////////////////////////////////////////////
   // Config defaults
   std::string app_cfg = "config/app_config.json";
@@ -93,11 +106,21 @@ int main(int argc, char *argv[])
     return 1;
   }
 
+  // Load config
   if(vm.count("app_cfg"))
   {
-    std::ifstream app_cfg_file(app_cfg);
-    json data = json::parse(app_cfg_file);
-    m_app_cfg = his_gen::History_generator_root_config(data);
+    try
+    {
+      std::ifstream app_cfg_file(app_cfg);
+      json data = json::parse(app_cfg_file);
+      m_app_cfg = his_gen::History_generator_root_config(data);
+    }
+    catch (const std::exception& e)
+    {
+      his_gen::Print_to_cout("Error loading config from JSON");
+      his_gen::Print_to_cout(e.what());
+      return 1;
+    }
   }
   else
   {
@@ -106,11 +129,14 @@ int main(int argc, char *argv[])
     return 1;
   }
 
-  // Initialize Manager
-  his_gen::History_generator_manager m_his_gen_mngr = his_gen::History_generator_manager(m_app_cfg);
+  //////////////////////////////////////////////////////
+  // Set up Runtime Objects
 
-  // Handle SIGINT
-  std::signal(SIGINT, &handle_sigint);
+  // Set up transport
+
+
+  // Initialize Runtime Manager
+  his_gen::History_generator_manager m_his_gen_mngr = his_gen::History_generator_manager(m_app_cfg);
 
   // Run until and unless application receives SIGINT
   while(!m_application_quit && m_generation_era != his_gen::Era::ERA_Terminate)

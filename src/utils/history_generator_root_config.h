@@ -27,9 +27,14 @@ class History_generator_root_config
 public:
   // Attributes
   /**
-   * @brief Global_config_placeholder
+   * @brief Data access type
+   * @details
+   * | Value    | Description                                         |
+   * |----------|-----------------------------------------------------|
+   * | file     | Data will be saved and retrieved from a system file |
+   * | postgres | PostgreSQL database                                 |
    */
-  bool Global_config_placeholder;
+  std::string Data_access_type;
 
   // Implementation
   /**

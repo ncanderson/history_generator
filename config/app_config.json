@@ -1,5 +1,5 @@
 {
-  "global_config_placeholder": true,
+  "data_access_type": "file",
   "myth_gen_config": 
   {    
     "myth_gen_ticks": 200,
