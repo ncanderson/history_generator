@@ -11,6 +11,7 @@
 // Application files
 #include <data_access/data_access_dao_base.h>
 #include <defs/history_generator_defs.h>
+#include <models/generated_history.h>
 
 namespace his_gen
 {
@@ -40,6 +41,14 @@ public:
    * @brief Destructor
    */
   ~Data_access_manager(){};
+
+  /**
+   * @brief Write the current generated history
+   * @param generated_history The generated history object shared by all
+   * generators
+   * @throws std::exception Probably
+   */
+  void Write_history(models::Generated_history generated_history);
 
 protected:
   // Attributes

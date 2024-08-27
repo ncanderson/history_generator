@@ -1,5 +1,6 @@
 # TODO
 
+- Fix handling of config - child classes should get their own copy of their own config
 
 # Notes
 

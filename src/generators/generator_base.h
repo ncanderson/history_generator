@@ -10,6 +10,7 @@
 // Application files
 #include <defs/history_generator_defs.h>
 #include <utils/history_generator_root_config.h>
+#include <data_access/data_access_manager.h>
 
 // Models
 #include <models/entity.h>
@@ -29,15 +30,19 @@ public:
   /**
    * @brief Constructor
    * @param generation_complete Default
-   * @param current_stage
+   * @param current_stage Current stage of generation
+   * @param his_gen_config Application configuration
+   * @param data_access_manager Data access manager
    */
   Generator_base(bool generation_complete,
                  his_gen::Stage current_stage,
-                 his_gen::History_generator_root_config &his_gen_config)
+                 his_gen::History_generator_root_config &his_gen_config,
+                 his_gen::Data_access_manager &data_access_manager)
       :
       m_generation_complete(generation_complete),
       m_current_stage(current_stage),
-      m_his_gen_config(his_gen_config)
+      m_his_gen_config(his_gen_config),
+      m_data_access_manager(data_access_manager)
   {
 
   }
@@ -81,6 +86,11 @@ protected:
    * @brief m_his_gen_config Application configuration
    */
   his_gen::History_generator_root_config &m_his_gen_config;
+
+  /**
+   * @brief Pointer to shared data access manager
+   */
+  his_gen::Data_access_manager &m_data_access_manager;
 
   // Implementation
   /**

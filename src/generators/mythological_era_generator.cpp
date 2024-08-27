@@ -58,6 +58,8 @@ void his_gen::Mythological_era_generator::Run()
       // Define the sentients that will be created for later phases
       // establish how gods remove themselves from the world
 
+      m_data_access_manager.Test_write();
+
       // TODO make this conditional?
       Set_generation_complete(true);
     }

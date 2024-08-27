@@ -28,7 +28,7 @@ void his_gen::Data_access_dao_pg::Create_entity()
 
 void his_gen::Data_access_dao_pg::Test_write()
 {
-  his_gen::Print_to_cout("in Test_write");
+  his_gen::Print_to_cout("in Test_write, postgres");
 }
 
 ///////////////////////////////////////////////////////////////////////
