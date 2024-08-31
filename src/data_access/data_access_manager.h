@@ -48,7 +48,7 @@ public:
    * generators
    * @throws std::exception Probably
    */
-  void Write_history(models::Generated_history generated_history);
+  void Write_history(std::shared_ptr<models::Generated_history> generated_history);
 
 protected:
   // Attributes

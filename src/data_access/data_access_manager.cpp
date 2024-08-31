@@ -29,7 +29,7 @@ his_gen::Data_access_manager::Data_access_manager(const his_gen::DAL_PG_params& 
 
 ///////////////////////////////////////////////////////////////////////
 
-void his_gen::Data_access_manager::Write_history(models::Generated_history generated_history)
+void his_gen::Data_access_manager::Write_history(std::shared_ptr<models::Generated_history> generated_history)
 {
   m_txport->Write_history(generated_history);
 }

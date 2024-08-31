@@ -64,7 +64,7 @@ void his_gen::Mythological_era_generator::Run()
       // establish how gods remove themselves from the world
 
       // Write the generated history out
-      m_data_access_manager->Write_history(*m_generated_history);
+      m_data_access_manager->Write_history(m_generated_history);
 
       // TODO make this conditional?
       Set_generation_complete(true);
