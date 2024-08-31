@@ -8,8 +8,12 @@
 // Standard libs
 #include <vector>
 
+// JSON
+#include <deps/json.hpp>
+
 // Application files
 #include <utils/history_generator_utils.h>
+
 // Models
 #include <models/entity_relationship.h>
 #include <models/entity_type_relationship_type.h>
@@ -70,6 +74,14 @@ public:
    * @brief Destructor
    */
   ~Generated_history() {};
+
+  /**
+   * @brief Write history object to JSON
+   * @param json Pointer to the json we'll be writing to
+   * @param generated_history The history object to write
+   */
+  void To_json(nlohmann::json& json,
+               std::shared_ptr<Generated_history> generated_history);
 
 protected:
   // Attributes
