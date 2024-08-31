@@ -5,6 +5,11 @@
 #ifndef DATA_ACCESS_DAO_BASE_H
 #define DATA_ACCESS_DAO_BASE_H
 
+// Standard libraries
+
+// Applicaiton files
+#include <models/generated_history.h>
+
 namespace his_gen
 {
 /**
@@ -22,14 +27,10 @@ public:
   virtual ~Data_access_dao_base(){};
 
   /**
-   * @brief Virtual base for entity creation functions
+   * @brief Write history to the DAO object
+   * @param generated_history The generated history object
    */
-  virtual void Create_entity() = 0;
-
-  /**
-   * @brief Simple function to test this DAO class
-   */
-  virtual void Test_write() = 0;
+  virtual void Write_history(models::Generated_history generated_history) = 0;
 
 protected:
   // Attributes

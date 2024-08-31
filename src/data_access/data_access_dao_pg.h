@@ -14,7 +14,7 @@ namespace his_gen
 /**
  * @brief The Data_access_dao_sql class
  */
-class Data_access_dao_pg : public Data_access_dao_base
+class Data_access_dao_pg : public virtual Data_access_dao_base
 {
 public:
   // Attributes
@@ -28,17 +28,13 @@ public:
   /**
    * @brief Destructor
    */
-  ~Data_access_dao_pg(){};
+  ~Data_access_dao_pg() override;
 
   /**
-   * @brief Create an entity
+   * @brief Write history to the DAO object
+   * @param generated_history The generated history object
    */
-  void Create_entity();
-
-  /**
-   * @brief Simple function to test this DAO class
-   */
-  void Test_write();
+  void Write_history(models::Generated_history generated_history) override;
 
 protected:
   // Attributes

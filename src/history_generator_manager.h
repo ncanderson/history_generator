@@ -36,9 +36,9 @@ public:
   /**
    * @brief Constructor with conifg
    */
-  History_generator_manager(his_gen::History_generator_root_config &his_gen_config,
-                            models::Generated_history &generated_history,
-                            his_gen::Data_access_manager &data_access_manager);
+  History_generator_manager(std::shared_ptr<his_gen::History_generator_root_config> his_gen_config,
+                            std::shared_ptr<models::Generated_history> generated_history,
+                            std::shared_ptr<his_gen::Data_access_manager> data_access_manager);
 
   /**
    * @brief Destructor.
@@ -64,12 +64,12 @@ private:
   /**
    * @brief m_his_gen_config Application configuration
    */
-  his_gen::History_generator_root_config &m_his_gen_config;
+  std::shared_ptr<his_gen::History_generator_root_config> m_his_gen_config;
 
   /**
    * @brief Pointer to the generated history object
    */
-  models::Generated_history &m_generated_history;
+  std::shared_ptr<models::Generated_history> m_generated_history;
 
   /**
    * @brief m_current_era Variable to track the generator's current era

@@ -19,16 +19,16 @@ his_gen::Data_access_dao_file::Data_access_dao_file(const DAL_file_params& param
 
 ///////////////////////////////////////////////////////////////////////
 
-void his_gen::Data_access_dao_file::Create_entity()
+his_gen::Data_access_dao_file::~Data_access_dao_file()
 {
-  his_gen::Print_to_cout("create entity");
+  // NOOP
 }
 
 ///////////////////////////////////////////////////////////////////////
 
-void his_gen::Data_access_dao_file::Test_write()
+void his_gen::Data_access_dao_file::Write_history(models::Generated_history generated_history)
 {
-  his_gen::Print_to_cout("in Test_write, file");
+  his_gen::Print_to_cout("FILE, entity size: " + std::to_string(generated_history.Entities.size()));
 }
 
 ///////////////////////////////////////////////////////////////////////

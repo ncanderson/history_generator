@@ -31,7 +31,7 @@ his_gen::Data_access_manager::Data_access_manager(const his_gen::DAL_PG_params& 
 
 void his_gen::Data_access_manager::Write_history(models::Generated_history generated_history)
 {
-  m_txport->Test_write();
+  m_txport->Write_history(generated_history);
 }
 
 ///////////////////////////////////////////////////////////////////////

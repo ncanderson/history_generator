@@ -60,17 +60,22 @@ std::string m_data_access_type;
 /**
  * @brief Application configuration
  */
-his_gen::History_generator_root_config m_app_cfg;
+std::shared_ptr<his_gen::History_generator_root_config> m_app_cfg;
 
 /**
  * @brief The history being generated
  */
-models::Generated_history m_generated_history;
+std::shared_ptr<models::Generated_history> m_generated_history;
 
 /**
  * @brief Runtime data access manager
  */
 std::shared_ptr<his_gen::Data_access_manager> m_data_access_manager;
+
+/**
+ * @brief History generator manager
+ */
+std::shared_ptr<his_gen::History_generator_manager> m_his_gen_mngr;
 
 ///////////////////////////////////////////////////////////////////////
 // Function Declarations
@@ -113,13 +118,11 @@ void initialize_data_access(his_gen::Data_access_type data_access_type)
       throw std::exception();
     }
   }
-
-
 }
 
 ///////////////////////////////////////////////////////////////////////
 
-void validate_json_config(his_gen::History_generator_root_config app_config)
+void validate_json_config(std::shared_ptr<his_gen::History_generator_root_config> app_config)
 {
   // ensure data access type is file or postgres
 
@@ -169,7 +172,7 @@ int main(int argc, char *argv[])
     {
       std::ifstream app_cfg_file(app_cfg);
       json data = json::parse(app_cfg_file);
-      m_app_cfg = his_gen::History_generator_root_config(data);
+      m_app_cfg.reset(new his_gen::History_generator_root_config(data));
     }
     catch (const std::exception& e)
     {
@@ -191,22 +194,22 @@ int main(int argc, char *argv[])
   // Set up Runtime Objects
 
   // Initialize data repository
-  m_generated_history = models::Generated_history();
+  m_generated_history.reset(new models::Generated_history());
 
   // Set up data access manager
-  initialize_data_access(his_gen::Get_data_access_type_from_string(m_app_cfg.Data_access_type));
+  initialize_data_access(his_gen::Get_data_access_type_from_string(m_app_cfg->Data_access_type));
 
   // Initialize Runtime Manager
-  his_gen::History_generator_manager m_his_gen_mngr = his_gen::History_generator_manager(m_app_cfg,
-                                                                                         m_generated_history,
-                                                                                         *m_data_access_manager);
+  m_his_gen_mngr.reset(new his_gen::History_generator_manager(m_app_cfg,
+                                                              m_generated_history,
+                                                              m_data_access_manager));
 
   // Run until and unless application receives SIGINT
   while(!m_application_quit && m_generation_era != his_gen::Era::ERA_Terminate)
   {
     try
     {
-      m_generation_era = m_his_gen_mngr.Run();
+      m_generation_era = m_his_gen_mngr->Run();
     }
     // Catch any errors bubbling up from the main run function
     catch(const std::exception& e)

@@ -37,9 +37,9 @@ public:
    */
   Generator_base(bool generation_complete,
                  his_gen::Stage current_stage,
-                 his_gen::History_generator_root_config &his_gen_config,
-                 models::Generated_history &generated_history,
-                 his_gen::Data_access_manager &data_access_manager)
+                 std::shared_ptr<his_gen::History_generator_root_config> his_gen_config,
+                 std::shared_ptr<models::Generated_history> generated_history,
+                 std::shared_ptr<his_gen::Data_access_manager> data_access_manager)
       :
       m_generation_complete(generation_complete),
       m_current_stage(current_stage),
@@ -87,12 +87,12 @@ protected:
   /**
    * @brief m_his_gen_config Application configuration
    */
-  his_gen::History_generator_root_config &m_his_gen_config;
+  std::shared_ptr<his_gen::History_generator_root_config> m_his_gen_config;
 
   /**
    * @brief Pointer to shared data access manager
    */
-  his_gen::Data_access_manager &m_data_access_manager;
+  std::shared_ptr<his_gen::Data_access_manager> m_data_access_manager;
 
   // Implementation
   /**

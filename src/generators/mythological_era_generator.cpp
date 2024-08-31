@@ -7,9 +7,9 @@
 
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::Mythological_era_generator::Mythological_era_generator(his_gen::History_generator_root_config &his_gen_config,
-                                                                models::Generated_history &generated_history,
-                                                                his_gen::Data_access_manager &data_access_manager)
+his_gen::Mythological_era_generator::Mythological_era_generator(std::shared_ptr<his_gen::History_generator_root_config> his_gen_config,
+                                                                std::shared_ptr<models::Generated_history> generated_history,
+                                                                std::shared_ptr<his_gen::Data_access_manager> data_access_manager)
     :
     his_gen::Generator_base(false,
                             his_gen::Stage::STAGE_Init,
@@ -64,7 +64,7 @@ void his_gen::Mythological_era_generator::Run()
       // establish how gods remove themselves from the world
 
       // Write the generated history out
-      m_data_access_manager.Write_history(m_generated_history);
+      m_data_access_manager->Write_history(*m_generated_history);
 
       // TODO make this conditional?
       Set_generation_complete(true);
@@ -83,7 +83,7 @@ void his_gen::Mythological_era_generator::Run()
 models::Entity his_gen::Mythological_era_generator::create_entity()
 {
   models::Entity new_entity = models::Entity("TEST name myth");
-  m_generated_history.Entities.push_back(new_entity);
+  m_generated_history->Entities.push_back(new_entity);
   return new_entity;
 }
 

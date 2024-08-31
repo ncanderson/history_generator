@@ -31,9 +31,9 @@ public:
    * @brief Constructor.
    * @param his_gen_config Pointer to the application configuration
    */
-  Mythological_era_generator(his_gen::History_generator_root_config &his_gen_config,
-                             models::Generated_history &generated_history,
-                             his_gen::Data_access_manager &data_access_manager);
+  Mythological_era_generator(std::shared_ptr<his_gen::History_generator_root_config> his_gen_config,
+                             std::shared_ptr<models::Generated_history> generated_history,
+                             std::shared_ptr<his_gen::Data_access_manager> data_access_manager);
 
   /**
    * @brief Destructor.
@@ -59,7 +59,7 @@ private:
   /**
    * @brief Pointer to the generated history object
    */
-  models::Generated_history &m_generated_history;
+  std::shared_ptr<models::Generated_history> m_generated_history;
 
   // Implementation
 
