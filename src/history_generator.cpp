@@ -198,7 +198,8 @@ int main(int argc, char *argv[])
 
   // Initialize Runtime Manager
   his_gen::History_generator_manager m_his_gen_mngr = his_gen::History_generator_manager(m_app_cfg,
-                                                                                         m_generated_history);
+                                                                                         m_generated_history,
+                                                                                         *m_data_access_manager);
 
   // Run until and unless application receives SIGINT
   while(!m_application_quit && m_generation_era != his_gen::Era::ERA_Terminate)

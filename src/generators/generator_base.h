@@ -32,11 +32,13 @@ public:
    * @param generation_complete Default
    * @param current_stage Current stage of generation
    * @param his_gen_config Application configuration
+   * @param generated_history Pointer to the generated history object
    * @param data_access_manager Data access manager
    */
   Generator_base(bool generation_complete,
                  his_gen::Stage current_stage,
                  his_gen::History_generator_root_config &his_gen_config,
+                 models::Generated_history &generated_history,
                  his_gen::Data_access_manager &data_access_manager)
       :
       m_generation_complete(generation_complete),

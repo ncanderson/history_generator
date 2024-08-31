@@ -8,9 +8,14 @@
 ///////////////////////////////////////////////////////////////////////
 
 his_gen::Mythological_era_generator::Mythological_era_generator(his_gen::History_generator_root_config &his_gen_config,
-                                                                models::Generated_history &generated_history)
+                                                                models::Generated_history &generated_history,
+                                                                his_gen::Data_access_manager &data_access_manager)
     :
-    his_gen::Generator_base(false, his_gen::Stage::STAGE_Init, his_gen_config),
+    his_gen::Generator_base(false,
+                            his_gen::Stage::STAGE_Init,
+                            his_gen_config,
+                            generated_history,
+                            data_access_manager),
     m_generated_history(generated_history)
 {
 
@@ -58,7 +63,8 @@ void his_gen::Mythological_era_generator::Run()
       // Define the sentients that will be created for later phases
       // establish how gods remove themselves from the world
 
-      m_data_access_manager.Test_write();
+      // Write the generated history out
+      m_data_access_manager.Write_history(m_generated_history);
 
       // TODO make this conditional?
       Set_generation_complete(true);

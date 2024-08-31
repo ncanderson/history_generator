@@ -37,7 +37,8 @@ public:
    * @brief Constructor with conifg
    */
   History_generator_manager(his_gen::History_generator_root_config &his_gen_config,
-                            models::Generated_history &generated_history);
+                            models::Generated_history &generated_history,
+                            his_gen::Data_access_manager &data_access_manager);
 
   /**
    * @brief Destructor.
