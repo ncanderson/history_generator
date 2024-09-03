@@ -8,6 +8,9 @@
 // Standard libs
 #include <string>
 
+// JSON
+#include <deps/json.hpp>
+
 // Application files
 #include <utils/history_generator_utils.h>
 
@@ -36,6 +39,14 @@ public:
    * @brief Destructor
    */
   ~Entity() {};
+
+  /**
+   * @brief Write entity object to JSON
+   * @param json Pointer to the json we'll be writing to
+   * @param entity The entity to write
+   */
+  void To_json(nlohmann::json& json,
+               std::shared_ptr<Entity> entity);
 
 protected:
   // Attributes

@@ -35,7 +35,6 @@ void his_gen::Data_access_dao_file::Write_history(std::shared_ptr<models::Genera
 {
   his_gen::Print_to_cout("Writing generated history to file");
 
-
   nlohmann::json output_json;
   generated_history->To_json(output_json, generated_history);
 

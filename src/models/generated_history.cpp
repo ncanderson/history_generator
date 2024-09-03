@@ -7,8 +7,8 @@
 
 ///////////////////////////////////////////////////////////////////////
 
-void To_json(nlohmann::json& json,
-             std::shared_ptr<models::Generated_history> generated_history)
+void models::Generated_history::To_json(nlohmann::json& json,
+                                        std::shared_ptr<models::Generated_history> generated_history)
 {
   json = nlohmann::json
   {
