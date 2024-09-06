@@ -65,7 +65,7 @@ std::shared_ptr<his_gen::History_generator_root_config> m_app_cfg;
 /**
  * @brief The history being generated
  */
-std::shared_ptr<models::Generated_history> m_generated_history;
+std::shared_ptr<his_gen::Generated_history> m_generated_history;
 
 /**
  * @brief Runtime data access manager
@@ -194,7 +194,7 @@ int main(int argc, char *argv[])
   // Set up Runtime Objects
 
   // Initialize data repository
-  m_generated_history.reset(new models::Generated_history());
+  m_generated_history.reset(new his_gen::Generated_history());
 
   // Set up data access manager
   initialize_data_access(his_gen::Get_data_access_type_from_string(m_app_cfg->Data_access_type));

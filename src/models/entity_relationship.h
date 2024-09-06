@@ -8,10 +8,13 @@
 // Standard libs
 #include <string>
 
+// JSON
+#include <deps/json.hpp>
+
 // Application files
 #include <utils/history_generator_utils.h>
 
-namespace models
+namespace his_gen
 {
 /**
  * @brief The relationship between two entities
@@ -32,6 +35,14 @@ public:
    */
   ~Entity_relationship() {};
 
+  /**
+   * @brief Write entity relationship object to JSON
+   * @param json Pointer to the json we'll be writing to
+   * @param entity_relationship The entity relationship to write
+   */
+  void To_json(nlohmann::json& json,
+               std::shared_ptr<Entity_relationship> entity_relationship);
+
 protected:
   // Attributes
 
@@ -43,6 +54,13 @@ private:
   // Implementation
 
 }; // class Entity_relationship
+
+void to_json(nlohmann::json& json,
+             const his_gen::Entity_relationship& entity_relationship);
+
+void from_json(const nlohmann::json& json,
+               his_gen::Entity_relationship& entity_relationship);
+
 }  // namespace models
 
 #endif // ENTITY_RELATIONSHIP_H

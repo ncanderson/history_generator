@@ -8,10 +8,13 @@
 // Standard libs
 #include <string>
 
+// JSON
+#include <deps/json.hpp>
+
 // Application files
 #include <utils/history_generator_utils.h>
 
-namespace models
+namespace his_gen
 {
 /**
  * @brief The type of relationship between entities
@@ -30,7 +33,7 @@ public:
   /**
    * @brief Destructor
    */
-  ~Relationship_type() {};
+  ~Relationship_type() {};  
 
 protected:
   // Attributes
@@ -43,6 +46,13 @@ private:
   // Implementation
 
 }; // class Relationship_type
+
+void to_json(nlohmann::json& json,
+             const his_gen::Relationship_type& relationship_type);
+
+void from_json(const nlohmann::json& json,
+               his_gen::Relationship_type& relationship_type);
+
 }  // namespace models
 
 #endif // RELATIONSHIP_TYPE_H

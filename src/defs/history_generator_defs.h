@@ -5,6 +5,7 @@
 #ifndef HISTORY_GENERATOR_DEFS_H
 #define HISTORY_GENERATOR_DEFS_H
 
+// Standard libraries
 #include <string>
 
 namespace his_gen
@@ -101,7 +102,6 @@ struct DAL_PG_params
   std::string db_name;
 
 }; // struct DAL_PG_details
-
 }  // namespace his_gen
 
 #endif // HISTORY_GENERATOR_DEFS_H

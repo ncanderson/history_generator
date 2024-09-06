@@ -38,7 +38,7 @@ public:
   Generator_base(bool generation_complete,
                  his_gen::Stage current_stage,
                  std::shared_ptr<his_gen::History_generator_root_config> his_gen_config,
-                 std::shared_ptr<models::Generated_history> generated_history,
+                 std::shared_ptr<his_gen::Generated_history> generated_history,
                  std::shared_ptr<his_gen::Data_access_manager> data_access_manager)
       :
       m_generation_complete(generation_complete),
@@ -98,7 +98,7 @@ protected:
   /**
    * @brief Virtual base class for entity creation
    */
-  virtual models::Entity create_entity() = 0;
+  virtual his_gen::Entity create_entity() = 0;
 
 private:
   // Attributes

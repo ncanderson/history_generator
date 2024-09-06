@@ -26,7 +26,7 @@ his_gen::Data_access_dao_pg::~Data_access_dao_pg()
 
 ///////////////////////////////////////////////////////////////////////
 
-void his_gen::Data_access_dao_pg::Write_history(std::shared_ptr<models::Generated_history> generated_history)
+void his_gen::Data_access_dao_pg::Write_history(std::shared_ptr<his_gen::Generated_history> generated_history)
 {
   his_gen::Print_to_cout("PG, entity size: " + std::to_string(generated_history->Entities.size()));
 }

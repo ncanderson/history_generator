@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////////
 
 his_gen::Mythological_era_generator::Mythological_era_generator(std::shared_ptr<his_gen::History_generator_root_config> his_gen_config,
-                                                                std::shared_ptr<models::Generated_history> generated_history,
+                                                                std::shared_ptr<his_gen::Generated_history> generated_history,
                                                                 std::shared_ptr<his_gen::Data_access_manager> data_access_manager)
     :
     his_gen::Generator_base(false,
@@ -42,7 +42,8 @@ void his_gen::Mythological_era_generator::Run()
       // figure out what the divine language looks like?
 
       // Create a new ultimate parent entity
-      models::Entity new_entity = create_entity();
+      his_gen::Entity entity1 = create_entity();
+      his_gen::Entity entity2 = create_entity();
 
       m_current_stage = STAGE_Run;
     }
@@ -80,9 +81,9 @@ void his_gen::Mythological_era_generator::Run()
 
 ///////////////////////////////////////////////////////////////////////
 
-models::Entity his_gen::Mythological_era_generator::create_entity()
+his_gen::Entity his_gen::Mythological_era_generator::create_entity()
 {
-  models::Entity new_entity = models::Entity("TEST name myth");
+  his_gen::Entity new_entity = his_gen::Entity("enbilulugugal");
   m_generated_history->Entities.push_back(new_entity);
   return new_entity;
 }
