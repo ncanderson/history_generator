@@ -5,6 +5,7 @@
 #ifndef HISTORY_GENERATOR_DEFS_H
 #define HISTORY_GENERATOR_DEFS_H
 
+// Standard libraries
 #include <string>
 
 namespace his_gen
@@ -48,6 +49,59 @@ enum Stage
  */
 std::string Get_current_stage(Stage current_stage);
 
+/**
+ * @brief The Data_access_type enum
+ * @details Determine the type of data source we'll be accessing
+ */
+enum Data_access_type
+{
+  DATA_ACCESS_TYPE_Unknown,  ///< Unknown data access type
+  DATA_ACCESS_TYPE_File,     ///< File
+  DATA_ACCESS_TYPE_Postgres  ///< PostgreSQL database
+};
+
+/**
+ * @brief Get the current data access type
+ * @param data_access_type The current data access type
+ * @return The string representation of the access type
+ */
+std::string Get_data_access_type(Data_access_type data_access_type);
+
+/**
+ * @brief Get enumerated data access type from a string
+ * @param data_access_type The string representation of the access type
+ * @return String access type enumeration
+ */
+his_gen::Data_access_type Get_data_access_type_from_string(std::string data_access_type);
+
+/**
+ * @brief Struct to hold the details necessary to create a file data connection
+ */
+struct DAL_file_params
+{
+  /**
+   * @brief Data file name
+   */
+  std::string filename;
+
+  /**
+   * @brief Path to data file to load
+   */
+  std::string file_path;
+}; // struct DAL_file_details
+
+/**
+ * @brief Struct to hold the details necessary to create a PostgreSQL data
+ * connection
+ */
+struct DAL_PG_params
+{
+  /**
+   * @brief Database name
+   */
+  std::string db_name;
+
+}; // struct DAL_PG_details
 }  // namespace his_gen
 
 #endif // HISTORY_GENERATOR_DEFS_H

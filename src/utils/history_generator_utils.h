@@ -17,6 +17,15 @@ namespace his_gen
  */
 void Print_to_cout(std::string log_message);
 
+// TODO: figure out a better way to do this, such that the templated version will
+// handle it and we don't need a separate function
+/**
+ * @brief Print key value pair for strings
+ * @param key_name Name of key
+ * @param value Value associated with key
+ */
+void Print_key_value_string(std::string key_name, std::string value);
+
 /**
  * @brief Print key value pair
  * @tparam T The numeric class to print
@@ -26,7 +35,7 @@ void Print_to_cout(std::string log_message);
 template <typename T>
 void Print_key_value(std::string key_name, T value)
 {
-  std::cout << "Log Message: " << key_name << " : " << std::to_string(value) << std::endl;
+  std::cout << "Log Message: " << key_name << ": " << std::to_string(value) << std::endl;
 }
 
 }  // namespace his_gen

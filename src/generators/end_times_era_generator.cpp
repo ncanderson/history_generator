@@ -7,9 +7,16 @@
 
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::End_times_era_generator::End_times_era_generator(his_gen::History_generator_root_config &his_gen_config)
+his_gen::End_times_era_generator::End_times_era_generator(std::shared_ptr<his_gen::History_generator_root_config> his_gen_config,
+                                                          std::shared_ptr<his_gen::Generated_history> generated_history,
+                                                          std::shared_ptr<his_gen::Data_access_manager> data_access_manager)
     :
-    his_gen::Generator_base(false, his_gen::Stage::STAGE_Init, his_gen_config)
+    his_gen::Generator_base(false,
+                            his_gen::Stage::STAGE_Init,
+                            his_gen_config,
+                            generated_history,
+                            data_access_manager),
+    m_generated_history(generated_history)
 {
 
 }
@@ -40,6 +47,14 @@ void his_gen::End_times_era_generator::Run()
     default:
       his_gen::Print_to_cout("Default");
   }
+}
+
+///////////////////////////////////////////////////////////////////////
+
+his_gen::Entity his_gen::End_times_era_generator::create_entity()
+{
+  his_gen::Entity new_entity = his_gen::Entity("TEST name end times");
+  return new_entity;
 }
 
 ///////////////////////////////////////////////////////////////////////

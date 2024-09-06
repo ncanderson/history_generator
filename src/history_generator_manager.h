@@ -10,6 +10,7 @@
 #include <generators/end_times_era_generator.h>
 #include <defs/history_generator_defs.h>
 #include <utils/history_generator_root_config.h>
+#include <models/generated_history.h>
 
 #ifndef HISTORY_GENERATOR_MANAGER_H
 #define HISTORY_GENERATOR_MANAGER_H
@@ -35,7 +36,9 @@ public:
   /**
    * @brief Constructor with conifg
    */
-  History_generator_manager(his_gen::History_generator_root_config &his_gen_config);
+  History_generator_manager(std::shared_ptr<his_gen::History_generator_root_config> his_gen_config,
+                            std::shared_ptr<his_gen::Generated_history> generated_history,
+                            std::shared_ptr<his_gen::Data_access_manager> data_access_manager);
 
   /**
    * @brief Destructor.
@@ -61,7 +64,12 @@ private:
   /**
    * @brief m_his_gen_config Application configuration
    */
-  his_gen::History_generator_root_config &m_his_gen_config;
+  std::shared_ptr<his_gen::History_generator_root_config> m_his_gen_config;
+
+  /**
+   * @brief Pointer to the generated history object
+   */
+  std::shared_ptr<his_gen::Generated_history> m_generated_history;
 
   /**
    * @brief m_current_era Variable to track the generator's current era
