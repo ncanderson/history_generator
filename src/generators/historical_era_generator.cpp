@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////////
 
 his_gen::Historical_era_generator::Historical_era_generator(std::shared_ptr<his_gen::History_generator_root_config> his_gen_config,
-                                                            std::shared_ptr<models::Generated_history> generated_history,
+                                                            std::shared_ptr<his_gen::Generated_history> generated_history,
                                                             std::shared_ptr<his_gen::Data_access_manager> data_access_manager)
     :
     his_gen::Generator_base(false,
@@ -50,9 +50,9 @@ void his_gen::Historical_era_generator::Run()
 
 ///////////////////////////////////////////////////////////////////////
 
-models::Entity his_gen::Historical_era_generator::create_entity()
+his_gen::Entity his_gen::Historical_era_generator::create_entity()
 {
-  models::Entity new_entity = models::Entity("TEST name history");
+  his_gen::Entity new_entity = his_gen::Entity("TEST name history");
   return new_entity;
 }
 

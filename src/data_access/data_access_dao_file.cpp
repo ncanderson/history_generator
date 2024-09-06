@@ -31,7 +31,7 @@ his_gen::Data_access_dao_file::~Data_access_dao_file()
 
 ///////////////////////////////////////////////////////////////////////
 
-void his_gen::Data_access_dao_file::Write_history(std::shared_ptr<models::Generated_history> generated_history)
+void his_gen::Data_access_dao_file::Write_history(std::shared_ptr<his_gen::Generated_history> generated_history)
 {
   his_gen::Print_to_cout("Writing generated history to file");
 
@@ -40,7 +40,7 @@ void his_gen::Data_access_dao_file::Write_history(std::shared_ptr<models::Genera
 
   std::ofstream output_file;
   output_file.open("/home/nanderson/nate_personal/projects/history_generator/output/sample_output.json");
-  output_file << output_json;
+  output_file << std::setw(2) << output_json;
   output_file.close();
 }
 

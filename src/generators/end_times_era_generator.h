@@ -32,7 +32,7 @@ public:
    * @param his_gen_config Pointer to the application configuration
    */
   End_times_era_generator(std::shared_ptr<his_gen::History_generator_root_config> his_gen_config,
-                          std::shared_ptr<models::Generated_history> generated_history,
+                          std::shared_ptr<his_gen::Generated_history> generated_history,
                           std::shared_ptr<his_gen::Data_access_manager> data_access_manager);
 
   /**
@@ -52,14 +52,14 @@ protected:
   /**
    * @brief Create a new entity
    */
-  models::Entity create_entity();
+  his_gen::Entity create_entity();
 
 private:
   // Attributes
   /**
    * @brief Pointer to the generated history object
    */
-  std::shared_ptr<models::Generated_history> m_generated_history;
+  std::shared_ptr<his_gen::Generated_history> m_generated_history;
 
   // Implementation
 

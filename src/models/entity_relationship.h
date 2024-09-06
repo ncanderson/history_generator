@@ -14,7 +14,7 @@
 // Application files
 #include <utils/history_generator_utils.h>
 
-namespace models
+namespace his_gen
 {
 /**
  * @brief The relationship between two entities
@@ -54,6 +54,13 @@ private:
   // Implementation
 
 }; // class Entity_relationship
+
+void to_json(nlohmann::json& json,
+             const his_gen::Entity_relationship& entity_relationship);
+
+void from_json(const nlohmann::json& json,
+               his_gen::Entity_relationship& entity_relationship);
+
 }  // namespace models
 
 #endif // ENTITY_RELATIONSHIP_H

@@ -7,12 +7,16 @@
 
 ///////////////////////////////////////////////////////////////////////
 
-void models::Generated_history::To_json(nlohmann::json& json,
-                                        std::shared_ptr<models::Generated_history> generated_history)
+void his_gen::Generated_history::To_json(nlohmann::json& json,
+                                        std::shared_ptr<his_gen::Generated_history> generated_history)
 {
   json = nlohmann::json
   {
-    {"generated_history", generated_history->Entities.size() }
+    {"entity_relationships", Entity_relationships},
+    {"entity_type_relationship_types", Entity_type_relationship_types},
+    {"entity_types", Entity_types},
+    {"entities", Entities},
+    {"relationship_types", Relationship_types}
   };
 }
 

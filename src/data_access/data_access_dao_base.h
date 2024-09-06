@@ -31,7 +31,7 @@ public:
    * @brief Write history to the DAO object
    * @param generated_history The generated history object
    */
-  virtual void Write_history(std::shared_ptr<models::Generated_history> generated_history) = 0;
+  virtual void Write_history(std::shared_ptr<his_gen::Generated_history> generated_history) = 0;
 
 protected:
   // Attributes

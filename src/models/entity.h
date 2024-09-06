@@ -14,7 +14,7 @@
 // Application files
 #include <utils/history_generator_utils.h>
 
-namespace models
+namespace his_gen
 {
 /**
  * @brief A generated entity
@@ -23,30 +23,25 @@ class Entity
 {
 public:
   // Attributes
+  /**
+   * @brief Entity name
+   */
+  std::string Name = "";
 
   // Implementation
   /**
    * @brief Constructor
    */
-  Entity(std::string entity_name)
+  Entity(std::string name)
     :
-      m_name(entity_name)
+      Name(name)
   {
-    // NOOP
   }
 
   /**
    * @brief Destructor
    */
   ~Entity() {};
-
-  /**
-   * @brief Write entity object to JSON
-   * @param json Pointer to the json we'll be writing to
-   * @param entity The entity to write
-   */
-  void To_json(nlohmann::json& json,
-               std::shared_ptr<Entity> entity);
 
 protected:
   // Attributes
@@ -55,14 +50,25 @@ protected:
 
 private:
   // Attributes
-  /**
-   * @brief Entity name
-   */
-  std::string m_name;
 
   // Implementation
 
 }; // class Entity
+
+/**
+ * @brief to_json
+ * @param json
+ * @param entity
+ */
+void to_json(nlohmann::json& json, const his_gen::Entity& entity);
+
+/**
+ * @brief from_json
+ * @param json
+ * @param entity
+ */
+void from_json(const nlohmann::json& json, his_gen::Entity& entity);
+
 }  // namespace models
 
 #endif // ENTITY_H

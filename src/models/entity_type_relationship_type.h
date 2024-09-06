@@ -14,7 +14,7 @@
 // Application files
 #include <utils/history_generator_utils.h>
 
-namespace models
+namespace his_gen
 {
 /**
  * @brief Relationships allowed between two entities of a given type
@@ -36,9 +36,9 @@ public:
   ~Entity_type_relationship_type(){};
 
   /**
-   * @brief Write entity relationship object to JSON
+   * @brief Write entity type relationship type object to JSON
    * @param json Pointer to the json we'll be writing to
-   * @param entity_relationship The entity relationship to write
+   * @param entity_type_relationship_type The entity type relationship type to write
    */
   void To_json(nlohmann::json& json,
                std::shared_ptr<Entity_type_relationship_type> entity_type_relationship_type);
@@ -54,6 +54,13 @@ private:
   // Implementation
 
 }; // class Entity_type_relationship_type
+
+void to_json(nlohmann::json& json,
+             const his_gen::Entity_type_relationship_type& entity_type_relationship_type);
+
+void from_json(const nlohmann::json& json,
+               his_gen::Entity_type_relationship_type& entity_type_relationship_type);
+
 }  // namespace models
 
 #endif // ENTITY_TYPE_RELATIONSHIP_TYPE_H

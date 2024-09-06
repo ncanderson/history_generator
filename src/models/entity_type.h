@@ -14,7 +14,7 @@
 // Application files
 #include <utils/history_generator_utils.h>
 
-namespace models
+namespace his_gen
 {
 /**
  * @brief The type of entity
@@ -54,6 +54,13 @@ private:
   // Implementation
 
 }; // class Entity_type
+
+void to_json(nlohmann::json& json,
+             const his_gen::Entity_type& entity_type);
+
+void from_json(const nlohmann::json& json,
+               his_gen::Entity_type& entity_type);
+
 }  // namespace models
 
 #endif // ENTITY_TYPE_H

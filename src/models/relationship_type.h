@@ -14,7 +14,7 @@
 // Application files
 #include <utils/history_generator_utils.h>
 
-namespace models
+namespace his_gen
 {
 /**
  * @brief The type of relationship between entities
@@ -35,14 +35,6 @@ public:
    */
   ~Relationship_type() {};  
 
-  /**
-   * @brief Write relationship type object to JSON
-   * @param json Pointer to the json we'll be writing to
-   * @param entity The relationship type to write
-   */
-  void To_json(nlohmann::json& json,
-               std::shared_ptr<Relationship_type> relationship_type);
-
 protected:
   // Attributes
 
@@ -54,6 +46,13 @@ private:
   // Implementation
 
 }; // class Relationship_type
+
+void to_json(nlohmann::json& json,
+             const his_gen::Relationship_type& relationship_type);
+
+void from_json(const nlohmann::json& json,
+               his_gen::Relationship_type& relationship_type);
+
 }  // namespace models
 
 #endif // RELATIONSHIP_TYPE_H
