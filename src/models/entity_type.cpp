@@ -13,6 +13,8 @@ void his_gen::to_json(nlohmann::json& json,
 {
   json = nlohmann::json
   {
+    // like this:
+    // {"json key", object attr}
 
   };
 }
