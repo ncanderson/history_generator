@@ -31,6 +31,11 @@ public:
   ~Data_access_dao_pg() override;
 
   /**
+   * @brief Load_data_defintions
+   */
+  void Load_data_defintions() override;
+
+  /**
    * @brief Write history to the DAO object
    * @param generated_history The generated history object
    */

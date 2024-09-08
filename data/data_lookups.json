@@ -1,12 +1,12 @@
 {
   "entity_types": [
-  	"deity",
-  	"nation",
-  	"clan/tribe",
-  	"sentient",
-  	"monster",
-  	"beast",
-  	"faction"
+  	{"name": "deity"},
+  	{"name": "nation"},
+  	{"name": "clan/tribe"},
+  	{"name": "sentient"},
+  	{"name": "monster"},
+  	{"name": "beast"},
+  	{"name": "faction"}
   ],
   "relationship_types": [
   	"marriage",

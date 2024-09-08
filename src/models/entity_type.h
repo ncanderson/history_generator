@@ -61,6 +61,6 @@ void to_json(nlohmann::json& json,
 void from_json(const nlohmann::json& json,
                his_gen::Entity_type& entity_type);
 
-}  // namespace models
+}  // namespace his_gen
 
 #endif // ENTITY_TYPE_H

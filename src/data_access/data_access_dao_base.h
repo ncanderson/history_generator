@@ -28,6 +28,11 @@ public:
   virtual ~Data_access_dao_base(){};
 
   /**
+   * @brief Load lookup and relational data
+   */
+  virtual void Load_data_defintions() = 0;
+
+  /**
    * @brief Write history to the DAO object
    * @param generated_history The generated history object
    */

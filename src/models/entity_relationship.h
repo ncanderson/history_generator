@@ -61,6 +61,6 @@ void to_json(nlohmann::json& json,
 void from_json(const nlohmann::json& json,
                his_gen::Entity_relationship& entity_relationship);
 
-}  // namespace models
+}  // namespace his_gen
 
 #endif // ENTITY_RELATIONSHIP_H
