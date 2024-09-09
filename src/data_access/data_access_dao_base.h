@@ -8,8 +8,11 @@
 // Standard libraries
 #include <memory>
 
-// Applicaiton files
+// Applicationfiles
+
+// Models
 #include <models/generated_history.h>
+#include <models/data_definitions.h>
 
 namespace his_gen
 {
@@ -28,15 +31,16 @@ public:
   virtual ~Data_access_dao_base(){};
 
   /**
-   * @brief Load lookup and relational data
-   */
-  virtual void Load_data_defintions() = 0;
-
-  /**
    * @brief Write history to the DAO object
    * @param generated_history The generated history object
    */
   virtual void Write_history(std::shared_ptr<his_gen::Generated_history> generated_history) = 0;
+
+  /**
+   * @brief load_data_definitions
+   * @param data_definitions
+   */
+  virtual void Load_data_definitions(std::shared_ptr<his_gen::Data_definitions> data_definitions) = 0;
 
 protected:
   // Attributes

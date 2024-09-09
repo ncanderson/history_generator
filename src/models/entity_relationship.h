@@ -35,14 +35,6 @@ public:
    */
   ~Entity_relationship() {};
 
-  /**
-   * @brief Write entity relationship object to JSON
-   * @param json Pointer to the json we'll be writing to
-   * @param entity_relationship The entity relationship to write
-   */
-  void To_json(nlohmann::json& json,
-               std::shared_ptr<Entity_relationship> entity_relationship);
-
 protected:
   // Attributes
 

@@ -9,6 +9,7 @@
 
 his_gen::History_generator_manager::History_generator_manager(std::shared_ptr<his_gen::History_generator_root_config> his_gen_config,
                                                               std::shared_ptr<his_gen::Generated_history> generated_history,
+                                                              std::shared_ptr<his_gen::Data_definitions> data_definitions,
                                                               std::shared_ptr<his_gen::Data_access_manager> data_access_manager)
   :
     m_his_gen_config(his_gen_config),

@@ -26,16 +26,16 @@ his_gen::Data_access_dao_pg::~Data_access_dao_pg()
 
 ///////////////////////////////////////////////////////////////////////
 
-void his_gen::Data_access_dao_pg::Load_data_defintions()
+void his_gen::Data_access_dao_pg::Write_history(std::shared_ptr<his_gen::Generated_history> generated_history)
 {
-
+  his_gen::Print_to_cout("PG, entity size: " + std::to_string(generated_history->Entities.size()));
 }
 
 ///////////////////////////////////////////////////////////////////////
 
-void his_gen::Data_access_dao_pg::Write_history(std::shared_ptr<his_gen::Generated_history> generated_history)
+void his_gen::Data_access_dao_pg::Load_data_definitions(std::shared_ptr<his_gen::Data_definitions> data_definitions)
 {
-  his_gen::Print_to_cout("PG, entity size: " + std::to_string(generated_history->Entities.size()));
+  // NOOP
 }
 
 ///////////////////////////////////////////////////////////////////////

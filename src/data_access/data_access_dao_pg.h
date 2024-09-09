@@ -31,15 +31,16 @@ public:
   ~Data_access_dao_pg() override;
 
   /**
-   * @brief Load_data_defintions
-   */
-  void Load_data_defintions() override;
-
-  /**
    * @brief Write history to the DAO object
    * @param generated_history The generated history object
    */
   void Write_history(std::shared_ptr<his_gen::Generated_history> generated_history) override;
+
+  /**
+   * @brief load_data_definitions
+   * @param data_definitions
+   */
+  void Load_data_definitions(std::shared_ptr<his_gen::Data_definitions> data_definitions) override;
 
 protected:
   // Attributes

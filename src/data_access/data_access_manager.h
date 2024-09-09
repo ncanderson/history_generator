@@ -11,7 +11,10 @@
 // Application files
 #include <data_access/data_access_dao_base.h>
 #include <defs/history_generator_defs.h>
+
+// Models
 #include <models/generated_history.h>
+#include <models/data_definitions.h>
 
 namespace his_gen
 {
@@ -28,14 +31,18 @@ public:
   /**
    * @brief Constructor for a file-based data acces layer
    * @param params Parameters for a file connection
+   * @param data_definitions
    */
-  Data_access_manager(const his_gen::DAL_file_params& params);
+  Data_access_manager(const his_gen::DAL_file_params& params,
+                      std::shared_ptr<his_gen::Data_definitions> data_definitions);
 
   /**
    * @brief Constructor for a PostgreSQL-based data acces layer
    * @param params Parameters for a PostgreSQL database connection
+   * @param data_definitions
    */
-  Data_access_manager(const his_gen::DAL_PG_params& params);
+  Data_access_manager(const his_gen::DAL_PG_params& params,
+                      std::shared_ptr<his_gen::Data_definitions> data_definitions);
 
   /**
    * @brief Destructor
@@ -57,6 +64,9 @@ protected:
 
 private:
   // Attributes
+  /**
+   * @brief m_txport
+   */
   std::shared_ptr<his_gen::Data_access_dao_base> m_txport;
 
   // Implementation

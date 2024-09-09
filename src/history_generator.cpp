@@ -24,6 +24,7 @@
 #include <data_access/data_access_dao_file.h>
 #include <data_access/data_access_dao_pg.h>
 #include <models/generated_history.h>
+#include <models/data_definitions.h>
 
 ///////////////////////////////////////////////////////////////////////
 // Global Variables
@@ -68,6 +69,11 @@ std::shared_ptr<his_gen::History_generator_root_config> m_app_cfg;
 std::shared_ptr<his_gen::Generated_history> m_generated_history;
 
 /**
+ * @brief Data definitions and lookups loaded from the persistance layer.
+ */
+std::shared_ptr<his_gen::Data_definitions> m_data_definitions;
+
+/**
  * @brief Runtime data access manager
  */
 std::shared_ptr<his_gen::Data_access_manager> m_data_access_manager;
@@ -92,6 +98,7 @@ void handle_sigint(int signal)
 
 ///////////////////////////////////////////////////////////////////////
 
+// TODO: Move this somewhere else I think
 /**
  * @brief Instantiate data access manager based on data access type
  * @param data_access_type Enumerated data access type
@@ -104,13 +111,15 @@ void initialize_data_access(his_gen::Data_access_type data_access_type)
     case his_gen::DATA_ACCESS_TYPE_File:
     {
       his_gen::DAL_file_params file_params = his_gen::DAL_file_params();
-      m_data_access_manager = std::make_shared<his_gen::Data_access_manager>(file_params);
+      m_data_access_manager = std::make_shared<his_gen::Data_access_manager>(file_params,
+                                                                             m_data_definitions);
     }
     break;
     case his_gen::DATA_ACCESS_TYPE_Postgres:
     {
       his_gen::DAL_PG_params pg_params = his_gen::DAL_PG_params();
-      m_data_access_manager = std::make_shared<his_gen::Data_access_manager>(pg_params);
+      m_data_access_manager = std::make_shared<his_gen::Data_access_manager>(pg_params,
+                                                                             m_data_definitions);
     }
     break;
     case his_gen::DATA_ACCESS_TYPE_Unknown:
@@ -122,6 +131,7 @@ void initialize_data_access(his_gen::Data_access_type data_access_type)
 
 ///////////////////////////////////////////////////////////////////////
 
+// TODO: Move this into a config class (maybe)
 void validate_json_config(std::shared_ptr<his_gen::History_generator_root_config> app_config)
 {
   // ensure data access type is file or postgres
@@ -195,6 +205,7 @@ int main(int argc, char *argv[])
 
   // Initialize data repository
   m_generated_history.reset(new his_gen::Generated_history());
+  m_data_definitions.reset(new his_gen::Data_definitions());
 
   // Set up data access manager
   initialize_data_access(his_gen::Get_data_access_type_from_string(m_app_cfg->Data_access_type));
@@ -202,6 +213,7 @@ int main(int argc, char *argv[])
   // Initialize Runtime Manager
   m_his_gen_mngr.reset(new his_gen::History_generator_manager(m_app_cfg,
                                                               m_generated_history,
+                                                              m_data_definitions,
                                                               m_data_access_manager));
 
   // Run until and unless application receives SIGINT
