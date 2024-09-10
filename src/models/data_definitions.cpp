@@ -37,7 +37,7 @@ void his_gen::from_json(const nlohmann::json& json,
 {
   json.at("entity_type_relationship_types").get_to(data_definitions.Entity_type_relationship_types);
   json.at("entity_types").get_to(data_definitions.Entity_types);
-  json.at("relationship_type").get_to(data_definitions.Relationship_types);
+  json.at("relationship_types").get_to(data_definitions.Relationship_types);
 }
 
 ///////////////////////////////////////////////////////////////////////

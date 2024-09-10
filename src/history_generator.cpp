@@ -70,6 +70,8 @@ std::shared_ptr<his_gen::Generated_history> m_generated_history;
 
 /**
  * @brief Data definitions and lookups loaded from the persistance layer.
+ * @details This pointer will be initialized in the constructor of the selected
+ * data access type.
  */
 std::shared_ptr<his_gen::Data_definitions> m_data_definitions;
 
@@ -205,7 +207,6 @@ int main(int argc, char *argv[])
 
   // Initialize data repository
   m_generated_history.reset(new his_gen::Generated_history());
-  m_data_definitions.reset(new his_gen::Data_definitions());
 
   // Set up data access manager
   initialize_data_access(his_gen::Get_data_access_type_from_string(m_app_cfg->Data_access_type));
