@@ -8,22 +8,22 @@
 ///////////////////////////////////////////////////////////////////////
 
 his_gen::History_generator_manager::History_generator_manager(std::shared_ptr<his_gen::History_generator_root_config> his_gen_config,
-                                                              std::shared_ptr<his_gen::Generated_history> generated_history,
-                                                              std::shared_ptr<his_gen::Data_definitions> data_definitions,
                                                               std::shared_ptr<his_gen::Data_access_manager> data_access_manager)
-  :
+    :
     m_his_gen_config(his_gen_config),
-    m_generated_history(generated_history),
+    m_generated_history(),
+    m_data_definitions(),
+    m_data_access_manager(std::make_shared<his_gen::Data_access_manager>()),
     m_current_era(his_gen::Era::ERA_Unknown),
     m_myth_gen(std::make_shared<his_gen::Mythological_era_generator>(his_gen_config,
-                                                                     generated_history,
-                                                                     data_access_manager)),
+                                                                     m_generated_history,
+                                                                     m_data_access_manager)),
     m_hist_gen(std::make_shared<his_gen::Historical_era_generator>(his_gen_config,
-                                                                   generated_history,
-                                                                   data_access_manager)),
+                                                                   m_generated_history,
+                                                                   m_data_access_manager)),
     m_end_times_gen(std::make_shared<his_gen::End_times_era_generator>(his_gen_config,
-                                                                       generated_history,
-                                                                       data_access_manager)),
+                                                                       m_generated_history,
+                                                                       m_data_access_manager)),
     m_num_iterations(0)
 {
 
