@@ -83,7 +83,7 @@ void his_gen::Mythological_era_generator::Run()
 
 his_gen::Entity his_gen::Mythological_era_generator::create_entity()
 {
-  his_gen::Entity new_entity = his_gen::Entity("did we do it chat?");
+  his_gen::Entity new_entity = his_gen::Entity("yup");
   m_generated_history->Entities.push_back(new_entity);
   return new_entity;
 }

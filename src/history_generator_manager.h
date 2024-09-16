@@ -112,31 +112,6 @@ private:
   uint32_t m_num_iterations;
 
   // Implementation
-  /**
-   * @brief Return the correct data connection parameter struct for
-   * instantiation of the data access manager.
-   * @tparam T Data access config struct returned based on data access type
-   * @param data_access_type Enumerated data access type
-   * @throws std::exception Thrown if the data access type is 'unknown'
-   */
-  template<typename T>
-  T get_dal_params_type(his_gen::Data_access_type data_access_type)
-  {
-    T param_type;
-    if(data_access_type == his_gen::DATA_ACCESS_TYPE_File)
-    {
-      param_type = his_gen::DAL_file_params();
-    }
-    else if(data_access_type == his_gen::DATA_ACCESS_TYPE_Postgres)
-    {
-      param_type = his_gen::DAL_PG_params();
-    }
-    else
-    {
-      throw std::runtime_error("Data access type unknown or not found");
-    }
-    return param_type;
-  }
 
 }; // class History_generator_manager
 }  // namespace his_gen
