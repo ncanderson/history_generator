@@ -43,7 +43,7 @@ public:
    * @param data_access_manager
    */
   History_generator_manager(std::shared_ptr<his_gen::History_generator_root_config> his_gen_config,
-                            std::unique_ptr<his_gen::Data_access_manager> data_access_manager);
+                            his_gen::Data_access_manager data_access_manager);
 
   /**
    * @brief Destructor.

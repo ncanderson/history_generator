@@ -39,7 +39,7 @@ public:
                  his_gen::Stage current_stage,
                  std::shared_ptr<his_gen::History_generator_root_config> his_gen_config,
                  std::shared_ptr<his_gen::Generated_history> generated_history,
-                 std::shared_ptr<his_gen::Data_access_manager> data_access_manager)
+                 std::unique_ptr<his_gen::Data_access_manager>& data_access_manager)
       :
       m_generation_complete(generation_complete),
       m_current_stage(current_stage),
@@ -92,7 +92,7 @@ protected:
   /**
    * @brief Pointer to shared data access manager
    */
-  std::shared_ptr<his_gen::Data_access_manager> m_data_access_manager;
+  std::unique_ptr<his_gen::Data_access_manager>& m_data_access_manager;
 
   // Implementation
   /**
