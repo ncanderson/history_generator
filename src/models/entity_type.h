@@ -6,7 +6,6 @@
 #define ENTITY_TYPE_H
 
 // Standard libs
-#include <string>
 
 // JSON
 #include <deps/json.hpp>
@@ -23,6 +22,10 @@ class Entity_type
 {
 public:
   // Attributes
+  /**
+   * @brief Entity type name
+   */
+  std::string Name;
 
   // Implementation
   /**
@@ -33,15 +36,7 @@ public:
   /**
    * @brief Destructor
    */
-  ~Entity_type() {};
-
-  /**
-   * @brief Write entity type object to JSON
-   * @param json Pointer to the json we'll be writing to
-   * @param entity_type The entity type to write
-   */
-  void To_json(nlohmann::json& json,
-               std::shared_ptr<Entity_type> entity_type);
+  ~Entity_type(){};
 
 protected:
   // Attributes

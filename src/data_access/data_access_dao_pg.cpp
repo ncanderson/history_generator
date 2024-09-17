@@ -33,7 +33,7 @@ void his_gen::Data_access_dao_pg::Write_history(std::shared_ptr<his_gen::Generat
 
 ///////////////////////////////////////////////////////////////////////
 
-void his_gen::Data_access_dao_pg::Load_data_definitions(std::shared_ptr<his_gen::Data_definitions> data_definitions)
+void his_gen::Data_access_dao_pg::Load_data_definitions(his_gen::Data_definitions& data_definitions)
 {
   // NOOP
 }

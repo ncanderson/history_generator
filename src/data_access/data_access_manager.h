@@ -33,16 +33,14 @@ public:
    * @param params Parameters for a file connection
    * @param data_definitions
    */
-  Data_access_manager(const his_gen::DAL_file_params& params,
-                      std::shared_ptr<his_gen::Data_definitions> data_definitions);
+  Data_access_manager(const his_gen::DAL_file_params& params);
 
   /**
    * @brief Constructor for a PostgreSQL-based data acces layer
    * @param params Parameters for a PostgreSQL database connection
    * @param data_definitions
    */
-  Data_access_manager(const his_gen::DAL_PG_params& params,
-                      std::shared_ptr<his_gen::Data_definitions> data_definitions);
+  Data_access_manager(const his_gen::DAL_PG_params& params);
 
   /**
    * @brief Destructor
@@ -65,9 +63,14 @@ protected:
 private:
   // Attributes
   /**
-   * @brief m_txport
+   * @brief m_dao
    */
-  std::shared_ptr<his_gen::Data_access_dao_base> m_txport;
+  std::shared_ptr<his_gen::Data_access_dao_base> m_dao;
+
+  /**
+   * @brief m_data_definitions
+   */
+  his_gen::Data_definitions m_data_definitions;
 
   // Implementation
 

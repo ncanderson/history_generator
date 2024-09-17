@@ -54,7 +54,7 @@ public:
   /**
    * @brief Destructor
    */
-  ~Generated_history() {};
+  ~Generated_history(){};
 
 protected:
   // Attributes

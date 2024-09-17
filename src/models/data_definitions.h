@@ -48,7 +48,7 @@ public:
   /**
    * @brief Destructor
    */
-  ~Data_definitions() {};
+  ~Data_definitions(){};
 
 protected:
   // Attributes

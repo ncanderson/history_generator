@@ -45,7 +45,7 @@ void his_gen::Data_access_dao_file::Write_history(std::shared_ptr<his_gen::Gener
 
 ///////////////////////////////////////////////////////////////////////
 
-void his_gen::Data_access_dao_file::Load_data_definitions(std::shared_ptr<his_gen::Data_definitions> data_definitions)
+void his_gen::Data_access_dao_file::Load_data_definitions(his_gen::Data_definitions& data_definitions)
 {
   his_gen::Print_to_cout("file dao defs load function");
 
@@ -53,7 +53,7 @@ void his_gen::Data_access_dao_file::Load_data_definitions(std::shared_ptr<his_ge
   nlohmann::json data = nlohmann::json::parse(data_definitions_file);
 
   auto defs = data.template get<his_gen::Data_definitions>();
-  data_definitions = std::make_shared<his_gen::Data_definitions>(defs);
+  data_definitions = his_gen::Data_definitions(defs);
 }
 
 ///////////////////////////////////////////////////////////////////////

@@ -23,6 +23,10 @@ class Relationship_type
 {
 public:
   // Attributes
+  /**
+   * @brief Relationship type name
+   */
+  std::string Name;
 
   // Implementation
   /**
@@ -33,7 +37,7 @@ public:
   /**
    * @brief Destructor
    */
-  ~Relationship_type() {};  
+  ~Relationship_type(){};
 
 protected:
   // Attributes

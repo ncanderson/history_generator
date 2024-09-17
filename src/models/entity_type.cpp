@@ -13,9 +13,7 @@ void his_gen::to_json(nlohmann::json& json,
 {
   json = nlohmann::json
   {
-    // like this:
-    // {"json key", object attr}
-
+    {"name", entity_type.Name}
   };
 }
 
@@ -24,8 +22,7 @@ void his_gen::to_json(nlohmann::json& json,
 void his_gen::from_json(const nlohmann::json& json,
                         his_gen::Entity_type& entity_type)
 {
-  // do it like this
-  // json.at("name").get_to(entity.Name);
+  json.at("name").get_to(entity_type.Name);
 }
 
 ///////////////////////////////////////////////////////////////////////

@@ -23,6 +23,15 @@ class Entity_type_relationship_type
 {
 public:
   // Attributes
+  /**
+   * @brief Entity type for this relationship
+   */
+  std::string Entity_type;
+
+  /**
+   * @brief Relationship type for this relationship
+   */
+  std::string Relationship_type;
 
   // Implementation
   /**
@@ -34,14 +43,6 @@ public:
    * @brief Destructor
    */
   ~Entity_type_relationship_type(){};
-
-  /**
-   * @brief Write entity type relationship type object to JSON
-   * @param json Pointer to the json we'll be writing to
-   * @param entity_type_relationship_type The entity type relationship type to write
-   */
-  void To_json(nlohmann::json& json,
-               std::shared_ptr<Entity_type_relationship_type> entity_type_relationship_type);
 
 protected:
   // Attributes

@@ -33,7 +33,7 @@ public:
   /**
    * @brief Destructor
    */
-  ~Entity_relationship() {};
+  ~Entity_relationship(){};
 
 protected:
   // Attributes

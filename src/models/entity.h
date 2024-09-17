@@ -26,7 +26,7 @@ public:
   /**
    * @brief Entity name
    */
-  std::string Name = "";
+  std::string Name;
 
   // Implementation
   /**
@@ -41,7 +41,7 @@ public:
   /**
    * @brief Destructor
    */
-  ~Entity() {};
+  ~Entity(){};
 
 protected:
   // Attributes

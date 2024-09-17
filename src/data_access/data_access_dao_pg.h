@@ -40,7 +40,7 @@ public:
    * @brief load_data_definitions
    * @param data_definitions
    */
-  void Load_data_definitions(std::shared_ptr<his_gen::Data_definitions> data_definitions) override;
+  void Load_data_definitions(his_gen::Data_definitions& data_definitions) override;
 
 protected:
   // Attributes

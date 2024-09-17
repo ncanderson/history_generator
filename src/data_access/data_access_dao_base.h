@@ -6,7 +6,6 @@
 #define DATA_ACCESS_DAO_BASE_H
 
 // Standard libraries
-#include <memory>
 
 // Applicationfiles
 
@@ -40,7 +39,7 @@ public:
    * @brief load_data_definitions
    * @param data_definitions
    */
-  virtual void Load_data_definitions(std::shared_ptr<his_gen::Data_definitions> data_definitions) = 0;
+  virtual void Load_data_definitions(his_gen::Data_definitions& data_definitions) = 0;
 
 protected:
   // Attributes
