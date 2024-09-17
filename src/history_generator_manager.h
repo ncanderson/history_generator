@@ -43,7 +43,7 @@ public:
    * @param data_access_manager
    */
   History_generator_manager(std::shared_ptr<his_gen::History_generator_root_config> his_gen_config,
-                            his_gen::Data_access_manager data_access_manager);
+                            const his_gen::Data_access_manager data_access_manager);
 
   /**
    * @brief Destructor.
@@ -84,7 +84,7 @@ private:
   /**
    * @brief Runtime data access manager
    */
-  std::unique_ptr<his_gen::Data_access_manager> m_data_access_manager;
+  std::unique_ptr<const his_gen::Data_access_manager> m_data_access_manager;
 
   /**
    * @brief m_current_era Variable to track the generator's current era

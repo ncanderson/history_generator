@@ -105,7 +105,7 @@ his_gen::Data_access_manager initialize_data_access(his_gen::Data_access_type da
       return his_gen::Data_access_manager(pg_params, data_definitions);
     }
     break;
-    case his_gen::DATA_ACCESS_TYPE_Unknown:
+    default:
     {
       throw std::exception();
     }
@@ -191,8 +191,8 @@ int main(int argc, char *argv[])
 
   // Set up data access manager
   his_gen::Data_access_type data_access_type = his_gen::Get_data_access_type_from_string(m_app_cfg->Data_access_type);
-  his_gen::Data_access_manager data_access_manager = initialize_data_access(data_access_type,
-                                                                            data_definitions);
+  const his_gen::Data_access_manager data_access_manager = initialize_data_access(data_access_type,
+                                                                                  data_definitions);
 
   // Initialize Runtime Manager
   // https://stackoverflow.com/questions/8114276/how-do-i-pass-a-unique-ptr-argument-to-a-constructor-or-a-function

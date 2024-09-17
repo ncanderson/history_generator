@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////////
 
 his_gen::History_generator_manager::History_generator_manager(std::shared_ptr<his_gen::History_generator_root_config> his_gen_config,
-                                                              his_gen::Data_access_manager data_access_manager)
+                                                              const his_gen::Data_access_manager data_access_manager)
     :
     m_his_gen_config(his_gen_config),
     m_generated_history(std::make_shared<his_gen::Generated_history>()),

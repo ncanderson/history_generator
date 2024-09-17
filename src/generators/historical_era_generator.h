@@ -32,7 +32,7 @@ public:
    */
   Historical_era_generator(std::shared_ptr<his_gen::History_generator_root_config> his_gen_config,
                            std::shared_ptr<his_gen::Generated_history> generated_history,
-                           std::unique_ptr<his_gen::Data_access_manager>& data_access_manager);
+                           std::unique_ptr<const his_gen::Data_access_manager>& data_access_manager);
 
   /**
    * @brief Destructor.
