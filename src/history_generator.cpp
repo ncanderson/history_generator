@@ -63,28 +63,6 @@ std::string m_data_access_type;
  */
 std::shared_ptr<his_gen::History_generator_root_config> m_app_cfg;
 
-/**
- * @brief The history being generated
- */
-std::shared_ptr<his_gen::Generated_history> m_generated_history;
-
-/**
- * @brief Data definitions and lookups loaded from the persistance layer.
- * @details This pointer will be initialized in the constructor of the selected
- * data access type.
- */
-std::shared_ptr<his_gen::Data_definitions> m_data_definitions;
-
-/**
- * @brief Runtime data access manager
- */
-std::shared_ptr<his_gen::Data_access_manager> m_data_access_manager;
-
-/**
- * @brief History generator manager
- */
-std::shared_ptr<his_gen::History_generator_manager> m_his_gen_mngr;
-
 ///////////////////////////////////////////////////////////////////////
 // Function Declarations
 ///////////////////////////////////////////////////////////////////////
@@ -104,27 +82,30 @@ void handle_sigint(int signal)
 /**
  * @brief Instantiate data access manager based on data access type
  * @param data_access_type Enumerated data access type
+ * @param data_definitions
+ * @returns Shared pointer to the data access manager
  * @throws std::exception Thrown if the data access type is 'unknown'
  */
-void initialize_data_access(his_gen::Data_access_type data_access_type)
+his_gen::Data_access_manager initialize_data_access(his_gen::Data_access_type data_access_type,
+                                                    std::shared_ptr<his_gen::Data_definitions> data_definitions)
 {
   switch(data_access_type)
   {
     case his_gen::DATA_ACCESS_TYPE_File:
     {
+      // TODO: declare these elsewhere, as we'll need to populate them from config
       his_gen::DAL_file_params file_params = his_gen::DAL_file_params();
-      m_data_access_manager = std::make_shared<his_gen::Data_access_manager>(file_params,
-                                                                             m_data_definitions);
+      return his_gen::Data_access_manager(file_params, data_definitions);
     }
     break;
     case his_gen::DATA_ACCESS_TYPE_Postgres:
     {
+      // TODO: declare these elsewhere, as we'll need to populate them from config
       his_gen::DAL_PG_params pg_params = his_gen::DAL_PG_params();
-      m_data_access_manager = std::make_shared<his_gen::Data_access_manager>(pg_params,
-                                                                             m_data_definitions);
+      return his_gen::Data_access_manager(pg_params, data_definitions);
     }
     break;
-    case his_gen::DATA_ACCESS_TYPE_Unknown:
+    default:
     {
       throw std::exception();
     }
@@ -204,25 +185,26 @@ int main(int argc, char *argv[])
 
   //////////////////////////////////////////////////////
   // Set up Runtime Objects
-
-  // Initialize data repository
-  m_generated_history.reset(new his_gen::Generated_history());
+  // These data definitions will be loaded by the data access manager, and
+  // will be shared by alll generators.
+  std::shared_ptr<his_gen::Data_definitions> data_definitions = std::make_shared<his_gen::Data_definitions>();
 
   // Set up data access manager
-  initialize_data_access(his_gen::Get_data_access_type_from_string(m_app_cfg->Data_access_type));
+  his_gen::Data_access_type data_access_type = his_gen::Get_data_access_type_from_string(m_app_cfg->Data_access_type);
+  const his_gen::Data_access_manager data_access_manager = initialize_data_access(data_access_type,
+                                                                                  data_definitions);
 
   // Initialize Runtime Manager
-  m_his_gen_mngr.reset(new his_gen::History_generator_manager(m_app_cfg,
-                                                              m_generated_history,
-                                                              m_data_definitions,
-                                                              m_data_access_manager));
+  // https://stackoverflow.com/questions/8114276/how-do-i-pass-a-unique-ptr-argument-to-a-constructor-or-a-function
+  his_gen::History_generator_manager m_his_gen_mngr(m_app_cfg,
+                                                    data_access_manager);
 
   // Run until and unless application receives SIGINT
   while(!m_application_quit && m_generation_era != his_gen::Era::ERA_Terminate)
   {
     try
     {
-      m_generation_era = m_his_gen_mngr->Run();
+      m_generation_era = m_his_gen_mngr.Run();
     }
     // Catch any errors bubbling up from the main run function
     catch(const std::exception& e)

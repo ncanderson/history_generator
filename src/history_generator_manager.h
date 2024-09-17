@@ -4,12 +4,14 @@
 
 // Standard libs
 #include <memory>
+
 // Application files
 #include <generators/mythological_era_generator.h>
 #include <generators/historical_era_generator.h>
 #include <generators/end_times_era_generator.h>
 #include <defs/history_generator_defs.h>
 #include <utils/history_generator_root_config.h>
+
 // Models
 #include <models/generated_history.h>
 #include <models/data_definitions.h>
@@ -36,12 +38,12 @@ public:
   History_generator_manager();
 
   /**
-   * @brief Constructor with conifg
+   * @brief History_generator_manager
+   * @param his_gen_config
+   * @param data_access_manager
    */
   History_generator_manager(std::shared_ptr<his_gen::History_generator_root_config> his_gen_config,
-                            std::shared_ptr<his_gen::Generated_history> generated_history,
-                            std::shared_ptr<his_gen::Data_definitions> data_definitions,
-                            std::shared_ptr<his_gen::Data_access_manager> data_access_manager);
+                            const his_gen::Data_access_manager data_access_manager);
 
   /**
    * @brief Destructor.
@@ -73,6 +75,16 @@ private:
    * @brief Pointer to the generated history object
    */
   std::shared_ptr<his_gen::Generated_history> m_generated_history;
+
+  /**
+   * @brief Pointer to the data definitions object
+   */
+  std::shared_ptr<his_gen::Data_definitions> m_data_definitions;
+
+  /**
+   * @brief Runtime data access manager
+   */
+  std::unique_ptr<const his_gen::Data_access_manager> m_data_access_manager;
 
   /**
    * @brief m_current_era Variable to track the generator's current era

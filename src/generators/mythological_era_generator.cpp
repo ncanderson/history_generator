@@ -9,7 +9,7 @@
 
 his_gen::Mythological_era_generator::Mythological_era_generator(std::shared_ptr<his_gen::History_generator_root_config> his_gen_config,
                                                                 std::shared_ptr<his_gen::Generated_history> generated_history,
-                                                                std::shared_ptr<his_gen::Data_access_manager> data_access_manager)
+                                                                std::unique_ptr<const his_gen::Data_access_manager>& data_access_manager)
     :
     his_gen::Generator_base(false,
                             his_gen::Stage::STAGE_Init,
@@ -83,7 +83,7 @@ void his_gen::Mythological_era_generator::Run()
 
 his_gen::Entity his_gen::Mythological_era_generator::create_entity()
 {
-  his_gen::Entity new_entity = his_gen::Entity("tippy tappy rainbow words");
+  his_gen::Entity new_entity = his_gen::Entity("yup");
   m_generated_history->Entities.push_back(new_entity);
   return new_entity;
 }
