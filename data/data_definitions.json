@@ -9,13 +9,13 @@
   	{"name": "faction"}
   ],
   "relationship_types": [
-  	"marriage",
-  	"conflict",
-  	"parentage",
-  	"dominance",
-  	"friendship",
-  	"ownership",
-  	"membership"
+  	{"name": "marriage"},
+  	{"name": "conflict"},
+  	{"name": "parentage"},
+  	{"name": "dominance"},
+  	{"name": "friendship"},
+  	{"name": "ownership"},
+  	{"name": "membership"}
   ],
   "entity_type_relationship_types": [
     {"entity_type":	"deity", "relationship_type": "marriage"},
