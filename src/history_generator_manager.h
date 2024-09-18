@@ -77,14 +77,14 @@ private:
   std::shared_ptr<his_gen::Generated_history> m_generated_history;
 
   /**
-   * @brief Pointer to the data definitions object
-   */
-  std::shared_ptr<his_gen::Data_definitions> m_data_definitions;
-
-  /**
    * @brief Runtime data access manager
    */
   std::unique_ptr<const his_gen::Data_access_manager> m_data_access_manager;
+
+  /**
+   * @brief The data definitions object
+   */
+  his_gen::Data_definitions m_data_definitions;
 
   /**
    * @brief m_current_era Variable to track the generator's current era

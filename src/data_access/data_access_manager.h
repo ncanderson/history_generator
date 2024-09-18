@@ -55,6 +55,12 @@ public:
    */
   void Write_history(std::shared_ptr<his_gen::Generated_history> generated_history) const;
 
+  /**
+   * @brief Load_data_definitions
+   * @param data_definitions
+   */
+  void Load_data_definitions(his_gen::Data_definitions& data_definitions) const;
+
 protected:
   // Attributes
 
@@ -66,11 +72,6 @@ private:
    * @brief m_dao
    */
   std::shared_ptr<his_gen::Data_access_dao_base> m_dao;
-
-  /**
-   * @brief m_data_definitions
-   */
-  his_gen::Data_definitions m_data_definitions;
 
   // Implementation
 

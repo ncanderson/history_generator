@@ -12,8 +12,8 @@ his_gen::History_generator_manager::History_generator_manager(std::shared_ptr<hi
     :
     m_his_gen_config(his_gen_config),
     m_generated_history(std::make_shared<his_gen::Generated_history>()),
-    m_data_definitions(),
     m_data_access_manager(std::unique_ptr<his_gen::Data_access_manager>(new his_gen::Data_access_manager(data_access_manager))),
+    m_data_definitions(),
     m_current_era(his_gen::Era::ERA_Unknown),
     m_myth_gen(std::make_shared<his_gen::Mythological_era_generator>(his_gen_config,
                                                                      m_generated_history,
@@ -26,7 +26,7 @@ his_gen::History_generator_manager::History_generator_manager(std::shared_ptr<hi
                                                                        m_data_access_manager)),
     m_num_iterations(0)
 {
-
+  m_data_access_manager->Load_data_definitions(m_data_definitions);
 }
 
 ///////////////////////////////////////////////////////////////////////
