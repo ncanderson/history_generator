@@ -34,9 +34,9 @@ void his_gen::Data_access_manager::Write_history(his_gen::Generated_history& gen
 
 ///////////////////////////////////////////////////////////////////////
 
-void his_gen::Data_access_manager::Load_data_definitions(his_gen::Data_definitions& data_definitions) const
+his_gen::Data_definitions his_gen::Data_access_manager::Load_data_definitions() const
 {
-  m_dao->Load_data_definitions(data_definitions);
+  return m_dao->Load_data_definitions();
 }
 
 ///////////////////////////////////////////////////////////////////////

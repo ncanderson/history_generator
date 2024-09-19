@@ -57,9 +57,9 @@ public:
 
   /**
    * @brief Load_data_definitions
-   * @param data_definitions
+   * @return Retrieved data definitions
    */
-  void Load_data_definitions(his_gen::Data_definitions& data_definitions) const;
+  his_gen::Data_definitions Load_data_definitions() const;
 
 protected:
   // Attributes

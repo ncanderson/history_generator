@@ -33,9 +33,9 @@ void his_gen::Data_access_dao_pg::Write_history(his_gen::Generated_history& gene
 
 ///////////////////////////////////////////////////////////////////////
 
-void his_gen::Data_access_dao_pg::Load_data_definitions(his_gen::Data_definitions& data_definitions)
+his_gen::Data_definitions his_gen::Data_access_dao_pg::Load_data_definitions()
 {
-  // NOOP
+  return his_gen::Data_definitions();
 }
 
 ///////////////////////////////////////////////////////////////////////

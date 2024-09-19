@@ -9,11 +9,13 @@
 
 his_gen::Mythological_era_generator::Mythological_era_generator(const his_gen::History_generator_root_config& his_gen_config,
                                                                 his_gen::Generated_history& generated_history,
-                                                                const his_gen::Data_access_manager& data_access_manager)
+                                                                const his_gen::Data_access_manager& data_access_manager,
+                                                                const his_gen::Data_definitions& data_definitions)
     :
     his_gen::Generator_base(his_gen_config,
                             generated_history,
-                            data_access_manager)
+                            data_access_manager,
+                            data_definitions)
 {
 
 }
@@ -30,7 +32,6 @@ void his_gen::Mythological_era_generator::Run()
     case STAGE_Init:
     {
       // Yes, do this
-      // load some definitions about the generation from external config
       // Establish end state for the Age of Mythology
       // Generate the progenitor deity
       // Establish means by which this deity will reproduce

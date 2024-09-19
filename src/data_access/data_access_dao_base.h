@@ -36,10 +36,10 @@ public:
   virtual void Write_history(his_gen::Generated_history& generated_history) = 0;
 
   /**
-   * @brief load_data_definitions
-   * @param data_definitions
+   * @brief Load_data_definitions
+   * @return
    */
-  virtual void Load_data_definitions(his_gen::Data_definitions& data_definitions) = 0;
+  virtual his_gen::Data_definitions Load_data_definitions() = 0;
 
 protected:
   // Attributes

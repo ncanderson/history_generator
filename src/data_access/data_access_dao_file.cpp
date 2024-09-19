@@ -45,7 +45,7 @@ void his_gen::Data_access_dao_file::Write_history(his_gen::Generated_history& ge
 
 ///////////////////////////////////////////////////////////////////////
 
-void his_gen::Data_access_dao_file::Load_data_definitions(his_gen::Data_definitions& data_definitions)
+his_gen::Data_definitions his_gen::Data_access_dao_file::Load_data_definitions()
 {
   his_gen::Print_to_cout("file dao defs load function");
 
@@ -53,7 +53,7 @@ void his_gen::Data_access_dao_file::Load_data_definitions(his_gen::Data_definiti
   nlohmann::json data = nlohmann::json::parse(data_definitions_file);
 
   auto defs = data.template get<his_gen::Data_definitions>();
-  data_definitions = his_gen::Data_definitions(defs);
+  return his_gen::Data_definitions(defs);
 }
 
 ///////////////////////////////////////////////////////////////////////

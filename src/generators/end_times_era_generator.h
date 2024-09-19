@@ -33,7 +33,8 @@ public:
    */
   End_times_era_generator(const his_gen::History_generator_root_config& his_gen_config,
                           his_gen::Generated_history& generated_history,
-                          const his_gen::Data_access_manager& data_access_manager);
+                          const his_gen::Data_access_manager& data_access_manager,
+                          const his_gen::Data_definitions& data_definitions);
 
   /**
    * @brief Destructor.

@@ -13,20 +13,22 @@ his_gen::History_generator_manager::History_generator_manager(const his_gen::His
     m_his_gen_config(his_gen_config),
     m_generated_history(),
     m_data_access_manager(data_access_manager),
-    m_data_definitions(),
+    m_data_definitions(m_data_access_manager.Load_data_definitions()),
     m_current_era(his_gen::Era::ERA_Unknown),
     m_myth_gen(his_gen::Mythological_era_generator(m_his_gen_config,
                                                    m_generated_history,
-                                                   m_data_access_manager)),
+                                                   m_data_access_manager,
+                                                   m_data_definitions)),
     m_hist_gen(his_gen::Historical_era_generator(m_his_gen_config,
                                                  m_generated_history,
-                                                 m_data_access_manager)),
+                                                 m_data_access_manager,
+                                                 m_data_definitions)),
     m_end_times_gen(his_gen::End_times_era_generator(m_his_gen_config,
                                                      m_generated_history,
-                                                     m_data_access_manager)),
+                                                     m_data_access_manager,
+                                                     m_data_definitions)),
     m_num_iterations(0)
-{
-  m_data_access_manager.Load_data_definitions(m_data_definitions);
+{  
 }
 
 ///////////////////////////////////////////////////////////////////////

@@ -37,10 +37,10 @@ public:
   void Write_history(his_gen::Generated_history& generated_history) override;
 
   /**
-   * @brief load_data_definitions
-   * @param data_definitions
+   * @brief Load_data_definitions
+   * @return
    */
-  void Load_data_definitions(his_gen::Data_definitions& data_definitions) override;
+  his_gen::Data_definitions Load_data_definitions() override;
 
 protected:
   // Attributes
