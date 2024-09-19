@@ -7,16 +7,13 @@
 
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::Mythological_era_generator::Mythological_era_generator(std::shared_ptr<his_gen::History_generator_root_config> his_gen_config,
-                                                                std::shared_ptr<his_gen::Generated_history> generated_history,
-                                                                std::unique_ptr<const his_gen::Data_access_manager>& data_access_manager)
+his_gen::Mythological_era_generator::Mythological_era_generator(const his_gen::History_generator_root_config& his_gen_config,
+                                                                his_gen::Generated_history& generated_history,
+                                                                const his_gen::Data_access_manager& data_access_manager)
     :
-    his_gen::Generator_base(false,
-                            his_gen::Stage::STAGE_Init,
-                            his_gen_config,
+    his_gen::Generator_base(his_gen_config,
                             generated_history,
-                            data_access_manager),
-    m_generated_history(generated_history)
+                            data_access_manager)
 {
 
 }
@@ -65,7 +62,7 @@ void his_gen::Mythological_era_generator::Run()
       // establish how gods remove themselves from the world
 
       // Write the generated history out
-      m_data_access_manager->Write_history(m_generated_history);
+      m_data_access_manager.Write_history(m_generated_history);
 
       // TODO make this conditional?
       Set_generation_complete(true);
@@ -84,7 +81,7 @@ void his_gen::Mythological_era_generator::Run()
 his_gen::Entity his_gen::Mythological_era_generator::create_entity()
 {
   his_gen::Entity new_entity = his_gen::Entity("new");
-  m_generated_history->Entities.push_back(new_entity);
+  m_generated_history.Entities.push_back(new_entity);
   return new_entity;
 }
 

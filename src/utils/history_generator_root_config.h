@@ -53,6 +53,12 @@ public:
    */
   virtual ~History_generator_root_config(){};
 
+  /**
+   * @brief Validate_config
+   * @param app_config
+   */
+  void Validate_config(const his_gen::History_generator_root_config& app_config) const;
+
 protected:
   // Attributes
 

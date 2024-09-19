@@ -34,34 +34,9 @@
 using json = nlohmann::json;
 
 /**
- * @brief Main thread sleep interval, ms
- */
-const std::chrono::milliseconds m_main_sleep_ms(10);
-
-/**
- * @brief Error sleep interval, ms
- */
-const std::chrono::milliseconds m_err_sleep_ms(50);
-
-/**
  * @brief m_quit If true, quit the application
  */
 bool m_application_quit = false;
-
-/**
- * @brief Current era being processed
- */
-his_gen::Era m_generation_era;
-
-/**
- * @brief Data access type
- */
-std::string m_data_access_type;
-
-/**
- * @brief Application configuration
- */
-std::shared_ptr<his_gen::History_generator_root_config> m_app_cfg;
 
 ///////////////////////////////////////////////////////////////////////
 // Function Declarations
@@ -82,11 +57,10 @@ void handle_sigint(int signal)
 /**
  * @brief Instantiate data access manager based on data access type
  * @param data_access_type Enumerated data access type
- * @param data_definitions
- * @returns Shared pointer to the data access manager
+ * @returns A new data access manager
  * @throws std::exception Thrown if the data access type is 'unknown'
  */
-his_gen::Data_access_manager initialize_data_access(his_gen::Data_access_type data_access_type)
+his_gen::Data_access_manager initialize_data_access(const his_gen::Data_access_type data_access_type)
 {
   switch(data_access_type)
   {
@@ -112,16 +86,6 @@ his_gen::Data_access_manager initialize_data_access(his_gen::Data_access_type da
 }
 
 ///////////////////////////////////////////////////////////////////////
-
-// TODO: Move this into a config class (maybe)
-void validate_json_config(std::shared_ptr<his_gen::History_generator_root_config> app_config)
-{
-  // ensure data access type is file or postgres
-
-  // more steps as we learn them
-}
-
-///////////////////////////////////////////////////////////////////////
 // Main
 ///////////////////////////////////////////////////////////////////////
 
@@ -131,8 +95,8 @@ int main(int argc, char *argv[])
   std::signal(SIGINT, &handle_sigint);
 
   //////////////////////////////////////////////////////
-  // Config defaults
-  std::string app_cfg = "config/app_config.json";
+  // Config defaults  
+  std::string app_cfg_path = "config/app_config.json";
 
   //////////////////////////////////////////////////////
   // Set up the program options
@@ -142,7 +106,7 @@ int main(int argc, char *argv[])
   po::options_description desc("Application options");
   desc.add_options()
       ("help", "Produce help message")
-      ("app_cfg", po::value(&app_cfg)->default_value(app_cfg), "Main application config file");
+      ("app_cfg", po::value(&app_cfg_path)->default_value(app_cfg_path), "Main application config file");
 
   po::variables_map vm;
   po::store(po::parse_command_line(argc, argv, desc), vm);
@@ -158,13 +122,15 @@ int main(int argc, char *argv[])
 
   //////////////////////////////////////////////////////
   // Load config
+  his_gen::History_generator_root_config app_cfg;
+
   if(vm.count("app_cfg"))
   {
     try
     {
-      std::ifstream app_cfg_file(app_cfg);
+      std::ifstream app_cfg_file(app_cfg_path);
       json data = json::parse(app_cfg_file);
-      m_app_cfg.reset(new his_gen::History_generator_root_config(data));
+      app_cfg = his_gen::History_generator_root_config(data);
     }
     catch (const std::exception& e)
     {
@@ -180,32 +146,38 @@ int main(int argc, char *argv[])
     return 1;
   }
 
-  validate_json_config(m_app_cfg);
+  app_cfg.Validate_config(app_cfg);
 
   //////////////////////////////////////////////////////
   // Set up Runtime Objects
 
   // Set up data access manager
-  his_gen::Data_access_type data_access_type = his_gen::Get_data_access_type_from_string(m_app_cfg->Data_access_type);
+  const his_gen::Data_access_type data_access_type = his_gen::Get_data_access_type_from_string(app_cfg.Data_access_type);
   const his_gen::Data_access_manager data_access_manager = initialize_data_access(data_access_type);
 
   // Initialize Runtime Manager
-  his_gen::History_generator_manager m_his_gen_mngr(m_app_cfg,
+  his_gen::History_generator_manager m_his_gen_mngr(app_cfg,
                                                     data_access_manager);
 
+  // Track the era, as generators finish their work
+  his_gen::Era generation_era = his_gen::ERA_Unknown;
+  // Thread sleep duration
+  const std::chrono::milliseconds main_sleep_ms(10);
+  const std::chrono::milliseconds err_sleep_ms(50);
+
   // Run until and unless application receives SIGINT
-  while(!m_application_quit && m_generation_era != his_gen::Era::ERA_Terminate)
+  while(!m_application_quit && generation_era != his_gen::Era::ERA_Terminate)
   {
     try
     {
-      m_generation_era = m_his_gen_mngr.Run();
+      generation_era = m_his_gen_mngr.Run();
     }
     // Catch any errors bubbling up from the main run function
     catch(const std::exception& e)
     {
-      std::this_thread::sleep_for(m_err_sleep_ms);
+      std::this_thread::sleep_for(err_sleep_ms);
     }
-    std::this_thread::sleep_for(m_main_sleep_ms);
+    std::this_thread::sleep_for(main_sleep_ms);
   }
 
   return 0;

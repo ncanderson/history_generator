@@ -27,7 +27,7 @@ his_gen::Data_access_manager::Data_access_manager(const his_gen::DAL_PG_params& 
 
 ///////////////////////////////////////////////////////////////////////
 
-void his_gen::Data_access_manager::Write_history(std::shared_ptr<his_gen::Generated_history> generated_history) const
+void his_gen::Data_access_manager::Write_history(his_gen::Generated_history& generated_history) const
 {
   m_dao->Write_history(generated_history);
 }

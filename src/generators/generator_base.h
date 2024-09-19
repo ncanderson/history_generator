@@ -28,22 +28,19 @@ public:
 
   // Implementation
   /**
-   * @brief Constructor
-   * @param generation_complete Default
-   * @param current_stage Current stage of generation
-   * @param his_gen_config Application configuration
-   * @param generated_history Pointer to the generated history object
-   * @param data_access_manager Data access manager
+   * @brief Generator_base
+   * @param his_gen_config
+   * @param generated_history
+   * @param data_access_manager
    */
-  Generator_base(bool generation_complete,
-                 his_gen::Stage current_stage,
-                 std::shared_ptr<his_gen::History_generator_root_config> his_gen_config,
-                 std::shared_ptr<his_gen::Generated_history> generated_history,
-                 std::unique_ptr<const his_gen::Data_access_manager>& data_access_manager)
+  Generator_base(const his_gen::History_generator_root_config& his_gen_config,
+                 his_gen::Generated_history& generated_history,
+                 const his_gen::Data_access_manager& data_access_manager)
       :
-      m_generation_complete(generation_complete),
-      m_current_stage(current_stage),
+      m_generation_complete(false),
+      m_current_stage(his_gen::Stage::STAGE_Init),
       m_his_gen_config(his_gen_config),
+      m_generated_history(generated_history),
       m_data_access_manager(data_access_manager)
   {
 
@@ -87,12 +84,17 @@ protected:
   /**
    * @brief m_his_gen_config Application configuration
    */
-  std::shared_ptr<his_gen::History_generator_root_config> m_his_gen_config;
+  const his_gen::History_generator_root_config& m_his_gen_config;
+
+  /**
+   * @brief Pointer to the generated history object
+   */
+  his_gen::Generated_history& m_generated_history;
 
   /**
    * @brief Pointer to shared data access manager
    */
-  std::unique_ptr<const his_gen::Data_access_manager>& m_data_access_manager;
+  const his_gen::Data_access_manager& m_data_access_manager;
 
   // Implementation
   /**

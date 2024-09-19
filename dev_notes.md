@@ -1,14 +1,10 @@
 # TODO
 
-- Get defs on startup - who should own the data defs object, and should we give it generators on construction?
-
-- rethink shared pointers everywhere, specifically how to handle generated history
-
 - figure out what functions to make const
 
-- Fix handling of config - child classes should get their own copy of their own config
-- Modify instantiation of config, probably don't need it defined outside of main. Model it after data access manager
+- Fix handling of config - child classes should get their own copy of their own config, and not a single global config for everything
 
+- Give data defs to the generators, not the data access manager. that class should just manage the pass-through
 
 # Notes
 

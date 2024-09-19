@@ -2,6 +2,9 @@
  * Copyright (C) 2024 Nate Anderson - All Rights Reserved
  */
 
+#ifndef HISTORY_GENERATOR_MANAGER_H
+#define HISTORY_GENERATOR_MANAGER_H
+
 // Standard libs
 #include <memory>
 
@@ -15,9 +18,6 @@
 // Models
 #include <models/generated_history.h>
 #include <models/data_definitions.h>
-
-#ifndef HISTORY_GENERATOR_MANAGER_H
-#define HISTORY_GENERATOR_MANAGER_H
 
 namespace his_gen
 {
@@ -42,7 +42,7 @@ public:
    * @param his_gen_config
    * @param data_access_manager
    */
-  History_generator_manager(std::shared_ptr<his_gen::History_generator_root_config> his_gen_config,
+  History_generator_manager(const his_gen::History_generator_root_config& his_gen_config,
                             const his_gen::Data_access_manager data_access_manager);
 
   /**
@@ -69,17 +69,17 @@ private:
   /**
    * @brief m_his_gen_config Application configuration
    */
-  std::shared_ptr<his_gen::History_generator_root_config> m_his_gen_config;
+  const his_gen::History_generator_root_config& m_his_gen_config;
 
   /**
    * @brief Pointer to the generated history object
    */
-  std::shared_ptr<his_gen::Generated_history> m_generated_history;
+  his_gen::Generated_history m_generated_history;
 
   /**
    * @brief Runtime data access manager
    */
-  std::unique_ptr<const his_gen::Data_access_manager> m_data_access_manager;
+  const his_gen::Data_access_manager m_data_access_manager;
 
   /**
    * @brief The data definitions object
@@ -94,17 +94,17 @@ private:
   /**
    * @brief m_myth_gen Shared pointer to the Mythology generator
    */
-  std::shared_ptr<his_gen::Mythological_era_generator> m_myth_gen;
+  his_gen::Mythological_era_generator m_myth_gen;
 
   /**
    * @brief m_myth_gen Shared pointer to the History generator
    */
-  std::shared_ptr<his_gen::Historical_era_generator> m_hist_gen;
+  his_gen::Historical_era_generator m_hist_gen;
 
   /**
    * @brief m_myth_gen Shared pointer to the End times generator
    */
-  std::shared_ptr<his_gen::End_times_era_generator> m_end_times_gen;
+  his_gen::End_times_era_generator m_end_times_gen;
 
   /**
    * @brief Number of iterations through this classes Run() function

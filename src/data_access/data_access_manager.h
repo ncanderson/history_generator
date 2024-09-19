@@ -53,7 +53,7 @@ public:
    * generators
    * @throws std::exception Probably
    */
-  void Write_history(std::shared_ptr<his_gen::Generated_history> generated_history) const;
+  void Write_history(his_gen::Generated_history& generated_history) const;
 
   /**
    * @brief Load_data_definitions
