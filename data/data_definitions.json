@@ -1,21 +1,21 @@
 {
   "entity_types": [
-  	"deity",
-  	"nation",
-  	"clan/tribe",
-  	"sentient",
-  	"monster",
-  	"beast",
-  	"faction"
+  	{"name": "deity"},
+  	{"name": "nation"},
+  	{"name": "clan/tribe"},
+  	{"name": "sentient"},
+  	{"name": "monster"},
+  	{"name": "beast"},
+  	{"name": "faction"}
   ],
   "relationship_types": [
-  	"marriage",
-  	"conflict",
-  	"parentage",
-  	"dominance",
-  	"friendship",
-  	"ownership",
-  	"membership"
+  	{"name": "marriage"},
+  	{"name": "conflict"},
+  	{"name": "parentage"},
+  	{"name": "dominance"},
+  	{"name": "friendship"},
+  	{"name": "ownership"},
+  	{"name": "membership"}
   ],
   "entity_type_relationship_types": [
     {"entity_type":	"deity", "relationship_type": "marriage"},

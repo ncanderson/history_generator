@@ -34,7 +34,13 @@ public:
    * @brief Write history to the DAO object
    * @param generated_history The generated history object
    */
-  void Write_history(std::shared_ptr<his_gen::Generated_history> generated_history) override;
+  void Write_history(his_gen::Generated_history& generated_history) override;
+
+  /**
+   * @brief Load_data_definitions
+   * @return
+   */
+  his_gen::Data_definitions Load_data_definitions() override;
 
 protected:
   // Attributes

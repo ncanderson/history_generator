@@ -40,21 +40,6 @@ public:
    */
   std::vector<his_gen::Entity_relationship> Entity_relationships;
 
-  /**
-   * @brief List of all possible entity relationship types based on entity type
-   */
-  std::vector<his_gen::Entity_type_relationship_type> Entity_type_relationship_types;
-
-  /**
-   * @brief List of all entity types
-   */
-  std::vector<his_gen::Entity_type> Entity_types;
-
-  /**
-   * @brief List of all entity relationship types
-   */
-  std::vector<his_gen::Relationship_type> Relationship_types;
-
   // Implementation
   /**
    * @brief Constructor
@@ -62,25 +47,14 @@ public:
   Generated_history()
     :
       Entities(),
-      Entity_relationships(),
-      Entity_type_relationship_types(),
-      Entity_types(),
-      Relationship_types()
+      Entity_relationships()
   {
   }
 
   /**
    * @brief Destructor
    */
-  ~Generated_history() {};
-
-  /**
-   * @brief Write history object to JSON
-   * @param json Pointer to the json we'll be writing to
-   * @param generated_history The history object to write
-   */
-  void To_json(nlohmann::json& json,
-               std::shared_ptr<Generated_history> generated_history);
+  ~Generated_history(){};
 
 protected:
   // Attributes
@@ -93,6 +67,23 @@ private:
   // Implementation
 
 }; // class Generated_history
-}  // namespace models
+
+/**
+ * @brief to_json
+ * @param json
+ * @param generated_history
+ */
+void to_json(nlohmann::json& json,
+             const his_gen::Generated_history& generated_history);
+
+/**
+ * @brief from_json
+ * @param json
+ * @param generated_history
+ */
+void from_json(const nlohmann::json& json,
+               his_gen::Generated_history& generated_history);
+
+}  // namespace his_gen
 
 #endif // GENERATED_HISTORY_H

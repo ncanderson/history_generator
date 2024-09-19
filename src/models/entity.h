@@ -26,7 +26,7 @@ public:
   /**
    * @brief Entity name
    */
-  std::string Name = "";
+  std::string Name;
 
   // Implementation
   /**
@@ -41,7 +41,7 @@ public:
   /**
    * @brief Destructor
    */
-  ~Entity() {};
+  ~Entity(){};
 
 protected:
   // Attributes
@@ -69,6 +69,6 @@ void to_json(nlohmann::json& json, const his_gen::Entity& entity);
  */
 void from_json(const nlohmann::json& json, his_gen::Entity& entity);
 
-}  // namespace models
+}  // namespace his_gen
 
 #endif // ENTITY_H

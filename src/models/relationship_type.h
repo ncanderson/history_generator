@@ -23,6 +23,10 @@ class Relationship_type
 {
 public:
   // Attributes
+  /**
+   * @brief Relationship type name
+   */
+  std::string Name;
 
   // Implementation
   /**
@@ -33,7 +37,7 @@ public:
   /**
    * @brief Destructor
    */
-  ~Relationship_type() {};  
+  ~Relationship_type(){};
 
 protected:
   // Attributes
@@ -53,6 +57,6 @@ void to_json(nlohmann::json& json,
 void from_json(const nlohmann::json& json,
                his_gen::Relationship_type& relationship_type);
 
-}  // namespace models
+}  // namespace his_gen
 
 #endif // RELATIONSHIP_TYPE_H

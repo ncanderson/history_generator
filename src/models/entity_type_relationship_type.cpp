@@ -13,9 +13,8 @@ void his_gen::to_json(nlohmann::json& json,
 {
   json = nlohmann::json
   {
-    // like this:
-    // {"json key", object attr}
-
+    {"entity_type", entity_type_relationship_type.Entity_type},
+    {"relationship_type", entity_type_relationship_type.Relationship_type}
   };
 }
 
@@ -24,8 +23,8 @@ void his_gen::to_json(nlohmann::json& json,
 void his_gen::from_json(const nlohmann::json& json,
                         his_gen::Entity_type_relationship_type& entity_type_relationship_type)
 {
-  // do it like this
-  // json.at("name").get_to(entity.Name);
+  json.at("entity_type").get_to(entity_type_relationship_type.Entity_type);
+  json.at("relationship_type").get_to(entity_type_relationship_type.Relationship_type);
 }
 
 ///////////////////////////////////////////////////////////////////////

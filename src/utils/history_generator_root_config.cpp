@@ -27,3 +27,13 @@ his_gen::History_generator_root_config::History_generator_root_config(json from_
 }
 
 ///////////////////////////////////////////////////////////////////////
+
+void his_gen::History_generator_root_config::Validate_config(const his_gen::History_generator_root_config& app_config) const
+{
+  // ensure data access type is file or postgres
+
+  // more steps as we learn them
+}
+
+///////////////////////////////////////////////////////////////////////
+// END OF FILE

@@ -13,25 +13,30 @@
 
 his_gen::Data_access_manager::Data_access_manager(const his_gen::DAL_file_params& params)
   :
-    m_txport(new his_gen::Data_access_dao_file(params))
+    m_dao(new his_gen::Data_access_dao_file(params))
 {
-
 }
 
 ///////////////////////////////////////////////////////////////////////
 
 his_gen::Data_access_manager::Data_access_manager(const his_gen::DAL_PG_params& params)
     :
-    m_txport(new his_gen::Data_access_dao_pg(params))
+    m_dao(new his_gen::Data_access_dao_pg(params))
 {
-
 }
 
 ///////////////////////////////////////////////////////////////////////
 
-void his_gen::Data_access_manager::Write_history(std::shared_ptr<his_gen::Generated_history> generated_history)
+void his_gen::Data_access_manager::Write_history(his_gen::Generated_history& generated_history) const
 {
-  m_txport->Write_history(generated_history);
+  m_dao->Write_history(generated_history);
+}
+
+///////////////////////////////////////////////////////////////////////
+
+his_gen::Data_definitions his_gen::Data_access_manager::Load_data_definitions() const
+{
+  return m_dao->Load_data_definitions();
 }
 
 ///////////////////////////////////////////////////////////////////////
