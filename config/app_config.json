@@ -2,7 +2,7 @@
   "data_access_type": "file",
   "myth_gen_config": 
   {    
-    "myth_gen_ticks": 200,
+    "myth_gen_ticks": 1,
     "max_entity_per_tick": 20
   },
   "hist_gen_config": 

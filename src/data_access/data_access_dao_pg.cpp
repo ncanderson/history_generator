@@ -39,4 +39,13 @@ his_gen::Data_definitions his_gen::Data_access_dao_pg::Load_data_definitions()
 }
 
 ///////////////////////////////////////////////////////////////////////
+
+void his_gen::Data_access_dao_pg::Load_all_names(std::vector<std::string>& names,
+                                                 std::vector<std::string>& titles)
+{
+  his_gen::Print_to_cout("Load_all_names");
+}
+
+///////////////////////////////////////////////////////////////////////
+
 // END OF FILE

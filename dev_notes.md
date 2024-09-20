@@ -4,7 +4,11 @@
 
 - Fix handling of config - child classes should get their own copy of their own config, and not a single global config for everything
 
-- Give data defs to the generators, not the data access manager. that class should just manage the pass-through
+- figure out what the divine language looks like?
 
 # Notes
+Names. Modules wrapper? Single class that marshalls all the data modules? Then instan. that in the hist gen manager and pass to generators?
 
+How to manage using names so we don't have tons of duplicates?
+
+Right now just using a single names object in the myth generator

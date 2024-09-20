@@ -104,11 +104,26 @@ protected:
    */
   const his_gen::Data_definitions& m_data_definitions;
 
+  /**
+   * @brief m_generator_ticks
+   */
+  int64_t m_generator_ticks{0};
+
+  /**
+   * @brief m_entities_per_tick
+   */
+  int64_t m_entities_per_tick{0};
+
+  /**
+   * @brief Total generator ticks completed
+   */
+  int64_t m_ticks_completed{0};
+
   // Implementation
   /**
    * @brief Virtual base class for entity creation
    */
-  virtual his_gen::Entity create_entity() = 0;
+  virtual void create_entity() = 0;
 
 private:
   // Attributes

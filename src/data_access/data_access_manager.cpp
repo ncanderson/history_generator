@@ -40,4 +40,12 @@ his_gen::Data_definitions his_gen::Data_access_manager::Load_data_definitions() 
 }
 
 ///////////////////////////////////////////////////////////////////////
+
+void his_gen::Data_access_manager::Load_all_names(std::vector<std::string>& names,
+                                                  std::vector<std::string>& titles) const
+{
+  m_dao->Load_all_names(names, titles);
+}
+
+///////////////////////////////////////////////////////////////////////
 // END OF FILE

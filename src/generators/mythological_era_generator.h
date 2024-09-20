@@ -10,6 +10,7 @@
 // Application files
 #include <defs/history_generator_defs.h>
 #include <generators/generator_base.h>
+#include <modules/names.h>
 
 // Models
 #include <models/generated_history.h>
@@ -44,7 +45,7 @@ public:
   /**
    * @brief Run the generator
    */
-  void Run();
+  void Run() override;
 
 protected:
   // Attributes
@@ -53,10 +54,22 @@ protected:
   /**
    * @brief Create a new entity
    */
-  his_gen::Entity create_entity();
+  void create_entity() override;
+
+  /**
+   * @brief The first being in this mythology
+   */
+  void create_progenitor_deity();
 
 private:
   // Attributes
+
+  // TODO: there should be a better place for this, otherwise we'll get tons
+  // of duplicate names if each generator has its own copy
+  /**
+   * @brief Names object
+   */
+  Names m_names;
 
   // Implementation
 

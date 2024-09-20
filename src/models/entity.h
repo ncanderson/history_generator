@@ -28,15 +28,16 @@ public:
    */
   std::string Name;
 
+  /**
+   * @brief Entity title
+   */
+  std::string Title;
+
   // Implementation
   /**
    * @brief Constructor
    */
-  Entity(std::string name)
-    :
-      Name(name)
-  {
-  }
+  Entity(std::string name, std::string title = "");
 
   /**
    * @brief Destructor

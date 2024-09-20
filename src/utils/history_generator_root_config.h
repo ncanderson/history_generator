@@ -59,6 +59,10 @@ public:
    */
   void Validate_config(const his_gen::History_generator_root_config& app_config) const;
 
+  // TODO Change config handling, we don't want every generator to have to query
+  // root config to get its own shit
+  his_gen::Mythological_era_config Get_myth_config() const { return m_myth_era_config; };
+
 protected:
   // Attributes
 
@@ -81,6 +85,7 @@ private:
    * @brief Config specific to the end times era
    */
   his_gen::End_times_era_config m_end_times_era_config;
+
   // Implementation
 
 }; // class History_generator_root_config
