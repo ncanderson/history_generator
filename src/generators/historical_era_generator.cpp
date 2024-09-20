@@ -49,10 +49,9 @@ void his_gen::Historical_era_generator::Run()
 
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::Entity his_gen::Historical_era_generator::create_entity()
+void his_gen::Historical_era_generator::create_entity()
 {
-  his_gen::Entity new_entity = his_gen::Entity("TEST name history");
-  return new_entity;
+  // NOOP
 }
 
 ///////////////////////////////////////////////////////////////////////

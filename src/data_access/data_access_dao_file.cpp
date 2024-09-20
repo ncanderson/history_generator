@@ -60,10 +60,10 @@ void his_gen::Data_access_dao_file::Load_all_names(std::vector<std::string>& nam
                                                    std::vector<std::string>& titles)
 {
   std::ifstream names_file("/home/nanderson/nate_personal/projects/history_generator/data/names_and_titles.json");
-  nlohmann::json data = nlohmann::json::parse(names_file);
+  nlohmann::json file_data = nlohmann::json::parse(names_file);
 
-  //auto defs = data.template get<his_gen::Data_definitions>();
-  int test = 1;
+  names = file_data.at("names");
+  titles = file_data.at("titles");
 }
 
 ///////////////////////////////////////////////////////////////////////
