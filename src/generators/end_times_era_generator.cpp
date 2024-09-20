@@ -50,10 +50,9 @@ void his_gen::End_times_era_generator::Run()
 
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::Entity his_gen::End_times_era_generator::create_entity()
+void his_gen::End_times_era_generator::create_entity()
 {
-  his_gen::Entity new_entity = his_gen::Entity("TEST name end times");
-  return new_entity;
+  // NOOP
 }
 
 ///////////////////////////////////////////////////////////////////////

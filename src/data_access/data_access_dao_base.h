@@ -41,6 +41,14 @@ public:
    */
   virtual his_gen::Data_definitions Load_data_definitions() = 0;
 
+  /**
+   * @brief Load_all_names
+   * @param names
+   * @param titles
+   */
+  virtual void Load_all_names(std::vector<std::string>& names,
+                              std::vector<std::string>& titles) = 0;
+
 protected:
   // Attributes
 

@@ -61,6 +61,14 @@ public:
    */
   his_gen::Data_definitions Load_data_definitions() const;
 
+  /**
+   * @brief Load_all_names
+   * @param names
+   * @param titles
+   */
+  void Load_all_names(std::vector<std::string>& names,
+                      std::vector<std::string>& titles) const;
+
 protected:
   // Attributes
 

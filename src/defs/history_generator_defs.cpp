@@ -10,7 +10,7 @@ std::string his_gen::Get_current_era(his_gen::Era current_era)
 {
   switch(current_era)
   {
-    case ERA_Unknown:   return "Unkown";        break;
+    case ERA_Unknown:   return "Unknown";       break;
     case ERA_Mythology: return "Mythology";     break;
     case ERA_History:   return "History";       break;
     case ERA_End_times: return "End Times";     break;

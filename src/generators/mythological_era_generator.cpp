@@ -15,9 +15,11 @@ his_gen::Mythological_era_generator::Mythological_era_generator(const his_gen::H
     his_gen::Generator_base(his_gen_config,
                             generated_history,
                             data_access_manager,
-                            data_definitions)
+                            data_definitions),
+    m_names(data_access_manager)
 {
-
+  m_generator_ticks = his_gen_config.Get_myth_config().Myth_gen_ticks;
+  m_entities_per_tick = his_gen_config.Get_myth_config().Max_entity_per_tick;
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -31,17 +33,8 @@ void his_gen::Mythological_era_generator::Run()
   {
     case STAGE_Init:
     {
-      // Yes, do this
-      // Establish end state for the Age of Mythology
-      // Generate the progenitor deity
-      // Establish means by which this deity will reproduce
-
-      // Maybe do this
-      // figure out what the divine language looks like?
-
       // Create a new ultimate parent entity
-      his_gen::Entity entity1 = create_entity();
-      his_gen::Entity entity2 = create_entity();
+      create_progenitor_deity();
 
       m_current_stage = STAGE_Run;
     }
@@ -49,11 +42,20 @@ void his_gen::Mythological_era_generator::Run()
 
     case STAGE_Run:
     {
-      // Generate
-      // Every runtick:
-      // - Generate entities
+      // Generate the desired number of entities for this tick
+      for(int64_t tick = 0; tick < m_entities_per_tick; tick++)
+      {
+        create_entity();
+      }
 
-      m_current_stage = STAGE_Terminate;
+      // Increment run-time ticks
+      m_ticks_completed++;
+
+      // Check exit state, move to terminate if we've completed enough ticks
+      if(m_ticks_completed >= m_generator_ticks)
+      {
+        m_current_stage = STAGE_Terminate;
+      }
     }
       break;
 
@@ -79,11 +81,20 @@ void his_gen::Mythological_era_generator::Run()
 
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::Entity his_gen::Mythological_era_generator::create_entity()
+void his_gen::Mythological_era_generator::create_progenitor_deity()
 {
-  his_gen::Entity new_entity = his_gen::Entity("new");
+  his_gen::Entity new_entity = his_gen::Entity("God",
+                                               "the Allfather");
   m_generated_history.Entities.push_back(new_entity);
-  return new_entity;
+}
+
+///////////////////////////////////////////////////////////////////////
+
+void his_gen::Mythological_era_generator::create_entity()
+{
+  his_gen::Entity new_entity = his_gen::Entity(m_names.Get_one_name(),
+                                               m_names.Get_one_title());
+  m_generated_history.Entities.push_back(new_entity);
 }
 
 ///////////////////////////////////////////////////////////////////////

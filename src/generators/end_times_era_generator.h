@@ -44,7 +44,7 @@ public:
   /**
    * @brief Run the generator
    */
-  void Run();
+  void Run() override;
 
 protected:
   // Attributes
@@ -53,7 +53,7 @@ protected:
   /**
    * @brief Create a new entity
    */
-  his_gen::Entity create_entity();
+  void create_entity() override;
 
 private:
   // Attributes
