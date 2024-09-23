@@ -10,8 +10,7 @@
 his_gen::Entity::Entity(std::string name,
                         std::string title)
     :
-    Name(name),
-    Title(title)
+    Entity_base(name, title)
 {
 }
 
@@ -23,8 +22,8 @@ void his_gen::to_json(nlohmann::json& json,
 {
   json = nlohmann::json
   {
-    {"name", entity.Name},
-    {"title", entity.Title}
+    {"name", entity.Get_name()},
+    {"title", entity.Get_title()}
   };
 }
 
@@ -33,8 +32,8 @@ void his_gen::to_json(nlohmann::json& json,
 void his_gen::from_json(const nlohmann::json& json,
                    his_gen::Entity& entity)
 {
-  json.at("name").get_to(entity.Name);
-  json.at("title").get_to(entity.Title);
+  entity.Set_name(json.at("name"));
+  entity.Set_title(json.at("title"));
 }
 
 ///////////////////////////////////////////////////////////////////////

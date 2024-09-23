@@ -12,6 +12,7 @@
 #include <deps/json.hpp>
 
 // Application files
+#include <models/entity_base.h>
 #include <utils/history_generator_utils.h>
 
 namespace his_gen
@@ -19,19 +20,10 @@ namespace his_gen
 /**
  * @brief A generated entity
  */
-class Entity
+class Entity : public virtual Entity_base
 {
 public:
   // Attributes
-  /**
-   * @brief Entity name
-   */
-  std::string Name;
-
-  /**
-   * @brief Entity title
-   */
-  std::string Title;
 
   // Implementation
   /**

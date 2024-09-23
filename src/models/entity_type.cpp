@@ -13,7 +13,7 @@ void his_gen::to_json(nlohmann::json& json,
 {
   json = nlohmann::json
   {
-    {"name", entity_type.Name}
+    {"name", entity_type.Get_name()}
   };
 }
 
@@ -22,7 +22,7 @@ void his_gen::to_json(nlohmann::json& json,
 void his_gen::from_json(const nlohmann::json& json,
                         his_gen::Entity_type& entity_type)
 {
-  json.at("name").get_to(entity_type.Name);
+  entity_type.Set_name(json.at("name"));
 }
 
 ///////////////////////////////////////////////////////////////////////

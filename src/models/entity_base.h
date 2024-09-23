@@ -2,10 +2,11 @@
  * Copyright (C) 2024 Nate Anderson - All Rights Reserved
  */
 
-#ifndef ENTITY_TYPE_H
-#define ENTITY_TYPE_H
+#ifndef ENTITY_BASE_H
+#define ENTITY_BASE_H
 
 // Standard libs
+#include <string>
 
 // JSON
 #include <deps/json.hpp>
@@ -16,9 +17,9 @@
 namespace his_gen
 {
 /**
- * @brief The type of entity
+ * @brief Base class for generated entities
  */
-class Entity_type
+class Entity_base
 {
 public:
   // Attributes
@@ -27,12 +28,12 @@ public:
   /**
    * @brief Constructor
    */
-  Entity_type(){}
+  Entity_base(std::string name, std::string title = ""){};
 
   /**
    * @brief Destructor
    */
-  ~Entity_type(){};
+  ~Entity_base(){};
 
   /**
    * @brief Set_name
@@ -46,6 +47,18 @@ public:
    */
   std::string Get_name() const { return m_name; }
 
+  /**
+   * @brief Set_title
+   * @param title
+   */
+  void Set_title(std::string title) { m_title = title; }
+
+  /**
+   * @brief Get_title
+   * @return
+   */
+  std::string Get_title() const { return m_title; }
+
 protected:
   // Attributes
 
@@ -54,20 +67,18 @@ protected:
 private:
   // Attributes
   /**
-   * @brief Entity type name
+   * @brief Entity name
    */
   std::string m_name;
 
+  /**
+   * @brief Entity title
+   */
+  std::string m_title;
+
   // Implementation
 
-}; // class Entity_type
-
-void to_json(nlohmann::json& json,
-             const his_gen::Entity_type& entity_type);
-
-void from_json(const nlohmann::json& json,
-               his_gen::Entity_type& entity_type);
-
+}; // class Entity
 }  // namespace his_gen
 
-#endif // ENTITY_TYPE_H
+#endif // ENTITY_BASE_H
