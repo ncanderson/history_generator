@@ -31,9 +31,10 @@ class Generated_history
 public:
   // Attributes
   /**
-   * @brief List of all generated entities
+   * @brief List of all generated entities.
+   * @details This vector will hold any entity derived from entity base.
    */
-  std::vector<his_gen::Entity> Entities;
+  std::vector<std::shared_ptr<his_gen::Entity_base>> Entities;
 
   /**
    * @brief List of all entity relationships

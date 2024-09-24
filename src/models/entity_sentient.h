@@ -2,8 +2,8 @@
  * Copyright (C) 2024 Nate Anderson - All Rights Reserved
  */
 
-#ifndef ENTITY_H
-#define ENTITY_H
+#ifndef ENTITY_SENTIENT_H
+#define ENTITY_SENTIENT_H
 
 // Standard libs
 #include <string>
@@ -15,12 +15,22 @@
 #include <models/entity_base.h>
 #include <utils/history_generator_utils.h>
 
+
+
+
+
+// look at this for how to instantiate entities using the base class
+// https://stackoverflow.com/a/34445588/5543374
+
+
+
+
 namespace his_gen
 {
 /**
  * @brief A generated entity
  */
-class Entity : public virtual Entity_base
+class Entity_sentient : public virtual Entity_base
 {
 public:
   // Attributes
@@ -29,12 +39,12 @@ public:
   /**
    * @brief Constructor
    */
-  Entity(std::string name, std::string title = "");
+  Entity_sentient(std::string name, std::string title = "");
 
   /**
    * @brief Destructor
    */
-  ~Entity(){};
+  ~Entity_sentient(){};
 
 protected:
   // Attributes
@@ -53,15 +63,15 @@ private:
  * @param json
  * @param entity
  */
-void to_json(nlohmann::json& json, const his_gen::Entity& entity);
+void to_json(nlohmann::json& json, const his_gen::Entity_sentient& entity_sentient);
 
 /**
  * @brief from_json
  * @param json
  * @param entity
  */
-void from_json(const nlohmann::json& json, his_gen::Entity& entity);
+void from_json(const nlohmann::json& json, his_gen::Entity_sentient& entity_sentient);
 
 }  // namespace his_gen
 
-#endif // ENTITY_H
+#endif // ENTITY_SENTIENT_H

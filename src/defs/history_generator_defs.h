@@ -8,6 +8,9 @@
 // Standard libraries
 #include <string>
 
+// JSON
+#include <deps/json.hpp>
+
 namespace his_gen
 {
 
@@ -72,7 +75,7 @@ std::string Get_data_access_type(Data_access_type data_access_type);
  * @param data_access_type The string representation of the access type
  * @return String access type enumeration
  */
-his_gen::Data_access_type Get_data_access_type_from_string(std::string data_access_type);
+his_gen::Data_access_type Get_data_access_type(std::string data_access_type);
 
 /**
  * @brief Struct to hold the details necessary to create a file data connection
@@ -102,6 +105,42 @@ struct DAL_PG_params
   std::string db_name;
 
 }; // struct DAL_PG_details
+
 }  // namespace his_gen
 
+/**
+ * Additional serializer for shared pointers
+ */
+namespace nlohmann
+{
+
+template <typename T>
+struct adl_serializer<std::shared_ptr<T>>
+{
+  static void to_json(json& j, const std::shared_ptr<T>& opt)
+  {
+    if (opt)
+    {
+      j = *opt;
+    }
+    else
+    {
+      j = nullptr;
+    }
+  }
+
+  static void from_json(const json& j, std::shared_ptr<T>& opt)
+  {
+    if (j.is_null())
+    {
+      opt = nullptr;
+    }
+    else
+    {
+      opt.reset(new T(j.get<T>()));
+    }
+  }
+};
+
+}
 #endif // HISTORY_GENERATOR_DEFS_H

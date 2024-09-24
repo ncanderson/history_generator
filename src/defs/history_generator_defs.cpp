@@ -47,7 +47,7 @@ std::string his_gen::Get_data_access_type(Data_access_type data_access_type)
 
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::Data_access_type his_gen::Get_data_access_type_from_string(std::string data_access_type)
+his_gen::Data_access_type his_gen::Get_data_access_type(std::string data_access_type)
 {
   if(data_access_type == "file")
   {

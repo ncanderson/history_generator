@@ -78,7 +78,35 @@ private:
 
   // Implementation
 
-}; // class Entity
+}; // class Entity_base
+
+/**
+ * @brief to_json
+ * @param json
+ * @param entity_base
+ */
+void to_json(nlohmann::json& json, const his_gen::Entity_base& entity_base)
+{
+  //json = nlohmann::json
+  //{
+  //  {"name", entity_base.Get_name()},
+  //  {"title", entity_base.Get_title()}
+  //};
+}
+
+/**
+ * @brief from_json
+ * @param json
+ * @param entity_base
+ */
+void from_json(const nlohmann::json& json, his_gen::Entity_base& entity_base)
+{
+  //{
+  //  entity_base.Set_name(json.at("name"));
+  //  entity_base.Set_title(json.at("title"));
+  //}
+}
+
 }  // namespace his_gen
 
 #endif // ENTITY_BASE_H
