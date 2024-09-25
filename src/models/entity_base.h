@@ -26,45 +26,23 @@ public:
 
   // Implementation
   /**
-   * @brief Constructor
+   * @brief Constructor.
    */
-  Entity_base(std::string name, std::string title = ""){};
+  Entity_base(std::string name, std::string title = "");
 
   /**
    * @brief Destructor
    */
   ~Entity_base(){};
 
-  /**
-   * @brief Set_name
-   * @param name
-   */
-  void Set_name(std::string name) { m_name = name; }
+  void Set_name(std::string name) {m_name = name;}
+  std::string Get_name() const {return m_name;}
+  void Set_title(std::string title) {m_title=title;}
+  std::string Get_title() const {return m_title;}
 
-  /**
-   * @brief Get_name
-   * @return
-   */
-  std::string Get_name() const { return m_name; }
-
-  /**
-   * @brief Set_title
-   * @param title
-   */
-  void Set_title(std::string title) { m_title = title; }
-
-  /**
-   * @brief Get_title
-   * @return
-   */
-  std::string Get_title() const { return m_title; }
+  //NLOHMANN_DEFINE_TYPE_INTRUSIVE(Entity_base, m_name, m_title)
 
 protected:
-  // Attributes
-
-  // Implementation
-
-private:
   // Attributes
   /**
    * @brief Entity name
@@ -78,6 +56,11 @@ private:
 
   // Implementation
 
+private:
+  // Attributes
+
+  // Implementation
+
 }; // class Entity_base
 
 /**
@@ -85,27 +68,16 @@ private:
  * @param json
  * @param entity_base
  */
-void to_json(nlohmann::json& json, const his_gen::Entity_base& entity_base)
-{
-  //json = nlohmann::json
-  //{
-  //  {"name", entity_base.Get_name()},
-  //  {"title", entity_base.Get_title()}
-  //};
-}
+void to_json(nlohmann::json& json, const his_gen::Entity_base& entity_base);
+
+void to_json(nlohmann::json& json, const std::shared_ptr<his_gen::Entity_base>& entity_base);
 
 /**
  * @brief from_json
  * @param json
  * @param entity_base
  */
-void from_json(const nlohmann::json& json, his_gen::Entity_base& entity_base)
-{
-  //{
-  //  entity_base.Set_name(json.at("name"));
-  //  entity_base.Set_title(json.at("title"));
-  //}
-}
+void from_json(const nlohmann::json& json, his_gen::Entity_base& entity_base);
 
 }  // namespace his_gen
 

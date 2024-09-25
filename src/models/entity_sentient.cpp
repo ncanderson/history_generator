@@ -3,14 +3,17 @@
  */
 
 // Standard
-#include <models/entity.h>
+#include <models/entity_sentient.h>
 
 ///////////////////////////////////////////////////////////////////////
 
 his_gen::Entity_sentient::Entity_sentient(std::string name,
-                                          std::string title)
+                                          std::string title,
+                                          bool test)
     :
-    Entity_base(name, title)
+    Entity_base(name, title),
+    m_test(test)
+    //m_personality()
 {
 }
 
@@ -25,18 +28,17 @@ void his_gen::to_json(nlohmann::json& json,
   //  JSON.update({ {"Ba", b.Ba}, {"Bb", b.Bb} });
   //}
 
-  nlohmann::to_json(json, static_cast<Entity_base>(entity_sentient));
+  nlohmann::to_json(json, static_cast<Entity_sentient>(entity_sentient));
   json.update(
     {
-      {"name", entity_sentient.Get_name()},
-      {"title", entity_sentient.Get_title()}
+      {"test", entity_sentient.Get_test()}
     });
 }
 
 ///////////////////////////////////////////////////////////////////////
 
 void his_gen::from_json(const nlohmann::json& json,
-                   his_gen::Entity_sentient& entity_sentient)
+                        his_gen::Entity_sentient& entity_sentient)
 {
   //void from_json( const nlohmann::json& JSON, B& b ) {
   //  nlohmann::from_json(JSON, static_cast<A&>(b));

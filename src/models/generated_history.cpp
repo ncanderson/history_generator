@@ -10,11 +10,11 @@
 void his_gen::to_json(nlohmann::json& json,
                       const his_gen::Generated_history& generated_history)
 {
-  //json = nlohmann::json
-  //{
-  //  {"entities", generated_history.Entities},
-  //  {"entity_relationships", generated_history.Entity_relationships}
-  //};
+  json = nlohmann::json
+  {
+    {"entities", generated_history.Entities},
+    {"entity_relationships", generated_history.Entity_relationships}
+  };
 }
 
 ///////////////////////////////////////////////////////////////////////

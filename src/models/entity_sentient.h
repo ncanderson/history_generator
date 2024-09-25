@@ -14,7 +14,7 @@
 // Application files
 #include <models/entity_base.h>
 #include <utils/history_generator_utils.h>
-
+#include <modules/personality.h>
 
 
 
@@ -39,12 +39,20 @@ public:
   /**
    * @brief Constructor
    */
-  Entity_sentient(std::string name, std::string title = "");
+  Entity_sentient(std::string name, std::string title, bool test = true);
 
   /**
    * @brief Destructor
    */
   ~Entity_sentient(){};
+
+  // temp for testing
+  bool Get_test() const { return m_test; }
+
+  void Set_name(std::string name) { m_name = name; }
+  std::string Get_name() const { return m_name; }
+  void Set_title(std::string title) { m_title = title; }
+  std::string Get_title() const { return m_title; }
 
 protected:
   // Attributes
@@ -53,6 +61,12 @@ protected:
 
 private:
   // Attributes
+  /**
+   * @brief Test var to figure out how to make inheritance work
+   */
+  bool m_test = false;
+
+  //Personality m_personality;
 
   // Implementation
 
@@ -63,14 +77,16 @@ private:
  * @param json
  * @param entity
  */
-void to_json(nlohmann::json& json, const his_gen::Entity_sentient& entity_sentient);
+void to_json(nlohmann::json& json,
+             const his_gen::Entity_sentient& entity_sentient);
 
 /**
  * @brief from_json
  * @param json
  * @param entity
  */
-void from_json(const nlohmann::json& json, his_gen::Entity_sentient& entity_sentient);
+void from_json(const nlohmann::json& json,
+               his_gen::Entity_sentient& entity_sentient);
 
 }  // namespace his_gen
 
