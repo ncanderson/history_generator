@@ -33,7 +33,7 @@ public:
   /**
    * @brief Destructor
    */
-  ~Entity_base(){};
+  virtual ~Entity_base(){};
 
   void Set_name(std::string name) {m_name = name;}
   std::string Get_name() const {return m_name;}

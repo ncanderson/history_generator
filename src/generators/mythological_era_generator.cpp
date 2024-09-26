@@ -84,7 +84,10 @@ void his_gen::Mythological_era_generator::Run()
 void his_gen::Mythological_era_generator::create_progenitor_deity()
 {
   //std::shared_ptr<his_gen::Entity_sentient> ptr = std::make_shared<his_gen::Entity_sentient>(his_gen::Entity_sentient("God", "the Allfather", false));
-  m_generated_history.Entities.emplace_back(std::make_shared<his_gen::Entity_sentient>(his_gen::Entity_sentient("God", "the Allfather", false)));
+  //m_generated_history.Entities.emplace_back(std::make_shared<his_gen::Entity_sentient>(his_gen::Entity_sentient("God", "the Allfather", false)));
+
+  std::shared_ptr<his_gen::Entity_sentient> ptr = std::make_shared<his_gen::Entity_sentient>("God", "the Allfather", false);
+  m_generated_history.Entities.push_back(ptr);
 }
 
 ///////////////////////////////////////////////////////////////////////

@@ -5,6 +5,10 @@
 // Standard
 #include <models/entity_base.h>
 
+// test
+#include <models/entity_sentient.h>
+//
+
 ///////////////////////////////////////////////////////////////////////
 
 his_gen::Entity_base::Entity_base(std::string name, std::string title)
