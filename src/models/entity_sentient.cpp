@@ -5,6 +5,9 @@
 // Standard
 #include <models/entity_sentient.h>
 
+// Defs
+#include <defs/json_helper_defs.h>
+
 ///////////////////////////////////////////////////////////////////////
 
 his_gen::Entity_sentient::Entity_sentient(std::string name,
@@ -15,6 +18,9 @@ his_gen::Entity_sentient::Entity_sentient(std::string name,
     m_test(test)
     //m_personality()
 {
+  // Register the derived class with the JSON serializer
+  Polymorphic_serializer<his_gen::Entity_base>::register_types<his_gen::Entity_base,
+                                                               his_gen::Entity_sentient>();
 }
 
 ///////////////////////////////////////////////////////////////////////

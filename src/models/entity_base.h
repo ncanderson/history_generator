@@ -31,16 +31,14 @@ public:
   Entity_base(std::string name, std::string title = "");
 
   /**
-   * @brief Destructor
+   * @brief Virtual destructor
    */
-  virtual ~Entity_base(){};
+  virtual ~Entity_base() = default;
 
   void Set_name(std::string name) {m_name = name;}
   std::string Get_name() const {return m_name;}
   void Set_title(std::string title) {m_title=title;}
   std::string Get_title() const {return m_title;}
-
-  //NLOHMANN_DEFINE_TYPE_INTRUSIVE(Entity_base, m_name, m_title)
 
 protected:
   // Attributes
