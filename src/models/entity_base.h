@@ -29,20 +29,40 @@ public:
   /**
    * @brief Constructor.
    */
-  Entity_base(std::string name, std::string title = "");
+  Entity_base(std::string name, std::string title = "")
+      :
+      m_name(name),
+      m_title(title)
+  { };
 
-  // TODO: Does this have to be virtual?
   /**
-   * @brief Virtual destructor
+   * @brief Virtual destructor.
    */
   virtual ~Entity_base() = default;
-  //~Entity_base(){};
 
-  // TODO: make these virtual?
-  void Set_name(std::string name) {m_name = name;}
-  std::string Get_name() const {return m_name;}
-  void Set_title(std::string title) {m_title=title;}
-  std::string Get_title() const {return m_title;}
+  /**
+   * @brief Set_name
+   * @param name
+   */
+  void Set_name(std::string name) { m_name = name; }
+
+  /**
+   * @brief Get_name
+   * @return
+   */
+  std::string Get_name() const { return m_name; }
+
+  /**
+   * @brief Set_title
+   * @param title
+   */
+  void Set_title(std::string title) { m_title=title; }
+
+  /**
+   * @brief Get_title
+   * @return
+   */
+  std::string Get_title() const { return m_title; }
 
 protected:
   // Attributes
