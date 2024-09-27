@@ -10,6 +10,7 @@
 
 // JSON
 #include <deps/json.hpp>
+#include <defs/json_helper_defs.h>
 
 // Application files
 #include <utils/history_generator_utils.h>
@@ -30,12 +31,14 @@ public:
    */
   Entity_base(std::string name, std::string title = "");
 
+  // TODO: Does this have to be virtual?
   /**
    * @brief Virtual destructor
    */
   virtual ~Entity_base() = default;
   //~Entity_base(){};
 
+  // TODO: make these virtual?
   void Set_name(std::string name) {m_name = name;}
   std::string Get_name() const {return m_name;}
   void Set_title(std::string title) {m_title=title;}
@@ -69,8 +72,6 @@ private:
  */
 void to_json(nlohmann::json& json, const his_gen::Entity_base& entity_base);
 
-void to_json(nlohmann::json& json, const std::shared_ptr<his_gen::Entity_base>& entity_base);
-
 /**
  * @brief from_json
  * @param json
@@ -79,5 +80,17 @@ void to_json(nlohmann::json& json, const std::shared_ptr<his_gen::Entity_base>& 
 void from_json(const nlohmann::json& json, his_gen::Entity_base& entity_base);
 
 }  // namespace his_gen
+
+/**
+ * By extending the adl_serializer to utilize this class, we can register
+ * derived classed allowing us to serialize those classes to JSON
+ */
+namespace nlohmann
+{
+template <>
+struct adl_serializer<his_gen::Entity_base>
+    :
+    Polymorphic_serializer<his_gen::Entity_base>{ };
+} // namespace nlohmann
 
 #endif // ENTITY_BASE_H

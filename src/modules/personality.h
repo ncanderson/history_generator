@@ -21,6 +21,7 @@ class Personality
 {
 public:
   // Attributes
+  int Test = 1;
 
   // Implementation
   /**
@@ -34,8 +35,6 @@ public:
    */
   ~Personality(){};
 
-  NLOHMANN_DEFINE_TYPE_INTRUSIVE(Personality, m_test)
-
 protected:
   // Attributes
 
@@ -43,11 +42,25 @@ protected:
 
 private:
   // Attributes
-  int m_test = 1;
 
   // Implementation
 
 }; // class Personality
+
+/**
+ * @brief to_json
+ * @param json
+ * @param personality
+ */
+void to_json(nlohmann::json& json, const his_gen::Personality& personality);
+
+/**
+ * @brief from_json
+ * @param json
+ * @param personality
+ */
+void from_json(const nlohmann::json& json, his_gen::Personality& personality);
+
 }  // namespace his_gen
 
 #endif // PERSONAALITY_H

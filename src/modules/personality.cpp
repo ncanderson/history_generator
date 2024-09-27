@@ -1,0 +1,34 @@
+/**
+ * Copyright (C) 2024 Nate Anderson - All Rights Reserved
+ */
+
+// Standard
+#include <modules/personality.h>
+
+///////////////////////////////////////////////////////////////////////
+
+his_gen::Personality::Personality()
+{
+
+};
+
+///////////////////////////////////////////////////////////////////////
+// JSON Helpers
+
+void to_json(nlohmann::json& json, const his_gen::Personality& personality)
+{
+  json = nlohmann::json
+  {
+    {"test", personality.Test}
+  };
+}
+
+///////////////////////////////////////////////////////////////////////
+
+void from_json(const nlohmann::json& json, his_gen::Personality& personality)
+{
+
+}
+
+///////////////////////////////////////////////////////////////////////
+// END OF FILE

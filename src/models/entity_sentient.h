@@ -16,15 +16,6 @@
 #include <utils/history_generator_utils.h>
 #include <modules/personality.h>
 
-
-
-
-// look at this for how to instantiate entities using the base class
-// https://stackoverflow.com/a/34445588/5543374
-
-
-
-
 namespace his_gen
 {
 /**
@@ -46,13 +37,11 @@ public:
    */
   ~Entity_sentient(){};
 
-  // temp for testing
-  bool Get_test() const { return m_test; }
-
-  //void Set_name(std::string name) { m_name = name; }
-  //std::string Get_name() const { return m_name; }
-  //void Set_title(std::string title) { m_title = title; }
-  //std::string Get_title() const { return m_title; }
+  /**
+   * @brief Get_personality
+   * @return
+   */
+  Personality Get_personality() const { return m_personality; }
 
 protected:
   // Attributes
@@ -62,11 +51,9 @@ protected:
 private:
   // Attributes
   /**
-   * @brief Test var to figure out how to make inheritance work
+   * @brief Get this entity's personality
    */
-  bool m_test = false;
-
-  //Personality m_personality;
+  Personality m_personality;
 
   // Implementation
 
@@ -79,9 +66,6 @@ private:
  */
 void to_json(nlohmann::json& json,
              const his_gen::Entity_sentient& entity_sentient);
-
-void to_json(nlohmann::json& json,
-             const std::shared_ptr<his_gen::Entity_sentient>& entity_sentient);
 
 /**
  * @brief from_json

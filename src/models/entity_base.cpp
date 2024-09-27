@@ -5,10 +5,6 @@
 // Standard
 #include <models/entity_base.h>
 
-// test
-#include <models/entity_sentient.h>
-//
-
 ///////////////////////////////////////////////////////////////////////
 
 his_gen::Entity_base::Entity_base(std::string name, std::string title)
@@ -27,17 +23,6 @@ void his_gen::to_json(nlohmann::json& json, const his_gen::Entity_base& entity_b
   {
     {"name", entity_base.Get_name()},
     {"title", entity_base.Get_title()}
-  };
-}
-
-///////////////////////////////////////////////////////////////////////
-
-void his_gen::to_json(nlohmann::json& json, const std::shared_ptr<his_gen::Entity_base>& entity_base)
-{
-  json = nlohmann::json
-  {
-    {"name", entity_base->Get_name()},
-    {"title", entity_base->Get_title()}
   };
 }
 
