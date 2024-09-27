@@ -34,6 +34,7 @@ public:
    * @brief Virtual destructor
    */
   virtual ~Entity_base() = default;
+  //~Entity_base(){};
 
   void Set_name(std::string name) {m_name = name;}
   std::string Get_name() const {return m_name;}

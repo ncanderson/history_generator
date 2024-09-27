@@ -12,6 +12,10 @@
 
 // JSON
 #include <deps/json.hpp>
+// test
+#include <defs/nlohmann_sample.h>
+//
+
 
 ///////////////////////////////////////////////////////////////////////
 
@@ -35,11 +39,24 @@ void his_gen::Data_access_dao_file::Write_history(his_gen::Generated_history& ge
 {
   his_gen::Print_to_cout("Writing generated history to file");
 
-  nlohmann::json output_json = generated_history;
+
+  std::vector<std::shared_ptr<Base>> v;
+  v.push_back(std::make_shared<Base>());
+  v.push_back(std::make_shared<Obj>(5));
+  v.push_back(std::make_shared<Base>());
+  v.push_back(std::make_shared<Obj>(10));
+
+  std::cout << v.size() << std::endl;
+
+  PolymorphicJsonSerializer<Base>::register_types<Base, Obj>();
+
+  json j = v;
+
+  //nlohmann::json output_json = generated_history;
   std::ofstream output_file;
 
   output_file.open("/home/nanderson/nate_personal/projects/history_generator/output/sample_output.json");
-  output_file << std::setw(2) << output_json;
+  output_file << std::setw(2) << j;//output_json;
   output_file.close();
 }
 

@@ -30,7 +30,7 @@ namespace his_gen
 /**
  * @brief A generated entity
  */
-class Entity_sentient : public virtual Entity_base
+class Entity_sentient : public Entity_base
 {
 public:
   // Attributes
@@ -79,6 +79,9 @@ private:
  */
 void to_json(nlohmann::json& json,
              const his_gen::Entity_sentient& entity_sentient);
+
+void to_json(nlohmann::json& json,
+             const std::shared_ptr<his_gen::Entity_sentient>& entity_sentient);
 
 /**
  * @brief from_json

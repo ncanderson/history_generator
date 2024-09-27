@@ -19,8 +19,8 @@ his_gen::Entity_sentient::Entity_sentient(std::string name,
     //m_personality()
 {
   // Register the derived class with the JSON serializer
-  Polymorphic_serializer<his_gen::Entity_base>::register_types<his_gen::Entity_base,
-                                                               his_gen::Entity_sentient>();
+  //Polymorphic_serializer<his_gen::Entity_base>::register_types<his_gen::Entity_base,
+  //                                                             his_gen::Entity_sentient>();
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -36,9 +36,21 @@ void his_gen::to_json(nlohmann::json& json,
 
   nlohmann::to_json(json, static_cast<Entity_sentient>(entity_sentient));
   json.update(
-    {
-      {"test", entity_sentient.Get_test()}
-    });
+  {
+    {"test", entity_sentient.Get_test()}
+  });
+}
+
+///////////////////////////////////////////////////////////////////////
+
+void his_gen::to_json(nlohmann::json& json,
+                      const std::shared_ptr<his_gen::Entity_sentient>& entity_sentient)
+{
+  nlohmann::to_json(json, static_cast<Entity_sentient>(*entity_sentient));
+  json.update(
+  {
+    {"test", entity_sentient->Get_test()}
+  });
 }
 
 ///////////////////////////////////////////////////////////////////////
