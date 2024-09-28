@@ -35,7 +35,16 @@ void his_gen::Data_access_dao_file::Write_history(his_gen::Generated_history& ge
 {
   his_gen::Print_to_cout("Writing generated history to file");
 
-  nlohmann::json output_json = generated_history;
+  nlohmann::json output_json;
+  try
+  {
+    output_json = generated_history;
+  }
+  catch(const nlohmann::json::exception& e)
+  {
+    his_gen::Print_to_cout("Error parsing generated_history to JSON");
+    his_gen::Print_to_cout(e.what());
+  }
   std::ofstream output_file;
 
   output_file.open("/home/nanderson/nate_personal/projects/history_generator/output/sample_output.json");

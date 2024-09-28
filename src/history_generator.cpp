@@ -152,7 +152,7 @@ int main(int argc, char *argv[])
   // Set up Runtime Objects
 
   // Set up data access manager
-  const his_gen::Data_access_type data_access_type = his_gen::Get_data_access_type_from_string(app_cfg.Data_access_type);
+  const his_gen::Data_access_type data_access_type = his_gen::Get_data_access_type(app_cfg.Data_access_type);
   const his_gen::Data_access_manager data_access_manager = initialize_data_access(data_access_type);
 
   // Initialize Runtime Manager

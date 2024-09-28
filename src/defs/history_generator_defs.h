@@ -72,7 +72,7 @@ std::string Get_data_access_type(Data_access_type data_access_type);
  * @param data_access_type The string representation of the access type
  * @return String access type enumeration
  */
-his_gen::Data_access_type Get_data_access_type_from_string(std::string data_access_type);
+his_gen::Data_access_type Get_data_access_type(std::string data_access_type);
 
 /**
  * @brief Struct to hold the details necessary to create a file data connection
@@ -102,6 +102,7 @@ struct DAL_PG_params
   std::string db_name;
 
 }; // struct DAL_PG_details
+
 }  // namespace his_gen
 
 #endif // HISTORY_GENERATOR_DEFS_H

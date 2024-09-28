@@ -3,26 +3,31 @@
  */
 
 // Standard
-#include <models/entity_type.h>
+#include <modules/personality.h>
+
+///////////////////////////////////////////////////////////////////////
+
+his_gen::Personality::Personality()
+{
+
+};
 
 ///////////////////////////////////////////////////////////////////////
 // JSON Helpers
 
-void his_gen::to_json(nlohmann::json& json,
-                      const his_gen::Entity_type& entity_type)
+void to_json(nlohmann::json& json, const his_gen::Personality& personality)
 {
   json = nlohmann::json
   {
-    {"name", entity_type.Get_name()}
+
   };
 }
 
 ///////////////////////////////////////////////////////////////////////
 
-void his_gen::from_json(const nlohmann::json& json,
-                        his_gen::Entity_type& entity_type)
+void from_json(const nlohmann::json& json, his_gen::Personality& personality)
 {
-  entity_type.Set_name(json.at("name"));
+
 }
 
 ///////////////////////////////////////////////////////////////////////

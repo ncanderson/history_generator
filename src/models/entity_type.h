@@ -22,10 +22,6 @@ class Entity_type
 {
 public:
   // Attributes
-  /**
-   * @brief Entity type name
-   */
-  std::string Name;
 
   // Implementation
   /**
@@ -38,6 +34,18 @@ public:
    */
   ~Entity_type(){};
 
+  /**
+   * @brief Set_name
+   * @param name
+   */
+  void Set_name(std::string name) { m_name = name; }
+
+  /**
+   * @brief Get_name
+   * @return
+   */
+  std::string Get_name() const { return m_name; }
+
 protected:
   // Attributes
 
@@ -45,6 +53,10 @@ protected:
 
 private:
   // Attributes
+  /**
+   * @brief Entity type name
+   */
+  std::string m_name;
 
   // Implementation
 

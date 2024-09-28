@@ -12,3 +12,54 @@ Names. Modules wrapper? Single class that marshalls all the data modules? Then i
 How to manage using names so we don't have tons of duplicates?
 
 Right now just using a single names object in the myth generator
+
+
+# Header
+
+/**
+ * Copyright (C) 2024 Nate Anderson - All Rights Reserved
+ */
+
+#ifndef
+#define
+
+// Standard libs
+
+// Application files
+
+namespace his_gen
+{
+/**
+ * @brief
+ */
+class
+{
+public:
+  // Attributes
+
+  // Implementation
+  /**
+   * @brief
+   * @param
+   */
+  Names();
+
+  /**
+   * @brief Destructor
+   */
+  ~Names(){};
+
+protected:
+  // Attributes
+
+  // Implementation
+
+private:
+  // Attributes
+
+  // Implementation
+
+}; // class
+}  // namespace his_gen
+
+#endif //
