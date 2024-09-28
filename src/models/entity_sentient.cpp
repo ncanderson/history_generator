@@ -11,7 +11,8 @@
 ///////////////////////////////////////////////////////////////////////
 
 his_gen::Entity_sentient::Entity_sentient(std::string name,
-                                          std::string title)
+                                          std::string title,
+                                          bool full_random_reproduction)
     :
     Entity_base(name, title),
     m_personality()
@@ -30,7 +31,9 @@ void his_gen::to_json(nlohmann::json& json,
   nlohmann::to_json(json, static_cast<Entity_base>(entity_sentient));
   json.update(
   {
-    {"personality", "TBD"}//entity_sentient.Get_personality()}
+    {"personality", entity_sentient.Get_personality()},
+    {"can_sire_young", entity_sentient.Get_can_sire()},
+    {"can_bear_young", entity_sentient.Get_can_bear()}
   });
 }
 

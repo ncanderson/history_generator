@@ -15,7 +15,7 @@ his_gen::Personality::Personality()
 ///////////////////////////////////////////////////////////////////////
 // JSON Helpers
 
-void to_json(nlohmann::json& json, const his_gen::Personality& personality)
+void his_gen::to_json(nlohmann::json& json, const his_gen::Personality& personality)
 {
   json = nlohmann::json
   {
@@ -25,7 +25,7 @@ void to_json(nlohmann::json& json, const his_gen::Personality& personality)
 
 ///////////////////////////////////////////////////////////////////////
 
-void from_json(const nlohmann::json& json, his_gen::Personality& personality)
+void his_gen::from_json(const nlohmann::json& json, his_gen::Personality& personality)
 {
 
 }
