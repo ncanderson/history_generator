@@ -30,7 +30,7 @@ public:
   /**
    * @brief Constructor
    */
-  Entity_sentient(std::string name, std::string title, bool test = true);
+  Entity_sentient(std::string name, std::string title);
 
   /**
    * @brief Destructor
