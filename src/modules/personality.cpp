@@ -19,7 +19,7 @@ void to_json(nlohmann::json& json, const his_gen::Personality& personality)
 {
   json = nlohmann::json
   {
-    {"test", personality.Test}
+
   };
 }
 

@@ -21,7 +21,6 @@ class Personality
 {
 public:
   // Attributes
-  int Test = 1;
 
   // Implementation
   /**
