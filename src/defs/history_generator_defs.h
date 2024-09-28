@@ -8,9 +8,6 @@
 // Standard libraries
 #include <string>
 
-// JSON
-#include <deps/json.hpp>
-
 namespace his_gen
 {
 
