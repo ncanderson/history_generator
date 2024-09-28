@@ -2,8 +2,8 @@
  * Copyright (C) 2024 Nate Anderson - All Rights Reserved
  */
 
-#ifndef PERSONAALITY_H
-#define PERSONAALITY_H
+#ifndef PERSONALITY_H
+#define PERSONALITY_H
 
 // Standard libs
 
@@ -63,4 +63,4 @@ void from_json(const nlohmann::json& json, his_gen::Personality& personality);
 
 }  // namespace his_gen
 
-#endif // PERSONAALITY_H
+#endif // PERSONALITY_H
