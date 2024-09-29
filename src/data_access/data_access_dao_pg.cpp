@@ -47,5 +47,4 @@ void his_gen::Data_access_dao_pg::Load_all_names(std::vector<std::string>& names
 }
 
 ///////////////////////////////////////////////////////////////////////
-
 // END OF FILE

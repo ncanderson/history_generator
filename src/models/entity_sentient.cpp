@@ -5,8 +5,9 @@
 // Standard
 #include <models/entity_sentient.h>
 
-// Defs
+// Defs and Utils
 #include <defs/json_helper_defs.h>
+#include <utils/dice_rolls.h>
 
 ///////////////////////////////////////////////////////////////////////
 
@@ -15,11 +16,27 @@ his_gen::Entity_sentient::Entity_sentient(std::string name,
                                           bool full_random_reproduction)
     :
     Entity_base(name, title),
-    m_personality()
+    m_personality(),
+    m_can_sire_young(),
+    m_can_bear_young()
 {
   // Register the derived class with the JSON serializer
   Polymorphic_serializer<his_gen::Entity_base>::register_types<his_gen::Entity_base,
                                                                his_gen::Entity_sentient>();
+
+  // Initialize reproductive ability
+  if(full_random_reproduction)
+  {
+    m_can_sire_young = his_gen::Flip_a_coin();
+    m_can_bear_young = his_gen::Flip_a_coin();
+  }
+  else
+  {
+    // TODO: This doesn't account for infertility when non-randomizing
+    // reproduction ability
+    m_can_sire_young = his_gen::Flip_a_coin();
+    m_can_bear_young = !m_can_sire_young;
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////
