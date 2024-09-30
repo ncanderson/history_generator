@@ -15,6 +15,7 @@
 #include <models/entity_base.h>
 #include <utils/history_generator_utils.h>
 #include <modules/personality.h>
+#include <modules/personality_attraction.h>
 
 namespace his_gen
 {
@@ -60,9 +61,14 @@ protected:
 private:
   // Attributes
   /**
-   * @brief Get this entity's personality
+   * @brief This entity's personality
    */
   Personality m_personality;
+
+  /**
+   * @brief This entity's attraction
+   */
+  Personality_attraction m_personality_attraction;
 
   /**
    * @brief Entity can sire young

@@ -17,6 +17,7 @@ his_gen::Entity_sentient::Entity_sentient(std::string name,
     :
     Entity_base(name, title),
     m_personality(),
+    m_personality_attraction(),
     m_can_sire_young(),
     m_can_bear_young()
 {

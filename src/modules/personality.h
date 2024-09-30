@@ -75,16 +75,6 @@ private:
    */
   std::map<Attribute, int8_t> m_personality_attributes;
 
-  /**
-   * @brief attracted_to_can_sire
-   */
-  bool attracted_to_can_sire;
-
-  /**
-   * @brief attracted_to_can_bear
-   */
-  bool attracted_to_can_bear;
-
   // Implementation
   /**
    * @brief Get the string representation of a personality attribute
