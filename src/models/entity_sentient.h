@@ -52,7 +52,7 @@ public:
   }
   void Set_personality_attraction (Personality_attraction personality_attraction)
   {
-    m_personality_attraction = personality_attraction ;
+    m_personality_attraction = personality_attraction;
   }
 
   bool Get_can_sire() const { return m_can_sire_young; }

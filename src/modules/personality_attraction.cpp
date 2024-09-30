@@ -19,28 +19,12 @@ his_gen::Personality_attraction::Personality_attraction()
 
 int8_t his_gen::Personality_attraction::derive_attraction_flexibility(std::map<his_gen::Attribute, int8_t> attributes)
 {
-  /**
-   * I think we really want to initialize all attributes in pairs, but then
-   * save them separately. Because we want the attributes to make sense on a
-   * spectrum, but be easy to understand when using. So if ATTRIBUTE_Cooperative_difficult
-   * is 47, that means we have cooperative 47 and difficult 53.
-   */
-  int8_t attraction_flexibility = 0;
-
-  int8_t cooperative_difficult = attributes[his_gen::Attribute::ATTRIBUTE_Cooperative_difficult];
-  //int8_t flexible_extreme = attributes[his_gen::Attribute::ATTRIBUTE_Flexible_extremist];
-  //int8_t jealous_compassionate = attributes[his_gen::Attribute::ATTRIBUTE_Jealous_compassionate];
-  //int8_t truculent_amiable = attributes[his_gen::Attribute::ATTRIBUTE_Truculent_amiable];
-
-  attraction_flexibility = cooperative_difficult;
-
-  //"cooperative-difficult": 47,
-  //"flexible-extremist": 82,
-  //"jealous-compassionate": 25,
-  //"truculent-amiable": 27,
-
-
-  return attraction_flexibility;
+  int8_t attribute_totals = (
+    (attributes[his_gen::Attribute::ATTRIBUTE_Cooperative] * m_cooperative_coefficient) +
+    (attributes[his_gen::Attribute::ATTRIBUTE_Amiable] * m_amiable_coefficient) +
+    (attributes[his_gen::Attribute::ATTRIBUTE_Compassionate] * m_compassionate_coefficient) +
+                             (attributes[his_gen::Attribute::ATTRIBUTE_Flexible] * m_flexible_coefficient));
+  return attribute_totals / 10;
 }
 
 ///////////////////////////////////////////////////////////////////////

@@ -50,6 +50,29 @@ protected:
 
 private:
   // Attributes
+  /**
+   * @brief Attraction flexibility coefficient for 'amiable'
+   */
+  double m_amiable_coefficient = .3;
+
+  /**
+   * @brief Attraction flexibility coefficient for 'compassionate'
+   */
+  double m_compassionate_coefficient = .1;
+
+  /**
+   * @brief Attraction flexibility coefficient for 'cooperative'
+   */
+  double m_cooperative_coefficient = .1;
+
+  /**
+   * @brief Attraction flexibility coefficient for 'flexible'
+   */
+  double m_flexible_coefficient = .5;
+
+  /**
+   * @brief m_attraction_flexibility
+   */
   int8_t m_attraction_flexibility;
 
   /**
@@ -64,9 +87,12 @@ private:
 
   // Implementation
   /**
-   * @brief derive_attraction_flexibility
-   * @param attributes
-   * @return
+   * @brief Return the attraction flexibility coefficient.
+   * @details This value uses several personality traits to determine a coefficient
+   * for attraction flexibility. This represents a buffer around traits that a
+   * given entity will be attracted to.
+   * @param attributes This enitity's attraction attributes
+   * @return The attraction flexibility coefficient
    */
   int8_t derive_attraction_flexibility(std::map<his_gen::Attribute, int8_t> attributes);
 

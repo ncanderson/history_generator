@@ -103,6 +103,9 @@ struct DAL_PG_params
 
 }; // struct DAL_PG_details
 
+// TODO: figure out some way to keep the pairs aligned? Maybe use a key for the
+// enum member's values, or a separate structure that keeps them together in
+// pairs?
 /**
    * @brief The Attribute enum
    * @details Containing pairs of opposed personality attributes, this enum
@@ -112,24 +115,42 @@ struct DAL_PG_params
    */
 enum Attribute
 {
-  ATTRIBUTE_Aggressive_passive,
-  ATTRIBUTE_Ambitious_lazy,
-  ATTRIBUTE_Avoidant_sociable,
-  ATTRIBUTE_Brave_cowardly,
-  ATTRIBUTE_Cooperative_difficult,
-  ATTRIBUTE_Cruel_kind,
-  ATTRIBUTE_Decisive_indecisive,
-  ATTRIBUTE_Diligent_lazy,
-  ATTRIBUTE_Flexible_extremist,
-  ATTRIBUTE_Frank_evasive,
-  ATTRIBUTE_Generous_selfish,
-  ATTRIBUTE_Helpful_useless,
-  ATTRIBUTE_Jealous_compassionate,
-  ATTRIBUTE_Placid_excitable,
-  ATTRIBUTE_Thoughtful_rash,
-  ATTRIBUTE_Thrifty_extravagant,
-  ATTRIBUTE_Truculent_amiable,
-  ATTRIBUTE_Witty_humorless
+  ATTRIBUTE_Aggressive,
+  ATTRIBUTE_Passive,
+  ATTRIBUTE_Ambitious,
+  ATTRIBUTE_Content,
+  ATTRIBUTE_Avoidant,
+  ATTRIBUTE_Sociable,
+  ATTRIBUTE_Brave,
+  ATTRIBUTE_Cowardly,
+  ATTRIBUTE_Cooperative,
+  ATTRIBUTE_Difficult,
+  ATTRIBUTE_Cruel,
+  ATTRIBUTE_Kind,
+  ATTRIBUTE_Decisive,
+  ATTRIBUTE_Indecisive,
+  ATTRIBUTE_Diligent,
+  ATTRIBUTE_Lazy,
+  ATTRIBUTE_Flexible,
+  ATTRIBUTE_Extremist,
+  ATTRIBUTE_Frank,
+  ATTRIBUTE_Evasive,
+  ATTRIBUTE_Generous,
+  ATTRIBUTE_Selfish,
+  ATTRIBUTE_Jealous,
+  ATTRIBUTE_Compassionate,
+  ATTRIBUTE_Placid,
+  ATTRIBUTE_Excitable,
+  ATTRIBUTE_Thoughtful,
+  ATTRIBUTE_Rash,
+  ATTRIBUTE_Thrifty,
+  ATTRIBUTE_Extravagant,
+  ATTRIBUTE_Argumentative,
+  ATTRIBUTE_Amiable,
+  ATTRIBUTE_Witty,
+  ATTRIBUTE_Humorless,
+  ATTRIBUTE_Honest,
+  ATTRIBUTE_Deceitful
 };
 
 /**

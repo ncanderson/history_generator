@@ -73,24 +73,42 @@ std::string his_gen::Get_attribute_string(const his_gen::Attribute attribute)
 {
   switch(attribute)
   {
-    case ATTRIBUTE_Aggressive_passive:    return "aggressive-passive";
-    case ATTRIBUTE_Ambitious_lazy:        return "ambitious-lazy";
-    case ATTRIBUTE_Avoidant_sociable:     return "avoidant-sociable";
-    case ATTRIBUTE_Brave_cowardly:        return "brave-cowardly";
-    case ATTRIBUTE_Cooperative_difficult: return "cooperative-difficult";
-    case ATTRIBUTE_Cruel_kind:            return "cruel-kind";
-    case ATTRIBUTE_Decisive_indecisive:   return "decisive-indecisive";
-    case ATTRIBUTE_Diligent_lazy:         return "diligent-lazy";
-    case ATTRIBUTE_Flexible_extremist:    return "flexible-extremist";
-    case ATTRIBUTE_Frank_evasive:         return "frank-evasive";
-    case ATTRIBUTE_Generous_selfish:      return "generous-selfish";
-    case ATTRIBUTE_Helpful_useless:       return "helpful-useless";
-    case ATTRIBUTE_Jealous_compassionate: return "jealous-compassionate";
-    case ATTRIBUTE_Placid_excitable:      return "placid-excitable";
-    case ATTRIBUTE_Thoughtful_rash:       return "thoughtful-rash";
-    case ATTRIBUTE_Thrifty_extravagant:   return "thrifty-extravagant";
-    case ATTRIBUTE_Truculent_amiable:     return "truculent-amiable";
-    case ATTRIBUTE_Witty_humorless:       return "witty-humorless";
+    case ATTRIBUTE_Aggressive:    return "aggressive";
+    case ATTRIBUTE_Passive:       return "passive";
+    case ATTRIBUTE_Ambitious:     return "ambitious";
+    case ATTRIBUTE_Content:       return "content";
+    case ATTRIBUTE_Avoidant:      return "avoidant";
+    case ATTRIBUTE_Sociable:      return "sociable";
+    case ATTRIBUTE_Brave:         return "brave";
+    case ATTRIBUTE_Cowardly:      return "cowardly";
+    case ATTRIBUTE_Cooperative:   return "cooperative";
+    case ATTRIBUTE_Difficult:     return "difficult";
+    case ATTRIBUTE_Cruel:         return "cruel";
+    case ATTRIBUTE_Kind:          return "kind";
+    case ATTRIBUTE_Decisive:      return "decisive";
+    case ATTRIBUTE_Indecisive:    return "indecisive";
+    case ATTRIBUTE_Diligent:      return "diligent";
+    case ATTRIBUTE_Lazy:          return "lazy";
+    case ATTRIBUTE_Flexible:      return "flexible";
+    case ATTRIBUTE_Extremist:     return "extremist";
+    case ATTRIBUTE_Frank:         return "frank";
+    case ATTRIBUTE_Evasive:       return "evasive";
+    case ATTRIBUTE_Generous:      return "generous";
+    case ATTRIBUTE_Selfish:       return "selfish";
+    case ATTRIBUTE_Jealous:       return "jealous";
+    case ATTRIBUTE_Compassionate: return "compassionate";
+    case ATTRIBUTE_Placid:        return "placid";
+    case ATTRIBUTE_Excitable:     return "excitable";
+    case ATTRIBUTE_Thoughtful:    return "thoughtful";
+    case ATTRIBUTE_Rash:          return "rash";
+    case ATTRIBUTE_Thrifty:       return "thrifty";
+    case ATTRIBUTE_Extravagant:   return "extravagant";
+    case ATTRIBUTE_Argumentative: return "argumentative";
+    case ATTRIBUTE_Amiable:       return "amiable";
+    case ATTRIBUTE_Witty:         return "witty";
+    case ATTRIBUTE_Humorless:     return "humorless";
+    case ATTRIBUTE_Honest:        return "honest";
+    case ATTRIBUTE_Deceitful:     return "deceitful";
     default:
       // Unrecognized value
       throw std::invalid_argument("Attribute not found");
