@@ -33,8 +33,8 @@ his_gen::Entity_sentient::Entity_sentient(std::string name,
   }
   else
   {
-    // TODO: This doesn't account for infertility when non-randomizing
-    // reproduction ability
+    // TODO: This doesn't account for infertility when reproduction ability
+    // isn't fully randomized
     m_can_sire_young = his_gen::Flip_a_coin();
     m_can_bear_young = !m_can_sire_young;
   }
@@ -50,6 +50,7 @@ void his_gen::to_json(nlohmann::json& json,
   json.update(
   {
     {"personality", entity_sentient.Get_personality()},
+    {"attraction", entity_sentient.Get_personality_attraction()},
     {"can_sire_young", entity_sentient.Get_can_sire()},
     {"can_bear_young", entity_sentient.Get_can_bear()}
   });

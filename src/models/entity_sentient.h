@@ -46,6 +46,15 @@ public:
   Personality Get_personality() const { return m_personality; }
   void Set_personality(Personality personality) { m_personality = personality; }
 
+  Personality_attraction Get_personality_attraction() const
+  {
+    return m_personality_attraction;
+  }
+  void Set_personality_attraction (Personality_attraction personality_attraction)
+  {
+    m_personality_attraction = personality_attraction ;
+  }
+
   bool Get_can_sire() const { return m_can_sire_young; }
   void Set_can_sire(bool can_sire_young) { m_can_sire_young = can_sire_young; }
 
@@ -82,12 +91,12 @@ private:
 
   // Implementation
 
-}; // class Entity
+}; // class Entity_sentient
 
 /**
  * @brief to_json
  * @param json
- * @param entity
+ * @param entity_sentient
  */
 void to_json(nlohmann::json& json,
              const his_gen::Entity_sentient& entity_sentient);
@@ -95,7 +104,7 @@ void to_json(nlohmann::json& json,
 /**
  * @brief from_json
  * @param json
- * @param entity
+ * @param entity_sentient
  */
 void from_json(const nlohmann::json& json,
                his_gen::Entity_sentient& entity_sentient);

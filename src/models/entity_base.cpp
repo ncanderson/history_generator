@@ -10,10 +10,10 @@
 void his_gen::to_json(nlohmann::json& json, const his_gen::Entity_base& entity_base)
 {
   json = nlohmann::json
-      {
-          {"name", entity_base.Get_name()},
-          {"title", entity_base.Get_title()}
-      };
+  {
+    {"name", entity_base.Get_name()},
+    {"title", entity_base.Get_title()}
+  };
 }
 
 ///////////////////////////////////////////////////////////////////////
