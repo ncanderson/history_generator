@@ -26,7 +26,7 @@ public:
    * @brief
    * @param
    */
-  Personality_attraction();
+  Personality_attraction(std::map<Attribute, int8_t> entity_attributes);
 
   /**
    * @brief Destructor
@@ -69,6 +69,17 @@ private:
    * @brief Attraction flexibility coefficient for 'flexible'
    */
   double m_flexible_coefficient = .5;
+
+  /**
+   * @brief This divisor determines the maximum flexibility coefficient.
+   * @details The maximum coefficient value will be the maximum attribute
+   * score / m_coefficient_divisor.
+   * | Divisor | Max Attr. Score | Max flexibility coefficient |
+   * |---------|-----------------|-----------------------------|
+   * | 10      | 100             | 10                          |
+   * | 2       | 100             | 50                          |
+   */
+  double m_coefficient_divisor = 2.0;
 
   /**
    * @brief m_attraction_flexibility

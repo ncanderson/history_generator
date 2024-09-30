@@ -11,6 +11,15 @@
 ///////////////////////////////////////////////////////////////////////
 
 his_gen::Personality::Personality()
+    :
+    m_personality_attributes()
+{
+  construct_personality_attributes();
+};
+
+///////////////////////////////////////////////////////////////////////
+
+void his_gen::Personality::construct_personality_attributes()
 {
   int8_t aggressive_passive = his_gen::Make_a_roll(100);
   m_personality_attributes[ATTRIBUTE_Aggressive] = aggressive_passive;
@@ -66,7 +75,7 @@ his_gen::Personality::Personality()
   int8_t honest_deceitful = his_gen::Make_a_roll(100);
   m_personality_attributes[ATTRIBUTE_Honest] = honest_deceitful;
   m_personality_attributes[ATTRIBUTE_Deceitful] = 100 - honest_deceitful;
-};
+}
 
 ///////////////////////////////////////////////////////////////////////
 // JSON Helpers

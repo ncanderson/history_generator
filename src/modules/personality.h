@@ -55,6 +55,7 @@ private:
   std::map<Attribute, int8_t> m_personality_attributes;
 
   // Implementation
+  void construct_personality_attributes();
 
 }; // class Personality
 
