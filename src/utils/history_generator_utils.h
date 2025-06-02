@@ -12,10 +12,23 @@ namespace his_gen
 {
 
 /**
- * @brief Print the argued error message to the console
+ * @brief Template for print to cout handling anything convertable to a string
  * @param log_message The message to print
  */
-void Print_to_cout(std::string log_message);
+template<typename C>
+void Print_to_cout(const C& log_message)
+{
+  if constexpr (std::is_convertible_v<C, std::string>)
+  {
+    // For anything you can convert directly to std::string
+      std::cout << "Log Message: " << log_message << std::endl;
+  }
+  else
+  {
+    // Fallback: stream it directly (works for arithmetic, and any type with operator<<)
+      std::cout << "Log Message: " << log_message << std::endl;
+  }
+}
 
 // TODO: figure out a better way to do this, such that the templated version will
 // handle it and we don't need a separate function

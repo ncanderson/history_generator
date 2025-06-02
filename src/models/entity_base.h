@@ -41,27 +41,30 @@ public:
   virtual ~Entity_base() = default;
 
   /**
-   * @brief Set_name
-   * @param name
+   * @brief Is_attracted to other entity
+   * @details This function is provided to allow for single entity comparisons
+   * @param other_entity
+   * @return True if this entity is attracted to `other_entity`
+   */
+  virtual bool Is_attracted(std::shared_ptr<Entity_base> other_entity) = 0;
+
+  /**
+   * @brief Is_attracted to other_entity
+   * @param other_entity The entity to compare to
+   * @param attracted_to A vector of entities that this entity is attracted to.
+   * This will be used to populate with entities that we'll later check for
+   * mutual attraction.
+   * @return True if this entity is attracted to `other_entity`
+   */
+  virtual bool Is_attracted(std::shared_ptr<Entity_base> other_entity,
+                            std::vector<std::shared_ptr<Entity_base>> attracted_to) = 0;
+
+  /**
+   * Getters and setters
    */
   void Set_name(std::string name) { m_name = name; }
-
-  /**
-   * @brief Get_name
-   * @return
-   */
   std::string Get_name() const { return m_name; }
-
-  /**
-   * @brief Set_title
-   * @param title
-   */
   void Set_title(std::string title) { m_title=title; }
-
-  /**
-   * @brief Get_title
-   * @return
-   */
   std::string Get_title() const { return m_title; }
 
 protected:
@@ -86,18 +89,33 @@ private:
 }; // class Entity_base
 
 /**
- * @brief to_json
+ * @brief JSON serializer, marked inline to keep this virtual base class
+ * header-only
  * @param json
  * @param entity_base
  */
-void to_json(nlohmann::json& json, const his_gen::Entity_base& entity_base);
+inline void to_json(nlohmann::json& json, const his_gen::Entity_base& entity_base)
+{
+  json = nlohmann::json
+  {
+      {"name", entity_base.Get_name()},
+      {"title", entity_base.Get_title()}
+  };
+}
 
 /**
- * @brief from_json
+ * @brief JSON de-serializer, marked inline to keep this virtual base class
+ * header-only
  * @param json
  * @param entity_base
  */
-void from_json(const nlohmann::json& json, his_gen::Entity_base& entity_base);
+inline void from_json(const nlohmann::json& json, his_gen::Entity_base& entity_base)
+{
+  {
+    entity_base.Set_name(json.at("name"));
+    entity_base.Set_title(json.at("title"));
+  }
+}
 
 }  // namespace his_gen
 

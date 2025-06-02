@@ -15,6 +15,7 @@
 
 // Application files
 #include <utils/history_generator_utils.h>
+#include <utils/dice_rolls.h>
 #include <history_generator_manager.h>
 #include <data_access/data_access_manager.h>
 #include <utils/history_generator_root_config.h>

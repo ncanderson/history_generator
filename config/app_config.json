@@ -3,7 +3,8 @@
   "myth_gen_config": 
   {    
     "myth_gen_ticks": 1,
-    "max_entity_per_tick": 20
+    "max_entity_per_tick": 20,
+    "full_random_reproduction": true
   },
   "hist_gen_config": 
   {

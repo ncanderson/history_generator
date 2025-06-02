@@ -103,6 +103,62 @@ struct DAL_PG_params
 
 }; // struct DAL_PG_details
 
+// TODO: figure out some way to keep the pairs aligned? Maybe use a key for the
+// enum member's values, or a separate structure that keeps them together in
+// pairs?
+/**
+   * @brief The Attribute enum
+   * @details Containing pairs of opposed personality attributes, this enum
+   * will be used as the key for a given entity's personality map. Use the
+   * Get_attribute_string function when outputing these attributes to the data
+   * storage.
+   */
+enum Attribute
+{
+  ATTRIBUTE_Aggressive,
+  ATTRIBUTE_Passive,
+  ATTRIBUTE_Ambitious,
+  ATTRIBUTE_Content,
+  ATTRIBUTE_Avoidant,
+  ATTRIBUTE_Sociable,
+  ATTRIBUTE_Brave,
+  ATTRIBUTE_Cowardly,
+  ATTRIBUTE_Cooperative,
+  ATTRIBUTE_Difficult,
+  ATTRIBUTE_Cruel,
+  ATTRIBUTE_Kind,
+  ATTRIBUTE_Decisive,
+  ATTRIBUTE_Indecisive,
+  ATTRIBUTE_Diligent,
+  ATTRIBUTE_Lazy,
+  ATTRIBUTE_Flexible,
+  ATTRIBUTE_Extremist,
+  ATTRIBUTE_Frank,
+  ATTRIBUTE_Evasive,
+  ATTRIBUTE_Generous,
+  ATTRIBUTE_Selfish,
+  ATTRIBUTE_Jealous,
+  ATTRIBUTE_Compassionate,
+  ATTRIBUTE_Placid,
+  ATTRIBUTE_Excitable,
+  ATTRIBUTE_Thoughtful,
+  ATTRIBUTE_Rash,
+  ATTRIBUTE_Thrifty,
+  ATTRIBUTE_Extravagant,
+  ATTRIBUTE_Argumentative,
+  ATTRIBUTE_Amiable,
+  ATTRIBUTE_Witty,
+  ATTRIBUTE_Humorless,
+  ATTRIBUTE_Honest,
+  ATTRIBUTE_Deceitful
+};
+
+/**
+   * @brief Get the string representation of a personality attribute
+   * @param attribute The attribute to get the string for.
+   */
+std::string Get_attribute_string(const Attribute attribute);
+
 }  // namespace his_gen
 
 #endif // HISTORY_GENERATOR_DEFS_H

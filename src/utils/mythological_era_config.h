@@ -29,6 +29,12 @@ public:
    */
   uint32_t Max_entity_per_tick;
 
+  /**
+   * @brief If true, there will be a 50/50 chance for both 'can sire' and 'can
+   * bear', meaning some gods will be able to do both or neither.
+   */
+  bool Full_random_reproduction{false};
+
   // Implementation
   /**
    * @brief Constructor

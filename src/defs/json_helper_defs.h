@@ -11,12 +11,50 @@
 // JSON
 #include <deps/json.hpp>
 
+// Application files
+#include <defs/history_generator_defs.h>
+
 /**
  * Extension of nlohmann namespace for additional serializers to handle
  * polymorphism
  */
 namespace nlohmann
 {
+
+template <typename T>
+struct adl_serializer<std::map<his_gen::Attribute, T>>
+{
+  using Map = std::map<his_gen::Attribute, T>;
+
+  static void to_json(json& json, Map const& map)
+  {
+    for(auto it = map.begin(); it != map.end(); ++it)
+    {
+      json[his_gen::Get_attribute_string(it->first)] = it->second;
+    }
+  }
+};
+
+///**
+// * @brief Additional serializer for personality attribute maps
+// */
+//template <typename T>
+//struct adl_serializer<std::map<his_gen::Attribute, T>>
+//{
+//  /**
+//   * @brief to_json
+//   * @param json
+//   * @param map
+//   */
+//  static void to_json(json& json, const std::map<his_gen::Attribute, T>& map)
+//  {
+//    for(auto it = map.begin(); it != map.end(); ++it)
+//    {
+//      json[his_gen::Get_attribute_string(it->first)] = it->second;
+//    }
+//  }
+//}; // struct adl_serializer
+
 /**
  * @brief Additional serializer for a shared pointer
  */

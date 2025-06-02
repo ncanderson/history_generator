@@ -11,6 +11,7 @@
 #include <deps/json.hpp>
 
 // Application files
+#include <defs/history_generator_defs.h>
 
 namespace his_gen
 {
@@ -34,8 +35,18 @@ public:
    */
   ~Personality(){};
 
+  /**
+   * @brief Get_attributes
+   * @return
+   */
+  std::map<Attribute, int8_t> Get_attributes() const { return m_personality_attributes; }
+
 protected:
   // Attributes
+  /**
+   * @brief All personality attributes with corresponding values
+   */
+  std::map<Attribute, int8_t> m_personality_attributes;
 
   // Implementation
 
@@ -43,6 +54,10 @@ private:
   // Attributes
 
   // Implementation
+  /**
+   * @brief construct_personality_attributes
+   */
+  void construct_personality_attributes();
 
 }; // class Personality
 
