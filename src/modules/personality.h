@@ -43,18 +43,20 @@ public:
 
 protected:
   // Attributes
-
-  // Implementation
-
-private:  
-  // Attributes
-
   /**
    * @brief All personality attributes with corresponding values
    */
   std::map<Attribute, int8_t> m_personality_attributes;
 
   // Implementation
+
+private:
+  // Attributes
+
+  // Implementation
+  /**
+   * @brief construct_personality_attributes
+   */
   void construct_personality_attributes();
 
 }; // class Personality

@@ -8,9 +8,11 @@
 ///////////////////////////////////////////////////////////////////////
 
 his_gen::Personality_attraction::Personality_attraction(std::map<Attribute, int8_t> entity_attributes)
-    :
-    Personality(),
-    m_attraction_flexibility(derive_attraction_flexibility(entity_attributes))
+  :
+  Personality(),
+  m_attraction_flexibility(derive_attraction_flexibility(entity_attributes)),
+  m_attracted_to_can_sire(false),
+  m_attracted_to_can_bear(false)
 {
 
 }

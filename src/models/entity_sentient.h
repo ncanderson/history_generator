@@ -22,7 +22,8 @@ namespace his_gen
 /**
  * @brief A generated entity
  */
-class Entity_sentient : public Entity_base
+class Entity_sentient : public Entity_base,
+                        public std::enable_shared_from_this<Entity_sentient>
 {
 public:
   // Attributes
@@ -41,19 +42,32 @@ public:
   ~Entity_sentient(){};
 
   /**
+   * @brief Check if this entity is attracted to `other_entity`
+   * @param other_entity The entity to check
+   * @return True if `this` is attracted to `other_entity`, otherwise false.
+   */
+  bool Is_attracted(std::shared_ptr<Entity_base> other_entity) override;
+
+  /**
+   * @brief Is_attracted to other_entity
+   * @details `attracted_to` will only be populated with `other_entity` if there
+   * is attraction. This function does not handle mutual attraction, but expects
+   * the caller to utilize the `attracted_to` vector populated here.
+   * @param other_entity The entity to compare to
+   * @param attracted_to Vector to populate with attraction partners
+   * @return True if `this` is attracted to `other_entity`, otherwise false.
+   */
+  bool Is_attracted(std::shared_ptr<Entity_base> other_entity,
+                    std::vector<std::shared_ptr<Entity_base>> attracted_to) override;
+
+  /**
    * Getters and Setters
    */
   Personality Get_personality() const { return m_personality; }
   void Set_personality(Personality personality) { m_personality = personality; }
 
-  Personality_attraction Get_personality_attraction() const
-  {
-    return m_personality_attraction;
-  }
-  void Set_personality_attraction (Personality_attraction personality_attraction)
-  {
-    m_personality_attraction = personality_attraction;
-  }
+  Personality_attraction Get_personality_attraction() const { return m_personality_attraction; }
+  void Set_personality_attraction (Personality_attraction personality_attraction) { m_personality_attraction = personality_attraction; }
 
   bool Get_can_sire() const { return m_can_sire_young; }
   void Set_can_sire(bool can_sire_young) { m_can_sire_young = can_sire_young; }
@@ -90,6 +104,16 @@ private:
   bool m_can_bear_young;
 
   // Implementation
+  /**
+   * @brief Check the reproductive attraction of this compared to some other
+   * entity.
+   * @details This function evaulates attraction to reproduction exclusively,
+   * and will not consider any other attributes of a sentient entity, like gender,
+   * sexuality, mutual attraction, etc.
+   * @param other_entity The entity to evaulate against this
+   * @return True if attraced, otherwise false
+   */
+  bool repro_attraction(std::shared_ptr<his_gen::Entity_sentient> other_entity);
 
 }; // class Entity_sentient
 

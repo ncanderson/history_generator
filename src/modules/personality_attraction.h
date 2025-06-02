@@ -79,7 +79,7 @@ private:
    * | 10      | 100             | 10                          |
    * | 2       | 100             | 50                          |
    */
-  double m_coefficient_divisor = 2.0;
+  double m_coefficient_divisor = 2;
 
   /**
    * @brief m_attraction_flexibility
@@ -89,12 +89,12 @@ private:
   /**
    * @brief attracted_to_can_sire
    */
-  bool m_attracted_to_can_sire{false};
+  bool m_attracted_to_can_sire;
 
   /**
    * @brief attracted_to_can_bear
    */
-  bool m_attracted_to_can_bear{false};
+  bool m_attracted_to_can_bear;
 
   // Implementation
   /**
