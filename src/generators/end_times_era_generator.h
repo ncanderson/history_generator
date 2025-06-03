@@ -50,10 +50,6 @@ protected:
   // Attributes
 
   // Implementation
-  /**
-   * @brief Create a new entity
-   */
-  void create_entity() override;
 
 private:
   // Attributes

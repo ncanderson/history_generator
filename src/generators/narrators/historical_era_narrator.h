@@ -24,7 +24,7 @@ public:
   /**
    * @brief Constructor
    */
-  Historical_era_narrator();
+  Historical_era_narrator(const his_gen::Data_access_manager& data_access_manager);
 
   /**
    * @brief Destructor
@@ -36,7 +36,7 @@ public:
    * @param entities
    * @param entities_per_tick
    */
-  void Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>> entities,
+  void Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
                        int64_t entities_per_tick) override;
 
 protected:
@@ -46,7 +46,7 @@ protected:
   /**
    * @brief Create a new entity
    */
-  void create_entity() override;
+  std::shared_ptr<his_gen::Entity_base> create_entity() override;
 
 private:
   // Attributes

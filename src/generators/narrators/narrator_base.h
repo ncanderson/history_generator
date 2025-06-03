@@ -51,14 +51,14 @@ public:
    * @param entities The vector of entity pointers to populate.
    * @param entities_per_tick Configued entities to create per generator tick.
    */
-  virtual void Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>> entities,
+  virtual void Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
                                int64_t entities_per_tick) = 0;
 
   /**
    * @brief Check all entities in `entities` for attraction
    * @param entities Vector of entities to review
    */
-  void Run_entity_attraction(std::vector<std::shared_ptr<his_gen::Entity_base>> entities);
+  void Run_entity_attraction(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities);
 
 protected:
   // Attributes
