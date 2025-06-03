@@ -6,7 +6,6 @@
 #define HISTORY_GENERATOR_MANAGER_H
 
 // Standard libs
-#include <memory>
 
 // Application files
 #include <generators/mythological_era_generator.h>
@@ -92,17 +91,17 @@ private:
   his_gen::Era m_current_era;
 
   /**
-   * @brief m_myth_gen Shared pointer to the Mythology generator
+   * @brief m_myth_gen The Mythology generator
    */
   his_gen::Mythological_era_generator m_myth_gen;
 
   /**
-   * @brief m_myth_gen Shared pointer to the History generator
+   * @brief m_myth_gen The History generator
    */
   his_gen::Historical_era_generator m_hist_gen;
 
   /**
-   * @brief m_myth_gen Shared pointer to the End times generator
+   * @brief m_myth_gen The End times generator
    */
   his_gen::End_times_era_generator m_end_times_gen;
 

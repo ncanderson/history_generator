@@ -28,7 +28,7 @@ his_gen::History_generator_manager::History_generator_manager(const his_gen::His
                                                      m_data_access_manager,
                                                      m_data_definitions)),
     m_num_iterations(0)
-{  
+{
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -44,7 +44,7 @@ his_gen::Era his_gen::History_generator_manager::Run()
       m_current_era = his_gen::Era::ERA_Mythology;
       break;
 
-    case his_gen::Era::ERA_Mythology:    
+    case his_gen::Era::ERA_Mythology:
       // Run through one generation iteration
       m_myth_gen.Run();
 
@@ -87,4 +87,3 @@ his_gen::Era his_gen::History_generator_manager::Run()
 }
 
 ///////////////////////////////////////////////////////////////////////
-// END OF FILE

@@ -1,4 +1,4 @@
-/**
+
  * Copyright (C) 2024 Nate Anderson - All Rights Reserved
  */
 
@@ -76,4 +76,3 @@ void his_gen::Data_access_dao_file::Load_all_names(std::vector<std::string>& nam
 }
 
 ///////////////////////////////////////////////////////////////////////
-// END OF FILE
