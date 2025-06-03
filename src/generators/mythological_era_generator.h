@@ -38,9 +38,9 @@ public:
                              const his_gen::Data_definitions& data_definitions);
 
   /**
-   * @brief Destructor.
+   * @brief Destructor
    */
-  virtual ~Mythological_era_generator(){}
+  ~Mythological_era_generator(){}
 
   /**
    * @brief Run the generator
@@ -57,7 +57,7 @@ private:
   /**
    * @brief Narrator to handle specific events within the generator context
    */
-  Myth_era_narrator m_myth_narrator;
+  Mythological_era_narrator m_myth_narrator;
 
   // Implementation
 

@@ -37,9 +37,9 @@ public:
                           const his_gen::Data_definitions& data_definitions);
 
   /**
-   * @brief Destructor.
+   * @brief Destructor
    */
-  virtual ~End_times_era_generator(){}
+  ~End_times_era_generator(){}
 
   /**
    * @brief Run the generator

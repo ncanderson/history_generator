@@ -52,6 +52,11 @@ public:
   }
 
   /**
+   * @brief Destructor
+   */
+  ~Generator_base() = default;
+
+  /**
    * @brief Run the generator
    */
   virtual void Run() = 0;

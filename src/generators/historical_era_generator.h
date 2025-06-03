@@ -36,9 +36,9 @@ public:
                            const his_gen::Data_definitions& data_definitions);
 
   /**
-   * @brief Destructor.
+   * @brief Destructor
    */
-  virtual ~Historical_era_generator(){}
+  ~Historical_era_generator(){}
 
   /**
    * @brief Run the generator

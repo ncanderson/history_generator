@@ -20,7 +20,7 @@ namespace his_gen
 /**
  * @brief Myth era generator narrator
  */
-class Myth_era_narrator : public Narrator_base
+class Mythological_era_narrator : public Narrator_base
 {
 public:
   // Attributes
@@ -29,13 +29,13 @@ public:
   /**
    * @brief Constructor
    */
-  Myth_era_narrator(const his_gen::Data_access_manager& data_access_manager,
+  Mythological_era_narrator(const his_gen::Data_access_manager& data_access_manager,
                     const his_gen::History_generator_root_config& his_gen_config);
 
   /**
    * @brief Destructor
    */
-  ~Myth_era_narrator();
+  ~Mythological_era_narrator(){}
 
   /**
    * @brief Create_entities

@@ -29,7 +29,7 @@ public:
   /**
    * @brief Destructor
    */
-  ~Historical_era_narrator();
+  ~Historical_era_narrator(){}
 
   /**
    * @brief Create_entities

@@ -44,7 +44,7 @@ public:
   /**
    * @brief Destructor
    */
-  ~Narrator_base();
+  ~Narrator_base() = default;
 
   /**
    * @brief Inheriting classes must implement this function to create new entities.
