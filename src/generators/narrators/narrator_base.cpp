@@ -3,11 +3,11 @@
  */
 
 // Standard
-#include <modules/narrator.h>
+#include <generators/narrators/narrator_base.h>
 
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::Narrator::Narrator()
+his_gen::Narrator_base::Narrator_base()
 {
 }
 
