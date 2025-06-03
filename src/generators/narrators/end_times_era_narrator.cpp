@@ -3,11 +3,11 @@
  */
 
 // Standard
-#include <generators/narrators/mythological_era_narrator.h>
+#include <generators/narrators/end_times_era_narrator.h>
 
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::Myth_era_narrator::Myth_era_narrator()
+his_gen::End_times_era_narrator::End_times_era_narrator()
 {
 }
 
