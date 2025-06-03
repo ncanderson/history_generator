@@ -13,6 +13,14 @@ namespace his_gen
 {
 // TODO: Should each generator have its own narrator or will a single narrator
 // work for all generators?
+
+// TODO: Add an event manager that will handle the creation of event chains.
+// These chains could be loaded from config, but will use event types to
+// construct a series of events. So the generator would say 'give me marriages',
+// the narrator for the era would do what needs doing. The event manager will
+// just accept a given event type, maybe some additional params, and then return
+// the next action. The narrator will have to parse that return
+
 /**
  * @brief Narrator module
  * @details The narrator handles calls from each generator. A generator might
