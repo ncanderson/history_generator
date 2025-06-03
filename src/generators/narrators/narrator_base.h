@@ -8,6 +8,8 @@
 // Standard libs
 
 // Application files
+#include <models/entity_base.h>
+#include <data_access/data_access_manager.h>
 
 namespace his_gen
 {
@@ -44,15 +46,35 @@ public:
    */
   ~Narrator_base();
 
+  /**
+   * @brief Inheriting classes must implement this function to create new entities.
+   * @param entities The vector of entity pointers to populate.
+   * @param entities_per_tick Configued entities to create per generator tick.
+   */
+  virtual void Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>> entities,
+                               int64_t entities_per_tick) = 0;
+
+  /**
+   * @brief Check all entities in `entities` for attraction
+   * @param entities Vector of entities to review
+   */
+  void Run_entity_attraction(std::vector<std::shared_ptr<his_gen::Entity_base>> entities);
+
 protected:
   // Attributes
 
   // Implementation
+  /**
+   * @brief Entity creation. Implementing classes must use their own
+   * configuration for the purposes of entity creation.
+   */
+  virtual std::shared_ptr<his_gen::Entity_base> create_entity() = 0;
 
 private:
   // Attributes
 
   // Implementation
+
 
 }; // class Narrator_base
 }  // namespace his_gen

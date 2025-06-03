@@ -31,10 +31,22 @@ public:
    */
   ~Historical_era_narrator();
 
+  /**
+   * @brief Create_entities
+   * @param entities
+   * @param entities_per_tick
+   */
+  void Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>> entities,
+                       int64_t entities_per_tick) override;
+
 protected:
   // Attributes
 
   // Implementation
+  /**
+   * @brief Create a new entity
+   */
+  void create_entity() override;
 
 private:
   // Attributes

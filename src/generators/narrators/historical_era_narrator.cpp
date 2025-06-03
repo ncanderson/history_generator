@@ -7,8 +7,18 @@
 
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::Historical_era_narrator::Historical_era_narrator()
+his_gen::Historical_era_narrator::Historical_era_narrator(const his_gen::Data_access_manager& data_access_manager)
+  :
+  Narrator_base()
 {
+}
+
+///////////////////////////////////////////////////////////////////////
+
+void Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
+                     int64_t entities_per_tick)
+{
+  // NOOP
 }
 
 ///////////////////////////////////////////////////////////////////////

@@ -11,11 +11,11 @@ his_gen::Historical_era_generator::Historical_era_generator(const his_gen::Histo
                                                             his_gen::Generated_history& generated_history,
                                                             const his_gen::Data_access_manager& data_access_manager,
                                                             const his_gen::Data_definitions& data_definitions)
-    :
-    his_gen::Generator_base(his_gen_config,
-                            generated_history,
-                            data_access_manager,
-                            data_definitions)
+  :
+  his_gen::Generator_base(his_gen_config,
+                          generated_history,
+                          data_access_manager,
+                          data_definitions)
 {
 
 }

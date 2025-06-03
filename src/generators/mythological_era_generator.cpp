@@ -11,12 +11,12 @@ his_gen::Mythological_era_generator::Mythological_era_generator(const his_gen::H
                                                                 his_gen::Generated_history& generated_history,
                                                                 const his_gen::Data_access_manager& data_access_manager,
                                                                 const his_gen::Data_definitions& data_definitions)
-    :
-    his_gen::Generator_base(his_gen_config,
-                            generated_history,
-                            data_access_manager,
-                            data_definitions),
-    m_names(data_access_manager)
+  :
+  his_gen::Generator_base(his_gen_config,
+                          generated_history,
+                          data_access_manager,
+                          data_definitions),
+  m_myth_narrator(data_access_manager, his_gen_config)
 {
   m_generator_ticks = his_gen_config.Get_myth_config().Myth_gen_ticks;
   m_entities_per_tick = his_gen_config.Get_myth_config().Max_entity_per_tick;
@@ -34,7 +34,7 @@ void his_gen::Mythological_era_generator::Run()
     case STAGE_Init:
     {
       // Create a new ultimate parent entity
-      create_progenitor_deity();
+      m_myth_narrator.Create_progenitor_deity(m_generated_history.Entities);
 
       m_current_stage = STAGE_Run;
     }
@@ -43,43 +43,12 @@ void his_gen::Mythological_era_generator::Run()
     case STAGE_Run:
     {
       // Generate the desired number of entities for this tick
-      for(int64_t tick = 0; tick < m_entities_per_tick; tick++)
-      {
-        create_entity();
-      }
+      m_myth_narrator.Create_entities(m_generated_history.Entities,
+                                      m_entities_per_tick);
 
-      // Check for entity attraction
-      std::vector<std::pair<std::shared_ptr<his_gen::Entity_sentient>,
-                            std::shared_ptr<his_gen::Entity_sentient>>> pairs;
+      // Do they like each other?
+      m_myth_narrator.Run_entity_attraction(m_generated_history.Entities);
 
-      // Loop through all entities
-      for(auto& it : m_generated_history.Entities)
-      {
-        // Vector to track attraction for this entity, so we can review mutual attraction
-        std::vector<std::shared_ptr<his_gen::Entity_base>> i_love_these_people;
-
-        // Compare to all other entities
-        for(auto& inner : m_generated_history.Entities)
-        {
-          it->Is_attracted(inner, i_love_these_people);
-        }
-
-        // If this entity is attracted to any other entities, check for mutual attraction
-        if(!i_love_these_people.empty())
-        {
-          for(auto& mutuals : i_love_these_people)
-          {
-            if(mutuals->Is_attracted(it))
-            {
-              std::pair<std::shared_ptr<his_gen::Entity_sentient>,
-                        std::shared_ptr<his_gen::Entity_sentient>> attraction =
-                  std::make_pair(std::dynamic_pointer_cast<his_gen::Entity_sentient>(it),
-                                 std::dynamic_pointer_cast<his_gen::Entity_sentient>(mutuals));
-              pairs.push_back(attraction);
-            }
-          }
-        }
-      }
 
       // Increment run-time ticks
       m_ticks_completed++;
@@ -113,23 +82,3 @@ void his_gen::Mythological_era_generator::Run()
 }
 
 ///////////////////////////////////////////////////////////////////////
-
-void his_gen::Mythological_era_generator::create_progenitor_deity()
-{
-  std::shared_ptr<his_gen::Entity_sentient> ptr = std::make_shared<his_gen::Entity_sentient>("God",
-                                                                                             "the Allfather",
-                                                                                             false);
-  m_generated_history.Entities.push_back(ptr);
-}
-
-///////////////////////////////////////////////////////////////////////
-
-void his_gen::Mythological_era_generator::create_entity()
-{
-  m_generated_history.Entities.push_back(std::make_shared<his_gen::Entity_sentient>(m_names.Get_one_name(),
-                                                                                    m_names.Get_one_title(),
-                                                                                    m_his_gen_config.Get_myth_config().Full_random_reproduction));
-}
-
-///////////////////////////////////////////////////////////////////////
-// END OF FILE

@@ -24,7 +24,7 @@
 namespace his_gen
 {
 /**
- * @brief The 'master' data type to contain vectors of all generate history
+ * @brief The 'master' data type to contain vectors of all generated history
  */
 class Generated_history
 {
@@ -47,8 +47,8 @@ public:
    */
   Generated_history()
     :
-      Entities(),
-      Entity_relationships()
+    Entities(),
+    Entity_relationships()
   {
   }
 

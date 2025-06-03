@@ -37,13 +37,16 @@ public:
                  his_gen::Generated_history& generated_history,
                  const his_gen::Data_access_manager& data_access_manager,
                  const his_gen::Data_definitions& data_definitions)
-      :
-      m_generation_complete(false),
-      m_current_stage(his_gen::Stage::STAGE_Init),
-      m_his_gen_config(his_gen_config),
-      m_generated_history(generated_history),
-      m_data_access_manager(data_access_manager),
-      m_data_definitions(data_definitions)
+    :
+    m_generation_complete(false),
+    m_current_stage(his_gen::Stage::STAGE_Init),
+    m_his_gen_config(his_gen_config),
+    m_generated_history(generated_history),
+    m_data_access_manager(data_access_manager),
+    m_data_definitions(data_definitions),
+    m_generator_ticks(0),
+    m_entities_per_tick(0),
+    m_ticks_completed(0)
   {
 
   }
@@ -54,22 +57,10 @@ public:
   virtual void Run() = 0;
 
   /**
-   * @brief Return boolean indicating completion status of this generator
-   * @return True if generation is complete, false otherwise.
+   * Getters and Setters
    */
-  bool Get_generation_complete()
-  {
-    return m_generation_complete;
-  }
-
-  /**
-   * @brief Set generation status for this generator
-   * @param generation_complete True if generation is complete, false otherwise.
-   */
-  void Set_generation_complete(bool generation_complete)
-  {
-    m_generation_complete = generation_complete;
-  }
+  bool Get_generation_complete() { return m_generation_complete; }
+  void Set_generation_complete(bool generation_complete) { m_generation_complete = generation_complete; }
 
 protected:
   // Attributes
@@ -107,23 +98,19 @@ protected:
   /**
    * @brief m_generator_ticks
    */
-  int64_t m_generator_ticks{0};
+  int64_t m_generator_ticks;
 
   /**
    * @brief m_entities_per_tick
    */
-  int64_t m_entities_per_tick{0};
+  int64_t m_entities_per_tick;
 
   /**
    * @brief Total generator ticks completed
    */
-  int64_t m_ticks_completed{0};
+  int64_t m_ticks_completed;
 
   // Implementation
-  /**
-   * @brief Virtual base class for entity creation
-   */
-  virtual void create_entity() = 0;
 
 private:
   // Attributes

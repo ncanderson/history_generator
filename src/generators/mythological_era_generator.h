@@ -10,7 +10,7 @@
 // Application files
 #include <defs/history_generator_defs.h>
 #include <generators/generator_base.h>
-#include <modules/names.h>
+#include <generators/narrators/mythological_era_narrator.h>
 
 // Models
 #include <models/generated_history.h>
@@ -51,25 +51,13 @@ protected:
   // Attributes
 
   // Implementation
-  /**
-   * @brief Create a new entity
-   */
-  void create_entity() override;
-
-  /**
-   * @brief The first being in this mythology
-   */
-  void create_progenitor_deity();
 
 private:
   // Attributes
-
-  // TODO: there should be a better place for this, otherwise we'll get tons
-  // of duplicate names if each generator has its own copy
   /**
-   * @brief Names object
+   * @brief Narrator to handle specific events within the generator context
    */
-  Names m_names;
+  Myth_era_narrator m_myth_narrator;
 
   // Implementation
 
