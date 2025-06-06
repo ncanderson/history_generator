@@ -38,19 +38,15 @@ public:
 
   /**
    * @brief List of all entity relationships
+   * @details This vector will hold all entity relationships,
    */
-  std::vector<his_gen::Entity_relationship> Entity_relationships;
+  std::map<boost::uuids::uuid, std::shared_ptr<his_gen::Entity_relationship>> Entity_relationships;
 
   // Implementation
   /**
    * @brief Constructor
    */
-  Generated_history()
-    :
-    Entities(),
-    Entity_relationships()
-  {
-  }
+  Generated_history();
 
   /**
    * @brief Destructor

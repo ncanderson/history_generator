@@ -64,17 +64,24 @@ public:
    * Getters and Setters
    */
   Personality Get_personality() const { return m_personality; }
-  void Set_personality(Personality personality) { m_personality = personality; }
+  void Set_personality(const Personality& personality) { m_personality = personality; }
 
   Personality_attraction Get_personality_attraction() const { return m_personality_attraction; }
-  void Set_personality_attraction (Personality_attraction personality_attraction) { m_personality_attraction = personality_attraction; }
+  void Set_personality_attraction(const Personality_attraction& personality_attraction) { m_personality_attraction = personality_attraction; }
 
   bool Get_can_sire() const { return m_can_sire_young; }
-  void Set_can_sire(bool can_sire_young) { m_can_sire_young = can_sire_young; }
+  void Set_can_sire(const bool can_sire_young) { m_can_sire_young = can_sire_young; }
 
   bool Get_can_bear() const { return m_can_bear_young; }
-  void Set_can_bear(bool can_bear_young) { m_can_bear_young = can_bear_young; }
+  void Set_can_bear(const bool can_bear_young) { m_can_bear_young = can_bear_young; }
 
+  std::vector<std::shared_ptr<his_gen::Entity_base>> Get_spouses() const { return m_spouses; }
+  void Set_spouses(const std::vector<std::shared_ptr<his_gen::Entity_base>>& spouses) { m_spouses = spouses; }
+  void Add_spouse(const std::shared_ptr<his_gen::Entity_base>& spouse) { m_spouses.push_back(spouse); }
+
+  std::vector<std::shared_ptr<his_gen::Entity_base>> Get_lovers() const { return m_lovers; }
+  void Set_lovers(const std::vector<std::shared_ptr<his_gen::Entity_base>>& lovers) { m_lovers = lovers; }
+  void Add_lover(const std::shared_ptr<his_gen::Entity_base>& lover) { m_lovers.push_back(lover); }
 
 protected:
   // Attributes
@@ -92,6 +99,16 @@ private:
    * @brief This entity's attraction
    */
   Personality_attraction m_personality_attraction;
+
+  /**
+   * @brief m_spouses Spouses of this entity
+   */
+  std::vector<std::shared_ptr<his_gen::Entity_base>> m_spouses;
+
+  /**
+   * @brief Lovers of this entity (but not spouses)
+   */
+  std::vector<std::shared_ptr<his_gen::Entity_base>> m_lovers;
 
   /**
    * @brief Entity can sire young

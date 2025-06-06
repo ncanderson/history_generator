@@ -67,8 +67,8 @@ private:
  * @param json
  * @param data_definitions
  */
-void to_json(nlohmann::json& json, const
-             his_gen::Data_definitions& data_definitions);
+void to_json(nlohmann::json& json,
+             const his_gen::Data_definitions& data_definitions);
 
 /**
  * @brief from_json

@@ -10,7 +10,7 @@
 his_gen::Historical_era_generator::Historical_era_generator(const his_gen::History_generator_root_config& his_gen_config,
                                                             his_gen::Generated_history& generated_history,
                                                             const his_gen::Data_access_manager& data_access_manager,
-                                                            const his_gen::Data_definitions& data_definitions)
+                                                            const std::shared_ptr<his_gen::Data_definitions> data_definitions)
   :
   his_gen::Generator_base(his_gen_config,
                           generated_history,

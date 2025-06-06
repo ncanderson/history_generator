@@ -7,6 +7,7 @@
 
 // Standard libs
 #include <string>
+#include <boost/uuid/random_generator.hpp>
 
 // JSON
 #include <deps/json.hpp>
@@ -30,10 +31,11 @@ public:
    * @brief Constructor.
    */
   Entity_base(std::string name, std::string title = "")
-      :
-      m_name(name),
-      m_title(title)
-  { };
+    :
+    m_entity_relationship_ids(),
+    m_name(name),
+    m_title(title)
+  { }
 
   /**
    * @brief Virtual destructor.
@@ -62,13 +64,25 @@ public:
   /**
    * Getters and setters
    */
-  void Set_name(std::string name) { m_name = name; }
   std::string Get_name() const { return m_name; }
-  void Set_title(std::string title) { m_title=title; }
+  void Set_name(const std::string& name) { m_name = name; }
+
   std::string Get_title() const { return m_title; }
+  void Set_title(const std::string& title) { m_title=title; }
+
+  std::vector<boost::uuids::uuid> Get_relationship_ids() const { return m_entity_relationship_ids; }
+  void Set_relationship_ids(const std::vector<boost::uuids::uuid>& entity_relationship_ids) { m_entity_relationship_ids = entity_relationship_ids; }
+  void Add_relationship_id(const boost::uuids::uuid& relationship_id) { m_entity_relationship_ids.push_back(relationship_id); }
 
 protected:
   // Attributes
+  /**
+   * @brief Vector of this entity's relationships.
+   * @details These relationship IDs will be used to access the relationships
+   * from the main map of all relationships.
+   */
+  std::vector<boost::uuids::uuid> m_entity_relationship_ids;
+
   /**
    * @brief Entity name
    */
@@ -98,8 +112,9 @@ inline void to_json(nlohmann::json& json, const his_gen::Entity_base& entity_bas
 {
   json = nlohmann::json
   {
-      {"name", entity_base.Get_name()},
-      {"title", entity_base.Get_title()}
+    {"name", entity_base.Get_name()},
+    {"title", entity_base.Get_title()},
+    {"relationship_ids", entity_base.Get_relationship_ids()}
   };
 }
 
@@ -114,13 +129,14 @@ inline void from_json(const nlohmann::json& json, his_gen::Entity_base& entity_b
   {
     entity_base.Set_name(json.at("name"));
     entity_base.Set_title(json.at("title"));
+    entity_base.Set_relationship_ids(json.at("relationship_ids"));
   }
 }
 
 }  // namespace his_gen
 
 /**
- * By extending the adl_serializer to utilize this class, we can register
+ * @brief By extending the adl_serializer to utilize this class, we can register
  * derived classed allowing us to serialize those classes to JSON
  */
 namespace nlohmann
@@ -129,6 +145,7 @@ template <>
 struct adl_serializer<his_gen::Entity_base>
     :
     Polymorphic_serializer<his_gen::Entity_base>{ };
+
 } // namespace nlohmann
 
 #endif // ENTITY_BASE_H

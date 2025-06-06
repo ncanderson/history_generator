@@ -21,7 +21,9 @@ sentient::Entity_sentient(std::string name,
   m_personality(),
   m_personality_attraction(m_personality.Get_attributes()),
   m_can_sire_young(),
-  m_can_bear_young()
+  m_can_bear_young(),
+  m_lovers(),
+  m_spouses()
 {
   // Register the derived class with the JSON serializer
   Polymorphic_serializer<his_gen::Entity_base>::register_types<his_gen::Entity_base,
@@ -131,7 +133,9 @@ void his_gen::to_json(nlohmann::json& json,
     {"personality", entity_sentient.Get_personality()},
     {"attraction", entity_sentient.Get_personality_attraction()},
     {"can_sire_young", entity_sentient.Get_can_sire()},
-    {"can_bear_young", entity_sentient.Get_can_bear()}
+    {"can_bear_young", entity_sentient.Get_can_bear()},
+    {"lovers", entity_sentient.Get_lovers()},
+    {"spouses", entity_sentient.Get_spouses()}
   });
 }
 

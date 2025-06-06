@@ -83,7 +83,7 @@ private:
   /**
    * @brief The data definitions object
    */
-  his_gen::Data_definitions m_data_definitions;
+  std::shared_ptr<his_gen::Data_definitions> m_data_definitions;
 
   /**
    * @brief m_current_era Variable to track the generator's current era

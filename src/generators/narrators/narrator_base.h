@@ -39,7 +39,7 @@ public:
   /**
    * @brief Constructor
    */
-  Narrator_base();
+  Narrator_base(const std::shared_ptr<his_gen::Data_definitions> data_definitions);
 
   /**
    * @brief Destructor
@@ -57,8 +57,10 @@ public:
   /**
    * @brief Check all entities in `entities` for attraction
    * @param entities Vector of entities to review
+   * @param enitity_relationships Map to track any new relationships
    */
-  void Run_entity_attraction(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities);
+  void Run_entity_attraction(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
+                             std::map<boost::uuids::uuid, std::shared_ptr<his_gen::Entity_relationship>>& enitity_relationships);
 
 protected:
   // Attributes
@@ -72,9 +74,12 @@ protected:
 
 private:
   // Attributes
+  /**
+   * @brief Pointer to the data definitions
+   */
+  const std::shared_ptr<his_gen::Data_definitions> m_data_definitions;
 
   // Implementation
-
 
 }; // class Narrator_base
 }  // namespace his_gen

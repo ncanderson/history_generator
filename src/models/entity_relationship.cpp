@@ -6,6 +6,20 @@
 #include <models/entity_relationship.h>
 
 ///////////////////////////////////////////////////////////////////////
+
+his_gen::Entity_relationship::Entity_relationship(boost::uuids::uuid relationship_id,
+                                                  std::shared_ptr<his_gen::Entity_base> entity_1,
+                                                  std::shared_ptr<his_gen::Entity_base> entity_2)
+  :
+  m_relationship_id(relationship_id),
+  m_entity_1(entity_1),
+  m_entity_2(entity_2)
+{
+
+}
+
+
+///////////////////////////////////////////////////////////////////////
 // JSON Helpers
 
 void his_gen::to_json(nlohmann::json& json,

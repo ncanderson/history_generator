@@ -18,16 +18,21 @@ namespace his_gen
 /**
  * @brief The type of entity
  */
-class Entity_type
+class  Entity_type
 {
 public:
   // Attributes
 
   // Implementation
   /**
+   * @brief Default constructor, required for JSON serialization
+   */
+  Entity_type() = default;
+
+  /**
    * @brief Constructor
    */
-  Entity_type(){}
+  Entity_type(std::string name);
 
   /**
    * @brief Destructor
@@ -35,15 +40,9 @@ public:
   ~Entity_type(){};
 
   /**
-   * @brief Set_name
-   * @param name
+   * Getters and setters
    */
   void Set_name(std::string name) { m_name = name; }
-
-  /**
-   * @brief Get_name
-   * @return
-   */
   std::string Get_name() const { return m_name; }
 
 protected:

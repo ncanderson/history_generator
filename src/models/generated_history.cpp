@@ -7,6 +7,16 @@
 
 ///////////////////////////////////////////////////////////////////////
 
+his_gen::Generated_history::Generated_history()
+  :
+  Entities(),
+  Entity_relationships()
+{
+
+}
+
+///////////////////////////////////////////////////////////////////////
+
 void his_gen::to_json(nlohmann::json& json,
                       const his_gen::Generated_history& generated_history)
 {

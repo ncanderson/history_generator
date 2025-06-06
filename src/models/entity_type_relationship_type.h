@@ -35,9 +35,9 @@ public:
 
   // Implementation
   /**
-   * @brief Constructor
+   * @brief Default constructor, required for JSON serialization
    */
-  Entity_type_relationship_type(){}
+  Entity_type_relationship_type() = default;
 
   /**
    * @brief Destructor

@@ -10,13 +10,13 @@
 his_gen::Mythological_era_generator::Mythological_era_generator(const his_gen::History_generator_root_config& his_gen_config,
                                                                 his_gen::Generated_history& generated_history,
                                                                 const his_gen::Data_access_manager& data_access_manager,
-                                                                const his_gen::Data_definitions& data_definitions)
+                                                                const std::shared_ptr<his_gen::Data_definitions> data_definitions)
   :
   his_gen::Generator_base(his_gen_config,
                           generated_history,
                           data_access_manager,
                           data_definitions),
-  m_myth_narrator(data_access_manager, his_gen_config)
+  m_myth_narrator(data_access_manager, his_gen_config, data_definitions)
 {
   m_generator_ticks = his_gen_config.Get_myth_config().Myth_gen_ticks;
   m_entities_per_tick = his_gen_config.Get_myth_config().Max_entity_per_tick;
@@ -47,8 +47,8 @@ void his_gen::Mythological_era_generator::Run()
                                       m_entities_per_tick);
 
       // Do they like each other?
-      m_myth_narrator.Run_entity_attraction(m_generated_history.Entities);
-
+      m_myth_narrator.Run_entity_attraction(m_generated_history.Entities,
+                                            m_generated_history.Entity_relationships);
 
       // Increment run-time ticks
       m_ticks_completed++;

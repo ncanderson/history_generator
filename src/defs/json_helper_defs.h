@@ -7,6 +7,9 @@
 
 // Standard libraries
 #include <string>
+#include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_io.hpp>
+#include <boost/uuid/string_generator.hpp>
 
 // JSON
 #include <deps/json.hpp>
@@ -15,17 +18,25 @@
 #include <defs/history_generator_defs.h>
 
 /**
- * Extension of nlohmann namespace for additional serializers to handle
- * polymorphism
+ * @brief Extension of nlohmann namespace for additional serializers to handle
+ * polymorphism and additional data types
  */
 namespace nlohmann
 {
 
+/**
+ * @brief Adl_serializer for maps with attribute keys
+ */
 template <typename T>
 struct adl_serializer<std::map<his_gen::Attribute, T>>
 {
   using Map = std::map<his_gen::Attribute, T>;
 
+  /**
+   * @brief to_json
+   * @param json
+   * @param map
+   */
   static void to_json(json& json, Map const& map)
   {
     for(auto it = map.begin(); it != map.end(); ++it)
@@ -35,7 +46,7 @@ struct adl_serializer<std::map<his_gen::Attribute, T>>
   }
 };
 
-///**
+///** TODO: Why are you commented?
 // * @brief Additional serializer for personality attribute maps
 // */
 //template <typename T>
@@ -95,11 +106,41 @@ struct adl_serializer<std::shared_ptr<T>>
     }
   }
 
-}; // struct adl_serializer
+}; // struct adl_serializer: std::shared_ptr<T>
+
+/**
+ * @brief Adl_serializer for boost UUIDs
+ */
+template <>
+struct adl_serializer<boost::uuids::uuid>
+{
+  /**
+   * @brief to_json
+   * @param j
+   * @param id
+   */
+  static void to_json(json& j, const boost::uuids::uuid& id)
+  {
+    j = boost::uuids::to_string(id);
+  }
+
+  /**
+   * @brief from_json
+   * @param j
+   * @param id
+   */
+  static void from_json(const json& j, boost::uuids::uuid& id)
+  {
+    boost::uuids::string_generator gen;
+    id = gen(j.get<std::string>());
+  }
+}; // struct adl_serializer: boost::uuids::uuid
+
 }  // namespace nlohmann
 
 /**
- * @brief Polymorphic JSON serializer implementation
+ * @brief Polymorphic JSON serializer implementation. This will allow full
+ * serialization of types used polymorphically.
  */
 namespace Polymorphic_serializer_impl
 {

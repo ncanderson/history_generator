@@ -9,13 +9,16 @@ using nar_base = his_gen::Narrator_base;
 
 ///////////////////////////////////////////////////////////////////////
 
-nar_base::Narrator_base()
+nar_base::Narrator_base(const std::shared_ptr<his_gen::Data_definitions> data_definitions)
+  :
+  m_data_definitions(data_definitions)
 {
 }
 
 ///////////////////////////////////////////////////////////////////////
 
-void nar_base::Run_entity_attraction(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities)
+void nar_base::Run_entity_attraction(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
+                                     std::map<boost::uuids::uuid, std::shared_ptr<his_gen::Entity_relationship>>& enitity_relationships)
 {
   // Check for entity attraction
   std::vector<std::pair<std::shared_ptr<his_gen::Entity_sentient>,

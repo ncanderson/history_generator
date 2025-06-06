@@ -13,9 +13,10 @@ using myth_nar = his_gen::Mythological_era_narrator;
 ///////////////////////////////////////////////////////////////////////
 
 myth_nar::Mythological_era_narrator(const his_gen::Data_access_manager& data_access_manager,
-                            const his_gen::History_generator_root_config& his_gen_config)
+                                    const his_gen::History_generator_root_config& his_gen_config,
+                                    const std::shared_ptr<his_gen::Data_definitions> data_definitions)
   :
-  Narrator_base(),
+  Narrator_base(data_definitions),
   m_config(his_gen_config),
   m_names(data_access_manager)
 {
@@ -39,7 +40,7 @@ void myth_nar::Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>
 {
   for(int64_t tick = 0; tick < entities_per_tick; tick++)
   {
-    create_entity();
+    entities.push_back(create_entity());
   }
 }
 
