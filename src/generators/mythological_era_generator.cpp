@@ -42,6 +42,12 @@ void his_gen::Mythological_era_generator::Run()
 
     case STAGE_Run:
     {
+      /*
+       * new class, event
+       * there are event_type_entity_type
+       * rather than hard-coding steps we check, determine possible event from entity type
+       * pass that event off to the event manager, which will determine how the event proceeds
+       */
       // Generate the desired number of entities for this tick
       m_myth_narrator.Create_entities(m_generated_history.Entities,
                                       m_entities_per_tick);

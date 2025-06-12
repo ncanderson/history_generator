@@ -12,6 +12,13 @@ namespace his_gen
 {
 
 /**
+ * @brief Make a string lowercase
+ * @param input_string
+ * @return The converted string
+ */
+std::string To_lowercase(const std::string& input_string);
+
+/**
  * @brief The Era enum
  * @details Track the current position within the overall generation
  */
@@ -107,12 +114,12 @@ struct DAL_PG_params
 // enum member's values, or a separate structure that keeps them together in
 // pairs?
 /**
-   * @brief The Attribute enum
-   * @details Containing pairs of opposed personality attributes, this enum
-   * will be used as the key for a given entity's personality map. Use the
-   * Get_attribute_string function when outputing these attributes to the data
-   * storage.
-   */
+ * @brief The Attribute enum
+ * @details Containing pairs of opposed personality attributes, this enum
+ * will be used as the key for a given entity's personality map. Use the
+ * Get_attribute_string function when outputing these attributes to the data
+ * storage.
+ */
 enum Attribute
 {
   ATTRIBUTE_Aggressive,
@@ -154,10 +161,68 @@ enum Attribute
 };
 
 /**
-   * @brief Get the string representation of a personality attribute
-   * @param attribute The attribute to get the string for.
-   */
+ * @brief Get the string representation of a personality attribute
+ * @param attribute The attribute to get the string for.
+ */
 std::string Get_attribute_string(const Attribute attribute);
+
+/**
+ * @brief Entity types
+ */
+enum EEntity_type
+{
+  EENTITY_TYPE_Unknown,     ///< Who the fuck knows
+  EENTITY_TYPE_Beast,       ///< Animal or other non-monstrous creature
+  EENTITY_TYPE_Clan_tribe,  ///< CLan or tribe
+  EENTITY_TYPE_Deity,       ///< A god or deity
+  EENTITY_TYPE_Faction,     ///< A faction
+  EENTITY_TYPE_Monster,     ///< Monster
+  EENTITY_TYPE_Nation,      ///< Nation, country or state
+  EENTITY_TYPE_Sentient     ///< A sentient entity
+};
+
+/**
+ * @brief Get the entity type string from its enumerated value
+ * @param entity_type Enumerated entity type
+ * @return The string representation of the enumeration
+ */
+std::string Get_entity_type_string(const EEntity_type& entity_type);
+
+/**
+ * @brief Get the entity type string from its enumerated value
+ * @param entity_type String representation of the entity type
+ * @return The string representation of the enumeration
+ */
+EEntity_type Get_entity_type(const std::string& entity_type);
+
+/**
+ * @brief The ERelationship_type enum
+ */
+enum ERelationship_type
+{
+  ERELATIONSHIP_TYPE_Conflict,    ///< Conflict
+  ERELATIONSHIP_TYPE_Dominance,   ///< Dominance
+  ERELATIONSHIP_TYPE_Friendship,  ///< Friendship
+  ERELATIONSHIP_TYPE_Lover,       ///< Lover
+  ERELATIONSHIP_TYPE_Marriage,    ///< Marriage
+  ERELATIONSHIP_TYPE_Membership,  ///< Membership, like to an organization or nation
+  ERELATIONSHIP_TYPE_Ownership,   ///< Ownership over something
+  ERELATIONSHIP_TYPE_Parentage    ///< Parentage
+};
+
+/**
+ * @brief Get the relationship type string from its enumerated value
+ * @param relationship_type Enumerated relationship type
+ * @return The string representation of the enumeration
+ */
+std::string Get_relationship_type_string(const ERelationship_type& relationship_type);
+
+/**
+ * @brief Get the relationship type string from its enumerated value
+ * @param relationship_type String representation of the relationship type
+ * @return The string representation of the enumeration
+ */
+ERelationship_type Get_relationship_type(const std::string& relationship_type);
 
 }  // namespace his_gen
 

@@ -12,6 +12,7 @@
 
 // Application files
 #include <utils/history_generator_utils.h>
+#include <defs/history_generator_defs.h>
 
 namespace his_gen
 {
@@ -32,7 +33,7 @@ public:
   /**
    * @brief Constructor
    */
-  Entity_type(std::string name);
+  Entity_type(const std::string& name);
 
   /**
    * @brief Destructor
@@ -42,8 +43,11 @@ public:
   /**
    * Getters and setters
    */
-  void Set_name(std::string name) { m_name = name; }
+  void Set_name(const std::string& name) { m_name = name; }
   std::string Get_name() const { return m_name; }
+
+  void Set_entity_type(const his_gen::EEntity_type& eentity_type) { m_entity_type = eentity_type; }
+  his_gen::EEntity_type Get_entity_type() const { return m_entity_type; }
 
 protected:
   // Attributes
@@ -56,6 +60,11 @@ private:
    * @brief Entity type name
    */
   std::string m_name;
+
+  /**
+   * @brief Enumerated entity type
+   */
+  his_gen::EEntity_type m_entity_type;
 
   // Implementation
 

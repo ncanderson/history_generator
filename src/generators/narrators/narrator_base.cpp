@@ -54,4 +54,8 @@ void nar_base::Run_entity_attraction(std::vector<std::shared_ptr<his_gen::Entity
   }
 }
 
+/**
+ * this function will populate an entity relationship
+ */
+
 ///////////////////////////////////////////////////////////////////////

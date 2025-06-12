@@ -13,6 +13,7 @@
 
 // Application files
 #include <utils/history_generator_utils.h>
+#include <defs/history_generator_defs.h>
 
 namespace his_gen
 {
@@ -35,9 +36,24 @@ public:
   Relationship_type() = default;
 
   /**
+   * @brief Constructor
+   * @param name Relationship type name
+   */
+  Relationship_type(const std::string& name);
+
+  /**
    * @brief Destructor
    */
   ~Relationship_type(){};
+
+  /**
+   * Getters and setters
+   */
+  void Set_name(const std::string& name) { m_name = name; }
+  std::string Get_name() const { return m_name; }
+
+  void Set_relationship_type(const his_gen::ERelationship_type& erelationship_type) { m_relationship_type = erelationship_type; }
+  his_gen::ERelationship_type Get_relationship_type() const { return m_relationship_type; }
 
 protected:
   // Attributes
@@ -46,6 +62,15 @@ protected:
 
 private:
   // Attributes
+  /**
+   * @brief Relationship type name
+   */
+  std::string m_name;
+
+  /**
+   * @brief Enumerated relationship type
+   */
+  his_gen::ERelationship_type m_relationship_type;
 
   // Implementation
 

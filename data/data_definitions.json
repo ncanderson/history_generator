@@ -48,7 +48,7 @@
     {"entity_type":	"sentient", "relationship_type": "dominance"},
     {"entity_type":	"sentient", "relationship_type": "friendship"},
     {"entity_type":	"sentient", "relationship_type": "ownership"},
-    {"entity_type":	"membership", "relationship_type": "membership"},
+    {"entity_type":	"sentient", "relationship_type": "membership"},
     {"entity_type":	"nation", "relationship_type": "conflict"},
     {"entity_type":	"nation", "relationship_type": "dominance"},
     {"entity_type":	"nation", "relationship_type": "friendship"},
