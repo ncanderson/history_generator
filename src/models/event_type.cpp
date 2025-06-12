@@ -3,14 +3,14 @@
  */
 
 // Standard
-#include <models/entity_type.h>
+#include <models/event_type.h>
 
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::Entity_type::Entity_type(const std::string& name)
+his_gen::Event_type::Event_type(const std::string& name)
   :
   m_name(name),
-  m_entity_type(his_gen::Get_entity_type(m_name))
+  m_event_type(his_gen::Get_event_type(m_name))
 {
 
 }
@@ -19,22 +19,22 @@ his_gen::Entity_type::Entity_type(const std::string& name)
 // JSON Helpers
 
 void his_gen::to_json(nlohmann::json& json,
-                      const his_gen::Entity_type& entity_type)
+                      const his_gen::Event_type& event_type)
 {
   json = nlohmann::json
   {
-    {"name", entity_type.Get_name()},
-    {"entity_type", his_gen::Get_entity_type_string(entity_type.Get_entity_type())}
+    {"name", event_type.Get_name()},
+    {"event_type", his_gen::Get_event_type_string(event_type.Get_event_type())}
   };
 }
 
 ///////////////////////////////////////////////////////////////////////
 
 void his_gen::from_json(const nlohmann::json& json,
-                        his_gen::Entity_type& entity_type)
+                        his_gen::Event_type& event_type)
 {
-  entity_type.Set_name(his_gen::To_lowercase(json.at("name")));
-  entity_type.Set_entity_type(his_gen::Get_entity_type(entity_type.Get_name()));
+  event_type.Set_name(his_gen::To_lowercase(json.at("name")));
+  event_type.Set_event_type(his_gen::Get_event_type(event_type.Get_name()));
 }
 
 ///////////////////////////////////////////////////////////////////////

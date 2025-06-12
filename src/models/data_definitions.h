@@ -14,6 +14,7 @@
 #include <models/entity_type_relationship_type.h>
 #include <models/entity_type.h>
 #include <models/relationship_type.h>
+#include <models/event_type.h>
 
 namespace his_gen
 {
@@ -38,6 +39,11 @@ public:
    * @brief List of all entity relationship types
    */
   std::vector<his_gen::Relationship_type> Relationship_types;
+
+  /**
+   * @brief Event_types
+   */
+  std::vector<his_gen::Event_type> Event_types;
 
   // Implementation
   /**

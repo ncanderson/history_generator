@@ -8,10 +8,11 @@
 ///////////////////////////////////////////////////////////////////////
 
 his_gen::Data_definitions::Data_definitions()
-    :
-    Entity_type_relationship_types(),
-    Entity_types(),
-    Relationship_types()
+  :
+  Entity_type_relationship_types(),
+  Entity_types(),
+  Relationship_types(),
+  Event_types()
 {
 
 }
@@ -26,7 +27,8 @@ void his_gen::to_json(nlohmann::json& json,
   {
     {"entity_type_relationship_types", data_definitions.Entity_type_relationship_types},
     {"entity_types", data_definitions.Entity_types},
-    {"relationship_type", data_definitions.Relationship_types}
+    {"relationship_type", data_definitions.Relationship_types},
+    {"event_type", data_definitions.Event_types}
   };
 }
 
@@ -38,7 +40,9 @@ void his_gen::from_json(const nlohmann::json& json,
   json.at("entity_type_relationship_types").get_to(data_definitions.Entity_type_relationship_types);
   json.at("entity_types").get_to(data_definitions.Entity_types);
   json.at("relationship_types").get_to(data_definitions.Relationship_types);
+  json.at("event_types").get_to(data_definitions.Event_types);
 }
 
 ///////////////////////////////////////////////////////////////////////
 // END OF FILE
+
