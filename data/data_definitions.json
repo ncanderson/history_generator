@@ -111,9 +111,7 @@
     {"entity_type":	"clan/tribe", "relationship_type": "ownership"},
     {"entity_type":	"clan/tribe", "relationship_type": "membership"}
   ],
-  "entity_type_entity_type": [
-    {"entity_type": "unknown", "event_type": "emerged"},
-    {"entity_type": "unknown", "event_type": "altered_identity"},
+  "entity_type_event_types": [
     {"entity_type": "artifact", "event_type": "altered_identity"},
     {"entity_type": "artifact", "event_type": "was_captured"},
     {"entity_type": "artifact", "event_type": "spread_influence"},
@@ -175,7 +173,7 @@
     {"entity_type": "monster", "event_type": "spread_fear"},
     {"entity_type": "monster", "event_type": "killed_entity"},
     {"entity_type": "monster", "event_type": "was_subdued"},
-    {"entity_type": "nation", "event_type": "declared_war"},
+    {"entity_type": "nation", "event_type": "initiated_conflict"},
     {"entity_type": "nation", "event_type": "signed_treaty"},
     {"entity_type": "nation", "event_type": "changed_leadership"},
     {"entity_type": "nation", "event_type": "absorbed_group"},

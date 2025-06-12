@@ -12,6 +12,7 @@
 
 // Models
 #include <models/entity_type_relationship_type.h>
+#include <models/entity_type_event_type.h>
 #include <models/entity_type.h>
 #include <models/relationship_type.h>
 #include <models/event_type.h>
@@ -29,6 +30,11 @@ public:
    * @brief List of all possible entity relationship types based on entity type
    */
   std::vector<his_gen::Entity_type_relationship_type> Entity_type_relationship_types;
+
+  /**
+   * @brief List of all possible entity event types based on entity type
+   */
+  std::vector<his_gen::Entity_type_event_type> Entity_type_event_types;
 
   /**
    * @brief List of all entity types
