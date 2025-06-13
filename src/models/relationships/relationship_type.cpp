@@ -3,7 +3,7 @@
  */
 
 // Standard
-#include <models/relationship_type.h>
+#include <models/relationships/relationship_type.h>
 
 ///////////////////////////////////////////////////////////////////////
 

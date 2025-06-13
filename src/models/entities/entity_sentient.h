@@ -12,7 +12,7 @@
 #include <deps/json.hpp>
 
 // Application files
-#include <models/entity_base.h>
+#include <models/entities/entity_base.h>
 #include <utils/history_generator_utils.h>
 #include <modules/personality.h>
 #include <modules/personality_attraction.h>

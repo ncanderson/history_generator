@@ -3,7 +3,7 @@
  */
 
 // Standard
-#include <models/entity_relationship.h>
+#include <models/relations/entity_relationship.h>
 
 ///////////////////////////////////////////////////////////////////////
 

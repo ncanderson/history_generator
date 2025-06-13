@@ -3,7 +3,7 @@
  */
 
 // Standard
-#include <models/entity_sentient.h>
+#include <models/entities/entity_sentient.h>
 
 // Defs and Utils
 #include <defs/json_helper_defs.h>

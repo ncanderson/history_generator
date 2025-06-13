@@ -8,7 +8,7 @@
 // Standard libs
 
 // Application files
-#include <models/entity_base.h>
+#include <models/entities/entity_base.h>
 #include <data_access/data_access_manager.h>
 
 namespace his_gen

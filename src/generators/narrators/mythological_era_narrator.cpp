@@ -6,7 +6,7 @@
 
 // Application files
 #include <generators/narrators/mythological_era_narrator.h>
-#include <models/entity_sentient.h>
+#include <models/entities/entity_sentient.h>
 
 using myth_nar = his_gen::Mythological_era_narrator;
 

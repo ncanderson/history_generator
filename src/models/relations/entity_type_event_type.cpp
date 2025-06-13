@@ -3,7 +3,7 @@
  */
 
 // Standard
-#include <models/entity_type_event_type.h>
+#include <models/relations/entity_type_event_type.h>
 
 using et_et = his_gen::Entity_type_event_type;
 

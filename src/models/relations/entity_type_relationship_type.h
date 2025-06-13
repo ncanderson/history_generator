@@ -13,8 +13,8 @@
 
 // Application files
 #include <utils/history_generator_utils.h>
-#include <models/entity_type.h>
-#include <models/relationship_type.h>
+#include <models/entities/entity_type.h>
+#include <models/relationships/relationship_type.h>
 
 namespace his_gen
 {

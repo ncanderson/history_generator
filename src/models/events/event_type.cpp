@@ -3,7 +3,7 @@
  */
 
 // Standard
-#include <models/event_type.h>
+#include <models/events/event_type.h>
 
 ///////////////////////////////////////////////////////////////////////
 

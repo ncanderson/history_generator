@@ -10,7 +10,7 @@
 // Application files
 #include <utils/history_generator_root_config.h>
 #include <generators/narrators/narrator_base.h>
-#include <models/entity_base.h>
+#include <models/entities/entity_base.h>
 
 // Modules
 #include <modules/names.h>

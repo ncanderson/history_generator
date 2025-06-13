@@ -15,11 +15,11 @@
 #include <utils/history_generator_utils.h>
 
 // Models
-#include <models/entity_relationship.h>
-#include <models/entity_type_relationship_type.h>
-#include <models/entity_type.h>
-#include <models/entity_sentient.h>
-#include <models/relationship_type.h>
+#include <models/relations/entity_relationship.h>
+#include <models/relations/entity_type_relationship_type.h>
+#include <models/entities/entity_type.h>
+#include <models/entities/entity_sentient.h>
+#include <models/relationships/relationship_type.h>
 
 namespace his_gen
 {

@@ -3,7 +3,7 @@
  */
 
 // Standard
-#include <models/entity_type_relationship_type.h>
+#include <models/relations/entity_type_relationship_type.h>
 
 using et_rt = his_gen::Entity_type_relationship_type;
 

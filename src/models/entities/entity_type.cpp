@@ -3,7 +3,7 @@
  */
 
 // Standard
-#include <models/entity_type.h>
+#include <models/entities/entity_type.h>
 
 ///////////////////////////////////////////////////////////////////////
 

@@ -13,7 +13,7 @@
 #include <data_access/data_access_manager.h>
 
 // Models
-#include <models/entity_sentient.h>
+#include <models/entities/entity_sentient.h>
 
 namespace his_gen
 {
