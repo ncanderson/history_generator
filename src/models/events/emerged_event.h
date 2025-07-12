@@ -53,7 +53,8 @@ protected:
    * @return A vector of unique_ptrs to follow-on events
    */
   std::vector<std::unique_ptr<Event_base>> get_next_steps() const override;
-};
+
+}; // class Emerged_event
 }  // namespace his_gen
 
 #endif  // EMERGED_EVENT_H

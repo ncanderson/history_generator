@@ -19,18 +19,18 @@ namespace his_gen
  * @class Joined_Group_event
  * @brief Represents the joined_group event
  */
-class Joined_Group_event : public Event_base
+class Joined_group_event : public Event_base
 {
 public:
   /**
    * @brief Constructor sets the event name
    */
-  Joined_Group_event();
+  Joined_group_event();
 
   /**
    * @brief Virtual destructor
    */
-  ~Joined_Group_event() override;
+  ~Joined_group_event() override;
 
 protected:
   /**
@@ -53,7 +53,8 @@ protected:
    * @return A vector of unique_ptrs to follow-on events
    */
   std::vector<std::unique_ptr<Event_base>> get_next_steps() const override;
-};
+
+}; // class Joined_group_event
 }  // namespace his_gen
 
 #endif  // JOINED_GROUP_EVENT_H

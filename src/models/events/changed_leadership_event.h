@@ -19,18 +19,18 @@ namespace his_gen
  * @class Changed_Leadership_event
  * @brief Represents the changed_leadership event
  */
-class Changed_Leadership_event : public Event_base
+class Changed_leadership_event : public Event_base
 {
 public:
   /**
    * @brief Constructor sets the event name
    */
-  Changed_Leadership_event();
+  Changed_leadership_event();
 
   /**
    * @brief Virtual destructor
    */
-  ~Changed_Leadership_event() override;
+  ~Changed_leadership_event() override;
 
 protected:
   /**
@@ -53,7 +53,8 @@ protected:
    * @return A vector of unique_ptrs to follow-on events
    */
   std::vector<std::unique_ptr<Event_base>> get_next_steps() const override;
-};
+
+}; // class Changed_leadership_event
 }  // namespace his_gen
 
 #endif  // CHANGED_LEADERSHIP_EVENT_H

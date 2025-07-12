@@ -19,18 +19,18 @@ namespace his_gen
  * @class Absorbed_Group_event
  * @brief Represents the absorbed_group event
  */
-class Absorbed_Group_event : public Event_base
+class Absorbed_group_event : public Event_base
 {
 public:
   /**
    * @brief Constructor sets the event name
    */
-  Absorbed_Group_event();
+  Absorbed_group_event();
 
   /**
    * @brief Virtual destructor
    */
-  ~Absorbed_Group_event() override;
+  ~Absorbed_group_event() override;
 
 protected:
   /**
@@ -53,7 +53,8 @@ protected:
    * @return A vector of unique_ptrs to follow-on events
    */
   std::vector<std::unique_ptr<Event_base>> get_next_steps() const override;
-};
+
+}; // class Absorbed_group_event
 }  // namespace his_gen
 
 #endif  // ABSORBED_GROUP_EVENT_H

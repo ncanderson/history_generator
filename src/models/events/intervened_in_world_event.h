@@ -19,18 +19,18 @@ namespace his_gen
  * @class Intervened_In_World_event
  * @brief Represents the intervened_in_world event
  */
-class Intervened_In_World_event : public Event_base
+class Intervened_in_world_event : public Event_base
 {
 public:
   /**
    * @brief Constructor sets the event name
    */
-  Intervened_In_World_event();
+  Intervened_in_world_event();
 
   /**
    * @brief Virtual destructor
    */
-  ~Intervened_In_World_event() override;
+  ~Intervened_in_world_event() override;
 
 protected:
   /**
@@ -53,7 +53,8 @@ protected:
    * @return A vector of unique_ptrs to follow-on events
    */
   std::vector<std::unique_ptr<Event_base>> get_next_steps() const override;
-};
+
+}; // class Intervened_in_world_event
 }  // namespace his_gen
 
 #endif  // INTERVENED_IN_WORLD_EVENT_H

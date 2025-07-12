@@ -19,18 +19,18 @@ namespace his_gen
  * @class Signed_Treaty_event
  * @brief Represents the signed_treaty event
  */
-class Signed_Treaty_event : public Event_base
+class Signed_treaty_event : public Event_base
 {
 public:
   /**
    * @brief Constructor sets the event name
    */
-  Signed_Treaty_event();
+  Signed_treaty_event();
 
   /**
    * @brief Virtual destructor
    */
-  ~Signed_Treaty_event() override;
+  ~Signed_treaty_event() override;
 
 protected:
   /**
@@ -53,7 +53,8 @@ protected:
    * @return A vector of unique_ptrs to follow-on events
    */
   std::vector<std::unique_ptr<Event_base>> get_next_steps() const override;
-};
+
+}; // class Signed_treaty_event
 }  // namespace his_gen
 
 #endif  // SIGNED_TREATY_EVENT_H

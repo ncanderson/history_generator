@@ -150,8 +150,8 @@ inline void from_json(const nlohmann::json& json, his_gen::Event_base& event_bas
   {
     event_base.Set_name(json.at("name"));
     event_base.Set_event_type(json.at("event_type"));
-    event_base.Set_triggering_entity(json.at("triggering_entity"));
-    event_base.Set_targets(json.at("targets"));
+    //event_base.Set_triggering_entity(json.at("triggering_entity"));
+    //event_base.Set_targets(json.at("targets"));
     event_base.Set_is_complete(json.at("is_complete"));
   }
 }

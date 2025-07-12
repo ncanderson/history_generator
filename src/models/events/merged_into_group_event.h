@@ -19,18 +19,18 @@ namespace his_gen
  * @class Merged_Into_Group_event
  * @brief Represents the merged_into_group event
  */
-class Merged_Into_Group_event : public Event_base
+class Merged_into_group_event : public Event_base
 {
 public:
   /**
    * @brief Constructor sets the event name
    */
-  Merged_Into_Group_event();
+  Merged_into_group_event();
 
   /**
    * @brief Virtual destructor
    */
-  ~Merged_Into_Group_event() override;
+  ~Merged_into_group_event() override;
 
 protected:
   /**
@@ -53,7 +53,8 @@ protected:
    * @return A vector of unique_ptrs to follow-on events
    */
   std::vector<std::unique_ptr<Event_base>> get_next_steps() const override;
-};
+
+}; // class Merged_into_group_event
 }  // namespace his_gen
 
 #endif  // MERGED_INTO_GROUP_EVENT_H

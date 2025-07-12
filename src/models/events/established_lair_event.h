@@ -19,18 +19,18 @@ namespace his_gen
  * @class Established_Lair_event
  * @brief Represents the established_lair event
  */
-class Established_Lair_event : public Event_base
+class Established_lair_event : public Event_base
 {
 public:
   /**
    * @brief Constructor sets the event name
    */
-  Established_Lair_event();
+  Established_lair_event();
 
   /**
    * @brief Virtual destructor
    */
-  ~Established_Lair_event() override;
+  ~Established_lair_event() override;
 
 protected:
   /**
@@ -53,7 +53,8 @@ protected:
    * @return A vector of unique_ptrs to follow-on events
    */
   std::vector<std::unique_ptr<Event_base>> get_next_steps() const override;
-};
+
+}; // class Established_lair_event
 }  // namespace his_gen
 
 #endif  // ESTABLISHED_LAIR_EVENT_H

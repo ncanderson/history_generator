@@ -19,18 +19,18 @@ namespace his_gen
  * @class Opposed_Policy_event
  * @brief Represents the opposed_policy event
  */
-class Opposed_Policy_event : public Event_base
+class Opposed_policy_event : public Event_base
 {
 public:
   /**
    * @brief Constructor sets the event name
    */
-  Opposed_Policy_event();
+  Opposed_policy_event();
 
   /**
    * @brief Virtual destructor
    */
-  ~Opposed_Policy_event() override;
+  ~Opposed_policy_event() override;
 
 protected:
   /**
@@ -53,7 +53,8 @@ protected:
    * @return A vector of unique_ptrs to follow-on events
    */
   std::vector<std::unique_ptr<Event_base>> get_next_steps() const override;
-};
+
+}; // class Opposed_policy_event
 }  // namespace his_gen
 
 #endif  // OPPOSED_POLICY_EVENT_H

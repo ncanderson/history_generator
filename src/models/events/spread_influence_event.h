@@ -19,18 +19,18 @@ namespace his_gen
  * @class Spread_Influence_event
  * @brief Represents the spread_influence event
  */
-class Spread_Influence_event : public Event_base
+class Spread_influence_event : public Event_base
 {
 public:
   /**
    * @brief Constructor sets the event name
    */
-  Spread_Influence_event();
+  Spread_influence_event();
 
   /**
    * @brief Virtual destructor
    */
-  ~Spread_Influence_event() override;
+  ~Spread_influence_event() override;
 
 protected:
   /**
@@ -54,7 +54,7 @@ protected:
    */
   std::vector<std::unique_ptr<Event_base>> get_next_steps() const override;
 
-}; // class Spread_Influence_event
+}; // class Spread_influence_event
 }  // namespace his_gen
 
 #endif  // SPREAD_INFLUENCE_EVENT_H

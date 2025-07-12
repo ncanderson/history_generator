@@ -19,18 +19,18 @@ namespace his_gen
  * @class Subverted_Rival_event
  * @brief Represents the subverted_rival event
  */
-class Subverted_Rival_event : public Event_base
+class Subverted_rival_event : public Event_base
 {
 public:
   /**
    * @brief Constructor sets the event name
    */
-  Subverted_Rival_event();
+  Subverted_rival_event();
 
   /**
    * @brief Virtual destructor
    */
-  ~Subverted_Rival_event() override;
+  ~Subverted_rival_event() override;
 
 protected:
   /**
@@ -53,7 +53,8 @@ protected:
    * @return A vector of unique_ptrs to follow-on events
    */
   std::vector<std::unique_ptr<Event_base>> get_next_steps() const override;
-};
+
+}; // class Subverted_rival_event
 }  // namespace his_gen
 
 #endif  // SUBVERTED_RIVAL_EVENT_H

@@ -19,18 +19,18 @@ namespace his_gen
  * @class Initiated_Conflict_event
  * @brief Represents the initiated_conflict event
  */
-class Initiated_Conflict_event : public Event_base
+class Initiated_conflict_event : public Event_base
 {
 public:
   /**
    * @brief Constructor sets the event name
    */
-  Initiated_Conflict_event();
+  Initiated_conflict_event();
 
   /**
    * @brief Virtual destructor
    */
-  ~Initiated_Conflict_event() override;
+  ~Initiated_conflict_event() override;
 
 protected:
   /**
@@ -53,7 +53,8 @@ protected:
    * @return A vector of unique_ptrs to follow-on events
    */
   std::vector<std::unique_ptr<Event_base>> get_next_steps() const override;
-};
+
+}; // class Initiated_conflict_event
 }  // namespace his_gen
 
 #endif  // INITIATED_CONFLICT_EVENT_H

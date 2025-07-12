@@ -7,28 +7,28 @@
 
 ///////////////////////////////////////////////////////////////////////
 
-void his_gen::Formed_Alliance_event::initialize_event()
+void his_gen::Formed_alliance_event::initialize_event()
 {
   // TODO: implement initialize_event
 }
 
 ///////////////////////////////////////////////////////////////////////
 
-void his_gen::Formed_Alliance_event::run_event()
+void his_gen::Formed_alliance_event::run_event()
 {
   // TODO: implement run_event
 }
 
 ///////////////////////////////////////////////////////////////////////
 
-void his_gen::Formed_Alliance_event::conclude_event()
+void his_gen::Formed_alliance_event::conclude_event()
 {
   // TODO: implement conclude_event
 }
 
 ///////////////////////////////////////////////////////////////////////
 
-std::vector<std::unique_ptr<his_gen::Event_base>> his_gen::Formed_Alliance_event::get_next_steps() const
+std::vector<std::unique_ptr<his_gen::Event_base>> his_gen::Formed_alliance_event::get_next_steps() const
 {
   // TODO: implement get_next_steps
   return {};

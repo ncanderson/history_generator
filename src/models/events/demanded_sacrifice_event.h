@@ -19,18 +19,18 @@ namespace his_gen
  * @class Demanded_Sacrifice_event
  * @brief Represents the demanded_sacrifice event
  */
-class Demanded_Sacrifice_event : public Event_base
+class Demanded_sacrifice_event : public Event_base
 {
 public:
   /**
    * @brief Constructor sets the event name
    */
-  Demanded_Sacrifice_event();
+  Demanded_sacrifice_event();
 
   /**
    * @brief Virtual destructor
    */
-  ~Demanded_Sacrifice_event() override;
+  ~Demanded_sacrifice_event() override;
 
 protected:
   /**
@@ -53,7 +53,8 @@ protected:
    * @return A vector of unique_ptrs to follow-on events
    */
   std::vector<std::unique_ptr<Event_base>> get_next_steps() const override;
-};
+
+}; // class Demanded_sacrifice_event
 }  // namespace his_gen
 
 #endif  // DEMANDED_SACRIFICE_EVENT_H

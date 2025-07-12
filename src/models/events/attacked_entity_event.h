@@ -19,18 +19,18 @@ namespace his_gen
  * @class Attacked_Entity_event
  * @brief Represents the attacked_entity event
  */
-class Attacked_Entity_event : public Event_base
+class Attacked_entity_event : public Event_base
 {
 public:
   /**
    * @brief Constructor sets the event name
    */
-  Attacked_Entity_event();
+  Attacked_entity_event();
 
   /**
    * @brief Virtual destructor
    */
-  ~Attacked_Entity_event() override;
+  ~Attacked_entity_event() override;
 
 protected:
   /**
@@ -53,7 +53,8 @@ protected:
    * @return A vector of unique_ptrs to follow-on events
    */
   std::vector<std::unique_ptr<Event_base>> get_next_steps() const override;
-};
+
+}; // class Attacked_entity_event
 }  // namespace his_gen
 
 #endif  // ATTACKED_ENTITY_EVENT_H

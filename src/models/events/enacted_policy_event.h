@@ -19,18 +19,18 @@ namespace his_gen
  * @class Enacted_Policy_event
  * @brief Represents the enacted_policy event
  */
-class Enacted_Policy_event : public Event_base
+class Enacted_policy_event : public Event_base
 {
 public:
   /**
    * @brief Constructor sets the event name
    */
-  Enacted_Policy_event();
+  Enacted_policy_event();
 
   /**
    * @brief Virtual destructor
    */
-  ~Enacted_Policy_event() override;
+  ~Enacted_policy_event() override;
 
 protected:
   /**
@@ -53,7 +53,8 @@ protected:
    * @return A vector of unique_ptrs to follow-on events
    */
   std::vector<std::unique_ptr<Event_base>> get_next_steps() const override;
-};
+
+}; // class Enacted_policy_event
 }  // namespace his_gen
 
 #endif  // ENACTED_POLICY_EVENT_H

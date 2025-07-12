@@ -19,18 +19,18 @@ namespace his_gen
  * @class Lost_Follower_event
  * @brief Represents the lost_follower event
  */
-class Lost_Follower_event : public Event_base
+class Lost_follower_event : public Event_base
 {
 public:
   /**
    * @brief Constructor sets the event name
    */
-  Lost_Follower_event();
+  Lost_follower_event();
 
   /**
    * @brief Virtual destructor
    */
-  ~Lost_Follower_event() override;
+  ~Lost_follower_event() override;
 
 protected:
   /**
@@ -53,7 +53,8 @@ protected:
    * @return A vector of unique_ptrs to follow-on events
    */
   std::vector<std::unique_ptr<Event_base>> get_next_steps() const override;
-};
+
+}; // class Lost_follower_event
 }  // namespace his_gen
 
 #endif  // LOST_FOLLOWER_EVENT_H

@@ -19,18 +19,18 @@ namespace his_gen
  * @class Moved_Territory_event
  * @brief Represents the moved_territory event
  */
-class Moved_Territory_event : public Event_base
+class Moved_territory_event : public Event_base
 {
 public:
   /**
    * @brief Constructor sets the event name
    */
-  Moved_Territory_event();
+  Moved_territory_event();
 
   /**
    * @brief Virtual destructor
    */
-  ~Moved_Territory_event() override;
+  ~Moved_territory_event() override;
 
 protected:
   /**
@@ -53,7 +53,8 @@ protected:
    * @return A vector of unique_ptrs to follow-on events
    */
   std::vector<std::unique_ptr<Event_base>> get_next_steps() const override;
-};
+
+}; // class Moved_territory_event
 }  // namespace his_gen
 
 #endif  // MOVED_TERRITORY_EVENT_H

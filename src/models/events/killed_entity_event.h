@@ -19,18 +19,18 @@ namespace his_gen
  * @class Killed_Entity_event
  * @brief Represents the killed_entity event
  */
-class Killed_Entity_event : public Event_base
+class Killed_entity_event : public Event_base
 {
 public:
   /**
    * @brief Constructor sets the event name
    */
-  Killed_Entity_event();
+  Killed_entity_event();
 
   /**
    * @brief Virtual destructor
    */
-  ~Killed_Entity_event() override;
+  ~Killed_entity_event() override;
 
 protected:
   /**
@@ -53,7 +53,8 @@ protected:
    * @return A vector of unique_ptrs to follow-on events
    */
   std::vector<std::unique_ptr<Event_base>> get_next_steps() const override;
-};
+
+}; // class Killed_entity_event
 }  // namespace his_gen
 
 #endif  // KILLED_ENTITY_EVENT_H

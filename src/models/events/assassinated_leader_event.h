@@ -19,18 +19,18 @@ namespace his_gen
  * @class Assassinated_Leader_event
  * @brief Represents the assassinated_leader event
  */
-class Assassinated_Leader_event : public Event_base
+class Assassinated_leader_event : public Event_base
 {
 public:
   /**
    * @brief Constructor sets the event name
    */
-  Assassinated_Leader_event();
+  Assassinated_leader_event();
 
   /**
    * @brief Virtual destructor
    */
-  ~Assassinated_Leader_event() override;
+  ~Assassinated_leader_event() override;
 
 protected:
   /**
@@ -53,7 +53,8 @@ protected:
    * @return A vector of unique_ptrs to follow-on events
    */
   std::vector<std::unique_ptr<Event_base>> get_next_steps() const override;
-};
+
+}; // class Assassinated_leader_event
 }  // namespace his_gen
 
 #endif  // ASSASSINATED_LEADER_EVENT_H

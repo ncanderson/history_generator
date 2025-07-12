@@ -19,18 +19,18 @@ namespace his_gen
  * @class Formed_Alliance_event
  * @brief Represents the formed_alliance event
  */
-class Formed_Alliance_event : public Event_base
+class Formed_alliance_event : public Event_base
 {
 public:
   /**
    * @brief Constructor sets the event name
    */
-  Formed_Alliance_event();
+  Formed_alliance_event();
 
   /**
    * @brief Virtual destructor
    */
-  ~Formed_Alliance_event() override;
+  ~Formed_alliance_event() override;
 
 protected:
   /**
@@ -53,7 +53,8 @@ protected:
    * @return A vector of unique_ptrs to follow-on events
    */
   std::vector<std::unique_ptr<Event_base>> get_next_steps() const override;
-};
+
+}; // class Formed_alliance_event
 }  // namespace his_gen
 
 #endif  // FORMED_ALLIANCE_EVENT_H

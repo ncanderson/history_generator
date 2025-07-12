@@ -19,18 +19,18 @@ namespace his_gen
  * @class Was_Subdued_event
  * @brief Represents the was_subdued event
  */
-class Was_Subdued_event : public Event_base
+class Was_subdued_event : public Event_base
 {
 public:
   /**
    * @brief Constructor sets the event name
    */
-  Was_Subdued_event();
+  Was_subdued_event();
 
   /**
    * @brief Virtual destructor
    */
-  ~Was_Subdued_event() override;
+  ~Was_subdued_event() override;
 
 protected:
   /**
@@ -53,7 +53,8 @@ protected:
    * @return A vector of unique_ptrs to follow-on events
    */
   std::vector<std::unique_ptr<Event_base>> get_next_steps() const override;
-};
+
+}; // class Was_subdued_event
 }  // namespace his_gen
 
 #endif  // WAS_SUBDUED_EVENT_H

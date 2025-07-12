@@ -19,18 +19,18 @@ namespace his_gen
  * @class Initiated_Revolt_event
  * @brief Represents the initiated_revolt event
  */
-class Initiated_Revolt_event : public Event_base
+class Initiated_revolt_event : public Event_base
 {
 public:
   /**
    * @brief Constructor sets the event name
    */
-  Initiated_Revolt_event();
+  Initiated_revolt_event();
 
   /**
    * @brief Virtual destructor
    */
-  ~Initiated_Revolt_event() override;
+  ~Initiated_revolt_event() override;
 
 protected:
   /**
@@ -53,7 +53,8 @@ protected:
    * @return A vector of unique_ptrs to follow-on events
    */
   std::vector<std::unique_ptr<Event_base>> get_next_steps() const override;
-};
+
+}; // class Initiated_revolt_event
 }  // namespace his_gen
 
 #endif  // INITIATED_REVOLT_EVENT_H

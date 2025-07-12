@@ -19,18 +19,18 @@ namespace his_gen
  * @class Was_Captured_event
  * @brief Represents the was_captured event
  */
-class Was_Captured_event : public Event_base
+class Was_captured_event : public Event_base
 {
 public:
   /**
    * @brief Constructor sets the event name
    */
-  Was_Captured_event();
+  Was_captured_event();
 
   /**
    * @brief Virtual destructor
    */
-  ~Was_Captured_event() override;
+  ~Was_captured_event() override;
 
 protected:
   /**
@@ -53,7 +53,8 @@ protected:
    * @return A vector of unique_ptrs to follow-on events
    */
   std::vector<std::unique_ptr<Event_base>> get_next_steps() const override;
-};
+
+}; // class Was_captured_event
 }  // namespace his_gen
 
 #endif  // WAS_CAPTURED_EVENT_H

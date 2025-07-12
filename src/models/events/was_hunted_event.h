@@ -19,18 +19,18 @@ namespace his_gen
  * @class Was_Hunted_event
  * @brief Represents the was_hunted event
  */
-class Was_Hunted_event : public Event_base
+class Was_hunted_event : public Event_base
 {
 public:
   /**
    * @brief Constructor sets the event name
    */
-  Was_Hunted_event();
+  Was_hunted_event();
 
   /**
    * @brief Virtual destructor
    */
-  ~Was_Hunted_event() override;
+  ~Was_hunted_event() override;
 
 protected:
   /**
@@ -53,7 +53,8 @@ protected:
    * @return A vector of unique_ptrs to follow-on events
    */
   std::vector<std::unique_ptr<Event_base>> get_next_steps() const override;
-};
+
+}; // class Was_hunted_event
 }  // namespace his_gen
 
 #endif  // WAS_HUNTED_EVENT_H

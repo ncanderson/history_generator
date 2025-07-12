@@ -19,18 +19,18 @@ namespace his_gen
  * @class Altered_Identity_event
  * @brief Represents the altered_identity event
  */
-class Altered_Identity_event : public Event_base
+class Altered_identity_event : public Event_base
 {
 public:
   /**
    * @brief Constructor sets the event name
    */
-  Altered_Identity_event();
+  Altered_identity_event();
 
   /**
    * @brief Virtual destructor
    */
-  ~Altered_Identity_event() override;
+  ~Altered_identity_event() override;
 
 protected:
   /**
@@ -53,7 +53,8 @@ protected:
    * @return A vector of unique_ptrs to follow-on events
    */
   std::vector<std::unique_ptr<Event_base>> get_next_steps() const override;
-};
+
+}; // class Altered_identity_event
 }  // namespace his_gen
 
 #endif  // ALTERED_IDENTITY_EVENT_H

@@ -19,18 +19,18 @@ namespace his_gen
  * @class Performed_Ritual_event
  * @brief Represents the performed_ritual event
  */
-class Performed_Ritual_event : public Event_base
+class Performed_ritual_event : public Event_base
 {
 public:
   /**
    * @brief Constructor sets the event name
    */
-  Performed_Ritual_event();
+  Performed_ritual_event();
 
   /**
    * @brief Virtual destructor
    */
-  ~Performed_Ritual_event() override;
+  ~Performed_ritual_event() override;
 
 protected:
   /**
@@ -53,7 +53,8 @@ protected:
    * @return A vector of unique_ptrs to follow-on events
    */
   std::vector<std::unique_ptr<Event_base>> get_next_steps() const override;
-};
+
+}; // class Performed_ritual_event
 }  // namespace his_gen
 
 #endif  // PERFORMED_RITUAL_EVENT_H

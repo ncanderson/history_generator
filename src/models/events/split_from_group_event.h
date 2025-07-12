@@ -19,18 +19,18 @@ namespace his_gen
  * @class Split_From_Group_event
  * @brief Represents the split_from_group event
  */
-class Split_From_Group_event : public Event_base
+class Split_from_group_event : public Event_base
 {
 public:
   /**
    * @brief Constructor sets the event name
    */
-  Split_From_Group_event();
+  Split_from_group_event();
 
   /**
    * @brief Virtual destructor
    */
-  ~Split_From_Group_event() override;
+  ~Split_from_group_event() override;
 
 protected:
   /**
@@ -53,7 +53,8 @@ protected:
    * @return A vector of unique_ptrs to follow-on events
    */
   std::vector<std::unique_ptr<Event_base>> get_next_steps() const override;
-};
+
+}; // class Split_from_group_event
 }  // namespace his_gen
 
 #endif  // SPLIT_FROM_GROUP_EVENT_H

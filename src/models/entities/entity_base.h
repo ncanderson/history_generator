@@ -27,6 +27,8 @@ public:
   // Attributes
 
   // Implementation
+  Entity_base() = default;
+
   /**
    * @brief Constructor.
    */

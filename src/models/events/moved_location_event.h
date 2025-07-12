@@ -19,18 +19,18 @@ namespace his_gen
  * @class Moved_Location_event
  * @brief Represents the moved_location event
  */
-class Moved_Location_event : public Event_base
+class Moved_location_event : public Event_base
 {
 public:
   /**
    * @brief Constructor sets the event name
    */
-  Moved_Location_event();
+  Moved_location_event();
 
   /**
    * @brief Virtual destructor
    */
-  ~Moved_Location_event() override;
+  ~Moved_location_event() override;
 
 protected:
   /**
@@ -53,7 +53,8 @@ protected:
    * @return A vector of unique_ptrs to follow-on events
    */
   std::vector<std::unique_ptr<Event_base>> get_next_steps() const override;
-};
+
+}; // class Moved_location_event
 }  // namespace his_gen
 
 #endif  // MOVED_LOCATION_EVENT_H
