@@ -143,8 +143,8 @@ namespace nlohmann
 {
 template <>
 struct adl_serializer<his_gen::Entity_base>
-    :
-    Polymorphic_serializer<his_gen::Entity_base>{ };
+  :
+  Polymorphic_serializer<his_gen::Entity_base>{ };
 
 } // namespace nlohmann
 

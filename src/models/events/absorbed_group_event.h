@@ -1,0 +1,59 @@
+/**
+ * Copyright (C) 2025 Nate Anderson - All Rights Reserved
+ */
+
+#ifndef ABSORBED_GROUP_EVENT_H
+#define ABSORBED_GROUP_EVENT_H
+
+// Standard libs
+#include <memory>
+#include <string>
+#include <vector>
+
+// Application files
+#include <models/events/event_base.h>
+
+namespace his_gen
+{
+/**
+ * @class Absorbed_Group_event
+ * @brief Represents the absorbed_group event
+ */
+class Absorbed_Group_event : public Event_base
+{
+public:
+  /**
+   * @brief Constructor sets the event name
+   */
+  Absorbed_Group_event();
+
+  /**
+   * @brief Virtual destructor
+   */
+  ~Absorbed_Group_event() override;
+
+protected:
+  /**
+   * @brief Event initialization logic
+   */
+  void initialize_event() override;
+
+  /**
+   * @brief Event execution logic
+   */
+  void run_event() override;
+
+  /**
+   * @brief Event conclusion logic
+   */
+  void conclude_event() override;
+
+  /**
+   * @brief Determines follow-on events
+   * @return A vector of unique_ptrs to follow-on events
+   */
+  std::vector<std::unique_ptr<Event_base>> get_next_steps() const override;
+};
+}  // namespace his_gen
+
+#endif  // ABSORBED_GROUP_EVENT_H
