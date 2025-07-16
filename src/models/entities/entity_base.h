@@ -27,13 +27,14 @@ public:
   // Attributes
 
   // Implementation
-  Entity_base() = default;
+  //Entity_base() = default;
 
   /**
    * @brief Constructor.
    */
   Entity_base(std::string name, std::string title = "")
     :
+    m_entity_id(boost::uuids::random_generator()()),
     m_entity_relationship_ids(),
     m_name(name),
     m_title(title)
@@ -66,18 +67,26 @@ public:
   /**
    * Getters and setters
    */
-  std::string Get_name() const { return m_name; }
+  const boost::uuids::uuid Get_entity_id() const {return m_entity_id; }
+  void Set_entity_id(const boost::uuids::uuid& entity_id) { m_entity_id = entity_id; }
+
+  const std::string Get_name() const { return m_name; }
   void Set_name(const std::string& name) { m_name = name; }
 
-  std::string Get_title() const { return m_title; }
+  const std::string Get_title() const { return m_title; }
   void Set_title(const std::string& title) { m_title=title; }
 
-  std::vector<boost::uuids::uuid> Get_relationship_ids() const { return m_entity_relationship_ids; }
+  const std::vector<boost::uuids::uuid> Get_relationship_ids() const { return m_entity_relationship_ids; }
   void Set_relationship_ids(const std::vector<boost::uuids::uuid>& entity_relationship_ids) { m_entity_relationship_ids = entity_relationship_ids; }
   void Add_relationship_id(const boost::uuids::uuid& relationship_id) { m_entity_relationship_ids.push_back(relationship_id); }
 
 protected:
   // Attributes
+  /**
+   * @brief ID of this entity
+   */
+  boost::uuids::uuid m_entity_id;
+
   /**
    * @brief Vector of this entity's relationships.
    * @details These relationship IDs will be used to access the relationships
@@ -114,6 +123,7 @@ inline void to_json(nlohmann::json& json, const his_gen::Entity_base& entity_bas
 {
   json = nlohmann::json
   {
+    {"id", entity_base.Get_entity_id()},
     {"name", entity_base.Get_name()},
     {"title", entity_base.Get_title()},
     {"relationship_ids", entity_base.Get_relationship_ids()}
@@ -129,6 +139,7 @@ inline void to_json(nlohmann::json& json, const his_gen::Entity_base& entity_bas
 inline void from_json(const nlohmann::json& json, his_gen::Entity_base& entity_base)
 {
   {
+    entity_base.Set_entity_id(json.at("id"));
     entity_base.Set_name(json.at("name"));
     entity_base.Set_title(json.at("title"));
     entity_base.Set_relationship_ids(json.at("relationship_ids"));
