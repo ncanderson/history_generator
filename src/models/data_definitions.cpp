@@ -5,6 +5,9 @@
 // Standard
 #include <models/data_definitions.h>
 
+// Application Files
+#include <utils/dice_rolls.h>
+
 ///////////////////////////////////////////////////////////////////////
 
 his_gen::Data_definitions::Data_definitions()
@@ -13,9 +16,46 @@ his_gen::Data_definitions::Data_definitions()
   Entity_type_event_types(),
   Entity_types(),
   Relationship_types(),
-  Event_types()
+  Event_types(),
+  m_entity_events(),
+  m_entity_relationships()
 {
+  build_entity_relationships(Entity_type_relationship_types);
+  build_entity_events(Entity_type_event_types);
+}
 
+///////////////////////////////////////////////////////////////////////
+
+his_gen::EEvent_type his_gen::Data_definitions::Get_rand_entity_event(his_gen::EEntity_type entity)
+{
+  return his_gen::Get_random_element(m_entity_events[entity]);
+}
+
+///////////////////////////////////////////////////////////////////////
+
+his_gen::ERelationship_type his_gen::Data_definitions::Get_rand_entity_relationship(his_gen::EEntity_type entity)
+{
+  return his_gen::Get_random_element(m_entity_relationships[entity]);
+}
+
+///////////////////////////////////////////////////////////////////////
+
+void his_gen::Data_definitions::build_entity_events(const std::vector<his_gen::Entity_type_event_type>& ent_event)
+{
+  for(auto& it : ent_event)
+  {
+    m_entity_events[it.Get_entity_type()].push_back(it.Get_event_type());
+  }
+}
+
+///////////////////////////////////////////////////////////////////////
+
+void his_gen::Data_definitions::build_entity_relationships(const std::vector<his_gen::Entity_type_relationship_type>& ent_rel)
+{
+  for(auto& it : ent_rel)
+  {
+    m_entity_relationships[it.Get_entity_type()].push_back(it.Get_relationship_type());
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////

@@ -24,11 +24,11 @@ et_et::Entity_type_event_type(const std::string& entity_type,
 
 et_et::Entity_type_event_type(const his_gen::EEntity_type& entity_type,
                               const his_gen::EEvent_type& event_type)
-    :
-    m_entity_type(entity_type),
-    m_entity_type_string(his_gen::Get_entity_type_string(entity_type)),
-    m_event_type(event_type),
-    m_event_type_string(his_gen::Get_event_type_string(event_type))
+  :
+  m_entity_type(entity_type),
+  m_entity_type_string(his_gen::Get_entity_type_string(entity_type)),
+  m_event_type(event_type),
+  m_event_type_string(his_gen::Get_event_type_string(event_type))
 {
 
 }

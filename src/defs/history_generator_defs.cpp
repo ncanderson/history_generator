@@ -359,3 +359,5 @@ his_gen::EEvent_type his_gen::Get_event_type(const std::string& event_type)
     throw std::invalid_argument("Can't find event type from string");
   }
 }
+
+///////////////////////////////////////////////////////////////////////

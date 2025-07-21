@@ -62,6 +62,20 @@ public:
    */
   ~Data_definitions(){};
 
+  /**
+   * @brief Return a random valid event for this entity type
+   * @param entity The entity to get an event for
+   * @return A random valid event type
+   */
+  his_gen::EEvent_type Get_rand_entity_event(his_gen::EEntity_type entity);
+
+  /**
+   * @brief Return a random valid relationship for this entity type
+   * @param entity The entity to get a relationship for
+   * @return A random valid relationship type
+   */
+  his_gen::ERelationship_type Get_rand_entity_relationship(his_gen::EEntity_type entity);
+
 protected:
   // Attributes
 
@@ -69,8 +83,32 @@ protected:
 
 private:
   // Attributes
+  /**
+   * @brief Map of entity type/event type pairs, re-ordered to facilitate
+   * retrieval from outside this class.
+   */
+  std::map<his_gen::EEntity_type, std::vector<his_gen::EEvent_type>> m_entity_events;
+
+  /**
+   * @brief Map of entity type/relationship type pairs, re-ordered to facilitate
+   * retrieval from outside this class.
+   */
+  std::map<his_gen::EEntity_type, std::vector<his_gen::ERelationship_type>> m_entity_relationships;
 
   // Implementation
+  /**
+   * @brief Populate the local map from external data
+   * @param ent_event A map of entity types as a key, with the corresponding
+   * event types as a value.
+   */
+  void build_entity_events(const std::vector<his_gen::Entity_type_event_type>& ent_event);
+
+  /**
+   * @brief Populate the local map from external data
+   * @param ent_rel A map of entity types as a key, with the corresponding
+   * relationship types as a value.
+   */
+  void build_entity_relationships(const std::vector<his_gen::Entity_type_relationship_type>& ent_rel);
 
 }; // class Data_definitions
 
