@@ -42,6 +42,12 @@ public:
   void Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
                        int64_t entities_per_tick) override;
 
+  /**
+   * @brief Handle_events
+   * @param entities
+   */
+  void Handle_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities) override;
+
 protected:
   // Attributes
 

@@ -2,8 +2,8 @@
  * Copyright (C) 2025 Nate Anderson - All Rights Reserved
  */
 
-#ifndef EVENT_TYPE_H
-#define EVENT_TYPE_H
+#ifndef EVENT_BASE_H
+#define EVENT_BASE_H
 
 // Standard libs
 #include <vector>
@@ -23,7 +23,6 @@
 // that any events loaded from file/db will require an additional lookup to
 // fully populate the pointer to that entity. In practice this might not matter,
 // but if that becomes a requirement, more attention will be required.
-
 namespace his_gen
 {
 /**
@@ -204,4 +203,4 @@ struct adl_serializer<his_gen::Event_base>
 
 } // namespace nlohmann
 
-#endif // EVENT_TYPE_H
+#endif // EVENT_BASE_H

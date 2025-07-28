@@ -27,6 +27,13 @@ void hist_nar::Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>
 
 ///////////////////////////////////////////////////////////////////////
 
+void hist_nar::Handle_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities)
+{
+  // NOOP
+}
+
+///////////////////////////////////////////////////////////////////////
+
 // TODO: expand to include entity type via switch case
 std::shared_ptr<his_gen::Entity_base> hist_nar::create_entity()
 {

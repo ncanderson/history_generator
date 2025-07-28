@@ -55,6 +55,13 @@ public:
                                int64_t entities_per_tick) = 0;
 
   /**
+   * @brief Inheriting classes must implement this function to create and run
+   * events for entities
+   * @param entities The vector of entity pointers to create events for.
+   */
+  virtual void Handle_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities) = 0;
+
+  /**
    * @brief Check all entities in `entities` for attraction
    * @param entities Vector of entities to review
    * @param enitity_relationships Map to track any new relationships
@@ -64,6 +71,10 @@ public:
 
 protected:
   // Attributes
+  /**
+   * @brief Pointer to the data definitions
+   */
+  const std::shared_ptr<his_gen::Data_definitions> m_data_definitions;
 
   // Implementation
   /**
@@ -74,10 +85,6 @@ protected:
 
 private:
   // Attributes
-  /**
-   * @brief Pointer to the data definitions
-   */
-  const std::shared_ptr<his_gen::Data_definitions> m_data_definitions;
 
   // Implementation
 

@@ -15,9 +15,10 @@ using sentient = his_gen::Entity_sentient;
 
 sentient::Entity_sentient(std::string name,
                           std::string title,
+                          EEntity_type entity_type,
                           bool full_random_reproduction)
   :
-  Entity_base(name, title),
+  Entity_base(name, entity_type, title),
   m_personality(),
   m_personality_attraction(m_personality.Get_attributes()),
   m_can_sire_young(),

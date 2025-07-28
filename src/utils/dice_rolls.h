@@ -7,7 +7,6 @@
 
 #include <stdint.h>
 #include <stdexcept>
-#include <vector>
 #include <random>
 
 namespace his_gen

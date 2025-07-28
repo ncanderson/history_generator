@@ -46,9 +46,14 @@ void his_gen::Mythological_era_generator::Run()
       m_myth_narrator.Create_entities(m_generated_history.Entities,
                                       m_entities_per_tick);
 
-      // Do they like each other?
-      m_myth_narrator.Run_entity_attraction(m_generated_history.Entities,
-                                            m_generated_history.Entity_relationships);
+      m_myth_narrator.Handle_events(m_generated_history.Entities);
+
+
+
+
+      //// Do they like each other?
+      //m_myth_narrator.Run_entity_attraction(m_generated_history.Entities,
+      //                                      m_generated_history.Entity_relationships);
 
       // Increment run-time ticks
       m_ticks_completed++;

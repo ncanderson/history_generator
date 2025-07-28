@@ -7,6 +7,8 @@
 // Application files
 #include <generators/narrators/mythological_era_narrator.h>
 #include <models/entities/entity_sentient.h>
+#include <models/events/event_base.h>
+#include <utils/dice_rolls.h>
 
 using myth_nar = his_gen::Mythological_era_narrator;
 
@@ -29,6 +31,7 @@ void myth_nar::Create_progenitor_deity(std::vector<std::shared_ptr<his_gen::Enti
   std::shared_ptr<his_gen::Entity_sentient> ptr =
       std::make_shared<his_gen::Entity_sentient>("God",
                                                  "the Allfather",
+                                                 EENTITY_TYPE_Deity,
                                                  false);
   entities.push_back(ptr);
 }
@@ -46,11 +49,39 @@ void myth_nar::Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>
 
 ///////////////////////////////////////////////////////////////////////
 
+void myth_nar::Create_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
+                             std::vector<std::shared_ptr<his_gen::Event_base>>& events)
+{
+  // A random entity
+  std::shared_ptr<his_gen::Entity_base> triggering_entity = his_gen::Get_random_element(entities);
+  // A random event
+  EEvent_type event_type = m_data_definitions->Get_rand_entity_event(triggering_entity->Get_entity_type());
+
+  /**
+   * create event from type, using a factory method I guess
+   */
+}
+
+///////////////////////////////////////////////////////////////////////
+
+void myth_nar::Handle_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities)
+{
+  /**
+   * while events run < event_num
+   *   if rand < event percent
+   *
+   *
+   */
+}
+
+///////////////////////////////////////////////////////////////////////
+
 // TODO: expand to include entity type via switch case
 std::shared_ptr<his_gen::Entity_base> myth_nar::create_entity()
 {
   return std::make_shared<his_gen::Entity_sentient>(m_names.Get_one_name(),
                                                     m_names.Get_one_title(),
+                                                    EENTITY_TYPE_Deity,
                                                     m_config.Get_myth_config().Full_random_reproduction);
 
 }

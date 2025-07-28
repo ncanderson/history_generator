@@ -11,6 +11,7 @@
 #include <utils/history_generator_root_config.h>
 #include <generators/narrators/narrator_base.h>
 #include <models/entities/entity_base.h>
+#include <models/events/event_base.h>
 
 // Modules
 #include <modules/names.h>
@@ -45,6 +46,21 @@ public:
    */
   void Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
                        int64_t entities_per_tick) override;
+
+  // TODO move this into the base class when its functionality is defined
+  /**
+   * @brief Create_events
+   * @param entities
+   * @param events
+   */
+  void Create_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
+                     std::vector<std::shared_ptr<his_gen::Event_base>>& events);
+
+  /**
+   * @brief Handle_events
+   * @param entities
+   */
+  void Handle_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities) override;
 
   /**
    * @brief The first being in this mythology
