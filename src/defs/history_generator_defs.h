@@ -271,6 +271,7 @@ enum EEvent_type
   EEVENT_TYPE_Moved_territory,      ///< Group relocated its territory.
   EEVENT_TYPE_Opposed_policy,       ///< An existing policy was resisted or challenged.
   EEVENT_TYPE_Performed_ritual,     ///< Ritual or ceremony was performed.
+  EEVENT_TYPE_Seek_partner,         ///< Seek a partner, romatic or otherwise
   EEVENT_TYPE_Signed_treaty,        ///< Treaty or formal agreement signed.
   EEVENT_TYPE_Split_from_group,     ///< Entity split from a group or origin.
   EEVENT_TYPE_Spread_fear,          ///< Entity caused fear or panic.

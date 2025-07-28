@@ -2,8 +2,8 @@
  * Copyright (C) 2025 Nate Anderson - All Rights Reserved
  */
 
-#ifndef MOVED_TERRITORY_EVENT_H
-#define MOVED_TERRITORY_EVENT_H
+#ifndef SEEK_PARTNER_EVENT_H
+#define SEEK_PARTNER_EVENT_H
 
 // Standard libs
 #include <memory>
@@ -54,7 +54,7 @@ protected:
    */
   std::vector<std::unique_ptr<Event_base>> get_next_steps() const override;
 
-}; // class Moved_territory_event
+}; // class Seek_partner_event
 }  // namespace his_gen
 
-#endif  // MOVED_TERRITORY_EVENT_H
+#endif  // SEEK_PARTNER_EVENT_H
