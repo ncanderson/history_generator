@@ -8,20 +8,23 @@
 
 ///////////////////////////////////////////////////////////////////////
 
-std::shared_ptr<his_gen::Event_base> his_gen::Event_factory::Create_event(his_gen::EEvent_type event_type)
+std::shared_ptr<his_gen::Event_base> his_gen::Event_factory::Create_event(his_gen::EEvent_type event_type,
+                                                                          std::shared_ptr<Entity_base>& triggering_entity)
 {
-  std::shared_ptr<his_gen::Event_base> event_return;
-
   switch(event_type)
   {
     case his_gen::EEvent_type::EEVENT_TYPE_Seek_partner:
     {
-      event_return = std::make_shared<his_gen::Seek_partner_event>();
+      return std::make_shared<his_gen::Seek_partner_event>(triggering_entity);
     }
     break;
+
+    default:
+      // Unrecognized value
+      throw std::invalid_argument("Event type enumeration not found");
   }
 
-  return event_return;
+
 }
 
 ///////////////////////////////////////////////////////////////////////

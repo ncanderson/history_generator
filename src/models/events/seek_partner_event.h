@@ -23,14 +23,20 @@ class Seek_partner_event : public Event_base
 {
 public:
   /**
-   * @brief Constructor sets the event name
+   * @brief Constructor
+   * @param triggering_entity The entity driving this event
    */
-  Seek_partner_event(const std::string& name);
+  Seek_partner_event(std::shared_ptr<Entity_base>& triggering_entity);
 
   /**
    * @brief Virtual destructor
    */
   ~Seek_partner_event() override;
+
+  /**
+   * Getters and setters
+   */
+  // TODO
 
 protected:
   /**
@@ -53,6 +59,8 @@ protected:
    * @return A vector of unique_ptrs to follow-on events
    */
   std::vector<std::unique_ptr<Event_base>> get_next_steps() const override;
+
+private:
 
 }; // class Seek_partner_event
 }  // namespace his_gen

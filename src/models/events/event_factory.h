@@ -30,9 +30,11 @@ public:
   /**
    * @brief Create and event from it's associated enumeration
    * @param event_type The enumerated event type
+   * @param triggering_entity The entity driving this event
    * @return A pointer to Event_base, holding the instantiated derived event type
    */
-  std::shared_ptr<his_gen::Event_base> Create_event(his_gen::EEvent_type event_type);
+  std::shared_ptr<his_gen::Event_base> Create_event(his_gen::EEvent_type event_type,
+                                                    std::shared_ptr<Entity_base>& triggering_entity);
 
 protected:
   // Attributes
