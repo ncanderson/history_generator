@@ -16,21 +16,21 @@
 namespace his_gen
 {
 /**
- * @class Moved_Territory_event
- * @brief Represents the moved_territory event
+ * @class Seek_partner_event
+ * @brief Represents the 'seek partner' event
  */
-class Moved_territory_event : public Event_base
+class Seek_partner_event : public Event_base
 {
 public:
   /**
    * @brief Constructor sets the event name
    */
-  Moved_territory_event();
+  Seek_partner_event(const std::string& name);
 
   /**
    * @brief Virtual destructor
    */
-  ~Moved_territory_event() override;
+  ~Seek_partner_event() override;
 
 protected:
   /**
