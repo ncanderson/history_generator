@@ -70,7 +70,7 @@ void his_gen::to_json(nlohmann::json& json,
     {"entity_type_event_types", data_definitions.Entity_type_event_types},
     {"entity_types", data_definitions.Entity_types},
     {"relationship_type", data_definitions.Relationship_types},
-    {"event_type", data_definitions.Event_types}
+    {"event_types", data_definitions.Event_types}
   };
 }
 

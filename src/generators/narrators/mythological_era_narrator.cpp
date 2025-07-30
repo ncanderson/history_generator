@@ -7,7 +7,7 @@
 // Application files
 #include <generators/narrators/mythological_era_narrator.h>
 #include <models/entities/entity_sentient.h>
-#include <models/events/event_base.h>
+#include <models/events/event_factory.h>
 #include <utils/dice_rolls.h>
 
 using myth_nar = his_gen::Mythological_era_narrator;
@@ -41,7 +41,7 @@ void myth_nar::Create_progenitor_deity(std::vector<std::shared_ptr<his_gen::Enti
 void myth_nar::Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
                                int64_t entities_per_tick)
 {
-  for(int64_t tick = 0; tick < entities_per_tick; tick++)
+  for(int64_t tick_count = 0; tick_count < entities_per_tick; tick_count++)
   {
     entities.push_back(create_entity());
   }
@@ -52,26 +52,18 @@ void myth_nar::Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>
 void myth_nar::Create_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
                              std::vector<std::shared_ptr<his_gen::Event_base>>& events)
 {
-  // A random entity
-  std::shared_ptr<his_gen::Entity_base> triggering_entity = his_gen::Get_random_element(entities);
-  // A random event
-  EEvent_type event_type = m_data_definitions->Get_rand_entity_event(triggering_entity->Get_entity_type());
-
-  /**
-   * create event from type, using a factory method I guess
-   */
-}
-
-///////////////////////////////////////////////////////////////////////
-
-void myth_nar::Handle_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities)
-{
-  /**
-   * while events run < event_num
-   *   if rand < event percent
-   *
-   *
-   */
+  for(int64_t tick_count = 0; tick_count < m_config.Get_myth_config().Max_event_per_tick; tick_count++)
+  {
+    // A random entity
+    std::shared_ptr<his_gen::Entity_base> triggering_entity = his_gen::Get_random_element(entities);
+    // A random event
+    EEvent_type event_type = m_data_definitions->Get_rand_entity_event(triggering_entity->Get_entity_type());
+    // Create the event
+    std::shared_ptr<his_gen::Event_base> new_event = his_gen::Event_factory::Create_event(event_type,
+                                                                                          triggering_entity);
+    // Add the event to the list
+    events.push_back(new_event);
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -83,7 +75,6 @@ std::shared_ptr<his_gen::Entity_base> myth_nar::create_entity()
                                                     m_names.Get_one_title(),
                                                     EENTITY_TYPE_Deity,
                                                     m_config.Get_myth_config().Full_random_reproduction);
-
 }
 
 ///////////////////////////////////////////////////////////////////////

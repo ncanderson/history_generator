@@ -7,7 +7,6 @@
 
 // Standard libs
 #include <memory>
-#include <string>
 #include <vector>
 
 // Application files
@@ -27,11 +26,6 @@ public:
    * @param triggering_entity The entity driving this event
    */
   Seek_partner_event(std::shared_ptr<Entity_base>& triggering_entity);
-
-  /**
-   * @brief Virtual destructor
-   */
-  ~Seek_partner_event() override;
 
   /**
    * Getters and setters

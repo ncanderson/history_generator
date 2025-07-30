@@ -18,6 +18,8 @@ namespace his_gen
 {
 /**
  * @brief Factory for creating events from event type enumerations
+ * @details This class provides methods for creating new events from types. It
+ * cannot be instantiated.
  */
 class Event_factory
 {
@@ -25,7 +27,10 @@ public:
   // Attributes
 
   // Implementation
-  Event_factory();
+  /**
+   * @brief Virtual destructor to make this class non-instantiable
+   */
+  virtual ~Event_factory() = 0;
 
   /**
    * @brief Create and event from it's associated enumeration
@@ -33,8 +38,8 @@ public:
    * @param triggering_entity The entity driving this event
    * @return A pointer to Event_base, holding the instantiated derived event type
    */
-  std::shared_ptr<his_gen::Event_base> Create_event(his_gen::EEvent_type event_type,
-                                                    std::shared_ptr<Entity_base>& triggering_entity);
+  static std::shared_ptr<his_gen::Event_base> Create_event(his_gen::EEvent_type event_type,
+                                                           std::shared_ptr<Entity_base>& triggering_entity);
 
 protected:
   // Attributes

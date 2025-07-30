@@ -16,8 +16,8 @@
 ///////////////////////////////////////////////////////////////////////
 
 his_gen::Data_access_dao_file::Data_access_dao_file(const DAL_file_params& params)
-    :
-    Data_access_dao_base()
+  :
+  Data_access_dao_base()
 {
 
 }

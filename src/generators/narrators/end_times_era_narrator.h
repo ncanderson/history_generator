@@ -10,6 +10,7 @@
 // Application files
 #include <generators/narrators/narrator_base.h>
 #include <utils/history_generator_root_config.h>
+#include <models/events/event_base.h>
 
 namespace his_gen
 {
@@ -30,11 +31,6 @@ public:
                          const std::shared_ptr<his_gen::Data_definitions> data_definitions);
 
   /**
-   * @brief Destructor
-   */
-  ~End_times_era_narrator(){}
-
-  /**
    * @brief Create_entities
    * @param entities
    * @param entities_per_tick
@@ -43,10 +39,12 @@ public:
                        int64_t entities_per_tick) override;
 
   /**
-   * @brief Handle_events
-   * @param entities
+   * @brief Create_events
+   * @param entities The vector of entity pointers to reference when creating events
+   * @param events The vector of events to populate
    */
-  void Handle_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities) override;
+  void Create_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
+                     std::vector<std::shared_ptr<his_gen::Event_base>>& events) override;
 
 protected:
   // Attributes

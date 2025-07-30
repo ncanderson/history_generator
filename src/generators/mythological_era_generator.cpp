@@ -46,7 +46,8 @@ void his_gen::Mythological_era_generator::Run()
       m_myth_narrator.Create_entities(m_generated_history.Entities,
                                       m_entities_per_tick);
 
-      m_myth_narrator.Handle_events(m_generated_history.Entities);
+      m_myth_narrator.Create_events(m_generated_history.Entities,
+                                    m_generated_history.Events);
 
 
 
