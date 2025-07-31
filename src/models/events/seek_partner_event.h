@@ -50,9 +50,9 @@ protected:
 
   /**
    * @brief Determines follow-on events
-   * @return A vector of unique_ptrs to follow-on events
+   * @return A vector of shared_ptrs to follow-on events
    */
-  std::vector<std::unique_ptr<Event_base>> get_next_steps() const override;
+  std::vector<std::shared_ptr<Event_base>> get_next_steps() const override;
 
 private:
 

@@ -37,7 +37,16 @@ public:
   /**
    * @brief Default constructor
    */
-  Event_base() = default;
+  Event_base()
+    :
+    m_event_type(his_gen::EEVENT_TYPE_Unkown),
+    m_name(),
+    m_triggering_entity(nullptr),
+    m_triggering_entity_id(),
+    m_targets(),
+    m_target_ids(),
+    m_is_complete(false)
+  {}
 
   /**
    * @brief Explicit constructor to prevent implicit instantiation
@@ -59,7 +68,7 @@ public:
   /**
    * @brief Destructor
    */
-  virtual ~Event_base() = default;
+  virtual ~Event_base();
 
   /**
    * Getters and setters
@@ -92,7 +101,6 @@ public:
   bool Is_complete() const { return m_is_complete; }
   void Set_is_complete(bool complete) { m_is_complete = complete; }
 
-
 protected:
   // Attributes
 
@@ -114,9 +122,9 @@ protected:
 
   /**
    * @brief Get any follow-on events to schedule
-   * @return A vector of unique_ptrs to newly created Event_base instances
+   * @return A vector of shared_ptrs to newly created Event_base instances
    */
-  virtual std::vector<std::unique_ptr<Event_base>> get_next_steps() const = 0;
+  virtual std::vector<std::shared_ptr<Event_base>> get_next_steps() const = 0;
 
 private:
   // Attributes
@@ -159,6 +167,8 @@ private:
 
 };  // class Event_base
 
+inline Event_base::~Event_base() {}
+
 /**
  * @brief JSON serializer, marked inline to keep this virtual base class
  * header-only
@@ -193,14 +203,13 @@ inline void from_json(const nlohmann::json& json,
                       his_gen::Event_base& event_base)
 {
   event_base.Set_name(json.at("name"));
-  event_base.Set_event_type(his_gen::Get_event_type(json.at("name)")));
+  event_base.Set_event_type(his_gen::Get_event_type(json.at("name")));
   event_base.Set_triggering_entity_id(json.at("triggering_entity_id"));
   event_base.Set_target_ids(json.at("target_ids"));
   event_base.Set_is_complete(json.at("is_complete"));
 }
 
 }  // namespace his_gen
-
 
 /**
  * @brief By extending the adl_serializer to utilize this class, we can register

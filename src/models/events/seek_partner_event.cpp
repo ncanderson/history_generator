@@ -14,8 +14,8 @@ his_gen::Seek_partner_event::Seek_partner_event(std::shared_ptr<Entity_base>& tr
              triggering_entity)
 {
   // Register the derived class with the JSON serializer
-  Polymorphic_serializer<his_gen::Event_base>::register_types<his_gen::Event_base,
-                                                               his_gen::Seek_partner_event>();
+  //Polymorphic_serializer<his_gen::Event_base>::register_types<his_gen::Event_base,
+  //                                                            his_gen::Seek_partner_event>();
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -41,7 +41,7 @@ void his_gen::Seek_partner_event::conclude_event()
 
 ///////////////////////////////////////////////////////////////////////
 
-std::vector<std::unique_ptr<his_gen::Event_base>> his_gen::Seek_partner_event::get_next_steps() const
+std::vector<std::shared_ptr<his_gen::Event_base>> his_gen::Seek_partner_event::get_next_steps() const
 {
   // TODO: implement get_next_steps
   return {};

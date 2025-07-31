@@ -279,7 +279,8 @@ enum EEvent_type
   EEVENT_TYPE_Subverted_rival,      ///< Undermined or sabotaged a rival.
   EEVENT_TYPE_Was_captured,         ///< Entity was captured.
   EEVENT_TYPE_Was_hunted,           ///< Entity was hunted or pursued.
-  EEVENT_TYPE_Was_subdued           ///< Entity was overpowered or suppressed.
+  EEVENT_TYPE_Was_subdued,          ///< Entity was overpowered or suppressed.
+  EEVENT_TYPE_Unkown                ///< Unknown or invalid event type.
 };
 
 /**

@@ -63,6 +63,14 @@ public:
   ~Data_definitions(){};
 
   /**
+   * @brief When instantiated directly from JSON, this class won't necessarily
+   * have full acccess to all data in the constructor. This function allows
+   * the class to fully initialize any data members not fully constructible
+   * from JSON.
+   */
+  void Initialize_composite_data();
+
+  /**
    * @brief Return a random valid event for this entity type
    * @param entity The entity to get an event for
    * @return A random valid event type

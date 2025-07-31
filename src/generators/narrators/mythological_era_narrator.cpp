@@ -10,6 +10,11 @@
 #include <models/events/event_factory.h>
 #include <utils/dice_rolls.h>
 
+//test
+#include <models/events/event_base.h>
+#include <models/events/seek_partner_event.h>
+//test
+
 using myth_nar = his_gen::Mythological_era_narrator;
 
 ///////////////////////////////////////////////////////////////////////

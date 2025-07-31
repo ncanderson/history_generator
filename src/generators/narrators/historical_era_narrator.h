@@ -31,6 +31,11 @@ public:
                           const std::shared_ptr<his_gen::Data_definitions> data_definitions);
 
   /**
+   * @brief Destructor
+   */
+  ~Historical_era_narrator(){}
+
+  /**
    * @brief Create_entities
    * @param entities
    * @param entities_per_tick

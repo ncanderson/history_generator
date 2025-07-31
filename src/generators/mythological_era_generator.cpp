@@ -28,6 +28,7 @@ void his_gen::Mythological_era_generator::Run()
 {
   his_gen::Print_to_cout("Current Stage: " +
                          his_gen::Get_current_stage(m_current_stage));
+  //his_gen::Print_to_cout("Ticks completed: " + std::to_string(m_ticks_completed));
 
   switch(m_current_stage)
   {

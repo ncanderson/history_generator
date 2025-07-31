@@ -20,6 +20,12 @@ his_gen::Data_definitions::Data_definitions()
   m_entity_events(),
   m_entity_relationships()
 {
+}
+
+///////////////////////////////////////////////////////////////////////
+
+void his_gen::Data_definitions::Initialize_composite_data()
+{
   build_entity_relationships(Entity_type_relationship_types);
   build_entity_events(Entity_type_event_types);
 }
@@ -84,6 +90,8 @@ void his_gen::from_json(const nlohmann::json& json,
   json.at("entity_types").get_to(data_definitions.Entity_types);
   json.at("relationship_types").get_to(data_definitions.Relationship_types);
   json.at("event_types").get_to(data_definitions.Event_types);
+
+  data_definitions.Initialize_composite_data();
 }
 
 ///////////////////////////////////////////////////////////////////////
