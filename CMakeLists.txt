@@ -25,7 +25,8 @@ set(headers ${headers} ${glob_headers} ${glob_deps})
 
 ######################################
 # Define the binary we're building
-add_executable(${project_name} ${sources} ${headers})
+add_executable(${project_name} ${sources} ${headers}
+  src/models/events/dummy_event.h src/models/events/dummy_event.cpp)
 
 ######################################
 # Include directories

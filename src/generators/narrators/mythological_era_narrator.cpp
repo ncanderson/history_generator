@@ -11,8 +11,8 @@
 #include <utils/dice_rolls.h>
 
 //test
-#include <models/events/event_base.h>
 #include <models/events/seek_partner_event.h>
+#include <models/events/dummy_event.h>
 //test
 
 using myth_nar = his_gen::Mythological_era_narrator;
@@ -64,8 +64,11 @@ void myth_nar::Create_events(std::vector<std::shared_ptr<his_gen::Entity_base>>&
     // A random event
     EEvent_type event_type = m_data_definitions->Get_rand_entity_event(triggering_entity->Get_entity_type());
     // Create the event
-    std::shared_ptr<his_gen::Event_base> new_event = his_gen::Event_factory::Create_event(event_type,
-                                                                                          triggering_entity);
+    //std::shared_ptr<his_gen::Event_base> new_event = his_gen::Event_factory::Create_event(event_type,
+    //                                                                                      triggering_entity);
+
+    std::shared_ptr<his_gen::Dummy_event> new_event = std::make_shared<his_gen::Dummy_event>(triggering_entity);
+
     // Add the event to the list
     events.push_back(new_event);
   }
