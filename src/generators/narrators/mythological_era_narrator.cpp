@@ -13,6 +13,7 @@
 //test
 #include <models/events/event_base.h>
 #include <models/events/seek_partner_event.h>
+#include <models/events/dummy_event.h>
 //test
 
 using myth_nar = his_gen::Mythological_era_narrator;

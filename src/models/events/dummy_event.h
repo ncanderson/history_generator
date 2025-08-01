@@ -14,6 +14,8 @@ public:
     void initialize_event() override {}
     void run_event() override {}
     void conclude_event() override {}
+    std::vector<std::shared_ptr<Event_base>> get_next_steps() const override {return {};}
 };
 }
+
 #endif // DUMMY_EVENT_H
