@@ -34,33 +34,24 @@ public:
   ~Seek_partner_event(){}
 
   /**
+   * @brief Run the event
+   */
+  void Run();
+
+  /**
    * Getters and setters
    */
   // TODO
 
 protected:
-  /**
-   * @brief Initialize the event
-   */
-  void initialize_event();
+  // Attributes
 
-  /**
-   * @brief Run the event
-   */
-  void run_event();
-
-  /**
-   * @brief Close out the event
-   */
-  void conclude_event();
-
-  /**
-   * @brief Get any follow-on events to schedule
-   * @return A vector of shared_ptrs to newly created Event_base instances
-   */
-  std::vector<std::shared_ptr<Event_base>> get_next_steps() const;
+  // Implementation
 
 private:
+  // Attributes
+
+  // Implementation
 
 }; // class Seek_partner_event
 }  // namespace his_gen

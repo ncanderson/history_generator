@@ -62,6 +62,8 @@ void myth_nar::Create_events(std::vector<std::shared_ptr<his_gen::Entity_base>>&
     // Create the event
     std::shared_ptr<his_gen::Event_base> new_event = his_gen::Event_factory::Create_event(event_type,
                                                                                           triggering_entity);
+    // Run the event
+    new_event->Run();
     // Add the event to the list
     events.push_back(new_event);
   }

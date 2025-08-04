@@ -57,6 +57,12 @@ public:
   virtual ~Event_base() = default;
 
   /**
+   * @brief Run the event. Implementing functions will determine
+   * what 'Run' means.
+   */
+  virtual void Run() = 0;
+
+  /**
    * Getters and setters
    */
   his_gen::EEvent_type Get_event_type() const { return m_event_type; }
@@ -91,26 +97,6 @@ protected:
   // Attributes
 
   // Implementation
-  /**
-   * @brief Event initialization function to be overriden by child classes
-   */
-  virtual void initialize_event() = 0;
-
-  /**
-   * @brief Event execution function to be overriden by child classes
-   */
-  virtual void run_event() = 0;
-
-  /**
-   * @brief Event wrap-up function to be overriden by child classes
-   */
-  virtual void conclude_event() = 0;
-
-  /**
-   * @brief Get any follow-on events to schedule
-   * @return A vector of shared_ptrs to newly created Event_base instances
-   */
-  virtual std::vector<std::shared_ptr<Event_base>> get_next_steps() const = 0;
 
 private:
   // Attributes
@@ -163,9 +149,7 @@ inline void to_json(nlohmann::json& json, const his_gen::Event_base& event_base)
 {
   json = nlohmann::json
   {
-    {"name", event_base.Get_name()},
     {"type", his_gen::Get_event_type_string(event_base.Get_event_type())},
-    {"triggering_entity", event_base.Get_triggering_entity()},
     {"triggering_entity_id", event_base.Get_triggering_entity()->Get_entity_id()},
     {"targets", event_base.Get_targets()},
     {"target_ids", event_base.Get_target_ids()},

@@ -23,6 +23,7 @@ void his_gen::to_json(nlohmann::json& json,
   json = nlohmann::json
   {
     {"entities", generated_history.Entities},
+    {"events", generated_history.Events},
     {"entity_relationships", generated_history.Entity_relationships}
   };
 }

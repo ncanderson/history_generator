@@ -18,31 +18,9 @@ his_gen::Seek_partner_event::Seek_partner_event(std::shared_ptr<Entity_base>& tr
 
 //////////////////////////////////////////////////////////////////////
 
-void his_gen::Seek_partner_event::initialize_event()
+void his_gen::Seek_partner_event::Run()
 {
-  // TODO: implement initialize_event
-}
-
-///////////////////////////////////////////////////////////////////////
-
-void his_gen::Seek_partner_event::run_event()
-{
-  // TODO: implement run_event
-}
-
-///////////////////////////////////////////////////////////////////////
-
-void his_gen::Seek_partner_event::conclude_event()
-{
-  // TODO: implement conclude_event
-}
-
-///////////////////////////////////////////////////////////////////////
-
-std::vector<std::shared_ptr<his_gen::Event_base>> his_gen::Seek_partner_event::get_next_steps() const
-{
-  // TODO: implement get_next_steps
-  return {};
+  his_gen::Print_to_cout("here we are in Run");
 }
 
 ///////////////////////////////////////////////////////////////////////
