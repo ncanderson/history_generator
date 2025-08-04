@@ -21,40 +21,48 @@ namespace his_gen
 class Seek_partner_event : public Event_base
 {
 public:
-  /**
-   * @brief Constructor
-   * @param triggering_entity The entity driving this event
-   */
-  Seek_partner_event(std::shared_ptr<Entity_base>& triggering_entity);
+    Seek_partner_event(std::shared_ptr<his_gen::Entity_base>& entity)
+        :
+        Event_base(his_gen::EEvent_type::EEVENT_TYPE_Seek_partner, "dummy", entity) {}
 
-  /**
-   * Getters and setters
-   */
-  // TODO
+    void initialize_event() override {}
+    void run_event() override {}
+    void conclude_event() override {}
+    std::vector<std::shared_ptr<Event_base>> get_next_steps() const override {return {};}
+//  /**
+//   * @brief Constructor
+//   * @param triggering_entity The entity driving this event
+//   */
+//  Seek_partner_event(std::shared_ptr<Entity_base>& triggering_entity);
 
-protected:
-  /**
-   * @brief Event initialization logic
-   */
-  void initialize_event() override;
+//   /**
+//    * Getters and setters
+//    */
+//   // TODO
 
-  /**
-   * @brief Event execution logic
-   */
-  void run_event() override;
+// //protected:
+  // /**
+  //  * @brief Event initialization logic
+  //  */
+  // void initialize_event() override;
 
-  /**
-   * @brief Event conclusion logic
-   */
-  void conclude_event() override;
+  // /**
+  //  * @brief Event execution logic
+  //  */
+  // void run_event() override;
 
-  /**
-   * @brief Determines follow-on events
-   * @return A vector of shared_ptrs to follow-on events
-   */
-  std::vector<std::shared_ptr<Event_base>> get_next_steps() const override;
+  // /**
+  //  * @brief Event conclusion logic
+  //  */
+  // void conclude_event() override;
 
-private:
+  // /**
+  //  * @brief Determines follow-on events
+  //  * @return A vector of shared_ptrs to follow-on events
+  //  */
+  // std::vector<std::shared_ptr<Event_base>> get_next_steps() const override;
+
+// private:
 
 }; // class Seek_partner_event
 }  // namespace his_gen

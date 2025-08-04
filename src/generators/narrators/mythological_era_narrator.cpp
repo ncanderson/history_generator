@@ -69,6 +69,7 @@ void myth_nar::Create_events(std::vector<std::shared_ptr<his_gen::Entity_base>>&
     //                                                                                      triggering_entity);
 
     std::shared_ptr<his_gen::Dummy_event> new_event = std::make_shared<his_gen::Dummy_event>(triggering_entity);
+    std::shared_ptr<his_gen::Seek_partner_event> seek_event = std::make_shared<his_gen::Seek_partner_event>(triggering_entity);
 
     // Add the event to the list
     events.push_back(new_event);

@@ -9,7 +9,8 @@ class Dummy_event : public Event_base
 {
 public:
     Dummy_event(std::shared_ptr<his_gen::Entity_base>& entity)
-        : Event_base(his_gen::EEvent_type::EEVENT_TYPE_Seek_partner, "dummy", entity) {}
+      :
+      Event_base(his_gen::EEvent_type::EEVENT_TYPE_Seek_partner, "dummy", entity) {}
 
     void initialize_event() override {}
     void run_event() override {}
