@@ -11,6 +11,8 @@
 #include <utils/history_generator_root_config.h>
 #include <generators/narrators/narrator_base.h>
 #include <models/entities/entity_base.h>
+#include <models/events/event_base.h>
+#include <models/events/event_factory.h>
 
 // Modules
 #include <modules/names.h>
@@ -45,6 +47,14 @@ public:
    */
   void Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
                        int64_t entities_per_tick) override;
+
+  /**
+   * @brief Create_events
+   * @param entities The vector of entity pointers to reference when creating events
+   * @param events The vector of events to populate
+   */
+  void Create_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
+                     std::vector<std::shared_ptr<his_gen::Event_base>>& events) override;
 
   /**
    * @brief The first being in this mythology

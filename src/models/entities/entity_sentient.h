@@ -31,9 +31,14 @@ public:
   // Implementation
   /**
    * @brief Constructor
+   * @param name
+   * @param title
+   * @param entity_type
+   * @param full_random_reproduction
    */
   Entity_sentient(std::string name,
                   std::string title,
+                  EEntity_type entity_type,
                   bool full_random_reproduction= false);
 
   /**

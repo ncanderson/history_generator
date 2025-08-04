@@ -28,6 +28,7 @@ void his_gen::Mythological_era_generator::Run()
 {
   his_gen::Print_to_cout("Current Stage: " +
                          his_gen::Get_current_stage(m_current_stage));
+  his_gen::Print_to_cout("Ticks completed: " + std::to_string(m_ticks_completed));
 
   switch(m_current_stage)
   {
@@ -42,19 +43,19 @@ void his_gen::Mythological_era_generator::Run()
 
     case STAGE_Run:
     {
-      /*
-       * new class, event
-       * there are event_type_entity_type
-       * rather than hard-coding steps we check, determine possible event from entity type
-       * pass that event off to the event manager, which will determine how the event proceeds
-       */
       // Generate the desired number of entities for this tick
       m_myth_narrator.Create_entities(m_generated_history.Entities,
                                       m_entities_per_tick);
 
-      // Do they like each other?
-      m_myth_narrator.Run_entity_attraction(m_generated_history.Entities,
-                                            m_generated_history.Entity_relationships);
+      m_myth_narrator.Create_events(m_generated_history.Entities,
+                                    m_generated_history.Events);
+
+
+
+
+      //// Do they like each other?
+      //m_myth_narrator.Run_entity_attraction(m_generated_history.Entities,
+      //                                      m_generated_history.Entity_relationships);
 
       // Increment run-time ticks
       m_ticks_completed++;

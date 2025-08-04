@@ -9,6 +9,7 @@
 
 // Application files
 #include <models/entities/entity_base.h>
+#include <models/events/event_base.h>
 #include <data_access/data_access_manager.h>
 
 namespace his_gen
@@ -44,7 +45,7 @@ public:
   /**
    * @brief Destructor
    */
-  ~Narrator_base() = default;
+  virtual ~Narrator_base() = default;
 
   /**
    * @brief Inheriting classes must implement this function to create new entities.
@@ -53,6 +54,14 @@ public:
    */
   virtual void Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
                                int64_t entities_per_tick) = 0;
+
+  /**
+   * @brief Inheriting classes must implement this function to create new events.
+   * @param entities The vector of entity pointers to reference when creating events
+   * @param events The vector of events to populate
+   */
+  virtual void Create_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
+                             std::vector<std::shared_ptr<his_gen::Event_base>>& events) =0;
 
   /**
    * @brief Check all entities in `entities` for attraction
@@ -64,6 +73,10 @@ public:
 
 protected:
   // Attributes
+  /**
+   * @brief Pointer to the data definitions
+   */
+  const std::shared_ptr<his_gen::Data_definitions> m_data_definitions;
 
   // Implementation
   /**
@@ -74,10 +87,6 @@ protected:
 
 private:
   // Attributes
-  /**
-   * @brief Pointer to the data definitions
-   */
-  const std::shared_ptr<his_gen::Data_definitions> m_data_definitions;
 
   // Implementation
 

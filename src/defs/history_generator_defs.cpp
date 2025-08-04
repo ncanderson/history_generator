@@ -264,7 +264,7 @@ his_gen::ERelationship_type his_gen::Get_relationship_type(const std::string& re
 
 ///////////////////////////////////////////////////////////////////////
 
-std::string his_gen::Get_event_type_string(const EEvent_type event_type)
+std::string his_gen::Get_event_type_string(const EEvent_type& event_type)
 {
   switch (event_type)
   {
@@ -293,6 +293,7 @@ std::string his_gen::Get_event_type_string(const EEvent_type event_type)
     case EEVENT_TYPE_Moved_territory:     return "moved_territory";
     case EEVENT_TYPE_Opposed_policy:      return "opposed_policy";
     case EEVENT_TYPE_Performed_ritual:    return "performed_ritual";
+    case EEVENT_TYPE_Seek_partner:        return "seek_partner";
     case EEVENT_TYPE_Signed_treaty:       return "signed_treaty";
     case EEVENT_TYPE_Split_from_group:    return "split_from_group";
     case EEVENT_TYPE_Spread_fear:         return "spread_fear";
@@ -336,6 +337,7 @@ his_gen::EEvent_type his_gen::Get_event_type(const std::string& event_type)
       {"moved_territory",     EEVENT_TYPE_Moved_territory},
       {"opposed_policy",      EEVENT_TYPE_Opposed_policy},
       {"performed_ritual",    EEVENT_TYPE_Performed_ritual},
+      {"seek_partner",        EEVENT_TYPE_Seek_partner},
       {"signed_treaty",       EEVENT_TYPE_Signed_treaty},
       {"split_from_group",    EEVENT_TYPE_Split_from_group},
       {"spread_fear",         EEVENT_TYPE_Spread_fear},
@@ -359,3 +361,5 @@ his_gen::EEvent_type his_gen::Get_event_type(const std::string& event_type)
     throw std::invalid_argument("Can't find event type from string");
   }
 }
+
+///////////////////////////////////////////////////////////////////////

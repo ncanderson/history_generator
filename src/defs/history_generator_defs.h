@@ -271,6 +271,7 @@ enum EEvent_type
   EEVENT_TYPE_Moved_territory,      ///< Group relocated its territory.
   EEVENT_TYPE_Opposed_policy,       ///< An existing policy was resisted or challenged.
   EEVENT_TYPE_Performed_ritual,     ///< Ritual or ceremony was performed.
+  EEVENT_TYPE_Seek_partner,         ///< Seek a partner, romatic or otherwise
   EEVENT_TYPE_Signed_treaty,        ///< Treaty or formal agreement signed.
   EEVENT_TYPE_Split_from_group,     ///< Entity split from a group or origin.
   EEVENT_TYPE_Spread_fear,          ///< Entity caused fear or panic.
@@ -278,7 +279,8 @@ enum EEvent_type
   EEVENT_TYPE_Subverted_rival,      ///< Undermined or sabotaged a rival.
   EEVENT_TYPE_Was_captured,         ///< Entity was captured.
   EEVENT_TYPE_Was_hunted,           ///< Entity was hunted or pursued.
-  EEVENT_TYPE_Was_subdued           ///< Entity was overpowered or suppressed.
+  EEVENT_TYPE_Was_subdued,          ///< Entity was overpowered or suppressed.
+  EEVENT_TYPE_Unkown                ///< Unknown or invalid event type.
 };
 
 /**
@@ -286,7 +288,7 @@ enum EEvent_type
  * @param event_type The event type enum value.
  * @return Lowercase string form (e.g. "died", "formed_alliance").
  */
-std::string Get_event_type_string(EEvent_type event_type);
+std::string Get_event_type_string(const EEvent_type& event_type);
 
 /**
  * @brief Convert a string to its corresponding EEvent_type enum value.

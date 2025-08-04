@@ -15,10 +15,11 @@
 #include <utils/history_generator_utils.h>
 
 // Models
-#include <models/relations/entity_relationship.h>
-#include <models/relations/entity_type_relationship_type.h>
 #include <models/entities/entity_type.h>
 #include <models/entities/entity_sentient.h>
+#include <models/events/event_base.h>
+#include <models/relations/entity_relationship.h>
+#include <models/relations/entity_type_relationship_type.h>
 #include <models/relationships/relationship_type.h>
 
 namespace his_gen
@@ -32,9 +33,15 @@ public:
   // Attributes
   /**
    * @brief List of all generated entities.
-   * @details This vector will hold any entity derived from entity base.
+   * @details This vector will hold any objects derived from the base class
    */
   std::vector<std::shared_ptr<his_gen::Entity_base>> Entities;
+
+  /**
+   * @brief List of all generated events.
+   * @details This vector will hold any objects derived from the base class
+   */
+  std::vector<std::shared_ptr<his_gen::Event_base>> Events;
 
   /**
    * @brief List of all entity relationships
