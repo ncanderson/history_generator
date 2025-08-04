@@ -26,6 +26,7 @@ sentient::Entity_sentient(std::string name,
   m_lovers(),
   m_spouses()
 {
+  // TODO Don't do this for every entity, move it somewhere so we do it once per class
   // Register the derived class with the JSON serializer
   Polymorphic_serializer<his_gen::Entity_base>::register_types<his_gen::Entity_base,
                                                                his_gen::Entity_sentient>();
