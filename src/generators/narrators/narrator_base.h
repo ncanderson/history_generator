@@ -52,8 +52,7 @@ public:
    * @param entities The vector of entity pointers to populate.
    * @param entities_per_tick Configued entities to create per generator tick.
    */
-  virtual void Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
-                               int64_t entities_per_tick) = 0;
+  virtual void Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities) = 0;
 
   /**
    * @brief Inheriting classes must implement this function to create new events.
@@ -82,8 +81,9 @@ protected:
   /**
    * @brief Entity creation. Implementing classes must use their own
    * configuration for the purposes of entity creation.
+   * @param entity_type The type of entity to create
    */
-  virtual std::shared_ptr<his_gen::Entity_base> create_entity() = 0;
+  virtual std::shared_ptr<his_gen::Entity_base> create_entity(his_gen::EEntity_type entity_type) = 0;
 
 private:
   // Attributes

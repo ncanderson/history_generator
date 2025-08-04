@@ -15,7 +15,7 @@ std::shared_ptr<his_gen::Entity_base> his_gen::Entity_factory::Create_entity(his
   {
     case his_gen::EEntity_type::EENTITY_TYPE_Sentient:
     {
-      return std::make_shared<his_gen::Entity_sentient>();
+      //return std::make_shared<his_gen::Entity_sentient>();
     }
     break;
 

@@ -45,8 +45,7 @@ public:
    * @param entities
    * @param entities_per_tick
    */
-  void Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
-                       int64_t entities_per_tick) override;
+  void Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities) override;
 
   /**
    * @brief Create_events
@@ -67,8 +66,9 @@ protected:
   // Implementation
   /**
    * @brief Create a new entity
+   * @param entity_type The entity type to create
    */
-  std::shared_ptr<his_gen::Entity_base> create_entity() override;
+  std::shared_ptr<his_gen::Entity_base> create_entity(his_gen::EEntity_type entity_type) override;
 
 private:
   // Attributes

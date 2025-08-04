@@ -39,12 +39,18 @@ void myth_nar::Create_progenitor_deity(std::vector<std::shared_ptr<his_gen::Enti
 
 ///////////////////////////////////////////////////////////////////////
 
-void myth_nar::Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
-                               int64_t entities_per_tick)
+void myth_nar::Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities)
 {
-  for(int64_t tick_count = 0; tick_count < entities_per_tick; tick_count++)
+  for(int64_t tick_count = 0; tick_count < m_config.Get_myth_config().Max_entity_per_tick; tick_count++)
   {
-    entities.push_back(create_entity());
+    // A random entity type
+    EEntity_type entity_type = m_data_definitions->Get_rand_entity_type();
+    // TEMP
+    // until we figure out how weight entities
+    entity_type = EENTITY_TYPE_Deity;
+    // TEMP
+    // Create the entity
+    entities.push_back(create_entity(entity_type));
   }
 }
 
@@ -71,13 +77,47 @@ void myth_nar::Create_events(std::vector<std::shared_ptr<his_gen::Entity_base>>&
 
 ///////////////////////////////////////////////////////////////////////
 
-// TODO: expand to include entity type via switch case
-std::shared_ptr<his_gen::Entity_base> myth_nar::create_entity()
+// TODO: figure out how to make this happen via factory maybe
+//       add weights
+std::shared_ptr<his_gen::Entity_base> myth_nar::create_entity(his_gen::EEntity_type entity_type)
 {
-  return std::make_shared<his_gen::Entity_sentient>(m_names.Get_one_name(),
-                                                    m_names.Get_one_title(),
-                                                    EENTITY_TYPE_Deity,
-                                                    m_config.Get_myth_config().Full_random_reproduction);
+  switch(entity_type)
+  {
+    case EENTITY_TYPE_Unknown:     break;
+    case EENTITY_TYPE_Artifact:    break;
+    case EENTITY_TYPE_Beast:       break;
+    case EENTITY_TYPE_Clan_tribe:  break;
+    case EENTITY_TYPE_Culture:     break;
+    case EENTITY_TYPE_Deity:
+    {
+      return std::make_shared<his_gen::Entity_sentient>(m_names.Get_one_name(),
+                                                        m_names.Get_one_title(),
+                                                        EENTITY_TYPE_Deity,
+                                                        m_config.Get_myth_config().Full_random_reproduction);
+    }
+    break;
+    case EENTITY_TYPE_Ethnicity:   break;
+    case EENTITY_TYPE_Event:       break;
+    case EENTITY_TYPE_Faction:     break;
+    case EENTITY_TYPE_House:       break;
+    case EENTITY_TYPE_Idea:        break;
+    case EENTITY_TYPE_Institution: break;
+    case EENTITY_TYPE_Language:    break;
+    case EENTITY_TYPE_Legend:      break;
+    case EENTITY_TYPE_Monster:     break;
+    case EENTITY_TYPE_Nation:      break;
+    case EENTITY_TYPE_Order:       break;
+    case EENTITY_TYPE_Pantheon:    break;
+    case EENTITY_TYPE_Phenomenon:  break;
+    case EENTITY_TYPE_Region:      break;
+    case EENTITY_TYPE_Religion:    break;
+    case EENTITY_TYPE_Ruin:        break;
+    case EENTITY_TYPE_Sentient:    break;
+    case EENTITY_TYPE_Settlement:  break;
+    default:
+      // Unrecognized value
+      throw std::invalid_argument("Entity type enumeration not found");
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////

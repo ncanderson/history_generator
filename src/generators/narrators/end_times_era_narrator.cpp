@@ -19,8 +19,7 @@ et_nar::End_times_era_narrator(const his_gen::Data_access_manager& data_access_m
 
 ///////////////////////////////////////////////////////////////////////
 
-void et_nar::Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
-                             int64_t entities_per_tick)
+void et_nar::Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities)
 {
   // NOOP
 }
@@ -36,7 +35,7 @@ void et_nar::Create_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& e
 ///////////////////////////////////////////////////////////////////////
 
 // TODO: expand to include entity type via switch case
-std::shared_ptr<his_gen::Entity_base> et_nar::create_entity()
+std::shared_ptr<his_gen::Entity_base> et_nar::create_entity(his_gen::EEntity_type entity_type)
 {
   // NOOP
   return nullptr;
