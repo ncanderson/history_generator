@@ -28,9 +28,14 @@ public:
 
   // Implementation
   /**
-   * @brief Virtual destructor to make this class non-instantiable
+   * @brief Deleted constructor to make this class non-instantiable
    */
-  virtual ~Event_factory() = 0;
+  Event_factory() = delete;
+
+  /**
+   * @brief Deleted destructor to make this class non-instantiable
+   */
+  ~Event_factory() = delete;
 
   /**
    * @brief Create and event from it's associated enumeration

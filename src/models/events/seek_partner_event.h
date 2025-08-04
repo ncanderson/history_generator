@@ -28,10 +28,10 @@ public:
    */
   Seek_partner_event(std::shared_ptr<his_gen::Entity_base>& triggering_entity);
 
-//  void initialize_event() override {}
-//  void run_event() override {}
-//  void conclude_event() override {}
-//  std::vector<std::shared_ptr<Event_base>> get_next_steps() const override {return {};}
+  /**
+   * @brief Destructor
+   */
+  ~Seek_partner_event(){}
 
   /**
    * Getters and setters
@@ -40,25 +40,25 @@ public:
 
 protected:
   /**
-   * @brief Event initialization logic
+   * @brief Initialize the event
    */
-  void initialize_event() override;
+  void initialize_event();
 
   /**
-   * @brief Event execution logic
+   * @brief Run the event
    */
-  void run_event() override;
+  void run_event();
 
   /**
-   * @brief Event conclusion logic
+   * @brief Close out the event
    */
-  void conclude_event() override;
+  void conclude_event();
 
   /**
-   * @brief Determines follow-on events
-   * @return A vector of shared_ptrs to follow-on events
+   * @brief Get any follow-on events to schedule
+   * @return A vector of shared_ptrs to newly created Event_base instances
    */
-  std::vector<std::shared_ptr<Event_base>> get_next_steps() const override;
+  std::vector<std::shared_ptr<Event_base>> get_next_steps() const;
 
 private:
 
