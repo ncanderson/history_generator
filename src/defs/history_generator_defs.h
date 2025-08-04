@@ -288,7 +288,7 @@ enum EEvent_type
  * @param event_type The event type enum value.
  * @return Lowercase string form (e.g. "died", "formed_alliance").
  */
-std::string Get_event_type_string(EEvent_type event_type);
+std::string Get_event_type_string(const EEvent_type& event_type);
 
 /**
  * @brief Convert a string to its corresponding EEvent_type enum value.
