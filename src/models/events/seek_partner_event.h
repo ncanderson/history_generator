@@ -35,8 +35,9 @@ public:
 
   /**
    * @brief Run the event
+   * @param entities The current set of entities, for check attraction
    */
-  void Run();
+  void Run(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities);
 
   /**
    * Getters and setters

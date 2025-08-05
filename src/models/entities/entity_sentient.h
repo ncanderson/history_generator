@@ -54,10 +54,11 @@ public:
   bool Is_attracted(std::shared_ptr<Entity_base> other_entity) override;
 
   /**
-   * @brief Is_attracted to other_entity
-   * @details `attracted_to` will only be populated with `other_entity` if there
+   * @brief Calling object Is_attracted to other_entity
+   * @details `attracted_to` will be populated with `other_entity` if there
    * is attraction. This function does not handle mutual attraction, but expects
-   * the caller to utilize the `attracted_to` vector populated here.
+   * the caller to utilize the `attracted_to` vector populated here to make that
+   * determination.
    * @param other_entity The entity to compare to
    * @param attracted_to Vector to populate with attraction partners
    * @return True if `this` is attracted to `other_entity`, otherwise false.

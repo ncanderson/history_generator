@@ -45,10 +45,13 @@ void myth_nar::Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>
   {
     // A random entity type
     EEntity_type entity_type = m_data_definitions->Get_rand_entity_type();
+
     // TEMP
     // until we figure out how weight entities
     entity_type = EENTITY_TYPE_Deity;
     // TEMP
+
+
     // Create the entity
     entities.push_back(create_entity(entity_type));
   }
@@ -69,7 +72,7 @@ void myth_nar::Create_events(std::vector<std::shared_ptr<his_gen::Entity_base>>&
     std::shared_ptr<his_gen::Event_base> new_event = his_gen::Event_factory::Create_event(event_type,
                                                                                           triggering_entity);
     // Run the event
-    new_event->Run();
+    new_event->Run(entities);
     // Add the event to the list
     events.push_back(new_event);
   }
@@ -95,7 +98,7 @@ std::shared_ptr<his_gen::Entity_base> myth_nar::create_entity(his_gen::EEntity_t
                                                         EENTITY_TYPE_Deity,
                                                         m_config.Get_myth_config().Full_random_reproduction);
     }
-    break;
+      break;
     case EENTITY_TYPE_Ethnicity:   break;
     case EENTITY_TYPE_Event:       break;
     case EENTITY_TYPE_Faction:     break;

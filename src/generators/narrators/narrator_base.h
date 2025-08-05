@@ -39,8 +39,12 @@ public:
   // Implementation
   /**
    * @brief Constructor
+   * @brief data_definitions The data definitions
    */
-  Narrator_base(const std::shared_ptr<his_gen::Data_definitions> data_definitions);
+  Narrator_base(const std::shared_ptr<his_gen::Data_definitions> data_definitions)
+    :
+    m_data_definitions(data_definitions)
+  { }
 
   /**
    * @brief Destructor
@@ -61,14 +65,6 @@ public:
    */
   virtual void Create_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
                              std::vector<std::shared_ptr<his_gen::Event_base>>& events) =0;
-
-  /**
-   * @brief Check all entities in `entities` for attraction
-   * @param entities Vector of entities to review
-   * @param enitity_relationships Map to track any new relationships
-   */
-  void Run_entity_attraction(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
-                             std::map<boost::uuids::uuid, std::shared_ptr<his_gen::Entity_relationship>>& enitity_relationships);
 
 protected:
   // Attributes

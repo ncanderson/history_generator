@@ -38,8 +38,10 @@ public:
    */
   bool Get_attracted_to_can_sire() const { return m_attracted_to_can_sire; }
   void Set_attracted_to_can_sire(bool attraction) { m_attracted_to_can_sire = attraction; }
+
   bool Get_attracted_to_can_bear() const { return m_attracted_to_can_bear; }
   void Set_attracted_to_can_bear(bool attraction) { m_attracted_to_can_bear = attraction; }
+
   int8_t Get_attraction_flexibility() const { return m_attraction_flexibility; }
   void Set_attraction_flexibility(int8_t attraction_flexibility) { m_attraction_flexibility = attraction_flexibility; }
 

@@ -64,6 +64,7 @@ bool sentient::Is_attracted(std::shared_ptr<Entity_base> other_entity)
     // Still here? Check attributes.
     for(auto& it : m_personality_attraction.Get_attributes())
     {
+      // TODO Move this into a helper
       // Subtract the argued entity attribute from the attraction attribute,
       // take the absolute value, and compare it to the attraction flexibility.
       // This will return false if any compared attribute doesn't meet the

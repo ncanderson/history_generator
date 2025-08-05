@@ -59,8 +59,9 @@ public:
   /**
    * @brief Run the event. Implementing functions will determine
    * what 'Run' means.
+   * @param entities The current set of entities, for resolving events
    */
-  virtual void Run() = 0;
+  virtual void Run(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities) = 0;
 
   /**
    * Getters and setters
@@ -82,9 +83,22 @@ public:
   void Set_triggering_entity_id(const boost::uuids::uuid& triggering_entity_id) { m_triggering_entity_id = triggering_entity_id; }
 
   const std::vector<std::shared_ptr<Entity_base>>& Get_targets() const { return m_targets; }
-  // TODO Make these setters also populate the target ID structure
-  void Set_targets(const std::vector<std::shared_ptr<Entity_base>>& targets) { m_targets = targets; }
-  void Add_target(const std::shared_ptr<Entity_base>& target) { m_targets.push_back(target); }
+  void Set_targets(const std::vector<std::shared_ptr<Entity_base>>& targets)
+  {
+    // Entities
+    m_targets = targets;
+    // IDs
+    m_target_ids.clear();
+    for(auto& it : m_targets)
+    {
+      m_target_ids.push_back(it->Get_entity_id());
+    }
+  }
+  void Add_target(const std::shared_ptr<Entity_base>& target)
+  {
+    m_targets.push_back(target);
+    m_target_ids.push_back(target->Get_entity_id());
+  }
 
   const std::vector<boost::uuids::uuid>& Get_target_ids() const { return m_target_ids; }
   void Set_target_ids(const std::vector<boost::uuids::uuid>& target_ids) { m_target_ids = target_ids; }
