@@ -113,6 +113,7 @@ struct DAL_PG_params
 // TODO: figure out some way to keep the pairs aligned? Maybe use a key for the
 // enum member's values, or a separate structure that keeps them together in
 // pairs?
+// TODO: Move into the personality module
 /**
  * @brief The Attribute enum
  * @details Containing pairs of opposed personality attributes, this enum

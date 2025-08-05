@@ -46,26 +46,6 @@ struct adl_serializer<std::map<his_gen::Attribute, T>>
   }
 };
 
-///** TODO: Why are you commented?
-// * @brief Additional serializer for personality attribute maps
-// */
-//template <typename T>
-//struct adl_serializer<std::map<his_gen::Attribute, T>>
-//{
-//  /**
-//   * @brief to_json
-//   * @param json
-//   * @param map
-//   */
-//  static void to_json(json& json, const std::map<his_gen::Attribute, T>& map)
-//  {
-//    for(auto it = map.begin(); it != map.end(); ++it)
-//    {
-//      json[his_gen::Get_attribute_string(it->first)] = it->second;
-//    }
-//  }
-//}; // struct adl_serializer
-
 /**
  * @brief Additional serializer for a shared pointer
  */
