@@ -14,7 +14,11 @@
 namespace his_gen
 {
 /**
- * @brief
+ * @brief The attributes governing this attraction.
+ * @details As `Personality` is randomized, this derived class
+ * will create its own instance of `Personality` to represent the attributes
+ * that are attractive. Attraction flexibility is the mechanism
+ * used to compare the two personalities.
  */
 class Personality_attraction : public Personality
 {

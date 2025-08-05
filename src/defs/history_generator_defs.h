@@ -28,7 +28,7 @@ enum Era
   ERA_Mythology = 0,  ///< Age of mythology, especially gods
   ERA_History   = 1,  ///< Age of history, mostly humans
   ERA_End_times = 2,  ///< Any wrap-up or post-generation tasks
-  ERA_Terminate = 3   ///< End generation terminate application
+  ERA_Terminate = 3   ///< End generation, terminate application
 };
 
 /**

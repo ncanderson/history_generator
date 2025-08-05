@@ -48,7 +48,7 @@ void his_gen::to_json(nlohmann::json& json,
 void his_gen::from_json(const nlohmann::json& json,
                         his_gen::Personality_attraction& personality_attraction)
 {
-
+  // NOOP
 }
 
 ///////////////////////////////////////////////////////////////////////
