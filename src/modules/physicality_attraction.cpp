@@ -7,14 +7,14 @@
 
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::Physicality_attraction::Physicality_attraction()
+his_gen::Physicality_attraction::Physicality_attraction(const Personality& entity_personality)
 {
 
 }
 
 ///////////////////////////////////////////////////////////////////////
 
-int8_t his_gen::Physicality_attraction::derive_attraction_flexibility(std::map<his_gen::Attribute, int8_t> attributes)
+int8_t his_gen::Physicality_attraction::derive_attraction_flexibility(const Personality& personality)
 {
   return 0;
 }

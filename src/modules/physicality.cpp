@@ -203,7 +203,7 @@ void his_gen::Physicality::set_attribute(const Physical_attribute physical_attri
 
 ///////////////////////////////////////////////////////////////////////
 
-std::string his_gen::Physicality::Get_attribute_string(const Physical_attribute physical_attribute)
+std::string his_gen::Physicality::Get_phys_attribute_string(const Physical_attribute physical_attribute)
 {
   switch(physical_attribute)
   {
@@ -269,7 +269,7 @@ void his_gen::to_json(nlohmann::json& json,
     std::visit([&attributes_converted, &it](const auto& value)
     {
       // Convert the value to an integer for JSON conversion
-      attributes_converted[Physicality::Get_attribute_string(it->first)] = static_cast<uint8_t>(value);
+      attributes_converted[Physicality::Get_phys_attribute_string(it->first)] = static_cast<uint8_t>(value);
     }, it->second.second);
   }
 

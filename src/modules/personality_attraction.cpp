@@ -5,9 +5,11 @@
 // Standard
 #include <modules/personality_attraction.h>
 
+using personality_attribute = his_gen::Personality::Personality_attribute;
+
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::Personality_attraction::Personality_attraction(const std::map<Attribute, int8_t>& entity_attributes)
+his_gen::Personality_attraction::Personality_attraction(const Personality_attribute_map& entity_attributes)
   :
   Personality(),
   m_attraction_flexibility(derive_attraction_flexibility(entity_attributes)),
@@ -19,13 +21,13 @@ his_gen::Personality_attraction::Personality_attraction(const std::map<Attribute
 
 ///////////////////////////////////////////////////////////////////////
 
-int8_t his_gen::Personality_attraction::derive_attraction_flexibility(std::map<his_gen::Attribute, int8_t> attributes)
+int8_t his_gen::Personality_attraction::derive_attraction_flexibility(Personality_attribute_map attributes)
 {
   int8_t attribute_totals = (
-    (attributes[his_gen::Attribute::ATTRIBUTE_Cooperative] * m_cooperative_coefficient) +
-    (attributes[his_gen::Attribute::ATTRIBUTE_Amiable] * m_amiable_coefficient) +
-    (attributes[his_gen::Attribute::ATTRIBUTE_Compassionate] * m_compassionate_coefficient) +
-    (attributes[his_gen::Attribute::ATTRIBUTE_Flexible] * m_flexible_coefficient)
+    (attributes[personality_attribute::PERSONALITY_ATTRIBUTE_Cooperative] * m_cooperative_coefficient) +
+    (attributes[personality_attribute::PERSONALITY_ATTRIBUTE_Amiable] * m_amiable_coefficient) +
+    (attributes[personality_attribute::PERSONALITY_ATTRIBUTE_Compassionate] * m_compassionate_coefficient) +
+    (attributes[personality_attribute::PERSONALITY_ATTRIBUTE_Flexible] * m_flexible_coefficient)
   );
   return std::round(attribute_totals / m_coefficient_divisor);
 }

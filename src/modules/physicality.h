@@ -109,7 +109,7 @@ public:
    * @param physical_attribute The physical attribute to get
    * @return The string representation of the physical attribute
    */
-  static std::string Get_attribute_string(const Physical_attribute physical_attribute);
+  static std::string Get_phys_attribute_string(const Physical_attribute physical_attribute);
 
   /**
    * Getters and setters

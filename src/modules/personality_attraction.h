@@ -32,7 +32,7 @@ public:
    * attributes based on that personality, using this class's attributes
    * @param entity_attributes The attributes of the users personality
    */
-  Personality_attraction(const std::map<Attribute, int8_t>& entity_attributes);
+  Personality_attraction(const Personality_attribute_map& entity_attributes);
 
   /**
    * @brief Destructor
@@ -113,7 +113,7 @@ private:
    * @param attributes This enitity's attraction attributes
    * @return The attraction flexibility coefficient
    */
-  int8_t derive_attraction_flexibility(std::map<his_gen::Attribute, int8_t> attributes);
+  int8_t derive_attraction_flexibility(Personality_attribute_map attributes);
 
 }; // class Personality_attraction
 

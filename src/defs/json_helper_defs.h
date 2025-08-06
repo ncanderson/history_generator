@@ -16,6 +16,7 @@
 
 // Application files
 #include <defs/history_generator_defs.h>
+#include <modules/personality.h>
 
 /**
  * @brief Extension of nlohmann namespace for additional serializers to handle
@@ -24,13 +25,14 @@
 namespace nlohmann
 {
 
+// TODO Do I need this? I didn't do this for the phsicality attrs but it still worked
 /**
- * @brief Adl_serializer for maps with attribute keys
+ * @brief Adl_serializer for maps with Personality attribute keys
  */
 template <typename T>
-struct adl_serializer<std::map<his_gen::Attribute, T>>
+struct adl_serializer<std::map<his_gen::Personality::Personality_attribute, T>>
 {
-  using Map = std::map<his_gen::Attribute, T>;
+  using Map = std::map<his_gen::Personality::Personality_attribute, T>;
 
   /**
    * @brief to_json
@@ -41,7 +43,7 @@ struct adl_serializer<std::map<his_gen::Attribute, T>>
   {
     for(auto it = map.begin(); it != map.end(); ++it)
     {
-      json[his_gen::Get_attribute_string(it->first)] = it->second;
+      json[his_gen::Personality::Get_attribute_string(it->first)] = it->second;
     }
   }
 };

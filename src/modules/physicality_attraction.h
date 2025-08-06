@@ -9,6 +9,7 @@
 
 // Application files
 #include <modules/physicality.h>
+#include <modules/personality.h>
 
 namespace his_gen
 {
@@ -25,7 +26,14 @@ class Physicality_attraction : public Physicality
 
   // Implementation
 
-  Physicality_attraction();
+  /**
+   * @brief Constructor
+   */
+  Physicality_attraction(const Personality& entity_personality);
+
+  /**
+   * @brief Destructor
+   */
   ~Physicality_attraction(){};
 
   /**
@@ -53,7 +61,7 @@ private:
    * @param attributes This enitity's attraction attributes
    * @return The attraction flexibility coefficient
    */
-  int8_t derive_attraction_flexibility(const Physical_attribute_maps& attributes);
+  int8_t derive_attraction_flexibility(const Personality& personality);
 
 }; // class Physicality_attraction
 
