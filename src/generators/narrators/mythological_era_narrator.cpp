@@ -65,7 +65,7 @@ void myth_nar::Create_events(std::vector<std::shared_ptr<his_gen::Entity_base>>&
   for(int64_t tick_count = 0; tick_count < m_config.Get_myth_config().Max_event_per_tick; tick_count++)
   {
     // A random entity
-    std::shared_ptr<his_gen::Entity_base> triggering_entity = his_gen::Get_random_element(entities);
+    std::shared_ptr<his_gen::Entity_base> triggering_entity = his_gen::dice::Get_random_element(entities);
     // A random event
     EEvent_type event_type = m_data_definitions->Get_rand_entity_event(triggering_entity->Get_entity_type());
     // Create the event

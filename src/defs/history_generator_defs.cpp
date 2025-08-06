@@ -123,6 +123,8 @@ std::string his_gen::Get_attribute_string(const his_gen::Attribute attribute)
     case ATTRIBUTE_Humorless:     return "humorless";
     case ATTRIBUTE_Honest:        return "honest";
     case ATTRIBUTE_Deceitful:     return "deceitful";
+    case ATTRIBUTE_Lustful:       return "lustful";
+    case ATTRIBUTE_Chaste:        return "chaste";
     default:
       // Unrecognized value
       throw std::invalid_argument("Attribute not found");
@@ -351,7 +353,7 @@ his_gen::EEvent_type his_gen::Get_event_type(const std::string& event_type)
   const std::string lc_event_type = his_gen::To_lowercase(event_type);
 
   auto it = event_type_map.find(lc_event_type);
-  if (it != event_type_map.end())
+  if(it != event_type_map.end())
   {
     return it->second;
   }

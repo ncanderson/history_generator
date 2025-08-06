@@ -16,6 +16,7 @@
 #include <utils/history_generator_utils.h>
 #include <modules/personality.h>
 #include <modules/personality_attraction.h>
+#include <modules/physicality.h>
 
 namespace his_gen
 {
@@ -75,11 +76,8 @@ public:
   Personality_attraction Get_personality_attraction() const { return m_personality_attraction; }
   void Set_personality_attraction(const Personality_attraction& personality_attraction) { m_personality_attraction = personality_attraction; }
 
-  bool Get_can_sire() const { return m_can_sire_young; }
-  void Set_can_sire(const bool can_sire_young) { m_can_sire_young = can_sire_young; }
-
-  bool Get_can_bear() const { return m_can_bear_young; }
-  void Set_can_bear(const bool can_bear_young) { m_can_bear_young = can_bear_young; }
+  Physicality Get_physicality() const { return m_physicality; }
+  void Set_physicality(const Physicality& physicality) { m_physicality = physicality; }
 
   std::vector<std::shared_ptr<his_gen::Entity_base>> Get_spouses() const { return m_spouses; }
   void Set_spouses(const std::vector<std::shared_ptr<his_gen::Entity_base>>& spouses) { m_spouses = spouses; }
@@ -107,6 +105,11 @@ private:
   Personality_attraction m_personality_attraction;
 
   /**
+   * @brief This entity's physical appearence
+   */
+  Physicality m_physicality;
+
+  /**
    * @brief m_spouses Spouses of this entity
    */
   std::vector<std::shared_ptr<his_gen::Entity_base>> m_spouses;
@@ -115,16 +118,6 @@ private:
    * @brief Lovers of this entity (but not spouses)
    */
   std::vector<std::shared_ptr<his_gen::Entity_base>> m_lovers;
-
-  /**
-   * @brief Entity can sire young
-   */
-  bool m_can_sire_young;
-
-  /**
-   * @brief Entity can bear young
-   */
-  bool m_can_bear_young;
 
   // Implementation
   /**

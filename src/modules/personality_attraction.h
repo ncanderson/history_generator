@@ -27,10 +27,12 @@ public:
 
   // Implementation
   /**
-   * @brief
-   * @param
+   * @brief Construct an attraction object
+   * @details This class takes a personality and derives some attraction
+   * attributes based on that personality, using this class's attributes
+   * @param entity_attributes The attributes of the users personality
    */
-  Personality_attraction(std::map<Attribute, int8_t> entity_attributes);
+  Personality_attraction(const std::map<Attribute, int8_t>& entity_attributes);
 
   /**
    * @brief Destructor

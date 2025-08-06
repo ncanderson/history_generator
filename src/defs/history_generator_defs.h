@@ -158,7 +158,9 @@ enum Attribute
   ATTRIBUTE_Witty,
   ATTRIBUTE_Humorless,
   ATTRIBUTE_Honest,
-  ATTRIBUTE_Deceitful
+  ATTRIBUTE_Deceitful,
+  ATTRIBUTE_Lustful,
+  ATTRIBUTE_Chaste
 };
 
 /**

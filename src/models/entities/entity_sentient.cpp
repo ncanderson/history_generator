@@ -21,8 +21,7 @@ sentient::Entity_sentient(std::string name,
   Entity_base(name, entity_type, title),
   m_personality(),
   m_personality_attraction(m_personality.Get_attributes()),
-  m_can_sire_young(),
-  m_can_bear_young(),
+  m_physicality(),
   m_lovers(),
   m_spouses()
 {
@@ -30,20 +29,6 @@ sentient::Entity_sentient(std::string name,
   // Register the derived class with the JSON serializer
   Polymorphic_serializer<his_gen::Entity_base>::register_types<his_gen::Entity_base,
                                                                his_gen::Entity_sentient>();
-
-  // Initialize reproductive ability
-  if(full_random_reproduction)
-  {
-    m_can_sire_young = his_gen::Flip_a_coin();
-    m_can_bear_young = his_gen::Flip_a_coin();
-  }
-  else
-  {
-    // TODO: This doesn't account for infertility when reproduction ability
-    // isn't fully randomized
-    m_can_sire_young = his_gen::Flip_a_coin();
-    m_can_bear_young = !m_can_sire_young;
-  }
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -106,22 +91,26 @@ bool sentient::Is_attracted(std::shared_ptr<Entity_base> other_entity,
 
 bool sentient::repro_attraction(std::shared_ptr<his_gen::Entity_sentient> other_entity)
 {
-  // Attributes of self
-  bool attraction_to_bear = m_personality_attraction.Get_attracted_to_can_bear();
-  bool attraction_to_sire = m_personality_attraction.Get_attracted_to_can_sire();
+  // Move this to physicality attraction
+  //// Attributes of self
+  //bool attraction_to_bear = m_personality_attraction.Get_attracted_to_can_bear();
+  //bool attraction_to_sire = m_personality_attraction.Get_attracted_to_can_sire();
 
+  // Probably needs some different getters
   // Attributes of other
-  bool other_can_bear = other_entity->Get_can_bear();
-  bool other_can_sire = other_entity->Get_can_sire();
+  //bool other_can_bear = other_entity->Get_can_bear();
+  //bool other_can_sire = other_entity->Get_can_sire();
 
-  if((attraction_to_bear && other_can_bear) || (attraction_to_sire && other_can_sire))
-  {
-    return true;
-  }
-  else
-  {
-    return false;
-  }
+  // This comparison should probably somewhere else?
+  //if((attraction_to_bear && other_can_bear) || (attraction_to_sire && other_can_sire))
+  //{
+  //  return true;
+  //}
+  //else
+  //{
+  //  return false;
+  //}
+  return true;
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -135,8 +124,7 @@ void his_gen::to_json(nlohmann::json& json,
   {
     {"personality", entity_sentient.Get_personality()},
     {"attraction", entity_sentient.Get_personality_attraction()},
-    {"can_sire_young", entity_sentient.Get_can_sire()},
-    {"can_bear_young", entity_sentient.Get_can_bear()},
+    {"physicality", entity_sentient.Get_physicality()},
     {"lovers", entity_sentient.Get_lovers()},
     {"spouses", entity_sentient.Get_spouses()}
   });
