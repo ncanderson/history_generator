@@ -137,7 +137,7 @@ void his_gen::Personality::construct_personality_attributes()
 void his_gen::to_json(nlohmann::json& json, const his_gen::Personality& personality)
 {
   nlohmann::json attributes_converted;
-  std::map<his_gen::Personality::Personality_attribute, int8_t> attributes = personality.Get_attributes();
+  Personality::Personality_attribute_map attributes = personality.Get_attributes();
   for(auto it = attributes.begin(); it != attributes.end(); ++it)
   {
     attributes_converted[his_gen::Personality::Get_attribute_string(it->first)] = it->second;

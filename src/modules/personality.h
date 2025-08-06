@@ -103,14 +103,14 @@ public:
   /**
    * Getters and setters
    */
-  std::map<Personality_attribute, int8_t> Get_attributes() const { return m_personality_attributes; }
+  Personality_attribute_map Get_attributes() const { return m_personality_attributes; }
 
 protected:
   // Attributes
   /**
    * @brief All personality attributes with corresponding values
    */
-  std::map<Personality_attribute, int8_t> m_personality_attributes;
+  Personality_attribute_map m_personality_attributes;
 
   // Implementation
 
