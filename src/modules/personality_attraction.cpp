@@ -12,12 +12,8 @@ using personality_attribute = his_gen::Personality::Personality_attribute;
 his_gen::Personality_attraction::Personality_attraction(const Personality_attribute_map& entity_attributes)
   :
   Personality(),
-  m_attraction_flexibility(derive_attraction_flexibility(entity_attributes)),
-  m_attracted_to_can_sire(false),
-  m_attracted_to_can_bear(false)
-{
-
-}
+  m_attraction_flexibility(derive_attraction_flexibility(entity_attributes))
+{ }
 
 ///////////////////////////////////////////////////////////////////////
 
@@ -40,9 +36,7 @@ void his_gen::to_json(nlohmann::json& json,
   nlohmann::to_json(json, static_cast<his_gen::Personality>(personality_attraction));
   json.update(
   {
-    {"attracted_to_can_sire", personality_attraction.Get_attracted_to_can_sire()},
-    {"attracted_to_can_bear", personality_attraction.Get_attracted_to_can_sire()},
-    {"attraction_flexibility", personality_attraction.Get_attraction_flexibility()}
+    {"attraction_flexibility", personality_attraction.Get_personality_attraction_flexibility()}
   });
 }
 
@@ -55,4 +49,3 @@ void his_gen::from_json(const nlohmann::json& json,
 }
 
 ///////////////////////////////////////////////////////////////////////
-// END OF FILE

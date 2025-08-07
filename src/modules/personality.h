@@ -13,6 +13,54 @@
 // Application files
 #include <defs/history_generator_defs.h>
 
+//// All personality trait pairs are to be defined here
+//#define PERSONALITY_ATTRIBUTE_PAIRS(X) \
+//  X(Aggressive, Passive)               \
+//  X(Ambitious, Content)                \
+//  X(Avoidant, Sociable)                \
+//  X(Brave, Cowardly)                   \
+//  X(Cooperative, Difficult)            \
+//  X(Cruel, Kind)                       \
+//  X(Decisive, Indecisive)              \
+//  X(Diligent, Lazy)                    \
+//  X(Flexible, Extremist)               \
+//  X(Frank, Evasive)                    \
+//  X(Generous, Selfish)                 \
+//  X(Jealous, Compassionate)            \
+//  X(Placid, Excitable)                 \
+//  X(Thoughtful, Rash)                  \
+//  X(Thrifty, Extravagant)              \
+//  X(Argumentative, Amiable)            \
+//  X(Witty, Humorless)                  \
+//  X(Honest, Deceitful)                 \
+//  X(Lustful, Chaste)
+//
+//// Macro to define the Personality_attribute enum
+//#define GENERATE_PERSONALITY_ATTRIBUTE_ENUM()   \
+//  enum class Personality_attribute : uint8_t    \
+//  {                                             \
+//    DEFINE_PERSONALITY_ATTRIBUTE_ENUM_ENTRIES() \
+//  };
+//
+//// Macro to populate the Personality_attribute enum
+//#define DEFINE_PERSONALITY_ATTRIBUTE_ENUM_ENTRIES() \
+//  PERSONALITY_ATTRIBUTE_PAIRS(DEFINE_PERSONALITY_ATTRIBUTE_ENUM)
+//
+//// Macro to define the Personality_attribute enum entries
+//#define DEFINE_PERSONALITY_ATTRIBUTE_ENUM(a, b) PERSONALITY_ATTRIBUTE_##a, PERSONALITY_ATTRIBUTE_##b
+//
+//// Define the map that will be used to hold the opposing personality attributes
+//#define GENERATE_OPPOSING_PERSONALITY_ATTRIBUTE_MAP()                                   \
+//  const std::map<Personality_attribute, Personality_attribute> m_personality_attributes \
+//  {                                                                                     \
+//    PERSONALITY_ATTRIBUTE_PAIRS(DEFINE_OPPOSITE_PERSONALITY_ATTRIBUTE_MAP)              \
+//  };
+//
+//// Populate the map with the attribute pairs
+//#define DEFINE_OPPOSITE_PERSONALITY_ATTRIBUTE_MAP(a, b)                                                 \
+//{ Personality_attribute::PERSONALITY_ATTRIBUTE_##a, Personality_attribute::PERSONALITY_ATTRIBUTE_##b }, \
+//{ Personality_attribute::PERSONALITY_ATTRIBUTE_##b, Personality_attribute::PERSONALITY_ATTRIBUTE_##a }, \
+
 namespace his_gen
 {
 /**
@@ -22,6 +70,7 @@ class Personality
 {
 public:
   // Attributes
+  static const size_t Number_of_attributes;
 
   // Implementation
   /**
@@ -35,11 +84,10 @@ public:
    */
   ~Personality(){};
 
-
+  // TODO: Make this static so it's not duplicated on every instance of Personality on every entity
   // TODO: figure out some way to keep the pairs aligned? Maybe use a key for the
   // enum member's values, or a separate structure that keeps them together in
   // pairs?
-  // TODO: Move into the personality module
   /**
  * @brief The Attribute enum
  * @details Containing pairs of opposed personality attributes, this enum
@@ -101,8 +149,25 @@ public:
   static std::string Get_attribute_string(const Personality_attribute attribute);
 
   /**
+   * @brief Get a personality attribute from this class
+   * @param attribute The enumerated attribute to get
+   * @return The value of this attribute
+   */
+  uint8_t Get_personality_attribute_value(const Personality_attribute attribute) const
+  {
+    auto it = m_personality_attributes.find(attribute);
+    // Verify the attribute exists
+    if(it == m_personality_attributes.end())
+    {
+      throw std::out_of_range("Attribute not found");
+    }
+    return it->second;
+  }
+
+  /**
    * Getters and setters
    */
+  size_t Get_number_of_attributes() const { return Number_of_attributes; }
   Personality_attribute_map Get_attributes() const { return m_personality_attributes; }
 
 protected:
@@ -121,7 +186,7 @@ private:
   /**
    * @brief construct_personality_attributes
    */
-  void construct_personality_attributes();
+  Personality_attribute_map construct_personality_attributes();
 
 }; // class Personality
 

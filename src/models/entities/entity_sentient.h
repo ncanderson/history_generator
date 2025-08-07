@@ -17,6 +17,7 @@
 #include <modules/personality.h>
 #include <modules/personality_attraction.h>
 #include <modules/physicality.h>
+#include <modules/physicality_attraction.h>
 
 namespace his_gen
 {
@@ -39,8 +40,7 @@ public:
    */
   Entity_sentient(std::string name,
                   std::string title,
-                  EEntity_type entity_type,
-                  bool full_random_reproduction = false);
+                  EEntity_type entity_type);
 
   /**
    * @brief Destructor
@@ -79,6 +79,9 @@ public:
   Physicality Get_physicality() const { return m_physicality; }
   void Set_physicality(const Physicality& physicality) { m_physicality = physicality; }
 
+  Physicality_attraction Get_physicality_attraction() const { return m_physicality_attraction; }
+  void Set_physicality_attraction(const Physicality_attraction& physicality_attraction) { m_physicality_attraction = physicality_attraction; }
+
   std::vector<std::shared_ptr<his_gen::Entity_base>> Get_spouses() const { return m_spouses; }
   void Set_spouses(const std::vector<std::shared_ptr<his_gen::Entity_base>>& spouses) { m_spouses = spouses; }
   void Add_spouse(const std::shared_ptr<his_gen::Entity_base>& spouse) { m_spouses.push_back(spouse); }
@@ -105,9 +108,28 @@ private:
   Personality_attraction m_personality_attraction;
 
   /**
+   * @brief This entity's personality attraction threshold, or the number
+   * of compatible personality attributes this entity looks for when
+   * determining attraction.
+   */
+  uint8_t m_personality_attraction_thresh;
+
+  /**
    * @brief This entity's physical appearence
    */
   Physicality m_physicality;
+
+  /**
+   * @brief This entity's attraction to the physical appearence of others
+   */
+  Physicality_attraction m_physicality_attraction;
+
+  /**
+   * @brief This entity's physical attraction threshold, or the number
+   * of compatible physical attributes this entity looks for when
+   * determining attraction.
+   */
+  uint8_t m_physicality_attraction_thresh;
 
   /**
    * @brief m_spouses Spouses of this entity
@@ -130,6 +152,68 @@ private:
    * @return True if attraced, otherwise false
    */
   bool repro_attraction(std::shared_ptr<his_gen::Entity_sentient> other_entity);
+
+  /**
+   * @brief Calculate the number of compatible personality attributes this entity
+   * requires to be attracted to another entity.
+   * @return The attraction threshold.
+   */
+  uint8_t derive_personality_attraction_thresh();
+
+  /**
+   * @brief Loop through all personality attributes for this and other_entity and compare each attribute.
+   * @details This function will utilize this entity's personality attraction flexibility
+   * to determine the minimum number of compatible attributes required for attraction.
+   * @param other_entity The entity to compare to.
+   * @return True if the number of compatible attributes is greater than or equal to this
+   * entity's attraction flexibility.
+   */
+  bool compare_personalities(std::shared_ptr<his_gen::Entity_sentient> other_entity);
+
+  /**
+   * @brief Check compatibility of personality attraction.
+   * @details Subtract the argued entity attribute from the attraction attribute,
+   * take the absolute value, and compare it to the attraction flexibility.
+   * This will return false if any compared attribute doesn't meet the
+   * flexibility requirements.
+   * @param other_entity Other entity to compare to
+   * @param pers_attr_to_compare The attribute to check
+   * @return True if the difference between these attributes is within this entity's
+   * flexibility range, otherwise false.
+   */
+  bool personality_attributes_compatible(std::shared_ptr<his_gen::Entity_sentient> other_entity,
+                                         Personality::Personality_attribute pers_attr_to_compare);
+
+  /**
+   * @brief Calculate the number of compatible physicality attributes this entity
+   * requires to be attracted to another entity.
+   * @return The attraction threshold.
+   */
+  uint8_t derive_physicality_attraction_thresh();
+
+  /**
+   * @brief Loop through all physical attributes for this and other_entity and compare each attribute.
+   * @details This function will utilize this entity's physical attraction flexibility
+   * to determine the minimum number of compatible attributes required for attraction.
+   * @param other_entity The entity to compare to.
+   * @return True if the number of compatible attributes is greater than or equal to this
+   * entity's attraction flexibility.
+   */
+  bool compare_physicalities(std::shared_ptr<his_gen::Entity_sentient> other_entity);
+
+  /**
+   * @brief Check compatibility of physicality attraction.
+   * @details Subtract the argued entity attribute from the attraction attribute,
+   * take the absolute value, and compare it to the attraction flexibility.
+   * This will return false if any compared attribute doesn't meet the
+   * flexibility requirements.
+   * @param other_entity Other entity to compare to
+   * @param phys_attr_to_compare The attribute to check
+   * @return True if the difference between these attributes is within this entity's
+   * flexibility range, otherwise false.
+   */
+  bool physicality_attributes_compatible(std::shared_ptr<his_gen::Entity_sentient> other_entity,
+                                         Physicality::Physical_attribute phys_attr_to_compare);
 
 }; // class Entity_sentient
 

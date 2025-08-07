@@ -112,16 +112,42 @@ public:
   static std::string Get_phys_attribute_string(const Physical_attribute physical_attribute);
 
   /**
+   * @brief Get a physical attribute from this class
+   * @tparam T The return type, which will be the data type corresponding
+   * to the Physical_attribute's Unit.
+   * @param attribute The enumerated attribute to get
+   * @return The value of this attribute
+   */
+  template<typename T>
+  T Get_physical_attribute_value(const Physical_attribute attribute) const
+  {
+    auto it = m_physical_attributes.find(attribute);
+    // Verify the attribute exists
+    if(it == m_physical_attributes.end())
+    {
+      throw std::out_of_range("Attribute not found");
+    }
+    return std::get<T>(it->second.second);
+  }
+
+  /**
+   * @brief Can_bear_young
+   * @return
+   */
+  bool Can_bear_young();
+
+  /**
+   * @brief Can_sire_young
+   * @return
+   */
+  bool Can_sire_young();
+
+  /**
    * Getters and setters
    */
   Physical_attribute_maps Get_physical_attributes() const { return m_physical_attributes; }
 
 protected:
-  // Attributes
-
-  // Implementation
-
-private:
   // Attributes
   /**
    * @brief The attributes and values for this entity
@@ -138,25 +164,10 @@ private:
   void set_attribute(const Physical_attribute physical_attribute,
                      const Unit unit,
                      const Physical_attribute_value value);
+private:
+  // Attributes
 
-  /**
-   * @brief Get a physical attribute from this class
-   * @tparam T The return type, which will be the data type corresponding
-   * to the Physical_attribute's Unit.
-   * @param attribute The enumerated attribute to get
-   * @return The value of this attribute
-   */
-  template<typename T>
-  T get_attribute(const Physical_attribute attribute) const
-  {
-    auto it = m_physical_attributes.find(attribute);
-    // Verify the attribute exists
-    if(it == m_physical_attributes.end())
-    {
-      throw std::out_of_range("Attribute not found");
-    }
-    return std::get<T>(it->second.second);
-  }
+  // Implementation
 
 }; // class Physicality
 

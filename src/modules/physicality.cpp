@@ -22,11 +22,11 @@ his_gen::Physicality::Physicality()
   // Bear young is the inverse of sire young
   set_attribute(Physical_attribute::PHYSICAL_ATTRIBUTE_Can_bear_young,
                 Unit::UNIT_Boolean,
-                !get_attribute<bool>(Physical_attribute::PHYSICAL_ATTRIBUTE_Can_sire_young));
+                !Get_physical_attribute_value<bool>(Physical_attribute::PHYSICAL_ATTRIBUTE_Can_sire_young));
   // Nurse young is the same as bear young
   set_attribute(Physical_attribute::PHYSICAL_ATTRIBUTE_Can_nurse_young,
                 Unit::UNIT_Boolean,
-                get_attribute<bool>(Physical_attribute::PHYSICAL_ATTRIBUTE_Can_bear_young));
+                Get_physical_attribute_value<bool>(Physical_attribute::PHYSICAL_ATTRIBUTE_Can_bear_young));
 
   // Extremities
   set_attribute(Physical_attribute::PHYSICAL_ATTRIBUTE_Hand_size,
@@ -126,7 +126,7 @@ his_gen::Physicality::Physicality()
 
   // Physical attributes that are dependent on others
   uint8_t conditional_max = 1;
-  if(get_attribute<bool>(Physical_attribute::PHYSICAL_ATTRIBUTE_Can_nurse_young))
+  if(Get_physical_attribute_value<bool>(Physical_attribute::PHYSICAL_ATTRIBUTE_Can_nurse_young))
   {
     conditional_max = 100;
   }
@@ -141,7 +141,7 @@ his_gen::Physicality::Physicality()
                 his_gen::dice::Make_a_roll<uint8_t>(conditional_max));
 
   conditional_max = 1;
-  if(get_attribute<bool>(Physical_attribute::PHYSICAL_ATTRIBUTE_Can_bear_young))
+  if(Get_physical_attribute_value<bool>(Physical_attribute::PHYSICAL_ATTRIBUTE_Can_bear_young))
   {
     conditional_max = 100;
   }
@@ -156,7 +156,7 @@ his_gen::Physicality::Physicality()
                 his_gen::dice::Make_a_roll<uint8_t>(conditional_max));
 
   conditional_max = 1;
-  if(get_attribute<bool>(Physical_attribute::PHYSICAL_ATTRIBUTE_Can_sire_young))
+  if(Get_physical_attribute_value<bool>(Physical_attribute::PHYSICAL_ATTRIBUTE_Can_sire_young))
   {
     conditional_max = 100;
   }
@@ -171,13 +171,27 @@ his_gen::Physicality::Physicality()
                 his_gen::dice::Make_a_roll<uint8_t>(conditional_max));
 
   conditional_max = 25;
-  if(get_attribute<bool>(Physical_attribute::PHYSICAL_ATTRIBUTE_Can_sire_young))
+  if(Get_physical_attribute_value<bool>(Physical_attribute::PHYSICAL_ATTRIBUTE_Can_sire_young))
   {
     conditional_max = 100;
   }
   set_attribute(Physical_attribute::PHYSICAL_ATTRIBUTE_Facial_hair_density,
                 Unit::UNIT_Scalar,
                 his_gen::dice::Make_a_roll<uint8_t>(conditional_max ));
+}
+
+///////////////////////////////////////////////////////////////////////
+
+bool his_gen::Physicality::Can_bear_young()
+{
+  return Get_physical_attribute_value<bool>(Physical_attribute::PHYSICAL_ATTRIBUTE_Can_bear_young);
+}
+
+///////////////////////////////////////////////////////////////////////
+
+bool his_gen::Physicality::Can_sire_young()
+{
+  return Get_physical_attribute_value<bool>(Physical_attribute::PHYSICAL_ATTRIBUTE_Can_sire_young);
 }
 
 ///////////////////////////////////////////////////////////////////////

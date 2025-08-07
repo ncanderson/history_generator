@@ -10,6 +10,7 @@
 // Application files
 #include <modules/physicality.h>
 #include <modules/personality.h>
+#include <models/entities/entity_base.h>
 
 namespace his_gen
 {
@@ -22,12 +23,14 @@ namespace his_gen
  */
 class Physicality_attraction : public Physicality
 {
+public:
   // Attributes
 
   // Implementation
-
   /**
    * @brief Constructor
+   * @brief entity_personality The entity's personality, used to check some
+   * attributes related to physical attraction.
    */
   Physicality_attraction(const Personality& entity_personality);
 
@@ -37,8 +40,25 @@ class Physicality_attraction : public Physicality
   ~Physicality_attraction(){};
 
   /**
+   * @brief Attracted_to_siring
+   * @return
+   */
+  bool Attracted_to_siring() const;
+
+  /**
+   * @brief Attracted_to_bearing
+   * @return
+   */
+  bool Attracted_to_bearing() const;
+
+  /**
    * Getters and setters
    */
+  int8_t Get_physical_attraction_flexibility() const { return m_physical_attraction_flexibility; }
+  void Set_physical_attraction_flexibility(const int8_t physical_attraction_flexibility)
+  {
+    m_physical_attraction_flexibility = physical_attraction_flexibility;
+  }
 
 protected:
   // Attributes
@@ -48,9 +68,30 @@ protected:
 private:
   // Attributes
   /**
+   * @brief Attraction flexibility coefficient for 'excitable'
+   */
+  double m_physical_excitable_coefficient = .2;
+
+  /**
+   * @brief Attraction flexibility coefficient for 'compassionate'
+   */
+  double m_physical_lustful_coefficient = .8;
+
+  /**
+   * @brief This divisor determines the maximum flexibility coefficient.
+   * @details The maximum coefficient value will be the maximum attribute
+   * score / m_coefficient_divisor.
+   * | Divisor | Max Attr. Score | Max flexibility coefficient |
+   * |---------|-----------------|-----------------------------|
+   * | 10      | 100             | 10                          |
+   * | 2       | 100             | 50                          |
+   */
+  double m_physical_coefficient_divisor = 2;
+
+  /**
    * @brief m_attraction_flexibility
    */
-  int8_t m_attraction_flexibility;
+  int8_t m_physical_attraction_flexibility;
 
   // Implementation
   /**
@@ -61,7 +102,7 @@ private:
    * @param attributes This enitity's attraction attributes
    * @return The attraction flexibility coefficient
    */
-  int8_t derive_attraction_flexibility(const Personality& personality);
+  int8_t derive_physical_attraction_flexibility(const Personality& personality);
 
 }; // class Physicality_attraction
 

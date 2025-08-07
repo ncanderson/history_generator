@@ -32,8 +32,7 @@ void myth_nar::Create_progenitor_deity(std::vector<std::shared_ptr<his_gen::Enti
   std::shared_ptr<his_gen::Entity_sentient> ptr =
       std::make_shared<his_gen::Entity_sentient>("God",
                                                  "the Allfather",
-                                                 EENTITY_TYPE_Deity,
-                                                 false);
+                                                 EENTITY_TYPE_Deity);
   entities.push_back(ptr);
 }
 
@@ -95,8 +94,7 @@ std::shared_ptr<his_gen::Entity_base> myth_nar::create_entity(his_gen::EEntity_t
     {
       return std::make_shared<his_gen::Entity_sentient>(m_names.Get_one_name(),
                                                         m_names.Get_one_title(),
-                                                        EENTITY_TYPE_Deity,
-                                                        m_config.Get_myth_config().Full_random_reproduction);
+                                                        EENTITY_TYPE_Deity);
     }
       break;
     case EENTITY_TYPE_Ethnicity:   break;
