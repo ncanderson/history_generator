@@ -50,7 +50,6 @@ void myth_nar::Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>
     entity_type = EENTITY_TYPE_Deity;
     // TEMP
 
-
     // Create the entity
     entities.push_back(create_entity(entity_type));
   }

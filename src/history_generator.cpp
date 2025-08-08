@@ -91,12 +91,12 @@ his_gen::Data_access_manager initialize_data_access(const his_gen::Data_access_t
 ///////////////////////////////////////////////////////////////////////
 
 int main(int argc, char *argv[])
-{  
+{
   // Handle SIGINT
   std::signal(SIGINT, &handle_sigint);
 
   //////////////////////////////////////////////////////
-  // Config defaults  
+  // Config defaults
   std::string app_cfg_path = "config/app_config.json";
 
   //////////////////////////////////////////////////////
@@ -176,6 +176,7 @@ int main(int argc, char *argv[])
     // Catch any errors bubbling up from the main run function
     catch(const std::exception& e)
     {
+      his_gen::Print_to_cout("Caught error");
       std::this_thread::sleep_for(err_sleep_ms);
     }
     std::this_thread::sleep_for(main_sleep_ms);

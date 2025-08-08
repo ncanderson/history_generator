@@ -162,6 +162,16 @@ bool sentient::compare_physicalities(std::shared_ptr<his_gen::Entity_sentient> o
 bool sentient::physicality_attributes_compatible(std::shared_ptr<his_gen::Entity_sentient> other_entity,
                                                  Physicality::Physical_attribute phys_attr_to_compare)
 {
+  if(phys_attr_to_compare == Physicality::Physical_attribute::PHYSICAL_ATTRIBUTE_Can_sire_young ||
+      phys_attr_to_compare == Physicality::Physical_attribute::PHYSICAL_ATTRIBUTE_Can_sire_young ||
+      phys_attr_to_compare == Physicality::Physical_attribute::PHYSICAL_ATTRIBUTE_Can_sire_young)
+  {
+    // TODO: Handle this differently. I didn't really think about this aspect. We're checking repro
+    // attraction via different methods, so why include them in the main enum at all? Should consider
+    // a separate enum, or a struct within the physicality class, or something else since actually
+    // the way we are comparing attrs is totally different so having them in the same place may not make any sense.
+    return false;
+  }
   uint8_t self_attr = m_physicality_attraction.Get_physical_attribute_value<uint8_t>(phys_attr_to_compare);
   uint8_t other_attr = other_entity->Get_physicality().Get_physical_attribute_value<uint8_t>(phys_attr_to_compare);
   return std::abs(self_attr - other_attr) >= m_physicality_attraction.Get_physical_attraction_flexibility();

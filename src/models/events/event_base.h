@@ -109,11 +109,6 @@ public:
 
 protected:
   // Attributes
-
-  // Implementation
-
-private:
-  // Attributes
   /**
    * @brief m_event_type
    */
@@ -151,6 +146,11 @@ private:
 
   // Implementation
 
+private:
+  // Attributes
+
+  // Implementation
+
 };  // class Event_base
 
 /**
@@ -165,7 +165,6 @@ inline void to_json(nlohmann::json& json, const his_gen::Event_base& event_base)
   {
     {"type", his_gen::Get_event_type_string(event_base.Get_event_type())},
     {"triggering_entity_id", event_base.Get_triggering_entity()->Get_entity_id()},
-    {"targets", event_base.Get_targets()},
     {"target_ids", event_base.Get_target_ids()},
     {"is_complete", event_base.Is_complete()},
   };

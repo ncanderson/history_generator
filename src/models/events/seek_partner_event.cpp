@@ -54,6 +54,8 @@ void his_gen::Seek_partner_event::Run(std::vector<std::shared_ptr<his_gen::Entit
       }
     }
   }
+  // It's done
+  m_is_complete = true;
 }
 
 ///////////////////////////////////////////////////////////////////////
