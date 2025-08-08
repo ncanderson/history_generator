@@ -8,9 +8,12 @@
 
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::Seek_partner_event::Seek_partner_event(std::shared_ptr<Entity_base>& triggering_entity)
+his_gen::Seek_partner_event::Seek_partner_event(std::shared_ptr<Entity_base>& triggering_entity,
+                                                int64_t current_tick)
   :
-  Event_base(his_gen::EEvent_type::EEVENT_TYPE_Seek_partner, triggering_entity)
+  Event_base(his_gen::EEvent_type::EEVENT_TYPE_Seek_partner,
+             triggering_entity,
+             current_tick)
 {
   // Register the derived class with the JSON serializer
   Polymorphic_serializer<his_gen::Event_base>::register_types<his_gen::Event_base,

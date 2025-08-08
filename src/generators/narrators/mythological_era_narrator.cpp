@@ -58,7 +58,8 @@ void myth_nar::Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>
 ///////////////////////////////////////////////////////////////////////
 
 void myth_nar::Create_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
-                             std::vector<std::shared_ptr<his_gen::Event_base>>& events)
+                             std::vector<std::shared_ptr<his_gen::Event_base>>& events,
+                             int64_t current_tick)
 {
   for(int64_t tick_count = 0; tick_count < m_config.Get_myth_config().Max_event_per_tick; tick_count++)
   {
@@ -68,7 +69,8 @@ void myth_nar::Create_events(std::vector<std::shared_ptr<his_gen::Entity_base>>&
     EEvent_type event_type = m_data_definitions->Get_rand_entity_event(triggering_entity->Get_entity_type());
     // Create the event
     std::shared_ptr<his_gen::Event_base> new_event = his_gen::Event_factory::Create_event(event_type,
-                                                                                          triggering_entity);
+                                                                                          triggering_entity,
+                                                                                          current_tick);
     // Run the event
     new_event->Run(entities);
     // Add the event to the list

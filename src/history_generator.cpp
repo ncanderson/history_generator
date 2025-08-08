@@ -169,16 +169,7 @@ int main(int argc, char *argv[])
   // Run until and unless application receives SIGINT
   while(!m_application_quit && generation_era != his_gen::Era::ERA_Terminate)
   {
-    try
-    {
-      generation_era = m_his_gen_mngr.Run();
-    }
-    // Catch any errors bubbling up from the main run function
-    catch(const std::exception& e)
-    {
-      his_gen::Print_to_cout("Caught error");
-      std::this_thread::sleep_for(err_sleep_ms);
-    }
+    generation_era = m_his_gen_mngr.Run();
     std::this_thread::sleep_for(main_sleep_ms);
   }
 

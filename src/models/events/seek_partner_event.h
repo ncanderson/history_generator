@@ -25,8 +25,10 @@ public:
   /**
    * @brief Constructor
    * @param triggering_entity The entity driving this event
+   * @parma current_tick The current tick
    */
-  Seek_partner_event(std::shared_ptr<his_gen::Entity_base>& triggering_entity);
+  Seek_partner_event(std::shared_ptr<his_gen::Entity_base>& triggering_entity,
+                     int64_t current_tick);
 
   /**
    * @brief Destructor

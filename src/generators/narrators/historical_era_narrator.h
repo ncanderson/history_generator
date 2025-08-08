@@ -46,9 +46,11 @@ public:
    * @brief Create_events
    * @param entities The vector of entity pointers to reference when creating events
    * @param events The vector of events to populate
+   * @param current_tick The current generation tick
    */
   void Create_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
-                     std::vector<std::shared_ptr<his_gen::Event_base>>& events) override;
+                     std::vector<std::shared_ptr<his_gen::Event_base>>& events,
+                     int64_t current_tick) override;
 
 protected:
   // Attributes

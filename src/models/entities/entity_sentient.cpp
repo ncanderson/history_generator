@@ -86,11 +86,11 @@ bool sentient::repro_attraction(std::shared_ptr<his_gen::Entity_sentient> other_
 uint8_t sentient::derive_personality_attraction_thresh()
 {
   // Get the flexibility. This is inverted, so that higher flexibility means a lower coefficient
-  int8_t flexibility_coefficient = (100 - m_personality_attraction.Get_personality_attraction_flexibility()) / 100;
+  double flexibility_coefficient = (100 - m_personality_attraction.Get_personality_attraction_flexibility()) / 100.0;
   // Get the attr count
   int8_t attr_count = m_personality.Get_attributes().size();
   // Return the percentage of the total attributes that need to be compatible
-  return attr_count * flexibility_coefficient;
+  return round(attr_count * flexibility_coefficient);
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -129,11 +129,11 @@ bool sentient::personality_attributes_compatible(std::shared_ptr<his_gen::Entity
 uint8_t sentient::derive_physicality_attraction_thresh()
 {
   // Get the flexibility. This is inverted, so that higher flexibility means a lower coefficient
-  int8_t flexibility_coefficient = (100 - m_physicality_attraction.Get_physical_attraction_flexibility()) / 100;
+  double flexibility_coefficient = (100 - m_physicality_attraction.Get_physical_attraction_flexibility()) / 100.0;
   // Get the attr count
   int8_t attr_count = m_physicality.Get_physical_attributes().size();
   // Return the percentage of the total attributes that need to be compatible
-  return attr_count * flexibility_coefficient;
+  return round(attr_count * flexibility_coefficient);
 }
 
 ///////////////////////////////////////////////////////////////////////
