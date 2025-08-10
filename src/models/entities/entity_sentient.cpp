@@ -83,57 +83,52 @@ bool sentient::repro_attraction(std::shared_ptr<his_gen::Entity_sentient> other_
 
 ///////////////////////////////////////////////////////////////////////
 
-uint8_t sentient::derive_personality_attraction_thresh()
+double sentient::derive_personality_attraction_thresh()
 {
-  // Get the flexibility. This is inverted, so that higher flexibility means a lower coefficient
-  double flexibility_coefficient = (100 - m_personality_attraction.Get_personality_attraction_flexibility()) / 100.0;
-  // Get the attr count
-  int8_t attr_count = m_personality.Get_attributes().size();
-  // Return the percentage of the total attributes that need to be compatible
-  return round(attr_count * flexibility_coefficient);
+  // TODO: Take this 50, hard code it in defs, and then derive the flexiblity divisor from there
+  // Scale the flexibility based on max flexibilty
+  double scaled_flexibility = (m_personality_attraction.Get_personality_attraction_flexibility()) / 50.0;
+  // Return the threshold, based on the scale flexibility
+  return 1.0 - scaled_flexibility;
 }
 
 ///////////////////////////////////////////////////////////////////////
 
 bool sentient::compare_personalities(std::shared_ptr<his_gen::Entity_sentient> other_entity)
 {
-  uint8_t compatible_attributes = 0;
+  // Calculate total difference in personality attributes
+  double total_difference = 0.0;
   for(auto& it : m_personality_attraction.Get_attributes())
   {
-    if(personality_attributes_compatible(other_entity, it.first))
-    {
-      compatible_attributes++;
-    }
-    // If there are enough compatible attributes, return true
-    if(compatible_attributes >= m_personality_attraction_thresh)
-    {
-      return true;
-    }
+    total_difference += personality_attribute_diff(other_entity, it.first);
   }
+  double entity_similarity = 1.0 - (total_difference / m_personality_attraction.Get_max_attribute_diff());
+
+
+
   // If we made it the end of the attributes and haven't met the threshold, there isn't attraction
   return false;
 }
 
 ///////////////////////////////////////////////////////////////////////
 
-bool sentient::personality_attributes_compatible(std::shared_ptr<his_gen::Entity_sentient> other_entity,
-                                                 Personality::Personality_attribute pers_attr_to_compare)
+uint8_t sentient::personality_attribute_diff(std::shared_ptr<his_gen::Entity_sentient> other_entity,
+                                          Personality::Personality_attribute pers_attr_to_compare)
 {
   uint8_t self_attr = m_personality_attraction.Get_personality_attribute_value(pers_attr_to_compare);
   uint8_t other_attr = other_entity->Get_personality().Get_personality_attribute_value(pers_attr_to_compare);
-  return std::abs(self_attr - other_attr) >= m_personality_attraction.Get_personality_attraction_flexibility();
+  return std::fabs(self_attr - other_attr);
 }
 
 ///////////////////////////////////////////////////////////////////////
 
-uint8_t sentient::derive_physicality_attraction_thresh()
+double sentient::derive_physicality_attraction_thresh()
 {
-  // Get the flexibility. This is inverted, so that higher flexibility means a lower coefficient
-  double flexibility_coefficient = (100 - m_physicality_attraction.Get_physical_attraction_flexibility()) / 100.0;
-  // Get the attr count
-  int8_t attr_count = m_physicality.Get_physical_attributes().size();
-  // Return the percentage of the total attributes that need to be compatible
-  return round(attr_count * flexibility_coefficient);
+  // TODO: Take this 50, hard code it in defs, and then derive the flexiblity divisor from there
+  // Scale the flexibility based on max flexibilty
+  double scaled_flexibility = (m_physicality_attraction.Get_physical_attraction_flexibility()) / 50.0;
+  // Return the threshold, based on the scale flexibility
+  return 1.0 - scaled_flexibility;
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -162,18 +157,8 @@ bool sentient::compare_physicalities(std::shared_ptr<his_gen::Entity_sentient> o
 bool sentient::physicality_attributes_compatible(std::shared_ptr<his_gen::Entity_sentient> other_entity,
                                                  Physicality::Physical_attribute phys_attr_to_compare)
 {
-  if(phys_attr_to_compare == Physicality::Physical_attribute::PHYSICAL_ATTRIBUTE_Can_sire_young ||
-      phys_attr_to_compare == Physicality::Physical_attribute::PHYSICAL_ATTRIBUTE_Can_sire_young ||
-      phys_attr_to_compare == Physicality::Physical_attribute::PHYSICAL_ATTRIBUTE_Can_sire_young)
-  {
-    // TODO: Handle this differently. I didn't really think about this aspect. We're checking repro
-    // attraction via different methods, so why include them in the main enum at all? Should consider
-    // a separate enum, or a struct within the physicality class, or something else since actually
-    // the way we are comparing attrs is totally different so having them in the same place may not make any sense.
-    return false;
-  }
-  uint8_t self_attr = m_physicality_attraction.Get_physical_attribute_value<uint8_t>(phys_attr_to_compare);
-  uint8_t other_attr = other_entity->Get_physicality().Get_physical_attribute_value<uint8_t>(phys_attr_to_compare);
+  uint8_t self_attr = m_physicality_attraction.Get_pysicality_attribute_value(phys_attr_to_compare);
+  uint8_t other_attr = other_entity->Get_physicality().Get_pysicality_attribute_value(phys_attr_to_compare);
   return std::abs(self_attr - other_attr) >= m_physicality_attraction.Get_physical_attraction_flexibility();
 }
 

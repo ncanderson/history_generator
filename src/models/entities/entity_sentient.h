@@ -108,11 +108,10 @@ private:
   Personality_attraction m_personality_attraction;
 
   /**
-   * @brief This entity's personality attraction threshold, or the number
-   * of compatible personality attributes this entity looks for when
-   * determining attraction.
+   * @brief This entity's personality attraction threshold, used to determine
+   * compability, based on personal flexibility
    */
-  uint8_t m_personality_attraction_thresh;
+  double m_personality_attraction_thresh;
 
   /**
    * @brief This entity's physical appearence
@@ -125,11 +124,10 @@ private:
   Physicality_attraction m_physicality_attraction;
 
   /**
-   * @brief This entity's physical attraction threshold, or the number
-   * of compatible physical attributes this entity looks for when
-   * determining attraction.
+   * @brief This entity's physicality attraction threshold, used to determine
+   * compability, based on personal flexibility
    */
-  uint8_t m_physicality_attraction_thresh;
+  double m_physicality_attraction_thresh;
 
   /**
    * @brief m_spouses Spouses of this entity
@@ -154,11 +152,10 @@ private:
   bool repro_attraction(std::shared_ptr<his_gen::Entity_sentient> other_entity);
 
   /**
-   * @brief Calculate the number of compatible personality attributes this entity
-   * requires to be attracted to another entity.
+   * @brief Calculate the personality compatibility threshold for this entity
    * @return The attraction threshold.
    */
-  uint8_t derive_personality_attraction_thresh();
+  double derive_personality_attraction_thresh();
 
   /**
    * @brief Loop through all personality attributes for this and other_entity and compare each attribute.
@@ -171,25 +168,19 @@ private:
   bool compare_personalities(std::shared_ptr<his_gen::Entity_sentient> other_entity);
 
   /**
-   * @brief Check compatibility of personality attraction.
-   * @details Subtract the argued entity attribute from the attraction attribute,
-   * take the absolute value, and compare it to the attraction flexibility.
-   * This will return false if any compared attribute doesn't meet the
-   * flexibility requirements.
+   * @brief Get the difference betwees personality attributes and attraction.
    * @param other_entity Other entity to compare to
    * @param pers_attr_to_compare The attribute to check
-   * @return True if the difference between these attributes is within this entity's
-   * flexibility range, otherwise false.
+   * @return The absolute difference between the two atributes
    */
-  bool personality_attributes_compatible(std::shared_ptr<his_gen::Entity_sentient> other_entity,
-                                         Personality::Personality_attribute pers_attr_to_compare);
+  uint8_t personality_attribute_diff(std::shared_ptr<his_gen::Entity_sentient> other_entity,
+                                     Personality::Personality_attribute pers_attr_to_compare);
 
   /**
-   * @brief Calculate the number of compatible physicality attributes this entity
-   * requires to be attracted to another entity.
+   * @brief Calculate the physicality compatibility threshold for this entity
    * @return The attraction threshold.
    */
-  uint8_t derive_physicality_attraction_thresh();
+  double derive_physicality_attraction_thresh();
 
   /**
    * @brief Loop through all physical attributes for this and other_entity and compare each attribute.

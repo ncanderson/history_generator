@@ -12,6 +12,17 @@ namespace his_gen
 {
 
 /**
+ * @brief Max value to use when generating attributes
+ */
+static const uint8_t ATTRIBUTE_MAX = 100;
+
+/**
+ * @brief Double version of the attribute max, used for dividing
+ * when a double is necessary.
+ */
+static const double ATTRIBUTE_MAX_DOUBLE = static_cast<double>(ATTRIBUTE_MAX);
+
+/**
  * @brief Make a string lowercase
  * @param input_string
  * @return The converted string

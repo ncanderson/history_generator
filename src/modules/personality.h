@@ -153,22 +153,16 @@ public:
    * @param attribute The enumerated attribute to get
    * @return The value of this attribute
    */
-  uint8_t Get_personality_attribute_value(const Personality_attribute attribute) const
-  {
-    auto it = m_personality_attributes.find(attribute);
-    // Verify the attribute exists
-    if(it == m_personality_attributes.end())
-    {
-      throw std::out_of_range("Attribute not found");
-    }
-    return it->second;
-  }
+  uint8_t Get_personality_attribute_value(const Personality_attribute attribute) const;
 
   /**
    * Getters and setters
    */
-  size_t Get_number_of_attributes() const { return Number_of_attributes; }
+  //size_t Get_number_of_attributes() const { return Number_of_attributes; }
   Personality_attribute_map Get_attributes() const { return m_personality_attributes; }
+
+  uint8_t Get_number_of_attributes() const { return m_num_attributes; }
+  uint16_t Get_max_attribute_diff() const { return m_max_attribute_diff; }
 
 protected:
   // Attributes
@@ -176,6 +170,18 @@ protected:
    * @brief All personality attributes with corresponding values
    */
   Personality_attribute_map m_personality_attributes;
+
+  // TODO: Make this a static value since it won't change at runtime
+  /**
+   * @brief The number of attributes
+   */
+  uint8_t m_num_attributes;
+
+  // TODO: Make this a static value since it won't change at runtime
+  /**
+   * @brief The maximum possible difference across all attributes
+   */
+  uint16_t m_max_attribute_diff;
 
   // Implementation
 

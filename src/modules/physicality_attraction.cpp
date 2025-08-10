@@ -7,6 +7,7 @@
 
 using personality = his_gen::Personality::Personality_attribute;
 using physical_attraction = his_gen::Physicality::Physical_attribute;
+using repro_attraction = his_gen::Physicality::Repro_attribute;
 
 ///////////////////////////////////////////////////////////////////////
 
@@ -20,14 +21,14 @@ his_gen::Physicality_attraction::Physicality_attraction(const Personality& entit
 
 bool his_gen::Physicality_attraction::Attracted_to_siring() const
 {
-  return Get_physical_attribute_value<bool>(physical_attraction::PHYSICAL_ATTRIBUTE_Can_sire_young);
+  return Get_repro_attribute_value(repro_attraction::REPRO_ATTRIBUTE_Can_sire_young);
 }
 
 ///////////////////////////////////////////////////////////////////////
 
 bool his_gen::Physicality_attraction::Attracted_to_bearing() const
 {
-  return Get_physical_attribute_value<bool>(physical_attraction::PHYSICAL_ATTRIBUTE_Can_bear_young);
+  return Get_repro_attribute_value(repro_attraction::REPRO_ATTRIBUTE_Can_bear_young);
 }
 
 ///////////////////////////////////////////////////////////////////////

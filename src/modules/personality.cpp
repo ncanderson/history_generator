@@ -11,8 +11,10 @@
 ///////////////////////////////////////////////////////////////////////
 
 his_gen::Personality::Personality()
-    :
-    m_personality_attributes(construct_personality_attributes())
+  :
+  m_personality_attributes(construct_personality_attributes()),
+  m_num_attributes(),
+  m_max_attribute_diff(his_gen::ATTRIBUTE_MAX * m_num_attributes)
 { };
 
 ///////////////////////////////////////////////////////////////////////
@@ -71,65 +73,78 @@ his_gen::Personality::Personality_attribute_map his_gen::Personality::construct_
 {
   Personality_attribute_map personality_attributes;
 
-  int8_t aggressive_passive = his_gen::dice::Make_a_roll<int8_t>(100);
+  int8_t aggressive_passive = his_gen::dice::Make_a_roll<int8_t>(his_gen::ATTRIBUTE_MAX);
   personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Aggressive] = aggressive_passive;
-  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Passive] = 100 - aggressive_passive;
-  int8_t ambitious_content = his_gen::dice::Make_a_roll<int8_t>(100);
+  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Passive] = his_gen::ATTRIBUTE_MAX - aggressive_passive;
+  int8_t ambitious_content = his_gen::dice::Make_a_roll<int8_t>(his_gen::ATTRIBUTE_MAX);
   personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Ambitious] = ambitious_content;
-  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Content] = 100 - ambitious_content;
-  int8_t avoidant_sociable = his_gen::dice::Make_a_roll<int8_t>(100);
+  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Content] = his_gen::ATTRIBUTE_MAX - ambitious_content;
+  int8_t avoidant_sociable = his_gen::dice::Make_a_roll<int8_t>(his_gen::ATTRIBUTE_MAX);
   personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Avoidant] = avoidant_sociable;
-  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Sociable] = 100 - avoidant_sociable;
-  int8_t brave_cowardly = his_gen::dice::Make_a_roll<int8_t>(100);
+  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Sociable] = his_gen::ATTRIBUTE_MAX - avoidant_sociable;
+  int8_t brave_cowardly = his_gen::dice::Make_a_roll<int8_t>(his_gen::ATTRIBUTE_MAX);
   personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Brave] = brave_cowardly;
-  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Cowardly] = 100 - brave_cowardly;
-  int8_t cooperative_difficult = his_gen::dice::Make_a_roll<int8_t>(100);
+  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Cowardly] = his_gen::ATTRIBUTE_MAX - brave_cowardly;
+  int8_t cooperative_difficult = his_gen::dice::Make_a_roll<int8_t>(his_gen::ATTRIBUTE_MAX);
   personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Cooperative] = cooperative_difficult;
-  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Difficult] = 100 - cooperative_difficult;
-  int8_t cruel_kind = his_gen::dice::Make_a_roll<int8_t>(100);
+  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Difficult] = his_gen::ATTRIBUTE_MAX - cooperative_difficult;
+  int8_t cruel_kind = his_gen::dice::Make_a_roll<int8_t>(his_gen::ATTRIBUTE_MAX);
   personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Cruel] = cruel_kind;
-  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Kind] = 100 - cruel_kind;
-  int8_t decisive_indecisive = his_gen::dice::Make_a_roll<int8_t>(100);
+  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Kind] = his_gen::ATTRIBUTE_MAX - cruel_kind;
+  int8_t decisive_indecisive = his_gen::dice::Make_a_roll<int8_t>(his_gen::ATTRIBUTE_MAX);
   personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Decisive] = decisive_indecisive;
-  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Indecisive] = 100 - decisive_indecisive;
-  int8_t diligent_lazy = his_gen::dice::Make_a_roll<int8_t>(100);
+  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Indecisive] = his_gen::ATTRIBUTE_MAX - decisive_indecisive;
+  int8_t diligent_lazy = his_gen::dice::Make_a_roll<int8_t>(his_gen::ATTRIBUTE_MAX);
   personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Diligent] = diligent_lazy;
-  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Lazy] = 100- diligent_lazy;
-  int8_t flexible_extremist = his_gen::dice::Make_a_roll<int8_t>(100);
+  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Lazy] = his_gen::ATTRIBUTE_MAX - diligent_lazy;
+  int8_t flexible_extremist = his_gen::dice::Make_a_roll<int8_t>(his_gen::ATTRIBUTE_MAX);
   personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Flexible] = flexible_extremist;
-  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Extremist] = 100 - flexible_extremist;
-  int8_t frank_evasive = his_gen::dice::Make_a_roll<int8_t>(100);
+  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Extremist] = his_gen::ATTRIBUTE_MAX - flexible_extremist;
+  int8_t frank_evasive = his_gen::dice::Make_a_roll<int8_t>(his_gen::ATTRIBUTE_MAX);
   personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Frank] = frank_evasive;
-  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Evasive] = 100 - frank_evasive;
-  int8_t generous_selfish = his_gen::dice::Make_a_roll<int8_t>(100);
+  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Evasive] = his_gen::ATTRIBUTE_MAX - frank_evasive;
+  int8_t generous_selfish = his_gen::dice::Make_a_roll<int8_t>(his_gen::ATTRIBUTE_MAX);
   personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Generous] = generous_selfish;
-  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Selfish] = 100 - generous_selfish;
-  int8_t jealous_compassionate = his_gen::dice::Make_a_roll<int8_t>(100);
+  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Selfish] = his_gen::ATTRIBUTE_MAX - generous_selfish;
+  int8_t jealous_compassionate = his_gen::dice::Make_a_roll<int8_t>(his_gen::ATTRIBUTE_MAX);
   personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Jealous] = jealous_compassionate;
-  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Compassionate] = 100 - jealous_compassionate;
-  int8_t placid_excitable = his_gen::dice::Make_a_roll<int8_t>(100);
+  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Compassionate] = his_gen::ATTRIBUTE_MAX - jealous_compassionate;
+  int8_t placid_excitable = his_gen::dice::Make_a_roll<int8_t>(his_gen::ATTRIBUTE_MAX);
   personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Placid] = placid_excitable;
-  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Excitable] = 100 - placid_excitable;
-  int8_t thoughtful_rash = his_gen::dice::Make_a_roll<int8_t>(100);
+  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Excitable] = his_gen::ATTRIBUTE_MAX - placid_excitable;
+  int8_t thoughtful_rash = his_gen::dice::Make_a_roll<int8_t>(his_gen::ATTRIBUTE_MAX);
   personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Thoughtful] = thoughtful_rash;
-  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Rash] = 100 - thoughtful_rash;
-  int8_t thrifty_extravagant = his_gen::dice::Make_a_roll<int8_t>(100);
+  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Rash] = his_gen::ATTRIBUTE_MAX - thoughtful_rash;
+  int8_t thrifty_extravagant = his_gen::dice::Make_a_roll<int8_t>(his_gen::ATTRIBUTE_MAX);
   personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Thrifty] = thrifty_extravagant;
-  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Extravagant] = 100 - thrifty_extravagant;
-  int8_t argumentative_amiable = his_gen::dice::Make_a_roll<int8_t>(100);
+  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Extravagant] = his_gen::ATTRIBUTE_MAX - thrifty_extravagant;
+  int8_t argumentative_amiable = his_gen::dice::Make_a_roll<int8_t>(his_gen::ATTRIBUTE_MAX);
   personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Argumentative] = argumentative_amiable;
-  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Amiable] = 100 - argumentative_amiable;
-  int8_t witty_humorless = his_gen::dice::Make_a_roll<int8_t>(100);
+  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Amiable] = his_gen::ATTRIBUTE_MAX - argumentative_amiable;
+  int8_t witty_humorless = his_gen::dice::Make_a_roll<int8_t>(his_gen::ATTRIBUTE_MAX);
   personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Witty] = witty_humorless;
-  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Humorless] = 100 - witty_humorless;
-  int8_t honest_deceitful = his_gen::dice::Make_a_roll<int8_t>(100);
+  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Humorless] = his_gen::ATTRIBUTE_MAX - witty_humorless;
+  int8_t honest_deceitful = his_gen::dice::Make_a_roll<int8_t>(his_gen::ATTRIBUTE_MAX);
   personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Honest] = honest_deceitful;
-  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Deceitful] = 100 - honest_deceitful;
-  int8_t lustful_chaste = his_gen::dice::Make_a_roll<int8_t>(100);
+  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Deceitful] = his_gen::ATTRIBUTE_MAX - honest_deceitful;
+  int8_t lustful_chaste = his_gen::dice::Make_a_roll<int8_t>(his_gen::ATTRIBUTE_MAX);
   personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Lustful] = lustful_chaste;
-  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Chaste] = 100 - lustful_chaste;
+  personality_attributes[Personality_attribute::PERSONALITY_ATTRIBUTE_Chaste] = his_gen::ATTRIBUTE_MAX - lustful_chaste;
 
   return personality_attributes;
+}
+
+///////////////////////////////////////////////////////////////////////
+
+uint8_t his_gen::Personality::Get_personality_attribute_value(const Personality_attribute attribute) const
+{
+  auto it = m_personality_attributes.find(attribute);
+  // Verify the attribute exists
+  if(it == m_personality_attributes.end())
+  {
+    throw std::out_of_range("Attribute not found");
+  }
+  return it->second;
 }
 
 ///////////////////////////////////////////////////////////////////////
