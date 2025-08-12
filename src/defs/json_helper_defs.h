@@ -25,29 +25,6 @@
 namespace nlohmann
 {
 
-// TODO Do I need this? I didn't do this for the phsicality attrs but it still worked
-/**
- * @brief Adl_serializer for maps with Personality attribute keys
- */
-template <typename T>
-struct adl_serializer<std::map<his_gen::Personality::Personality_attribute, T>>
-{
-  using Map = std::map<his_gen::Personality::Personality_attribute, T>;
-
-  /**
-   * @brief to_json
-   * @param json
-   * @param map
-   */
-  static void to_json(json& json, Map const& map)
-  {
-    for(auto it = map.begin(); it != map.end(); ++it)
-    {
-      json[his_gen::Personality::Get_attribute_string(it->first)] = it->second;
-    }
-  }
-};
-
 /**
  * @brief Additional serializer for a shared pointer
  */

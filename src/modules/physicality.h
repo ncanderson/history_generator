@@ -6,14 +6,13 @@
 #define PHYSICALITY_H
 
 // Standard libs
-#include <variant>
 #include <map>
-#include <stdexcept>
 
 // JSON
 #include <deps/json.hpp>
 
 // Application files
+#include <modules/entity_attributes_base.h>
 #include <defs/history_generator_defs.h>
 
 namespace his_gen
@@ -21,7 +20,7 @@ namespace his_gen
 /**
  * @brief Physical attributes for an entity with a body
  */
-class Physicality
+class Physicality : public Entity_attributes_base<his_gen::Attribute_enums::EPhysicality>
 {
 public:
 
@@ -36,99 +35,33 @@ public:
   ~Physicality() = default;
 
   /**
-   * @brief The Physical_attributes enum
-   * @details Each of these attributes will represent a physical characteristic
-   * for an entity with a body. Numeric values will be represented using 1 - 100.
-   * These values don't correspond directly to any real-world measurements,
-   * but rather represent this entity's attribute in relation to a general
-   * average for that type of entity.
-   */
-  enum class Physical_attribute : uint8_t
-  {
-    PHYSICAL_ATTRIBUTE_Can_sire_young,          ///< [bool]
-    PHYSICAL_ATTRIBUTE_Can_bear_young,          ///< [bool]
-    PHYSICAL_ATTRIBUTE_Can_nurse_young,         ///< [bool]
-    PHYSICAL_ATTRIBUTE_Hair_length,             ///< [uint]
-    PHYSICAL_ATTRIBUTE_Hair_thickness,          ///< [uint]
-    PHYSICAL_ATTRIBUTE_Hand_size,               ///< [uint]
-    PHYSICAL_ATTRIBUTE_Foot_size,               ///< [uint]
-    PHYSICAL_ATTRIBUTE_Nipple_size,             ///< [uint]
-    PHYSICAL_ATTRIBUTE_Body_fat,                ///< [uint]
-    PHYSICAL_ATTRIBUTE_Muscle_mass,             ///< [uint]
-    PHYSICAL_ATTRIBUTE_Height,                  ///< [uint]
-    PHYSICAL_ATTRIBUTE_Shoulder_width,          ///< [uint]
-    PHYSICAL_ATTRIBUTE_Stomach_size,            ///< [uint]
-    PHYSICAL_ATTRIBUTE_Hip_width,               ///< [uint]
-    PHYSICAL_ATTRIBUTE_Waist_circumference,     ///< [uint]
-    PHYSICAL_ATTRIBUTE_Posture_straightness,    ///< [uint]
-    PHYSICAL_ATTRIBUTE_Body_freckle_density,    ///< [uint]
-    PHYSICAL_ATTRIBUTE_Body_hair_density,       ///< [uint]
-    PHYSICAL_ATTRIBUTE_Skin_color,              ///< [uint]
-    PHYSICAL_ATTRIBUTE_Skin_elasticity,         ///< [uint]
-    PHYSICAL_ATTRIBUTE_Scar_coverage,           ///< [uint]
-    PHYSICAL_ATTRIBUTE_Voice_pitch,             ///< [uint]
-    PHYSICAL_ATTRIBUTE_Facial_angularity,       ///< [uint]
-    PHYSICAL_ATTRIBUTE_Cheekbone_prominence,    ///< [uint]
-    PHYSICAL_ATTRIBUTE_Nose_size,               ///< [uint]
-    PHYSICAL_ATTRIBUTE_Jawline_sharpness,       ///< [uint]
-    PHYSICAL_ATTRIBUTE_Lip_fullness,            ///< [uint]
-    PHYSICAL_ATTRIBUTE_Eye_size,                ///< [uint]
-    PHYSICAL_ATTRIBUTE_Eye_spacing,             ///< [uint]
-    PHYSICAL_ATTRIBUTE_Eye_color_saturation,    ///< [uint]
-    PHYSICAL_ATTRIBUTE_Ear_size,                ///< [uint]
-    PHYSICAL_ATTRIBUTE_Breast_size,             ///< [uint]
-    PHYSICAL_ATTRIBUTE_Breast_shape_roundness,  ///< [uint]
-    PHYSICAL_ATTRIBUTE_Breast_cleavage_depth,   ///< [uint]
-    PHYSICAL_ATTRIBUTE_Labia_major_size,        ///< [uint]
-    PHYSICAL_ATTRIBUTE_Labia_minor_size,        ///< [uint]
-    PHYSICAL_ATTRIBUTE_Clitoris_size,           ///< [uint]
-    PHYSICAL_ATTRIBUTE_Penis_length,            ///< [uint]
-    PHYSICAL_ATTRIBUTE_Penis_width,             ///< [uint]
-    PHYSICAL_ATTRIBUTE_Testicle_size,           ///< [uint]
-    PHYSICAL_ATTRIBUTE_Facial_hair_density      ///< [uint]
-  };
-
-  /**
-   * @brief The Unit enum, for specifying the value of a given
-   * physical attribute.
-   */
-  enum class Unit : uint8_t
-  {
-    UNIT_Boolean, ///< A boolean
-    UNIT_Scalar   ///< A scalar (ie numeric) value
-  };
-
-  /**
    * Usings
    */
-  using Physical_attribute_value = std::variant<bool, uint8_t>;
-  using Physical_attribute_maps = std::map<Physical_attribute, std::pair<Unit, Physical_attribute_value>>;
+  using Physical_attribute_map = std::map<Attribute_enums::EPhysicality, uint8_t>;
+  using Repro_attribute_map = std::map<Attribute_enums::EReproduction, bool>;
 
   /**
-   * @brief Get the string representation of the physical attribute
-   * @param physical_attribute The physical attribute to get
-   * @return The string representation of the physical attribute
+   * Overrides
    */
-  static std::string Get_phys_attribute_string(const Physical_attribute physical_attribute);
+  Physical_attribute_map Get_attributes() const override { return m_physical_attributes; }
 
   /**
    * @brief Get a physical attribute from this class
-   * @tparam T The return type, which will be the data type corresponding
-   * to the Physical_attribute's Unit.
    * @param attribute The enumerated attribute to get
    * @return The value of this attribute
    */
-  template<typename T>
-  T Get_physical_attribute_value(const Physical_attribute attribute) const
-  {
-    auto it = m_physical_attributes.find(attribute);
-    // Verify the attribute exists
-    if(it == m_physical_attributes.end())
-    {
-      throw std::out_of_range("Attribute not found");
-    }
-    return std::get<T>(it->second.second);
-  }
+  uint8_t Get_entity_attribute_value(const Attribute_enums::EPhysicality attribute) const override;
+
+  /**
+   * Other public functions
+   */
+
+  /**
+   * @brief Get a repro attribute from this class
+   * @param attribute The enumerated attribute to get
+   * @return The value of this attribute
+   */
+  bool Get_repro_attribute_value(const Attribute_enums::EReproduction repro_attribute) const;
 
   /**
    * @brief Can_bear_young
@@ -145,27 +78,38 @@ public:
   /**
    * Getters and setters
    */
-  Physical_attribute_maps Get_physical_attributes() const { return m_physical_attributes; }
+  Repro_attribute_map Get_repro_attributes() const { return m_repro_attributes; }
+
+  uint8_t Get_number_of_attributes() const { return m_num_attributes; }
+  uint16_t Get_max_attribute_diff() const { return m_max_attribute_diff; }
 
 protected:
   // Attributes
   /**
    * @brief The attributes and values for this entity
    */
-  Physical_attribute_maps m_physical_attributes;
+  Physical_attribute_map m_physical_attributes;
+
+  /**
+   * @brief Reproductive attributes of this entity
+   */
+  Repro_attribute_map m_repro_attributes;
 
   // Implementation
-  /**
-   * @brief Set the value of this attribute
-   * @param physical_attribute The enumerated physical attribute value
-   * @param unit The unit for this value
-   * @param value
-   */
-  void set_attribute(const Physical_attribute physical_attribute,
-                     const Unit unit,
-                     const Physical_attribute_value value);
+
 private:
   // Attributes
+  // TODO: Make this a static value since it won't change at runtime
+  /**
+   * @brief The number of attributes
+   */
+  uint8_t m_num_attributes;
+
+  // TODO: Make this a static value since it won't change at runtime
+  /**
+   * @brief The maximum possible difference across all attributes
+   */
+  uint16_t m_max_attribute_diff;
 
   // Implementation
 

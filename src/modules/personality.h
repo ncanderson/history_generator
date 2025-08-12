@@ -11,6 +11,7 @@
 #include <deps/json.hpp>
 
 // Application files
+#include <modules/entity_attributes_base.h>
 #include <defs/history_generator_defs.h>
 
 //// All personality trait pairs are to be defined here
@@ -66,7 +67,7 @@ namespace his_gen
 /**
  * @brief
  */
-class Personality
+class Personality : public Entity_attributes_base<Attribute_enums::EPersonality>
 {
 public:
   // Attributes
@@ -84,91 +85,26 @@ public:
    */
   ~Personality(){};
 
-  // TODO: Make this static so it's not duplicated on every instance of Personality on every entity
-  // TODO: figure out some way to keep the pairs aligned? Maybe use a key for the
-  // enum member's values, or a separate structure that keeps them together in
-  // pairs?
-  /**
- * @brief The Attribute enum
- * @details Containing pairs of opposed personality attributes, this enum
- * will be used as the key for a given entity's personality map. Use the
- * Get_attribute_string function when outputing these attributes to the data
- * storage.
- */
-  enum class Personality_attribute : uint8_t
-  {
-    PERSONALITY_ATTRIBUTE_Aggressive,
-    PERSONALITY_ATTRIBUTE_Passive,
-    PERSONALITY_ATTRIBUTE_Ambitious,
-    PERSONALITY_ATTRIBUTE_Content,
-    PERSONALITY_ATTRIBUTE_Avoidant,
-    PERSONALITY_ATTRIBUTE_Sociable,
-    PERSONALITY_ATTRIBUTE_Brave,
-    PERSONALITY_ATTRIBUTE_Cowardly,
-    PERSONALITY_ATTRIBUTE_Cooperative,
-    PERSONALITY_ATTRIBUTE_Difficult,
-    PERSONALITY_ATTRIBUTE_Cruel,
-    PERSONALITY_ATTRIBUTE_Kind,
-    PERSONALITY_ATTRIBUTE_Decisive,
-    PERSONALITY_ATTRIBUTE_Indecisive,
-    PERSONALITY_ATTRIBUTE_Diligent,
-    PERSONALITY_ATTRIBUTE_Lazy,
-    PERSONALITY_ATTRIBUTE_Flexible,
-    PERSONALITY_ATTRIBUTE_Extremist,
-    PERSONALITY_ATTRIBUTE_Frank,
-    PERSONALITY_ATTRIBUTE_Evasive,
-    PERSONALITY_ATTRIBUTE_Generous,
-    PERSONALITY_ATTRIBUTE_Selfish,
-    PERSONALITY_ATTRIBUTE_Jealous,
-    PERSONALITY_ATTRIBUTE_Compassionate,
-    PERSONALITY_ATTRIBUTE_Placid,
-    PERSONALITY_ATTRIBUTE_Excitable,
-    PERSONALITY_ATTRIBUTE_Thoughtful,
-    PERSONALITY_ATTRIBUTE_Rash,
-    PERSONALITY_ATTRIBUTE_Thrifty,
-    PERSONALITY_ATTRIBUTE_Extravagant,
-    PERSONALITY_ATTRIBUTE_Argumentative,
-    PERSONALITY_ATTRIBUTE_Amiable,
-    PERSONALITY_ATTRIBUTE_Witty,
-    PERSONALITY_ATTRIBUTE_Humorless,
-    PERSONALITY_ATTRIBUTE_Honest,
-    PERSONALITY_ATTRIBUTE_Deceitful,
-    PERSONALITY_ATTRIBUTE_Lustful,
-    PERSONALITY_ATTRIBUTE_Chaste
-  };
-
   /**
    * Usings
    */
-  using Personality_attribute_map = std::map<Personality_attribute, uint8_t>;
-
-  /**
-   * @brief Get the string representation of a personality attribute
-   * @param attribute The attribute to get the string for.
-   */
-  static std::string Get_attribute_string(const Personality_attribute attribute);
+  using Personality_attribute_map = std::map<Attribute_enums::EPersonality, uint8_t>;
 
   /**
    * @brief Get a personality attribute from this class
    * @param attribute The enumerated attribute to get
    * @return The value of this attribute
    */
-  uint8_t Get_personality_attribute_value(const Personality_attribute attribute) const
-  {
-    auto it = m_personality_attributes.find(attribute);
-    // Verify the attribute exists
-    if(it == m_personality_attributes.end())
-    {
-      throw std::out_of_range("Attribute not found");
-    }
-    return it->second;
-  }
+  uint8_t Get_entity_attribute_value(const Attribute_enums::EPersonality attribute) const override;
 
   /**
    * Getters and setters
    */
-  size_t Get_number_of_attributes() const { return Number_of_attributes; }
-  Personality_attribute_map Get_attributes() const { return m_personality_attributes; }
+  //size_t Get_number_of_attributes() const { return Number_of_attributes; }
+  Personality_attribute_map Get_attributes() const override { return m_personality_attributes; }
+
+  uint8_t Get_number_of_attributes() const { return m_num_attributes; }
+  uint16_t Get_max_attribute_diff() const { return m_max_attribute_diff; }
 
 protected:
   // Attributes
@@ -176,6 +112,18 @@ protected:
    * @brief All personality attributes with corresponding values
    */
   Personality_attribute_map m_personality_attributes;
+
+  // TODO: Make this a static value since it won't change at runtime
+  /**
+   * @brief The number of attributes
+   */
+  uint8_t m_num_attributes;
+
+  // TODO: Make this a static value since it won't change at runtime
+  /**
+   * @brief The maximum possible difference across all attributes
+   */
+  uint16_t m_max_attribute_diff;
 
   // Implementation
 

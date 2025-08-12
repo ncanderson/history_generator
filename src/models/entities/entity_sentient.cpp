@@ -7,7 +7,6 @@
 
 // Defs and Utils
 #include <defs/json_helper_defs.h>
-#include <utils/dice_rolls.h>
 
 using sentient = his_gen::Entity_sentient;
 
@@ -20,10 +19,10 @@ sentient::Entity_sentient(std::string name,
   Entity_base(name, entity_type, title),
   m_personality(),
   m_personality_attraction(m_personality.Get_attributes()),
-  m_personality_attraction_thresh(derive_personality_attraction_thresh()),
+  m_personality_attraction_thresh(derive_attraction_thresh(m_personality_attraction.Get_personality_attraction_flexibility())),
   m_physicality(),
   m_physicality_attraction(m_personality),
-  m_physicality_attraction_thresh(derive_physicality_attraction_thresh()),
+  m_physicality_attraction_thresh(derive_attraction_thresh(m_physicality_attraction.Get_physical_attraction_flexibility())),
   m_lovers(),
   m_spouses()
 {
@@ -45,7 +44,8 @@ bool sentient::Is_attracted(std::shared_ptr<Entity_base> other_entity)
   {
     return false;
   }
-  return compare_personalities(other) && compare_physicalities(other);
+  return compare_attributes<his_gen::Personality>(Get_personality(), other->Get_personality()) &&
+         compare_attributes<his_gen::Physicality>(Get_physicality(), other->Get_physicality());
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -83,98 +83,16 @@ bool sentient::repro_attraction(std::shared_ptr<his_gen::Entity_sentient> other_
 
 ///////////////////////////////////////////////////////////////////////
 
-uint8_t sentient::derive_personality_attraction_thresh()
+double sentient::derive_attraction_thresh(uint8_t entity_flexibility)
 {
-  // Get the flexibility. This is inverted, so that higher flexibility means a lower coefficient
-  double flexibility_coefficient = (100 - m_personality_attraction.Get_personality_attraction_flexibility()) / 100.0;
-  // Get the attr count
-  int8_t attr_count = m_personality.Get_attributes().size();
-  // Return the percentage of the total attributes that need to be compatible
-  return round(attr_count * flexibility_coefficient);
-}
-
-///////////////////////////////////////////////////////////////////////
-
-bool sentient::compare_personalities(std::shared_ptr<his_gen::Entity_sentient> other_entity)
-{
-  uint8_t compatible_attributes = 0;
-  for(auto& it : m_personality_attraction.Get_attributes())
-  {
-    if(personality_attributes_compatible(other_entity, it.first))
-    {
-      compatible_attributes++;
-    }
-    // If there are enough compatible attributes, return true
-    if(compatible_attributes >= m_personality_attraction_thresh)
-    {
-      return true;
-    }
-  }
-  // If we made it the end of the attributes and haven't met the threshold, there isn't attraction
-  return false;
-}
-
-///////////////////////////////////////////////////////////////////////
-
-bool sentient::personality_attributes_compatible(std::shared_ptr<his_gen::Entity_sentient> other_entity,
-                                                 Personality::Personality_attribute pers_attr_to_compare)
-{
-  uint8_t self_attr = m_personality_attraction.Get_personality_attribute_value(pers_attr_to_compare);
-  uint8_t other_attr = other_entity->Get_personality().Get_personality_attribute_value(pers_attr_to_compare);
-  return std::abs(self_attr - other_attr) >= m_personality_attraction.Get_personality_attraction_flexibility();
-}
-
-///////////////////////////////////////////////////////////////////////
-
-uint8_t sentient::derive_physicality_attraction_thresh()
-{
-  // Get the flexibility. This is inverted, so that higher flexibility means a lower coefficient
-  double flexibility_coefficient = (100 - m_physicality_attraction.Get_physical_attraction_flexibility()) / 100.0;
-  // Get the attr count
-  int8_t attr_count = m_physicality.Get_physical_attributes().size();
-  // Return the percentage of the total attributes that need to be compatible
-  return round(attr_count * flexibility_coefficient);
-}
-
-///////////////////////////////////////////////////////////////////////
-
-bool sentient::compare_physicalities(std::shared_ptr<his_gen::Entity_sentient> other_entity)
-{
-  uint8_t compatible_attributes = 0;
-  for(auto& it : m_physicality_attraction.Get_physical_attributes())
-  {
-    if(physicality_attributes_compatible(other_entity, it.first))
-    {
-      compatible_attributes++;
-    }
-    // If there are enough compatible attributes, return true
-    if(compatible_attributes >= m_physicality_attraction_thresh)
-    {
-      return true;
-    }
-  }
-  // If we made it the end of the attributes and haven't met the threshold, there isn't attraction
-  return false;
-}
-
-///////////////////////////////////////////////////////////////////////
-
-bool sentient::physicality_attributes_compatible(std::shared_ptr<his_gen::Entity_sentient> other_entity,
-                                                 Physicality::Physical_attribute phys_attr_to_compare)
-{
-  if(phys_attr_to_compare == Physicality::Physical_attribute::PHYSICAL_ATTRIBUTE_Can_sire_young ||
-      phys_attr_to_compare == Physicality::Physical_attribute::PHYSICAL_ATTRIBUTE_Can_sire_young ||
-      phys_attr_to_compare == Physicality::Physical_attribute::PHYSICAL_ATTRIBUTE_Can_sire_young)
-  {
-    // TODO: Handle this differently. I didn't really think about this aspect. We're checking repro
-    // attraction via different methods, so why include them in the main enum at all? Should consider
-    // a separate enum, or a struct within the physicality class, or something else since actually
-    // the way we are comparing attrs is totally different so having them in the same place may not make any sense.
-    return false;
-  }
-  uint8_t self_attr = m_physicality_attraction.Get_physical_attribute_value<uint8_t>(phys_attr_to_compare);
-  uint8_t other_attr = other_entity->Get_physicality().Get_physical_attribute_value<uint8_t>(phys_attr_to_compare);
-  return std::abs(self_attr - other_attr) >= m_physicality_attraction.Get_physical_attraction_flexibility();
+  // TODO: Take this 50, hard code it in defs, and then derive the flexiblity divisor from there
+  // TODO: put this 50.0 somewhere that makes more sense. It's tied to the flexibiliy divisor:
+  // divisor = X where MAX_SCORE / X = max flexibility
+  // Scale the attraction flexibility to a 0 - 1 range, use the max flexibility
+  // Scale the flexibility based on max flexibilty
+  double scaled_flexibility = (entity_flexibility) / 50.0;
+  // Return the threshold, based on the scale flexibility
+  return 1.0 - scaled_flexibility;
 }
 
 ///////////////////////////////////////////////////////////////////////

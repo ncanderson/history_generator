@@ -28,8 +28,8 @@ T Make_a_roll(uint32_t max_value, uint32_t min_value = 1)
   static_assert(std::is_arithmetic_v<T>, "T must be numeric");
 
   // Initialize a random number generator
-  std::random_device rand;
-  std::mt19937 generate(rand());
+  static std::random_device rand;
+  static std::mt19937 generate(rand());
 
   if constexpr(std::is_integral_v<T>)
   {
