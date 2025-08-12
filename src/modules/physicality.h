@@ -86,14 +86,14 @@ public:
 protected:
   // Attributes
   /**
-   * @brief The attributes and values for this entity
-   */
-  Physical_attribute_map m_physical_attributes;
-
-  /**
    * @brief Reproductive attributes of this entity
    */
   Repro_attribute_map m_repro_attributes;
+
+  /**
+   * @brief The attributes and values for this entity
+   */
+  Physical_attribute_map m_physical_attributes;
 
   // Implementation
 
@@ -112,6 +112,18 @@ private:
   uint16_t m_max_attribute_diff;
 
   // Implementation
+  // TODO: Move to the base class (along with personality attr construct)
+  /**
+   * @brief construct_physicality_attributes
+   * @return
+   */
+  Physical_attribute_map construct_physicality_attributes();
+
+  /**
+   * @brief construct_repro_attributes
+   * @return
+   */
+  Repro_attribute_map construct_repro_attributes();
 
 }; // class Physicality
 
