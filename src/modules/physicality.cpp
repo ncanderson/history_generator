@@ -8,10 +8,14 @@
 // Application files
 #include <utils/dice_rolls.h>
 
+using physicality = his_gen::Attribute_enums::EPhysicality;
+using repro = his_gen::Attribute_enums::EReproduction;
+
 ///////////////////////////////////////////////////////////////////////
 
 his_gen::Physicality::Physicality()
   :
+  Entity_attributes_base<his_gen::Attribute_enums::EPhysicality>(),
   m_physical_attributes(),
   m_repro_attributes(),
   m_num_attributes(),
@@ -19,49 +23,49 @@ his_gen::Physicality::Physicality()
 {
   // Reproduction
   // TODO do more to handle intersex people, infertility, etc
-  m_repro_attributes[Repro_attribute::REPRO_ATTRIBUTE_Can_sire_young] = his_gen::dice::Flip_a_coin();
-  m_repro_attributes[Repro_attribute::REPRO_ATTRIBUTE_Can_bear_young] = !Can_sire_young();
-  m_repro_attributes[Repro_attribute::REPRO_ATTRIBUTE_Can_nurse_young] = Can_bear_young();
+  m_repro_attributes[repro::EREPRODUCTION_Can_sire_young] = his_gen::dice::Flip_a_coin();
+  m_repro_attributes[repro::EREPRODUCTION_Can_bear_young] = !Can_sire_young();
+  m_repro_attributes[repro::EREPRODUCTION_Can_nurse_young] = Can_bear_young();
 
   // Extremities
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Hand_size] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Foot_size] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
+  m_physical_attributes[physicality::EPHYSICALITY_Hand_size] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
+  m_physical_attributes[physicality::EPHYSICALITY_Foot_size] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
 
   // Chest
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Nipple_size] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
+  m_physical_attributes[physicality::EPHYSICALITY_Nipple_size] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
 
   // Body
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Body_fat] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Muscle_mass] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Height] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Shoulder_width] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Stomach_size] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Hip_width] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Posture_straightness] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Waist_circumference] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
+  m_physical_attributes[physicality::EPHYSICALITY_Body_fat] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
+  m_physical_attributes[physicality::EPHYSICALITY_Muscle_mass] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
+  m_physical_attributes[physicality::EPHYSICALITY_Height] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
+  m_physical_attributes[physicality::EPHYSICALITY_Shoulder_width] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
+  m_physical_attributes[physicality::EPHYSICALITY_Stomach_size] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
+  m_physical_attributes[physicality::EPHYSICALITY_Hip_width] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
+  m_physical_attributes[physicality::EPHYSICALITY_Posture_straightness] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
+  m_physical_attributes[physicality::EPHYSICALITY_Waist_circumference] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
 
   // Skin
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Body_freckle_density] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Body_hair_density] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Skin_color] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Scar_coverage] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Skin_elasticity] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
+  m_physical_attributes[physicality::EPHYSICALITY_Body_freckle_density] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
+  m_physical_attributes[physicality::EPHYSICALITY_Body_hair_density] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
+  m_physical_attributes[physicality::EPHYSICALITY_Skin_color] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
+  m_physical_attributes[physicality::EPHYSICALITY_Scar_coverage] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
+  m_physical_attributes[physicality::EPHYSICALITY_Skin_elasticity] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
 
   // Voice
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Voice_pitch] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
+  m_physical_attributes[physicality::EPHYSICALITY_Voice_pitch] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
 
   // Head and face
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Cheekbone_prominence] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Ear_size] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Eye_color_saturation] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Eye_size] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Eye_spacing] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Facial_angularity] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Hair_length] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Hair_thickness] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Jawline_sharpness] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Lip_fullness] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Nose_size] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
+  m_physical_attributes[physicality::EPHYSICALITY_Cheekbone_prominence] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
+  m_physical_attributes[physicality::EPHYSICALITY_Ear_size] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
+  m_physical_attributes[physicality::EPHYSICALITY_Eye_color_saturation] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
+  m_physical_attributes[physicality::EPHYSICALITY_Eye_size] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
+  m_physical_attributes[physicality::EPHYSICALITY_Eye_spacing] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
+  m_physical_attributes[physicality::EPHYSICALITY_Facial_angularity] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
+  m_physical_attributes[physicality::EPHYSICALITY_Hair_length] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
+  m_physical_attributes[physicality::EPHYSICALITY_Hair_thickness] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
+  m_physical_attributes[physicality::EPHYSICALITY_Jawline_sharpness] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
+  m_physical_attributes[physicality::EPHYSICALITY_Lip_fullness] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
+  m_physical_attributes[physicality::EPHYSICALITY_Nose_size] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
 
   // Physical attributes that are dependent on others
   uint8_t conditional_max = 1;
@@ -69,28 +73,28 @@ his_gen::Physicality::Physicality()
   {
     conditional_max = his_gen::ATTRIBUTE_MAX;
   }
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Breast_cleavage_depth] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Breast_shape_roundness] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Breast_size] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Clitoris_size] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Labia_major_size] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Labia_minor_size] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
+  m_physical_attributes[physicality::EPHYSICALITY_Breast_cleavage_depth] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
+  m_physical_attributes[physicality::EPHYSICALITY_Breast_shape_roundness] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
+  m_physical_attributes[physicality::EPHYSICALITY_Breast_size] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
+  m_physical_attributes[physicality::EPHYSICALITY_Clitoris_size] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
+  m_physical_attributes[physicality::EPHYSICALITY_Labia_major_size] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
+  m_physical_attributes[physicality::EPHYSICALITY_Labia_minor_size] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
 
   conditional_max = 1;
   if(Can_sire_young())
   {
     conditional_max = his_gen::ATTRIBUTE_MAX;
   }
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Penis_length] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Penis_width] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Testicle_size] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
+  m_physical_attributes[physicality::EPHYSICALITY_Penis_length] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
+  m_physical_attributes[physicality::EPHYSICALITY_Penis_width] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
+  m_physical_attributes[physicality::EPHYSICALITY_Testicle_size] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
 
   conditional_max = 25;
   if(Can_sire_young())
   {
     conditional_max = his_gen::ATTRIBUTE_MAX;
   }
-  m_physical_attributes[Physical_attribute::PHYSICAL_ATTRIBUTE_Facial_hair_density] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
+  m_physical_attributes[physicality::EPHYSICALITY_Facial_hair_density] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
 
 }
 
@@ -98,84 +102,19 @@ his_gen::Physicality::Physicality()
 
 bool his_gen::Physicality::Can_bear_young()
 {
-  return m_repro_attributes[Repro_attribute::REPRO_ATTRIBUTE_Can_bear_young];
+  return m_repro_attributes[repro::EREPRODUCTION_Can_bear_young];
 }
 
 ///////////////////////////////////////////////////////////////////////
 
 bool his_gen::Physicality::Can_sire_young()
 {
-  return m_repro_attributes[Repro_attribute::REPRO_ATTRIBUTE_Can_sire_young];
+  return m_repro_attributes[repro::EREPRODUCTION_Can_sire_young];
 }
 
 ///////////////////////////////////////////////////////////////////////
 
-std::string his_gen::Physicality::Get_phys_attribute_string(const Physical_attribute physical_attribute)
-{
-  switch(physical_attribute)
-  {
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Hair_length:            return "hair_length";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Hair_thickness:         return "hair_thickness";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Hand_size:              return "hand_size";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Foot_size:              return "foot_size";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Nipple_size:            return "nipple_size";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Body_fat:               return "body_fat";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Muscle_mass:            return "muscle_mass";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Height:                 return "height";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Shoulder_width:         return "should_width";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Stomach_size:           return "stomach_size";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Hip_width:              return "hip_width";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Waist_circumference:    return "waist_circumference";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Posture_straightness:   return "posture_straightness";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Body_freckle_density:   return "body_freckle_density";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Body_hair_density:      return "body_hair_density";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Skin_color:             return "skin_color";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Skin_elasticity:        return "skin_elasticity";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Scar_coverage:          return "scar_coverage";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Voice_pitch:            return "voice_pitch";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Facial_angularity:      return "facial_angularity";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Cheekbone_prominence:   return "cheekbone_prominence";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Nose_size:              return "nose_size";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Jawline_sharpness:      return "jawline_sharpness";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Lip_fullness:           return "lip_fullness";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Eye_size:               return "eye_size";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Eye_spacing:            return "eye_spacing";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Eye_color_saturation:   return "eye_color_saturation";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Ear_size:               return "ear_size";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Breast_size:            return "breast_size";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Breast_shape_roundness: return "breast_shape_roundness";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Breast_cleavage_depth:  return "breast_cleavage_depth";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Labia_major_size:       return "labia_major_size";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Labia_minor_size:       return "labia_minor_size";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Clitoris_size:          return "clitoris_size";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Penis_length:           return "penis_length";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Penis_width:            return "penis_width";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Testicle_size:          return "testicle_size";
-    case Physical_attribute::PHYSICAL_ATTRIBUTE_Facial_hair_density:    return "facial_hair_density";
-    default:
-      // Unrecognized value
-      throw std::invalid_argument("Physical attribute not found");
-  }
-}
-
-///////////////////////////////////////////////////////////////////////
-
-std::string his_gen::Physicality::Get_repro_attribute_string(const Repro_attribute repro_attribute)
-{
-  switch(repro_attribute)
-  {
-    case Repro_attribute::REPRO_ATTRIBUTE_Can_sire_young:  return "can_sire_young";
-    case Repro_attribute::REPRO_ATTRIBUTE_Can_bear_young:  return "can_bear_young";
-    case Repro_attribute::REPRO_ATTRIBUTE_Can_nurse_young: return "can_nurse_young";
-    default:
-      // Unrecognized value
-      throw std::invalid_argument("Repro attribute not found");
-  }
-}
-
-///////////////////////////////////////////////////////////////////////
-
-uint8_t his_gen::Physicality::Get_pysicality_attribute_value(const Physical_attribute attribute) const
+uint8_t his_gen::Physicality::Get_entity_attribute_value(const physicality attribute) const
 {
   auto it = m_physical_attributes.find(attribute);
   // Verify the attribute exists
@@ -188,7 +127,7 @@ uint8_t his_gen::Physicality::Get_pysicality_attribute_value(const Physical_attr
 
 ///////////////////////////////////////////////////////////////////////
 
-bool his_gen::Physicality::Get_repro_attribute_value(const Repro_attribute repro_attribute) const
+bool his_gen::Physicality::Get_repro_attribute_value(const Attribute_enums::EReproduction repro_attribute) const
 {
   auto it = m_repro_attributes.find(repro_attribute);
   // Verify the attribute exists
@@ -206,29 +145,21 @@ void his_gen::to_json(nlohmann::json& json,
 {
   // Physicality
   nlohmann::json phys_attributes_converted;
-  Physicality::Physical_attribute_map attributes = physicality.Get_physical_attributes();
+  Physicality::Physical_attribute_map attributes = physicality.Get_attributes();
   for(auto it = attributes.begin(); it != attributes.end(); ++it)
   {
-    phys_attributes_converted[his_gen::Physicality::Get_phys_attribute_string(it->first)] = it->second;
+    phys_attributes_converted[his_gen::Attribute_enums::Get_entity_attribute_string(it->first)] = it->second;
   }
-
-  json = nlohmann::json
-  {
-    {"physicality", phys_attributes_converted}
-  };
+  json["physicality"] = phys_attributes_converted;
 
   // Repro
   nlohmann::json repro_attributes_converted;
   Physicality::Repro_attribute_map repro = physicality.Get_repro_attributes();
   for(auto it = repro.begin(); it != repro.end(); ++it)
   {
-    repro_attributes_converted[his_gen::Physicality::Get_repro_attribute_string(it->first)] = it->second;
+    repro_attributes_converted[his_gen::Attribute_enums::Get_entity_attribute_string(it->first)] = it->second;
   }
-
-  json = nlohmann::json
-  {
-    {"reproduction", repro_attributes_converted}
-  };
+  json["reproduction"] = repro_attributes_converted;
 }
 
 ///////////////////////////////////////////////////////////////////////

@@ -13,11 +13,12 @@
 
 // Application files
 #include <models/entities/entity_base.h>
-#include <utils/history_generator_utils.h>
 #include <modules/personality.h>
 #include <modules/personality_attraction.h>
 #include <modules/physicality.h>
 #include <modules/physicality_attraction.h>
+#include <utils/dice_rolls.h>
+#include <utils/history_generator_utils.h>
 
 namespace his_gen
 {
@@ -152,20 +153,37 @@ private:
   bool repro_attraction(std::shared_ptr<his_gen::Entity_sentient> other_entity);
 
   /**
-   * @brief Calculate the personality compatibility threshold for this entity
+   * @brief Calculate the compatibility threshold for this entity
+   * @param entity_flexibility The entity's flexibility
    * @return The attraction threshold.
    */
-  double derive_personality_attraction_thresh();
+  double derive_attraction_thresh(uint8_t entity_flexibility);
 
   /**
-   * @brief Loop through all personality attributes for this and other_entity and compare each attribute.
-   * @details This function will utilize this entity's personality attraction flexibility
-   * to determine the minimum number of compatible attributes required for attraction.
+   * @brief Loop through all attributes for this and other_entity and compare each attribute.
+   * @details This function will utilize this entity's attraction flexibility to determine
+   * the minimum number compatibility required.
    * @param other_entity The entity to compare to.
    * @return True if the number of compatible attributes is greater than or equal to this
    * entity's attraction flexibility.
    */
-  bool compare_personalities(std::shared_ptr<his_gen::Entity_sentient> other_entity);
+  template <typename Attribute_class>
+  bool compare_attributes(const Attribute_class& self_attribute_class,
+                          const Attribute_class& other_attribute_class)
+  {
+    double total_difference = 0.0;
+    for (auto& it : self_attribute_class.Get_attributes())
+    {
+      total_difference += entity_attribute_diff(self_attribute_class,
+                                                other_attribute_class,
+                                                it.first);
+    }
+
+    double entity_similarity = 1.0 - (total_difference / self_attribute_class.Get_max_attribute_diff());
+    double attraction_chance = entity_similarity * get_attraction_threshold<Attribute_class>();
+
+    return his_gen::dice::Make_a_roll<double>(1, 0) < attraction_chance;
+  }
 
   /**
    * @brief Get the difference betwees personality attributes and attraction.
@@ -173,38 +191,31 @@ private:
    * @param pers_attr_to_compare The attribute to check
    * @return The absolute difference between the two atributes
    */
-  uint8_t personality_attribute_diff(std::shared_ptr<his_gen::Entity_sentient> other_entity,
-                                     Personality::Personality_attribute pers_attr_to_compare);
+  template <typename Enum_type, typename Container_type>
+  uint8_t entity_attribute_diff(const Container_type& self_container,
+                                const Container_type& other_container,
+                                Enum_type attr_to_compare)
+  {
+    uint8_t self_attr  = self_container.Get_entity_attribute_value(attr_to_compare);
+    uint8_t other_attr = other_container.Get_entity_attribute_value(attr_to_compare);
+    return static_cast<uint8_t>(std::fabs(self_attr - other_attr));
+  }
 
   /**
-   * @brief Calculate the physicality compatibility threshold for this entity
-   * @return The attraction threshold.
+   * @brief Get_attraction_threshold
+   * @tparam T The attribute class to get the threshold for
+   * @return The correct threshold based on the attribute class being used
    */
-  double derive_physicality_attraction_thresh();
-
-  /**
-   * @brief Loop through all physical attributes for this and other_entity and compare each attribute.
-   * @details This function will utilize this entity's physical attraction flexibility
-   * to determine the minimum number of compatible attributes required for attraction.
-   * @param other_entity The entity to compare to.
-   * @return True if the number of compatible attributes is greater than or equal to this
-   * entity's attraction flexibility.
-   */
-  bool compare_physicalities(std::shared_ptr<his_gen::Entity_sentient> other_entity);
-
-  /**
-   * @brief Check compatibility of physicality attraction.
-   * @details Subtract the argued entity attribute from the attraction attribute,
-   * take the absolute value, and compare it to the attraction flexibility.
-   * This will return false if any compared attribute doesn't meet the
-   * flexibility requirements.
-   * @param other_entity Other entity to compare to
-   * @param phys_attr_to_compare The attribute to check
-   * @return True if the difference between these attributes is within this entity's
-   * flexibility range, otherwise false.
-   */
-  bool physicality_attributes_compatible(std::shared_ptr<his_gen::Entity_sentient> other_entity,
-                                         Physicality::Physical_attribute phys_attr_to_compare);
+  template<typename T>
+  double get_attraction_threshold() const
+  {
+    if constexpr (std::is_same_v<T, Physicality>)
+      return m_physicality_attraction_thresh;
+    else if constexpr (std::is_same_v<T, Personality>)
+      return m_personality_attraction_thresh;
+    else
+      static_assert(std::is_same_v<T, void>, "Unsupported attribute class type");
+  }
 
 }; // class Entity_sentient
 

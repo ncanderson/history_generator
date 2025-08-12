@@ -73,9 +73,14 @@ private:
   double m_physical_excitable_coefficient = .2;
 
   /**
+   * @brief Attraction flexibility coefficient for 'extravagant'
+   */
+  double m_physical_extravagant_coefficient = .1;
+
+  /**
    * @brief Attraction flexibility coefficient for 'compassionate'
    */
-  double m_physical_lustful_coefficient = .8;
+  double m_physical_lustful_coefficient = .7;
 
   /**
    * @brief This divisor determines the maximum flexibility coefficient.
