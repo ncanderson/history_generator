@@ -45,6 +45,8 @@ public:
   int8_t Get_personality_attraction_flexibility() const { return m_attraction_flexibility; }
   void Set_personality_attraction_flexibility(int8_t attraction_flexibility) { m_attraction_flexibility = attraction_flexibility; }
 
+  double Get_risk_appetite() const { return m_attraction_risk_appetite; }
+
 protected:
   // Attributes
 
@@ -88,6 +90,11 @@ private:
    */
   int8_t m_attraction_flexibility;
 
+  /**
+   * @brief How likely this entity is to take a risk on more divergent attributes
+   */
+  double m_attraction_risk_appetite;
+
   // Implementation
   /**
    * @brief Return the attraction flexibility coefficient.
@@ -98,6 +105,16 @@ private:
    * @return The attraction flexibility coefficient
    */
   int8_t derive_attraction_flexibility(Personality_attribute_map attributes);
+
+  /**
+   * @brief Calculate the risk appetite for this entity.
+   * @details This attribute represents the likelyhood that an entity will be attracted
+   * to a more divergent entity, representing greater riskiness. The value will
+   * be used as the standard deviation when checking for attribute alignment.
+   * @param attributes This enitity's attraction attributes
+   * @return The calculated standard deviation, based on attributes.
+   */
+  double derive_risk_appetite(Personality_attribute_map attributes);
 
 }; // class Personality_attraction
 

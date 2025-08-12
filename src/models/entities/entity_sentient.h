@@ -131,6 +131,11 @@ private:
   double m_physicality_attraction_thresh;
 
   /**
+   * @brief How likely this entity is to take a risk on more divergent attributes
+   */
+  double m_attraction_risk_appetite;
+
+  /**
    * @brief m_spouses Spouses of this entity
    */
   std::vector<std::shared_ptr<his_gen::Entity_base>> m_spouses;
@@ -181,8 +186,12 @@ private:
 
     double entity_similarity = 1.0 - (total_difference / self_attribute_class.Get_max_attribute_diff());
     double attraction_chance = entity_similarity * get_attraction_threshold<Attribute_class>();
-
-    return his_gen::dice::Make_a_roll<double>(1, 0) < attraction_chance;
+    // This declare separately to help with debugging
+    double weighted_roll = his_gen::dice::Make_weighted_roll<double>(1,
+                                                                     0,
+                                                                     attraction_chance,
+                                                                     m_attraction_risk_appetite);
+    return weighted_roll < attraction_chance;
   }
 
   /**

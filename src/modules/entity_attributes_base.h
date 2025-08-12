@@ -72,7 +72,9 @@ enum class EPersonality : uint8_t
   EPERSONALITY_Honest,
   EPERSONALITY_Deceitful,
   EPERSONALITY_Lustful,
-  EPERSONALITY_Chaste
+  EPERSONALITY_Chaste,
+  EPERSONALITY_Progressive,
+  EPERSONALITY_Conservative
 }; // enum EPersonality
 
 /**

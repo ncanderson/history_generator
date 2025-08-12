@@ -23,6 +23,7 @@ sentient::Entity_sentient(std::string name,
   m_physicality(),
   m_physicality_attraction(m_personality),
   m_physicality_attraction_thresh(derive_attraction_thresh(m_physicality_attraction.Get_physical_attraction_flexibility())),
+  m_attraction_risk_appetite(m_personality_attraction.Get_risk_appetite()),
   m_lovers(),
   m_spouses()
 {
