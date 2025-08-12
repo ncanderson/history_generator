@@ -32,8 +32,7 @@ void myth_nar::Create_progenitor_deity(std::vector<std::shared_ptr<his_gen::Enti
   std::shared_ptr<his_gen::Entity_sentient> ptr =
       std::make_shared<his_gen::Entity_sentient>("God",
                                                  "the Allfather",
-                                                 EENTITY_TYPE_Deity,
-                                                 false);
+                                                 EENTITY_TYPE_Deity);
   entities.push_back(ptr);
 }
 
@@ -51,7 +50,6 @@ void myth_nar::Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>
     entity_type = EENTITY_TYPE_Deity;
     // TEMP
 
-
     // Create the entity
     entities.push_back(create_entity(entity_type));
   }
@@ -60,17 +58,19 @@ void myth_nar::Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>
 ///////////////////////////////////////////////////////////////////////
 
 void myth_nar::Create_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
-                             std::vector<std::shared_ptr<his_gen::Event_base>>& events)
+                             std::vector<std::shared_ptr<his_gen::Event_base>>& events,
+                             int64_t current_tick)
 {
   for(int64_t tick_count = 0; tick_count < m_config.Get_myth_config().Max_event_per_tick; tick_count++)
   {
     // A random entity
-    std::shared_ptr<his_gen::Entity_base> triggering_entity = his_gen::Get_random_element(entities);
+    std::shared_ptr<his_gen::Entity_base> triggering_entity = his_gen::dice::Get_random_element(entities);
     // A random event
     EEvent_type event_type = m_data_definitions->Get_rand_entity_event(triggering_entity->Get_entity_type());
     // Create the event
     std::shared_ptr<his_gen::Event_base> new_event = his_gen::Event_factory::Create_event(event_type,
-                                                                                          triggering_entity);
+                                                                                          triggering_entity,
+                                                                                          current_tick);
     // Run the event
     new_event->Run(entities);
     // Add the event to the list
@@ -95,8 +95,7 @@ std::shared_ptr<his_gen::Entity_base> myth_nar::create_entity(his_gen::EEntity_t
     {
       return std::make_shared<his_gen::Entity_sentient>(m_names.Get_one_name(),
                                                         m_names.Get_one_title(),
-                                                        EENTITY_TYPE_Deity,
-                                                        m_config.Get_myth_config().Full_random_reproduction);
+                                                        EENTITY_TYPE_Deity);
     }
       break;
     case EENTITY_TYPE_Ethnicity:   break;

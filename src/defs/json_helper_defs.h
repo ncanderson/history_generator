@@ -16,6 +16,7 @@
 
 // Application files
 #include <defs/history_generator_defs.h>
+#include <modules/personality.h>
 
 /**
  * @brief Extension of nlohmann namespace for additional serializers to handle
@@ -23,48 +24,6 @@
  */
 namespace nlohmann
 {
-
-/**
- * @brief Adl_serializer for maps with attribute keys
- */
-template <typename T>
-struct adl_serializer<std::map<his_gen::Attribute, T>>
-{
-  using Map = std::map<his_gen::Attribute, T>;
-
-  /**
-   * @brief to_json
-   * @param json
-   * @param map
-   */
-  static void to_json(json& json, Map const& map)
-  {
-    for(auto it = map.begin(); it != map.end(); ++it)
-    {
-      json[his_gen::Get_attribute_string(it->first)] = it->second;
-    }
-  }
-};
-
-///** TODO: Why are you commented?
-// * @brief Additional serializer for personality attribute maps
-// */
-//template <typename T>
-//struct adl_serializer<std::map<his_gen::Attribute, T>>
-//{
-//  /**
-//   * @brief to_json
-//   * @param json
-//   * @param map
-//   */
-//  static void to_json(json& json, const std::map<his_gen::Attribute, T>& map)
-//  {
-//    for(auto it = map.begin(); it != map.end(); ++it)
-//    {
-//      json[his_gen::Get_attribute_string(it->first)] = it->second;
-//    }
-//  }
-//}; // struct adl_serializer
 
 /**
  * @brief Additional serializer for a shared pointer

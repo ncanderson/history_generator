@@ -12,12 +12,40 @@
 namespace his_gen
 {
 /**
+ * @brief Utilities for random number generation
+ */
+namespace dice
+{
+/**
  * @brief Generate a random number between min and max
  * @param max_value
  * @param min_value
  * @return
  */
-uint32_t Make_a_roll(uint32_t max_value, uint32_t min_value = 1);
+template<typename T>
+T Make_a_roll(uint32_t max_value, uint32_t min_value = 1)
+{
+  static_assert(std::is_arithmetic_v<T>, "T must be numeric");
+
+  // Initialize a random number generator
+  static std::random_device rand;
+  static std::mt19937 generate(rand());
+
+  if constexpr(std::is_integral_v<T>)
+  {
+    std::uniform_int_distribution<T> dist(min_value, max_value);
+    return dist(generate);
+  }
+  else if constexpr(std::is_floating_point_v<T>)
+  {
+    std::uniform_real_distribution<T> dist(min_value, max_value);
+    return dist(generate);
+  }
+  else
+  {
+    static_assert(std::is_same_v<T, void>, "Unsupported numeric type");
+  }
+}
 
 /**
  * @brief Little wrapper to make it clear when we want a boolean value
@@ -48,6 +76,7 @@ decltype(auto) Get_random_element(V&& vector)
   return std::forward<V>(vector)[dist(gen)];
 }
 
+} // namespace dice
 } // namespace his_gen
 
 #endif // DICE_ROLLS_H

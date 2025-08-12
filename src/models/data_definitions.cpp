@@ -34,21 +34,21 @@ void his_gen::Data_definitions::Initialize_composite_data()
 
 his_gen::EEntity_type his_gen::Data_definitions::Get_rand_entity_type()
 {
-  return his_gen::Get_random_element(Entity_types).Get_entity_type();
+  return his_gen::dice::Get_random_element(Entity_types).Get_entity_type();
 }
 
 ///////////////////////////////////////////////////////////////////////
 
 his_gen::EEvent_type his_gen::Data_definitions::Get_rand_entity_event(his_gen::EEntity_type entity)
 {
-  return his_gen::Get_random_element(m_entity_events[entity]);
+  return his_gen::dice::Get_random_element(m_entity_events[entity]);
 }
 
 ///////////////////////////////////////////////////////////////////////
 
 his_gen::ERelationship_type his_gen::Data_definitions::Get_rand_entity_relationship(his_gen::EEntity_type entity)
 {
-  return his_gen::Get_random_element(m_entity_relationships[entity]);
+  return his_gen::dice::Get_random_element(m_entity_relationships[entity]);
 }
 
 ///////////////////////////////////////////////////////////////////////

@@ -62,9 +62,11 @@ public:
    * @brief Inheriting classes must implement this function to create new events.
    * @param entities The vector of entity pointers to reference when creating events
    * @param events The vector of events to populate
+   * @current_tick The current generation tick
    */
   virtual void Create_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
-                             std::vector<std::shared_ptr<his_gen::Event_base>>& events) =0;
+                             std::vector<std::shared_ptr<his_gen::Event_base>>& events,
+                             int64_t current_tick) =0;
 
 protected:
   // Attributes

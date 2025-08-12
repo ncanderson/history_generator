@@ -27,10 +27,12 @@ public:
 
   // Implementation
   /**
-   * @brief
-   * @param
+   * @brief Construct an attraction object
+   * @details This class takes a personality and derives some attraction
+   * attributes based on that personality, using this class's attributes
+   * @param entity_attributes The attributes of the users personality
    */
-  Personality_attraction(std::map<Attribute, int8_t> entity_attributes);
+  Personality_attraction(const Personality_attribute_map& entity_attributes);
 
   /**
    * @brief Destructor
@@ -40,14 +42,8 @@ public:
   /**
    * Getters and setters
    */
-  bool Get_attracted_to_can_sire() const { return m_attracted_to_can_sire; }
-  void Set_attracted_to_can_sire(bool attraction) { m_attracted_to_can_sire = attraction; }
-
-  bool Get_attracted_to_can_bear() const { return m_attracted_to_can_bear; }
-  void Set_attracted_to_can_bear(bool attraction) { m_attracted_to_can_bear = attraction; }
-
-  int8_t Get_attraction_flexibility() const { return m_attraction_flexibility; }
-  void Set_attraction_flexibility(int8_t attraction_flexibility) { m_attraction_flexibility = attraction_flexibility; }
+  int8_t Get_personality_attraction_flexibility() const { return m_attraction_flexibility; }
+  void Set_personality_attraction_flexibility(int8_t attraction_flexibility) { m_attraction_flexibility = attraction_flexibility; }
 
 protected:
   // Attributes
@@ -92,16 +88,6 @@ private:
    */
   int8_t m_attraction_flexibility;
 
-  /**
-   * @brief attracted_to_can_sire
-   */
-  bool m_attracted_to_can_sire;
-
-  /**
-   * @brief attracted_to_can_bear
-   */
-  bool m_attracted_to_can_bear;
-
   // Implementation
   /**
    * @brief Return the attraction flexibility coefficient.
@@ -111,7 +97,7 @@ private:
    * @param attributes This enitity's attraction attributes
    * @return The attraction flexibility coefficient
    */
-  int8_t derive_attraction_flexibility(std::map<his_gen::Attribute, int8_t> attributes);
+  int8_t derive_attraction_flexibility(Personality_attribute_map attributes);
 
 }; // class Personality_attraction
 

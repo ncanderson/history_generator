@@ -7,7 +7,6 @@
 
 // Defs and Utils
 #include <defs/json_helper_defs.h>
-#include <utils/dice_rolls.h>
 
 using sentient = his_gen::Entity_sentient;
 
@@ -15,14 +14,15 @@ using sentient = his_gen::Entity_sentient;
 
 sentient::Entity_sentient(std::string name,
                           std::string title,
-                          EEntity_type entity_type,
-                          bool full_random_reproduction)
+                          EEntity_type entity_type)
   :
   Entity_base(name, entity_type, title),
   m_personality(),
   m_personality_attraction(m_personality.Get_attributes()),
-  m_can_sire_young(),
-  m_can_bear_young(),
+  m_personality_attraction_thresh(derive_attraction_thresh(m_personality_attraction.Get_personality_attraction_flexibility())),
+  m_physicality(),
+  m_physicality_attraction(m_personality),
+  m_physicality_attraction_thresh(derive_attraction_thresh(m_physicality_attraction.Get_physical_attraction_flexibility())),
   m_lovers(),
   m_spouses()
 {
@@ -30,20 +30,6 @@ sentient::Entity_sentient(std::string name,
   // Register the derived class with the JSON serializer
   Polymorphic_serializer<his_gen::Entity_base>::register_types<his_gen::Entity_base,
                                                                his_gen::Entity_sentient>();
-
-  // Initialize reproductive ability
-  if(full_random_reproduction)
-  {
-    m_can_sire_young = his_gen::Flip_a_coin();
-    m_can_bear_young = his_gen::Flip_a_coin();
-  }
-  else
-  {
-    // TODO: This doesn't account for infertility when reproduction ability
-    // isn't fully randomized
-    m_can_sire_young = his_gen::Flip_a_coin();
-    m_can_bear_young = !m_can_sire_young;
-  }
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -53,35 +39,13 @@ bool sentient::Is_attracted(std::shared_ptr<Entity_base> other_entity)
   // Downcast to derived class from the base class pointer
   std::shared_ptr<his_gen::Entity_sentient> other = std::dynamic_pointer_cast<his_gen::Entity_sentient>(other_entity);
 
-  // Check reproduction attraction first, before looping through attributes and
-  // ensure we're not comparing an entity to itself
+  // Check reproduction attraction first, and ensure we're not comparing an entity to itself
   if(other == shared_from_this() || !repro_attraction(other))
   {
     return false;
   }
-  else
-  {
-    // Still here? Check attributes.
-    for(auto& it : m_personality_attraction.Get_attributes())
-    {
-      // TODO Move this into a helper
-      // Subtract the argued entity attribute from the attraction attribute,
-      // take the absolute value, and compare it to the attraction flexibility.
-      // This will return false if any compared attribute doesn't meet the
-      // flexibility requirements.
-      if(std::abs(it.second - other->Get_personality().Get_attributes()[it.first]) >=
-          m_personality_attraction.Get_attraction_flexibility())
-      {
-        return false;
-      }
-      else
-      {
-        return true;
-      }
-    }
-    // If we haven't returned by now, there isn't any attraction
-    return false;
-  }
+  return compare_attributes<his_gen::Personality>(Get_personality(), other->Get_personality()) &&
+         compare_attributes<his_gen::Physicality>(Get_physicality(), other->Get_physicality());
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -107,21 +71,28 @@ bool sentient::Is_attracted(std::shared_ptr<Entity_base> other_entity,
 bool sentient::repro_attraction(std::shared_ptr<his_gen::Entity_sentient> other_entity)
 {
   // Attributes of self
-  bool attraction_to_bear = m_personality_attraction.Get_attracted_to_can_bear();
-  bool attraction_to_sire = m_personality_attraction.Get_attracted_to_can_sire();
+  bool attracted_to_bear = m_physicality_attraction.Attracted_to_bearing();
+  bool attracted_to_sire = m_physicality_attraction.Attracted_to_siring();
 
   // Attributes of other
-  bool other_can_bear = other_entity->Get_can_bear();
-  bool other_can_sire = other_entity->Get_can_sire();
+  bool other_can_bear = other_entity->Get_physicality().Can_bear_young();
+  bool other_can_sire = other_entity->Get_physicality().Can_sire_young();
 
-  if((attraction_to_bear && other_can_bear) || (attraction_to_sire && other_can_sire))
-  {
-    return true;
-  }
-  else
-  {
-    return false;
-  }
+  return (attracted_to_bear && other_can_bear) || (attracted_to_sire && other_can_sire);
+}
+
+///////////////////////////////////////////////////////////////////////
+
+double sentient::derive_attraction_thresh(uint8_t entity_flexibility)
+{
+  // TODO: Take this 50, hard code it in defs, and then derive the flexiblity divisor from there
+  // TODO: put this 50.0 somewhere that makes more sense. It's tied to the flexibiliy divisor:
+  // divisor = X where MAX_SCORE / X = max flexibility
+  // Scale the attraction flexibility to a 0 - 1 range, use the max flexibility
+  // Scale the flexibility based on max flexibilty
+  double scaled_flexibility = (entity_flexibility) / 50.0;
+  // Return the threshold, based on the scale flexibility
+  return 1.0 - scaled_flexibility;
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -135,8 +106,8 @@ void his_gen::to_json(nlohmann::json& json,
   {
     {"personality", entity_sentient.Get_personality()},
     {"attraction", entity_sentient.Get_personality_attraction()},
-    {"can_sire_young", entity_sentient.Get_can_sire()},
-    {"can_bear_young", entity_sentient.Get_can_bear()},
+    {"physicality", entity_sentient.Get_physicality()},
+    {"physical_attraction", entity_sentient.Get_physicality_attraction()},
     {"lovers", entity_sentient.Get_lovers()},
     {"spouses", entity_sentient.Get_spouses()}
   });

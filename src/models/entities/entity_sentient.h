@@ -13,9 +13,12 @@
 
 // Application files
 #include <models/entities/entity_base.h>
-#include <utils/history_generator_utils.h>
 #include <modules/personality.h>
 #include <modules/personality_attraction.h>
+#include <modules/physicality.h>
+#include <modules/physicality_attraction.h>
+#include <utils/dice_rolls.h>
+#include <utils/history_generator_utils.h>
 
 namespace his_gen
 {
@@ -38,8 +41,7 @@ public:
    */
   Entity_sentient(std::string name,
                   std::string title,
-                  EEntity_type entity_type,
-                  bool full_random_reproduction = false);
+                  EEntity_type entity_type);
 
   /**
    * @brief Destructor
@@ -75,11 +77,11 @@ public:
   Personality_attraction Get_personality_attraction() const { return m_personality_attraction; }
   void Set_personality_attraction(const Personality_attraction& personality_attraction) { m_personality_attraction = personality_attraction; }
 
-  bool Get_can_sire() const { return m_can_sire_young; }
-  void Set_can_sire(const bool can_sire_young) { m_can_sire_young = can_sire_young; }
+  Physicality Get_physicality() const { return m_physicality; }
+  void Set_physicality(const Physicality& physicality) { m_physicality = physicality; }
 
-  bool Get_can_bear() const { return m_can_bear_young; }
-  void Set_can_bear(const bool can_bear_young) { m_can_bear_young = can_bear_young; }
+  Physicality_attraction Get_physicality_attraction() const { return m_physicality_attraction; }
+  void Set_physicality_attraction(const Physicality_attraction& physicality_attraction) { m_physicality_attraction = physicality_attraction; }
 
   std::vector<std::shared_ptr<his_gen::Entity_base>> Get_spouses() const { return m_spouses; }
   void Set_spouses(const std::vector<std::shared_ptr<his_gen::Entity_base>>& spouses) { m_spouses = spouses; }
@@ -107,6 +109,28 @@ private:
   Personality_attraction m_personality_attraction;
 
   /**
+   * @brief This entity's personality attraction threshold, used to determine
+   * compability, based on personal flexibility
+   */
+  double m_personality_attraction_thresh;
+
+  /**
+   * @brief This entity's physical appearence
+   */
+  Physicality m_physicality;
+
+  /**
+   * @brief This entity's attraction to the physical appearence of others
+   */
+  Physicality_attraction m_physicality_attraction;
+
+  /**
+   * @brief This entity's physicality attraction threshold, used to determine
+   * compability, based on personal flexibility
+   */
+  double m_physicality_attraction_thresh;
+
+  /**
    * @brief m_spouses Spouses of this entity
    */
   std::vector<std::shared_ptr<his_gen::Entity_base>> m_spouses;
@@ -115,16 +139,6 @@ private:
    * @brief Lovers of this entity (but not spouses)
    */
   std::vector<std::shared_ptr<his_gen::Entity_base>> m_lovers;
-
-  /**
-   * @brief Entity can sire young
-   */
-  bool m_can_sire_young;
-
-  /**
-   * @brief Entity can bear young
-   */
-  bool m_can_bear_young;
 
   // Implementation
   /**
@@ -137,6 +151,71 @@ private:
    * @return True if attraced, otherwise false
    */
   bool repro_attraction(std::shared_ptr<his_gen::Entity_sentient> other_entity);
+
+  /**
+   * @brief Calculate the compatibility threshold for this entity
+   * @param entity_flexibility The entity's flexibility
+   * @return The attraction threshold.
+   */
+  double derive_attraction_thresh(uint8_t entity_flexibility);
+
+  /**
+   * @brief Loop through all attributes for this and other_entity and compare each attribute.
+   * @details This function will utilize this entity's attraction flexibility to determine
+   * the minimum number compatibility required.
+   * @param other_entity The entity to compare to.
+   * @return True if the number of compatible attributes is greater than or equal to this
+   * entity's attraction flexibility.
+   */
+  template <typename Attribute_class>
+  bool compare_attributes(const Attribute_class& self_attribute_class,
+                          const Attribute_class& other_attribute_class)
+  {
+    double total_difference = 0.0;
+    for (auto& it : self_attribute_class.Get_attributes())
+    {
+      total_difference += entity_attribute_diff(self_attribute_class,
+                                                other_attribute_class,
+                                                it.first);
+    }
+
+    double entity_similarity = 1.0 - (total_difference / self_attribute_class.Get_max_attribute_diff());
+    double attraction_chance = entity_similarity * get_attraction_threshold<Attribute_class>();
+
+    return his_gen::dice::Make_a_roll<double>(1, 0) < attraction_chance;
+  }
+
+  /**
+   * @brief Get the difference betwees personality attributes and attraction.
+   * @param other_entity Other entity to compare to
+   * @param pers_attr_to_compare The attribute to check
+   * @return The absolute difference between the two atributes
+   */
+  template <typename Enum_type, typename Container_type>
+  uint8_t entity_attribute_diff(const Container_type& self_container,
+                                const Container_type& other_container,
+                                Enum_type attr_to_compare)
+  {
+    uint8_t self_attr  = self_container.Get_entity_attribute_value(attr_to_compare);
+    uint8_t other_attr = other_container.Get_entity_attribute_value(attr_to_compare);
+    return static_cast<uint8_t>(std::fabs(self_attr - other_attr));
+  }
+
+  /**
+   * @brief Get_attraction_threshold
+   * @tparam T The attribute class to get the threshold for
+   * @return The correct threshold based on the attribute class being used
+   */
+  template<typename T>
+  double get_attraction_threshold() const
+  {
+    if constexpr (std::is_same_v<T, Physicality>)
+      return m_physicality_attraction_thresh;
+    else if constexpr (std::is_same_v<T, Personality>)
+      return m_personality_attraction_thresh;
+    else
+      static_assert(std::is_same_v<T, void>, "Unsupported attribute class type");
+  }
 
 }; // class Entity_sentient
 

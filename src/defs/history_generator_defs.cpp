@@ -83,54 +83,6 @@ his_gen::Data_access_type his_gen::Get_data_access_type(std::string data_access_
 
 ///////////////////////////////////////////////////////////////////////
 
-std::string his_gen::Get_attribute_string(const his_gen::Attribute attribute)
-{
-  switch(attribute)
-  {
-    case ATTRIBUTE_Aggressive:    return "aggressive";
-    case ATTRIBUTE_Passive:       return "passive";
-    case ATTRIBUTE_Ambitious:     return "ambitious";
-    case ATTRIBUTE_Content:       return "content";
-    case ATTRIBUTE_Avoidant:      return "avoidant";
-    case ATTRIBUTE_Sociable:      return "sociable";
-    case ATTRIBUTE_Brave:         return "brave";
-    case ATTRIBUTE_Cowardly:      return "cowardly";
-    case ATTRIBUTE_Cooperative:   return "cooperative";
-    case ATTRIBUTE_Difficult:     return "difficult";
-    case ATTRIBUTE_Cruel:         return "cruel";
-    case ATTRIBUTE_Kind:          return "kind";
-    case ATTRIBUTE_Decisive:      return "decisive";
-    case ATTRIBUTE_Indecisive:    return "indecisive";
-    case ATTRIBUTE_Diligent:      return "diligent";
-    case ATTRIBUTE_Lazy:          return "lazy";
-    case ATTRIBUTE_Flexible:      return "flexible";
-    case ATTRIBUTE_Extremist:     return "extremist";
-    case ATTRIBUTE_Frank:         return "frank";
-    case ATTRIBUTE_Evasive:       return "evasive";
-    case ATTRIBUTE_Generous:      return "generous";
-    case ATTRIBUTE_Selfish:       return "selfish";
-    case ATTRIBUTE_Jealous:       return "jealous";
-    case ATTRIBUTE_Compassionate: return "compassionate";
-    case ATTRIBUTE_Placid:        return "placid";
-    case ATTRIBUTE_Excitable:     return "excitable";
-    case ATTRIBUTE_Thoughtful:    return "thoughtful";
-    case ATTRIBUTE_Rash:          return "rash";
-    case ATTRIBUTE_Thrifty:       return "thrifty";
-    case ATTRIBUTE_Extravagant:   return "extravagant";
-    case ATTRIBUTE_Argumentative: return "argumentative";
-    case ATTRIBUTE_Amiable:       return "amiable";
-    case ATTRIBUTE_Witty:         return "witty";
-    case ATTRIBUTE_Humorless:     return "humorless";
-    case ATTRIBUTE_Honest:        return "honest";
-    case ATTRIBUTE_Deceitful:     return "deceitful";
-    default:
-      // Unrecognized value
-      throw std::invalid_argument("Attribute not found");
-  }
-}
-
-///////////////////////////////////////////////////////////////////////
-
 std::string his_gen::Get_entity_type_string(const his_gen::EEntity_type& entity_type)
 {
   switch(entity_type)
@@ -351,7 +303,7 @@ his_gen::EEvent_type his_gen::Get_event_type(const std::string& event_type)
   const std::string lc_event_type = his_gen::To_lowercase(event_type);
 
   auto it = event_type_map.find(lc_event_type);
-  if (it != event_type_map.end())
+  if(it != event_type_map.end())
   {
     return it->second;
   }

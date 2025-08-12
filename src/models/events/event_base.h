@@ -40,8 +40,10 @@ public:
    * @param triggering_entity
    */
   Event_base(const his_gen::EEvent_type event_type,
-             std::shared_ptr<Entity_base>& triggering_entity)
+             std::shared_ptr<Entity_base>& triggering_entity,
+             int64_t current_tick)
     :
+    m_event_tick(current_tick),
     m_event_type(event_type),
     m_name(his_gen::Get_event_type_string(event_type)),
     m_triggering_entity(triggering_entity),
@@ -66,6 +68,9 @@ public:
   /**
    * Getters and setters
    */
+  int64_t Get_event_tick() const { return m_event_tick; }
+  void Set_event_tick(const int64_t event_tick) { m_event_tick = event_tick; }
+
   his_gen::EEvent_type Get_event_type() const { return m_event_type; }
   void Set_event_type(const his_gen::EEvent_type& event_type) { m_event_type = event_type; }
 
@@ -109,11 +114,11 @@ public:
 
 protected:
   // Attributes
+  /**
+   * @brief The current generation tick
+   */
+  int64_t m_event_tick;
 
-  // Implementation
-
-private:
-  // Attributes
   /**
    * @brief m_event_type
    */
@@ -151,6 +156,11 @@ private:
 
   // Implementation
 
+private:
+  // Attributes
+
+  // Implementation
+
 };  // class Event_base
 
 /**
@@ -164,8 +174,8 @@ inline void to_json(nlohmann::json& json, const his_gen::Event_base& event_base)
   json = nlohmann::json
   {
     {"type", his_gen::Get_event_type_string(event_base.Get_event_type())},
+    {"event_tick", event_base.Get_event_tick()},
     {"triggering_entity_id", event_base.Get_triggering_entity()->Get_entity_id()},
-    {"targets", event_base.Get_targets()},
     {"target_ids", event_base.Get_target_ids()},
     {"is_complete", event_base.Is_complete()},
   };
@@ -185,6 +195,7 @@ inline void from_json(const nlohmann::json& json,
                       his_gen::Event_base& event_base)
 {
   event_base.Set_name(json.at("name"));
+  event_base.Set_event_tick(json.at("event_tick"));
   event_base.Set_event_type(his_gen::Get_event_type(json.at("name")));
   event_base.Set_triggering_entity_id(json.at("triggering_entity_id"));
   event_base.Set_target_ids(json.at("target_ids"));
