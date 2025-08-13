@@ -60,17 +60,12 @@ public:
   /**
    * @brief The first being in this mythology
    */
-  void Create_progenitor_deity(std::vector<std::shared_ptr<his_gen::Entity_base>>& Entities);
+  void Create_progenitor_deity(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities);
 
 protected:
   // Attributes
 
   // Implementation
-  /**
-   * @brief Create a new entity
-   * @param entity_type The entity type to create
-   */
-  std::shared_ptr<his_gen::Entity_base> create_entity(his_gen::EEntity_type entity_type) override;
 
 private:
   // Attributes
@@ -78,13 +73,6 @@ private:
    * @brief Config for this generation era
    */
   History_generator_root_config m_config;
-
-  // TODO: there should be a better place for this, otherwise we'll get tons
-  // of duplicate names if each generator has its own copy
-  /**
-   * @brief Names object
-   */
-  Names m_names;
 
   // Implementation
 

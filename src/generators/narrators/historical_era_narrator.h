@@ -56,11 +56,6 @@ protected:
   // Attributes
 
   // Implementation
-  /**
-   * @brief Create a new entity
-   * @param entity_type The entity type to create
-   */
-  std::shared_ptr<his_gen::Entity_base> create_entity(his_gen::EEntity_type entity_type) override;
 
 private:
   // Attributes

@@ -7,6 +7,7 @@
 // Application files
 #include <generators/narrators/mythological_era_narrator.h>
 #include <models/entities/entity_sentient.h>
+#include <models/entities/entity_factory.h>
 #include <models/events/event_factory.h>
 #include <models/events/seek_partner_event.h>
 #include <utils/dice_rolls.h>
@@ -20,8 +21,7 @@ myth_nar::Mythological_era_narrator(const his_gen::Data_access_manager& data_acc
                                     const std::shared_ptr<his_gen::Data_definitions> data_definitions)
   :
   Narrator_base(data_definitions),
-  m_config(his_gen_config),
-  m_names(data_access_manager)
+  m_config(his_gen_config)
 {
 }
 
@@ -46,12 +46,14 @@ void myth_nar::Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>
     EEntity_type entity_type = m_data_definitions->Get_rand_entity_type();
 
     // TEMP
-    // until we figure out how weight entities
+    // Only deity is implemented right now
     entity_type = EENTITY_TYPE_Deity;
-    // TEMP
+    //
+
+    std::shared_ptr<his_gen::Entity_base> new_entity = his_gen::Entity_factory::Create_entity(entity_type);
 
     // Create the entity
-    entities.push_back(create_entity(entity_type));
+    entities.push_back(new_entity);
   }
 }
 
@@ -75,50 +77,6 @@ void myth_nar::Create_events(std::vector<std::shared_ptr<his_gen::Entity_base>>&
     new_event->Run(entities);
     // Add the event to the list
     events.push_back(new_event);
-  }
-}
-
-///////////////////////////////////////////////////////////////////////
-
-// TODO: figure out how to make this happen via factory maybe
-//       add weights
-std::shared_ptr<his_gen::Entity_base> myth_nar::create_entity(his_gen::EEntity_type entity_type)
-{
-  switch(entity_type)
-  {
-    case EENTITY_TYPE_Unknown:     break;
-    case EENTITY_TYPE_Artifact:    break;
-    case EENTITY_TYPE_Beast:       break;
-    case EENTITY_TYPE_Clan_tribe:  break;
-    case EENTITY_TYPE_Culture:     break;
-    case EENTITY_TYPE_Deity:
-    {
-      return std::make_shared<his_gen::Entity_sentient>(m_names.Get_one_name(),
-                                                        m_names.Get_one_title(),
-                                                        EENTITY_TYPE_Deity);
-    }
-      break;
-    case EENTITY_TYPE_Ethnicity:   break;
-    case EENTITY_TYPE_Event:       break;
-    case EENTITY_TYPE_Faction:     break;
-    case EENTITY_TYPE_House:       break;
-    case EENTITY_TYPE_Idea:        break;
-    case EENTITY_TYPE_Institution: break;
-    case EENTITY_TYPE_Language:    break;
-    case EENTITY_TYPE_Legend:      break;
-    case EENTITY_TYPE_Monster:     break;
-    case EENTITY_TYPE_Nation:      break;
-    case EENTITY_TYPE_Order:       break;
-    case EENTITY_TYPE_Pantheon:    break;
-    case EENTITY_TYPE_Phenomenon:  break;
-    case EENTITY_TYPE_Region:      break;
-    case EENTITY_TYPE_Religion:    break;
-    case EENTITY_TYPE_Ruin:        break;
-    case EENTITY_TYPE_Sentient:    break;
-    case EENTITY_TYPE_Settlement:  break;
-    default:
-      // Unrecognized value
-      throw std::invalid_argument("Entity type enumeration not found");
   }
 }
 

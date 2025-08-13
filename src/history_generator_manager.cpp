@@ -29,6 +29,7 @@ his_gen::History_generator_manager::History_generator_manager(const his_gen::His
                                                      m_data_definitions)),
     m_num_iterations(0)
 {
+  his_gen::Names::Initialize(m_data_access_manager);
 }
 
 ///////////////////////////////////////////////////////////////////////

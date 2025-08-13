@@ -2,13 +2,38 @@
  * Copyright (C) 2024 Nate Anderson - All Rights Reserved
  */
 
-// Standard
-#include <models/entities/entity_sentient.h>
+// Standard libs
+#include <string>
 
-// Defs and Utils
+// JSON
+
+// Application files
 #include <defs/json_helper_defs.h>
+#include <models/entities/entity_sentient.h>
+#include <modules/names.h>
+
+///////////////////////////////////////////////////////////////////////
 
 using sentient = his_gen::Entity_sentient;
+REGISTER_POLYMORPHIC_TYPE(his_gen::Entity_base, his_gen::Entity_sentient)
+
+///////////////////////////////////////////////////////////////////////
+
+sentient::Entity_sentient(EEntity_type entity_type)
+  :
+  Entity_base(his_gen::Names::Get_one_name(),
+              entity_type,
+              his_gen::Names::Get_one_title()),
+  m_personality(),
+  m_personality_attraction(m_personality.Get_attributes()),
+  m_personality_attraction_thresh(derive_attraction_thresh(m_personality_attraction.Get_personality_attraction_flexibility())),
+  m_physicality(),
+  m_physicality_attraction(m_personality),
+  m_physicality_attraction_thresh(derive_attraction_thresh(m_physicality_attraction.Get_physical_attraction_flexibility())),
+  m_attraction_risk_appetite(m_personality_attraction.Get_risk_appetite()),
+  m_lovers(),
+  m_spouses()
+{ }
 
 ///////////////////////////////////////////////////////////////////////
 
@@ -26,12 +51,7 @@ sentient::Entity_sentient(std::string name,
   m_attraction_risk_appetite(m_personality_attraction.Get_risk_appetite()),
   m_lovers(),
   m_spouses()
-{
-  // TODO Don't do this for every entity, move it somewhere so we do it once per class
-  // Register the derived class with the JSON serializer
-  Polymorphic_serializer<his_gen::Entity_base>::register_types<his_gen::Entity_base,
-                                                               his_gen::Entity_sentient>();
-}
+{ }
 
 ///////////////////////////////////////////////////////////////////////
 

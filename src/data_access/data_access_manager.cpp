@@ -48,4 +48,3 @@ void his_gen::Data_access_manager::Load_all_names(std::vector<std::string>& name
 }
 
 ///////////////////////////////////////////////////////////////////////
-// END OF FILE

@@ -6,23 +6,14 @@
 #include <modules/names.h>
 #include <utils/dice_rolls.h>
 
-///////////////////////////////////////////////////////////////////////
-
-his_gen::Names::Names(const his_gen::Data_access_manager& data_access_manager)
-  :
-    m_data_access_manager(data_access_manager),
-    m_names(),
-    m_titles()
-{
-  load_all_names(m_names, m_titles);
-}
+std::vector<std::string> his_gen::Names::m_names;
+std::vector<std::string> his_gen::Names::m_titles;
 
 ///////////////////////////////////////////////////////////////////////
 
-void his_gen::Names::load_all_names(std::vector<std::string>& names,
-                                    std::vector<std::string>& titles)
+void his_gen::Names::Initialize(const his_gen::Data_access_manager& data_access_manager)
 {
-  m_data_access_manager.Load_all_names(names, titles);
+  data_access_manager.Load_all_names(m_names, m_titles);
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -45,6 +36,7 @@ std::string his_gen::Names::Get_one_title()
   // from this list will cause segfaults when we run out of space
   //std::string title = m_titles.back();
   //m_titles.pop_back();
+
   return his_gen::dice::Get_random_element(m_titles);
 }
 

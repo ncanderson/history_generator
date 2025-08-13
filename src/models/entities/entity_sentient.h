@@ -33,7 +33,14 @@ public:
 
   // Implementation
   /**
-   * @brief Constructor
+   * @brief Constructor allowing the utilization of static name/title retrieval
+   * @param entity_type The type of entity to instantiate.
+   */
+  Entity_sentient(EEntity_type entity_type);
+
+  /**
+   * @brief Overloaded constructor if an externally-specified name
+   * and title are desired
    * @param name
    * @param title
    * @param entity_type

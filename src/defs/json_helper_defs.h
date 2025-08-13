@@ -181,4 +181,67 @@ struct Polymorphic_serializer
 
 }; // struct Polymorphic_serializer
 
+/**
+ * @brief Macro to allow static registration of all Polymorphic types
+ * @details This macro will also register the derived type with the
+ * Polymorphic_serializer_registry, allowing a single call to register all
+ * derived types at startup.
+ * @param Base_type The base class to register with
+ * @param Derived_type The derived class to register
+ */
+#define REGISTER_POLYMORPHIC_TYPE(Base_type, Derived_type) \
+namespace \
+{ \
+  using _derived_type_alias = Derived_type; \
+  inline void __register_##_derived_type_alias() \
+  { \
+    static struct __registrar \
+    { \
+      __registrar() \
+      { \
+        static_assert(std::is_base_of_v<Base_type, Derived_type>, #Derived_type " must derive from " #Base_type); \
+        Polymorphic_serializer<Base_type>::register_types<Derived_type>(); \
+      } \
+    } registrar_instance; \
+  } \
+  struct __auto_register_##_derived_type_alias \
+  { \
+    __auto_register_##_derived_type_alias() \
+    { \
+      static auto& registry = Polymorphic_serializer_registry::instance().functions; \
+    registry.push_back(&__register_##_derived_type_alias); \
+    } \
+  }; \
+  static __auto_register_##_derived_type_alias __auto_register_instance_##_derived_type_alias; \
+}
+
+/**
+ * @brief Struct to allow automatic registration of derived class with the
+ * polymorphic serializer
+ */
+struct Polymorphic_serializer_registry
+{
+  std::vector<void(*)()> functions;
+
+  /**
+   * @brief Get an instance of a derived class to register
+   * @return
+   */
+  static Polymorphic_serializer_registry& instance()
+  {
+    static Polymorphic_serializer_registry inst;
+    return inst;
+  }
+
+  /**
+   * @brief Initialize all derived types, registering class with the serializer
+   */
+  void initialize_all()
+  {
+    for (auto f : functions)
+      f();
+  }
+};
+
+
 #endif // JSON_HELPER_DEFS_H

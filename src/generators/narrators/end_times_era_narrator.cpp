@@ -34,13 +34,3 @@ void et_nar::Create_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& e
 }
 
 ///////////////////////////////////////////////////////////////////////
-
-// TODO: expand to include entity type via switch case
-std::shared_ptr<his_gen::Entity_base> et_nar::create_entity(his_gen::EEntity_type entity_type)
-{
-  // NOOP
-  return nullptr;
-}
-
-///////////////////////////////////////////////////////////////////////
-

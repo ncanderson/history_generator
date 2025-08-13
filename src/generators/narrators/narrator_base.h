@@ -76,12 +76,6 @@ protected:
   const std::shared_ptr<his_gen::Data_definitions> m_data_definitions;
 
   // Implementation
-  /**
-   * @brief Entity creation. Implementing classes must use their own
-   * configuration for the purposes of entity creation.
-   * @param entity_type The type of entity to create
-   */
-  virtual std::shared_ptr<his_gen::Entity_base> create_entity(his_gen::EEntity_type entity_type) = 0;
 
 private:
   // Attributes

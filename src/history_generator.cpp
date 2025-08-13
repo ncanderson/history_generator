@@ -95,6 +95,10 @@ int main(int argc, char *argv[])
   // Handle SIGINT
   std::signal(SIGINT, &handle_sigint);
 
+  // Register all derived class with their base types for the
+  // purpose of JSON serialization
+  Polymorphic_serializer_registry::instance().initialize_all();
+
   //////////////////////////////////////////////////////
   // Config defaults
   std::string app_cfg_path = "config/app_config.json";
