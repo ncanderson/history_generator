@@ -91,12 +91,16 @@ his_gen::Data_access_manager initialize_data_access(const his_gen::Data_access_t
 ///////////////////////////////////////////////////////////////////////
 
 int main(int argc, char *argv[])
-{  
+{
   // Handle SIGINT
   std::signal(SIGINT, &handle_sigint);
 
+  // Register all derived class with their base types for the
+  // purpose of JSON serialization
+  Polymorphic_serializer_registry::instance().initialize_all();
+
   //////////////////////////////////////////////////////
-  // Config defaults  
+  // Config defaults
   std::string app_cfg_path = "config/app_config.json";
 
   //////////////////////////////////////////////////////
@@ -169,15 +173,7 @@ int main(int argc, char *argv[])
   // Run until and unless application receives SIGINT
   while(!m_application_quit && generation_era != his_gen::Era::ERA_Terminate)
   {
-    try
-    {
-      generation_era = m_his_gen_mngr.Run();
-    }
-    // Catch any errors bubbling up from the main run function
-    catch(const std::exception& e)
-    {
-      std::this_thread::sleep_for(err_sleep_ms);
-    }
+    generation_era = m_his_gen_mngr.Run();
     std::this_thread::sleep_for(main_sleep_ms);
   }
 

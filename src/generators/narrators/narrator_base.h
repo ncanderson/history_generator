@@ -39,8 +39,12 @@ public:
   // Implementation
   /**
    * @brief Constructor
+   * @brief data_definitions The data definitions
    */
-  Narrator_base(const std::shared_ptr<his_gen::Data_definitions> data_definitions);
+  Narrator_base(const std::shared_ptr<his_gen::Data_definitions> data_definitions)
+    :
+    m_data_definitions(data_definitions)
+  { }
 
   /**
    * @brief Destructor
@@ -52,24 +56,17 @@ public:
    * @param entities The vector of entity pointers to populate.
    * @param entities_per_tick Configued entities to create per generator tick.
    */
-  virtual void Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
-                               int64_t entities_per_tick) = 0;
+  virtual void Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities) = 0;
 
   /**
    * @brief Inheriting classes must implement this function to create new events.
    * @param entities The vector of entity pointers to reference when creating events
    * @param events The vector of events to populate
+   * @current_tick The current generation tick
    */
   virtual void Create_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
-                             std::vector<std::shared_ptr<his_gen::Event_base>>& events) =0;
-
-  /**
-   * @brief Check all entities in `entities` for attraction
-   * @param entities Vector of entities to review
-   * @param enitity_relationships Map to track any new relationships
-   */
-  void Run_entity_attraction(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
-                             std::map<boost::uuids::uuid, std::shared_ptr<his_gen::Entity_relationship>>& enitity_relationships);
+                             std::vector<std::shared_ptr<his_gen::Event_base>>& events,
+                             int64_t current_tick) =0;
 
 protected:
   // Attributes
@@ -79,11 +76,6 @@ protected:
   const std::shared_ptr<his_gen::Data_definitions> m_data_definitions;
 
   // Implementation
-  /**
-   * @brief Entity creation. Implementing classes must use their own
-   * configuration for the purposes of entity creation.
-   */
-  virtual std::shared_ptr<his_gen::Entity_base> create_entity() = 0;
 
 private:
   // Attributes

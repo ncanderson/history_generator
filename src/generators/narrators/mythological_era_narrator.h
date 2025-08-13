@@ -45,30 +45,27 @@ public:
    * @param entities
    * @param entities_per_tick
    */
-  void Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
-                       int64_t entities_per_tick) override;
+  void Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities) override;
 
   /**
    * @brief Create_events
    * @param entities The vector of entity pointers to reference when creating events
    * @param events The vector of events to populate
+   * @param current_tick The current generation tick
    */
   void Create_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
-                     std::vector<std::shared_ptr<his_gen::Event_base>>& events) override;
+                     std::vector<std::shared_ptr<his_gen::Event_base>>& events,
+                     int64_t current_tick) override;
 
   /**
    * @brief The first being in this mythology
    */
-  void Create_progenitor_deity(std::vector<std::shared_ptr<his_gen::Entity_base>>& Entities);
+  void Create_progenitor_deity(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities);
 
 protected:
   // Attributes
 
   // Implementation
-  /**
-   * @brief Create a new entity
-   */
-  std::shared_ptr<his_gen::Entity_base> create_entity() override;
 
 private:
   // Attributes
@@ -76,13 +73,6 @@ private:
    * @brief Config for this generation era
    */
   History_generator_root_config m_config;
-
-  // TODO: there should be a better place for this, otherwise we'll get tons
-  // of duplicate names if each generator has its own copy
-  /**
-   * @brief Names object
-   */
-  Names m_names;
 
   // Implementation
 

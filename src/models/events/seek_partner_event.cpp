@@ -4,45 +4,59 @@
 
 // Standard
 #include <models/events/seek_partner_event.h>
+#include <models/entities/entity_base.h>
+
+REGISTER_POLYMORPHIC_TYPE(his_gen::Event_base, his_gen::Seek_partner_event)
 
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::Seek_partner_event::Seek_partner_event(std::shared_ptr<Entity_base>& triggering_entity)
+his_gen::Seek_partner_event::Seek_partner_event(std::shared_ptr<Entity_base>& triggering_entity,
+                                                int64_t current_tick)
   :
-  Event_base(his_gen::EEvent_type::EEVENT_TYPE_Seek_partner, triggering_entity)
-{
-  // Register the derived class with the JSON serializer
-  Polymorphic_serializer<his_gen::Event_base>::register_types<his_gen::Event_base,
-                                                              his_gen::Seek_partner_event>();
-}
+  Event_base(his_gen::EEvent_type::EEVENT_TYPE_Seek_partner,
+             triggering_entity,
+             current_tick)
+{ }
 
 //////////////////////////////////////////////////////////////////////
 
-void his_gen::Seek_partner_event::initialize_event()
+void his_gen::Seek_partner_event::Run(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities)
 {
-  // TODO: implement initialize_event
-}
+  // Check for entity attraction
+  std::vector<std::pair<std::shared_ptr<his_gen::Entity_base>,
+                        std::shared_ptr<his_gen::Entity_base>>> pairs;
 
-///////////////////////////////////////////////////////////////////////
+  std::shared_ptr<his_gen::Entity_base> triggering_entity = Get_triggering_entity();
 
-void his_gen::Seek_partner_event::run_event()
-{
-  // TODO: implement run_event
-}
+  // Loop through all entities
+  for(auto& it : entities)
+  {
+    // Only compare entities that are the same type
+    if(triggering_entity->Get_entity_type() != it->Get_entity_type())
+    {
+      // TODO: figure out how to do stuff like have trolls be attracted to
+      // people and stuff.
+      continue;
+    }
 
-///////////////////////////////////////////////////////////////////////
-
-void his_gen::Seek_partner_event::conclude_event()
-{
-  // TODO: implement conclude_event
-}
-
-///////////////////////////////////////////////////////////////////////
-
-std::vector<std::shared_ptr<his_gen::Event_base>> his_gen::Seek_partner_event::get_next_steps() const
-{
-  // TODO: implement get_next_steps
-  return {};
+    // Check the attraction of the triggering entity against this iteration
+    if(triggering_entity->Is_attracted(it))
+    {
+      // If this entity is attracted to another entity, check for mutual attraction
+      if(it->Is_attracted(triggering_entity))
+      {
+        // Add the target to this event's vector of targets if there is mutual attraction
+        Add_target(it);
+        return;
+      }
+      else
+      {
+        continue;
+      }
+    }
+  }
+  // It's done
+  m_is_complete = true;
 }
 
 ///////////////////////////////////////////////////////////////////////

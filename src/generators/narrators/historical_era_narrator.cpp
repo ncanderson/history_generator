@@ -19,8 +19,7 @@ hist_nar::Historical_era_narrator(const his_gen::Data_access_manager& data_acces
 
 ///////////////////////////////////////////////////////////////////////
 
-void hist_nar::Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
-                               int64_t entities_per_tick)
+void hist_nar::Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities)
 {
   // NOOP
 }
@@ -28,19 +27,10 @@ void hist_nar::Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>
 ///////////////////////////////////////////////////////////////////////
 
 void hist_nar::Create_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
-                             std::vector<std::shared_ptr<his_gen::Event_base>>& events)
+                             std::vector<std::shared_ptr<his_gen::Event_base>>& events,
+                             int64_t current_tick)
 {
   // NOOP
 }
 
 ///////////////////////////////////////////////////////////////////////
-
-// TODO: expand to include entity type via switch case
-std::shared_ptr<his_gen::Entity_base> hist_nar::create_entity()
-{
-  // NOOP
-  return nullptr;
-}
-
-///////////////////////////////////////////////////////////////////////
-

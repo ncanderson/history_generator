@@ -14,7 +14,11 @@
 namespace his_gen
 {
 /**
- * @brief
+ * @brief The attributes governing this attraction.
+ * @details As `Personality` is randomized, this derived class
+ * will create its own instance of `Personality` to represent the attributes
+ * that are attractive. Attraction flexibility is the mechanism
+ * used to compare the two personalities.
  */
 class Personality_attraction : public Personality
 {
@@ -23,10 +27,12 @@ public:
 
   // Implementation
   /**
-   * @brief
-   * @param
+   * @brief Construct an attraction object
+   * @details This class takes a personality and derives some attraction
+   * attributes based on that personality, using this class's attributes
+   * @param entity_attributes The attributes of the users personality
    */
-  Personality_attraction(std::map<Attribute, int8_t> entity_attributes);
+  Personality_attraction(const Personality_attribute_map& entity_attributes);
 
   /**
    * @brief Destructor
@@ -36,12 +42,10 @@ public:
   /**
    * Getters and setters
    */
-  bool Get_attracted_to_can_sire() const { return m_attracted_to_can_sire; }
-  void Set_attracted_to_can_sire(bool attraction) { m_attracted_to_can_sire = attraction; }
-  bool Get_attracted_to_can_bear() const { return m_attracted_to_can_bear; }
-  void Set_attracted_to_can_bear(bool attraction) { m_attracted_to_can_bear = attraction; }
-  int8_t Get_attraction_flexibility() const { return m_attraction_flexibility; }
-  void Set_attraction_flexibility(int8_t attraction_flexibility) { m_attraction_flexibility = attraction_flexibility; }
+  int8_t Get_personality_attraction_flexibility() const { return m_attraction_flexibility; }
+  void Set_personality_attraction_flexibility(int8_t attraction_flexibility) { m_attraction_flexibility = attraction_flexibility; }
+
+  double Get_risk_appetite() const { return m_attraction_risk_appetite; }
 
 protected:
   // Attributes
@@ -87,14 +91,9 @@ private:
   int8_t m_attraction_flexibility;
 
   /**
-   * @brief attracted_to_can_sire
+   * @brief How likely this entity is to take a risk on more divergent attributes
    */
-  bool m_attracted_to_can_sire;
-
-  /**
-   * @brief attracted_to_can_bear
-   */
-  bool m_attracted_to_can_bear;
+  double m_attraction_risk_appetite;
 
   // Implementation
   /**
@@ -105,7 +104,17 @@ private:
    * @param attributes This enitity's attraction attributes
    * @return The attraction flexibility coefficient
    */
-  int8_t derive_attraction_flexibility(std::map<his_gen::Attribute, int8_t> attributes);
+  int8_t derive_attraction_flexibility(Personality_attribute_map attributes);
+
+  /**
+   * @brief Calculate the risk appetite for this entity.
+   * @details This attribute represents the likelyhood that an entity will be attracted
+   * to a more divergent entity, representing greater riskiness. The value will
+   * be used as the standard deviation when checking for attribute alignment.
+   * @param attributes This enitity's attraction attributes
+   * @return The calculated standard deviation, based on attributes.
+   */
+  double derive_risk_appetite(Personality_attribute_map attributes);
 
 }; // class Personality_attraction
 

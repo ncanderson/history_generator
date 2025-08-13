@@ -44,18 +44,11 @@ void his_gen::Mythological_era_generator::Run()
     case STAGE_Run:
     {
       // Generate the desired number of entities for this tick
-      m_myth_narrator.Create_entities(m_generated_history.Entities,
-                                      m_entities_per_tick);
+      m_myth_narrator.Create_entities(m_generated_history.Entities);
 
       m_myth_narrator.Create_events(m_generated_history.Entities,
-                                    m_generated_history.Events);
-
-
-
-
-      //// Do they like each other?
-      //m_myth_narrator.Run_entity_attraction(m_generated_history.Entities,
-      //                                      m_generated_history.Entity_relationships);
+                                    m_generated_history.Events,
+                                    m_ticks_completed);
 
       // Increment run-time ticks
       m_ticks_completed++;

@@ -14,7 +14,8 @@
 namespace his_gen
 {
 /**
- * @brief Names module
+ * @brief Static (non-instantiable) Names module.
+ * @details
  */
 class Names
 {
@@ -23,27 +24,22 @@ public:
 
   // Implementation
   /**
-   * @brief Names
-   * @param data_access_manager
+   * @brief Initialize the data for this class to make it available statically
+   * @param data_access_manager The object that will provide the names data
    */
-  Names(const his_gen::Data_access_manager& data_access_manager);
-
-  /**
-   * @brief Destructor
-   */
-  ~Names(){};
+  static void Initialize(const his_gen::Data_access_manager& data_access_manager);
 
   /**
    * @brief Get one name
    * @return A single name
    */
-  std::string Get_one_name();
+  static std::string Get_one_name();
 
   /**
    * @brief Get one title
    * @return A single title
    */
-  std::string Get_one_title();
+  static std::string Get_one_title();
 
 protected:
   // Attributes
@@ -53,28 +49,20 @@ protected:
 private:
   // Attributes
   /**
-   * @brief Address of data access manager
-   */
-  const his_gen::Data_access_manager& m_data_access_manager;
-
-  /**
    * @brief List of names
    */
-  std::vector<std::string> m_names;
+  static std::vector<std::string> m_names;
 
   /**
    * @brief List of titles
    */
-  std::vector<std::string> m_titles;
+  static std::vector<std::string> m_titles;
 
   // Implementation
   /**
-   * @brief load_all_names
-   * @param names
-   * @param titles
+   * @brief Delete constructor to prevent instantiation
    */
-  void load_all_names(std::vector<std::string>& names,
-                      std::vector<std::string>& titles);
+  Names() = delete;
 
 }; // class Names
 }  // namespace his_gen

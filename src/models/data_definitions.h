@@ -71,6 +71,11 @@ public:
   void Initialize_composite_data();
 
   /**
+   * @brief Return a random entity type
+   */
+  his_gen::EEntity_type Get_rand_entity_type();
+
+  /**
    * @brief Return a random valid event for this entity type
    * @param entity The entity to get an event for
    * @return A random valid event type

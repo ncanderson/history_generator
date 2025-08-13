@@ -25,8 +25,10 @@ public:
   /**
    * @brief Constructor
    * @param triggering_entity The entity driving this event
+   * @parma current_tick The current tick
    */
-  Seek_partner_event(std::shared_ptr<his_gen::Entity_base>& triggering_entity);
+  Seek_partner_event(std::shared_ptr<his_gen::Entity_base>& triggering_entity,
+                     int64_t current_tick);
 
   /**
    * @brief Destructor
@@ -34,33 +36,25 @@ public:
   ~Seek_partner_event(){}
 
   /**
+   * @brief Run the event
+   * @param entities The current set of entities, for check attraction
+   */
+  void Run(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities);
+
+  /**
    * Getters and setters
    */
   // TODO
 
 protected:
-  /**
-   * @brief Initialize the event
-   */
-  void initialize_event();
+  // Attributes
 
-  /**
-   * @brief Run the event
-   */
-  void run_event();
-
-  /**
-   * @brief Close out the event
-   */
-  void conclude_event();
-
-  /**
-   * @brief Get any follow-on events to schedule
-   * @return A vector of shared_ptrs to newly created Event_base instances
-   */
-  std::vector<std::shared_ptr<Event_base>> get_next_steps() const;
+  // Implementation
 
 private:
+  // Attributes
+
+  // Implementation
 
 }; // class Seek_partner_event
 }  // namespace his_gen
