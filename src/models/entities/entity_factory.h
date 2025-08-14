@@ -40,9 +40,11 @@ public:
   /**
    * @brief Create an entity from its associated enumeration
    * @param entity_type The enumerated entity type
+   * @param current_tick The current generation tick
    * @return A pointer to Entity_base, holding the instantiated derived entity type
    */
-  static std::shared_ptr<his_gen::Entity_base> Create_entity(his_gen::EEntity_type entity_type);
+  static std::shared_ptr<his_gen::Entity_base> Create_entity(const his_gen::EEntity_type entity_type,
+                                                             const uint64_t current_tick);
 
 protected:
   // Attributes

@@ -41,7 +41,7 @@ public:
    */
   Event_base(const his_gen::EEvent_type event_type,
              std::shared_ptr<Entity_base>& triggering_entity,
-             int64_t current_tick)
+             uint64_t current_tick)
     :
     m_event_tick(current_tick),
     m_event_type(event_type),
@@ -117,7 +117,7 @@ protected:
   /**
    * @brief The current generation tick
    */
-  int64_t m_event_tick;
+  uint64_t m_event_tick;
 
   /**
    * @brief m_event_type

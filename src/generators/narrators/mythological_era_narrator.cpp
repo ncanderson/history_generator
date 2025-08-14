@@ -32,13 +32,15 @@ void myth_nar::Create_progenitor_deity(std::vector<std::shared_ptr<his_gen::Enti
   std::shared_ptr<his_gen::Entity_sentient> ptr =
       std::make_shared<his_gen::Entity_sentient>("God",
                                                  "the Allfather",
-                                                 EENTITY_TYPE_Deity);
+                                                 EENTITY_TYPE_Deity,
+                                                 0);
   entities.push_back(ptr);
 }
 
 ///////////////////////////////////////////////////////////////////////
 
-void myth_nar::Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities)
+void myth_nar::Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
+                               const uint64_t current_tick)
 {
   for(int64_t tick_count = 0; tick_count < m_config.Get_myth_config().Max_entity_per_tick; tick_count++)
   {
@@ -50,7 +52,8 @@ void myth_nar::Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>
     entity_type = EENTITY_TYPE_Deity;
     //
 
-    std::shared_ptr<his_gen::Entity_base> new_entity = his_gen::Entity_factory::Create_entity(entity_type);
+    std::shared_ptr<his_gen::Entity_base> new_entity = his_gen::Entity_factory::Create_entity(entity_type,
+                                                                                              current_tick);
 
     // Create the entity
     entities.push_back(new_entity);
@@ -61,7 +64,7 @@ void myth_nar::Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>
 
 void myth_nar::Create_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
                              std::vector<std::shared_ptr<his_gen::Event_base>>& events,
-                             int64_t current_tick)
+                             const uint64_t current_tick)
 {
   for(int64_t tick_count = 0; tick_count < m_config.Get_myth_config().Max_event_per_tick; tick_count++)
   {

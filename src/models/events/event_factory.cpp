@@ -11,7 +11,7 @@
 
 std::shared_ptr<his_gen::Event_base> his_gen::Event_factory::Create_event(his_gen::EEvent_type event_type,
                                                                           std::shared_ptr<Entity_base>& triggering_entity,
-                                                                          int64_t current_tick)
+                                                                          uint64_t current_tick)
 {
   switch(event_type)
   {

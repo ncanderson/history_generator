@@ -35,8 +35,10 @@ public:
   /**
    * @brief Constructor allowing the utilization of static name/title retrieval
    * @param entity_type The type of entity to instantiate.
+   * @param current_tick The current generation tick
    */
-  Entity_sentient(EEntity_type entity_type);
+  Entity_sentient(const EEntity_type entity_type,
+                  const uint64_t current_tick);
 
   /**
    * @brief Overloaded constructor if an externally-specified name
@@ -44,11 +46,12 @@ public:
    * @param name
    * @param title
    * @param entity_type
-   * @param full_random_reproduction
+   * @param current_tick
    */
-  Entity_sentient(std::string name,
-                  std::string title,
-                  EEntity_type entity_type);
+  Entity_sentient(const std::string& name,
+                  const std::string& title,
+                  const EEntity_type entity_type,
+                  const uint64_t current_tick);
 
   /**
    * @brief Destructor

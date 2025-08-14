@@ -30,17 +30,23 @@ public:
   //Entity_base() = default;
 
   /**
-   * @brief Constructor.
+   * @brief Entity_base
+   * @param name
+   * @param entity_type
+   * @param current_tick
+   * @param title
    */
-  Entity_base(std::string name,
-              EEntity_type entity_type,
-              std::string title = "")
+  Entity_base(const std::string& name,
+              const EEntity_type entity_type,
+              const uint64_t current_tick,
+              const std::string& title = "")
     :
     m_entity_id(boost::uuids::random_generator()()),
     m_entity_type(entity_type),
     m_entity_relationship_ids(),
     m_name(name),
-    m_title(title)
+    m_title(title),
+    m_creation_tick(current_tick)
   { }
 
   /**
@@ -86,6 +92,9 @@ public:
   void Set_relationship_ids(const std::vector<boost::uuids::uuid>& entity_relationship_ids) { m_entity_relationship_ids = entity_relationship_ids; }
   void Add_relationship_id(const boost::uuids::uuid& relationship_id) { m_entity_relationship_ids.push_back(relationship_id); }
 
+  const uint64_t Get_creation_tick() const { return m_creation_tick; }
+  void Set_creation_tick(const uint64_t tick) { m_creation_tick = tick; }
+
 protected:
   // Attributes
   /**
@@ -115,6 +124,11 @@ protected:
    */
   std::string m_title;
 
+  /**
+   * @brief The current generation tick
+   */
+  uint64_t m_creation_tick;
+
   // Implementation
 
 private:
@@ -138,7 +152,8 @@ inline void to_json(nlohmann::json& json, const his_gen::Entity_base& entity_bas
     {"entity_type", his_gen::Get_entity_type_string(entity_base.Get_entity_type())},
     {"name", entity_base.Get_name()},
     {"title", entity_base.Get_title()},
-    {"relationship_ids", entity_base.Get_relationship_ids()}
+    {"relationship_ids", entity_base.Get_relationship_ids()},
+    {"creation_tick", entity_base.Get_creation_tick()}
   };
 }
 
@@ -155,6 +170,7 @@ inline void from_json(const nlohmann::json& json, his_gen::Entity_base& entity_b
   entity_base.Set_name(json.at("name"));
   entity_base.Set_title(json.at("title"));
   entity_base.Set_relationship_ids(json.at("relationship_ids"));
+  entity_base.Set_creation_tick(json.at("creation_tick"));
 }
 
 }  // namespace his_gen
