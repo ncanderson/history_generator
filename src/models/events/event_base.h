@@ -41,7 +41,7 @@ public:
    */
   Event_base(const his_gen::EEvent_type event_type,
              std::shared_ptr<Entity_base>& triggering_entity,
-             uint64_t current_tick)
+             const uint64_t current_tick)
     :
     m_event_tick(current_tick),
     m_event_type(event_type),
@@ -61,9 +61,19 @@ public:
   /**
    * @brief Run the event. Implementing functions will determine
    * what 'Run' means.
+   * @details By default, the value of `m_event_changes_state` will be used
+   * to determine if this event has created meaningful change that should be saved
    * @param entities The current set of entities, for resolving events
    */
   virtual void Run(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities) = 0;
+
+  /**
+   * @brief If true, this event created meaningful change and should be saved.
+   * @details Implementing classes can override this function if different save logic
+   * is required
+   * @return
+   */
+  virtual bool Created_meaningful_change() const { return m_event_changes_state; }
 
   /**
    * Getters and setters
@@ -154,7 +164,20 @@ protected:
    */
   bool m_is_complete;
 
+  /**
+   * @brief If true, this event has created meaningful change and should be saved
+   */
+  bool m_event_changes_state;
+
   // Implementation
+  /**
+   * @brief Helper function to clarify this classes interface.
+   * @details If necessary, derived classes can override this function. By default
+   * this function will set the variable that will be checked externally to
+   * determine if this event should be saved.
+   * @param change_occurred This event created meaningful change
+   */
+  virtual void meaningful_change_occurred(bool change_occurred) { m_event_changes_state = change_occurred; }
 
 private:
   // Attributes

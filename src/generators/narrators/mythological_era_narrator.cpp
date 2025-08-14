@@ -78,8 +78,17 @@ void myth_nar::Create_events(std::vector<std::shared_ptr<his_gen::Entity_base>>&
                                                                                           current_tick);
     // Run the event
     new_event->Run(entities);
-    // Add the event to the list
-    events.push_back(new_event);
+
+    // Add the event to the list if something changed
+    if(new_event->Created_meaningful_change())
+    {
+      events.push_back(new_event);
+    }
+    else
+    {
+      his_gen::Print_to_cout(new_event->Get_name() + " " +
+                             "event run; no meaningful change occured");
+    }
   }
 }
 
