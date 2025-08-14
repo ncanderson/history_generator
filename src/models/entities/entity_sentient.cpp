@@ -19,10 +19,12 @@ REGISTER_POLYMORPHIC_TYPE(his_gen::Entity_base, his_gen::Entity_sentient)
 
 ///////////////////////////////////////////////////////////////////////
 
-sentient::Entity_sentient(EEntity_type entity_type)
+sentient::Entity_sentient(const EEntity_type entity_type,
+                          const uint64_t current_tick)
   :
   Entity_base(his_gen::Names::Get_one_name(),
               entity_type,
+              current_tick,
               his_gen::Names::Get_one_title()),
   m_personality(),
   m_personality_attraction(m_personality.Get_attributes()),
@@ -37,11 +39,12 @@ sentient::Entity_sentient(EEntity_type entity_type)
 
 ///////////////////////////////////////////////////////////////////////
 
-sentient::Entity_sentient(std::string name,
-                          std::string title,
-                          EEntity_type entity_type)
+sentient::Entity_sentient(const std::string& name,
+                          const std::string& title,
+                          const EEntity_type entity_type,
+                          const uint64_t current_tick)
   :
-  Entity_base(name, entity_type, title),
+  Entity_base(name, entity_type, current_tick, title),
   m_personality(),
   m_personality_attraction(m_personality.Get_attributes()),
   m_personality_attraction_thresh(derive_attraction_thresh(m_personality_attraction.Get_personality_attraction_flexibility())),

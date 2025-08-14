@@ -43,9 +43,10 @@ public:
   /**
    * @brief Create_entities
    * @param entities
-   * @param entities_per_tick
+   * @param current_tick
    */
-  void Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities) override;
+  void Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
+                       const uint64_t current_tick) override;
 
   /**
    * @brief Create_events
@@ -55,7 +56,7 @@ public:
    */
   void Create_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
                      std::vector<std::shared_ptr<his_gen::Event_base>>& events,
-                     int64_t current_tick) override;
+                     const uint64_t current_tick) override;
 
   /**
    * @brief The first being in this mythology
