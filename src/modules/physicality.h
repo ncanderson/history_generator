@@ -20,8 +20,11 @@ namespace his_gen
 /**
  * @brief Physical attributes for an entity with a body
  */
-class Physicality : public Entity_attributes_base<his_gen::Attribute_enums::EPhysicality>
+class Physicality : public Entity_attributes_base<Physicality, his_gen::Attribute_enums::EPhysicality>
 {
+  // This allows the base class to call the derived construct_attributes()
+  friend class Entity_attributes_base<Physicality, Attribute_enums::EPhysicality>;
+
 public:
 
   /**
@@ -41,20 +44,9 @@ public:
   using Repro_attribute_map = std::map<Attribute_enums::EReproduction, bool>;
 
   /**
-   * Overrides
+   * Getters
    */
-  Physical_attribute_map Get_attributes() const override { return m_physical_attributes; }
-
-  /**
-   * @brief Get a physical attribute from this class
-   * @param attribute The enumerated attribute to get
-   * @return The value of this attribute
-   */
-  uint8_t Get_entity_attribute_value(const Attribute_enums::EPhysicality attribute) const override;
-
-  /**
-   * Other public functions
-   */
+  const Repro_attribute_map& Get_repro_attributes() const { return m_repro_attributes; }
 
   /**
    * @brief Get a repro attribute from this class
@@ -75,14 +67,6 @@ public:
    */
   bool Can_sire_young();
 
-  /**
-   * Getters and setters
-   */
-  Repro_attribute_map Get_repro_attributes() const { return m_repro_attributes; }
-
-  uint8_t Get_number_of_attributes() const { return m_num_attributes; }
-  uint16_t Get_max_attribute_diff() const { return m_max_attribute_diff; }
-
 protected:
   // Attributes
   /**
@@ -90,35 +74,27 @@ protected:
    */
   Repro_attribute_map m_repro_attributes;
 
-  /**
-   * @brief The attributes and values for this entity
-   */
-  Physical_attribute_map m_physical_attributes;
-
   // Implementation
+  /**
+   * @brief Construct attributes for this personality
+   */
+  static Physical_attribute_map construct_attributes();
+
+  /**
+   * @brief Update any attributes that are dependent on an instance's
+   * reproductive abilities.
+   * @details construct_attributes() will initialize the base class data
+   * member, but won't have acccess to instance-specific attributes. This
+   * function will fill out the missing attributes for a given instance
+   * of this class. This function expects the base class member m_attributes
+   * to be initialized.
+   */
+  void update_repro_dependent_attributes();
 
 private:
   // Attributes
-  // TODO: Make this a static value since it won't change at runtime
-  /**
-   * @brief The number of attributes
-   */
-  uint8_t m_num_attributes;
-
-  // TODO: Make this a static value since it won't change at runtime
-  /**
-   * @brief The maximum possible difference across all attributes
-   */
-  uint16_t m_max_attribute_diff;
 
   // Implementation
-  // TODO: Move to the base class (along with personality attr construct)
-  /**
-   * @brief construct_physicality_attributes
-   * @return
-   */
-  Physical_attribute_map construct_physicality_attributes();
-
   /**
    * @brief construct_repro_attributes
    * @return

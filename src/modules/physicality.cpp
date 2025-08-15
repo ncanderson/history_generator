@@ -15,12 +15,11 @@ using repro = his_gen::Attribute_enums::EReproduction;
 
 his_gen::Physicality::Physicality()
   :
-  Entity_attributes_base<his_gen::Attribute_enums::EPhysicality>(),
-  m_repro_attributes(construct_repro_attributes()),
-  m_physical_attributes(construct_physicality_attributes()),
-  m_num_attributes(m_physical_attributes.size()),
-  m_max_attribute_diff(his_gen::ATTRIBUTE_MAX * m_num_attributes)
-{ }
+  Entity_attributes_base<Physicality, his_gen::Attribute_enums::EPhysicality>(),
+  m_repro_attributes(construct_repro_attributes())
+{
+  update_repro_dependent_attributes();
+}
 
 ///////////////////////////////////////////////////////////////////////
 
@@ -39,7 +38,7 @@ his_gen::Physicality::Repro_attribute_map his_gen::Physicality::construct_repro_
 
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::Physicality::Physical_attribute_map his_gen::Physicality::construct_physicality_attributes()
+his_gen::Physicality::Physical_attribute_map his_gen::Physicality::construct_attributes()
 {
   Physical_attribute_map physical_attributes;
 
@@ -83,36 +82,41 @@ his_gen::Physicality::Physical_attribute_map his_gen::Physicality::construct_phy
   physical_attributes[physicality::EPHYSICALITY_Lip_fullness] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
   physical_attributes[physicality::EPHYSICALITY_Nose_size] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
 
+  return physical_attributes;
+}
+
+///////////////////////////////////////////////////////////////////////
+
+void his_gen::Physicality::update_repro_dependent_attributes()
+{
   // Physical attributes that are dependent on others
   uint8_t conditional_max = 1;
   if(Can_bear_young())
   {
     conditional_max = his_gen::ATTRIBUTE_MAX;
   }
-  physical_attributes[physicality::EPHYSICALITY_Breast_cleavage_depth] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
-  physical_attributes[physicality::EPHYSICALITY_Breast_shape_roundness] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
-  physical_attributes[physicality::EPHYSICALITY_Breast_size] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
-  physical_attributes[physicality::EPHYSICALITY_Clitoris_size] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
-  physical_attributes[physicality::EPHYSICALITY_Labia_major_size] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
-  physical_attributes[physicality::EPHYSICALITY_Labia_minor_size] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
+  m_attributes[physicality::EPHYSICALITY_Breast_cleavage_depth] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
+  m_attributes[physicality::EPHYSICALITY_Breast_shape_roundness] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
+  m_attributes[physicality::EPHYSICALITY_Breast_size] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
+  m_attributes[physicality::EPHYSICALITY_Clitoris_size] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
+  m_attributes[physicality::EPHYSICALITY_Labia_major_size] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
+  m_attributes[physicality::EPHYSICALITY_Labia_minor_size] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
 
   conditional_max = 1;
   if(Can_sire_young())
   {
     conditional_max = his_gen::ATTRIBUTE_MAX;
   }
-  physical_attributes[physicality::EPHYSICALITY_Penis_length] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
-  physical_attributes[physicality::EPHYSICALITY_Penis_width] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
-  physical_attributes[physicality::EPHYSICALITY_Testicle_size] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
+  m_attributes[physicality::EPHYSICALITY_Penis_length] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
+  m_attributes[physicality::EPHYSICALITY_Penis_width] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
+  m_attributes[physicality::EPHYSICALITY_Testicle_size] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
 
   conditional_max = 25;
   if(Can_sire_young())
   {
     conditional_max = his_gen::ATTRIBUTE_MAX;
   }
-  physical_attributes[physicality::EPHYSICALITY_Facial_hair_density] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
-
-  return physical_attributes;
+  m_attributes[physicality::EPHYSICALITY_Facial_hair_density] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -127,19 +131,6 @@ bool his_gen::Physicality::Can_bear_young()
 bool his_gen::Physicality::Can_sire_young()
 {
   return m_repro_attributes[repro::EREPRODUCTION_Can_sire_young];
-}
-
-///////////////////////////////////////////////////////////////////////
-
-uint8_t his_gen::Physicality::Get_entity_attribute_value(const physicality attribute) const
-{
-  auto it = m_physical_attributes.find(attribute);
-  // Verify the attribute exists
-  if(it == m_physical_attributes.end())
-  {
-    throw std::out_of_range("Attribute not found");
-  }
-  return it->second;
 }
 
 ///////////////////////////////////////////////////////////////////////

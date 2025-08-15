@@ -10,10 +10,12 @@
 #include <string>
 #include <stdexcept>
 #include <map>
+#include <limits>
 
 // JSON
 
 // Application files
+#include <defs/history_generator_defs.h>
 
 namespace his_gen
 {
@@ -269,32 +271,177 @@ inline std::string Get_entity_attribute_string(const EReproduction repro_attribu
 } // namespace Attribute_enums
 
 /**
- * @brief Base class for any attribute container
- * @tparam Enum_type The enumerated attribute type
+ * @class Entity_attributes_base
+ * @brief Base class template for managing enumerated attributes of an entity.
+ *
+ * @tparam Derived The derived class implementing this base.
+ * @tparam EnumType The enumerated type representing the entity's attributes.
+ *
+ * This class provides a standardized mechanism for derived classes to:
+ *   - Store attributes in a uniform map keyed by an enumeration.
+ *   - Retrieve attribute values safely.
+ *   - Track meta-information such as the number of attributes and
+ *     the maximum possible attribute score.
+ *
+ * Design Highlights:
+ * 1. **Generic Attribute Storage**
+ *    - Uses `std::map<EnumType, uint8_t>` to store attribute values.
+ *    - Provides `Get_entity_attribute_value()` and `Get_attributes()` for safe access.
+ *
+ * 2. **Attribute Meta-Data**
+ *    - `m_num_attributes` stores the number of attributes.
+ *    - `m_max_attribute_score` stores the maximum possible total score.
+ *    - Automatically computed when `set_attributes()` is called.
+ *
+ * 3. **Enforcing Derived-Class Attribute Construction**
+ *    - This base class requires that any derived class implements
+ *      `construct_attributes()`, implementing its own attribute construction logic.
+ *    - Enables derived classes to compute attributes based on instance-specific
+ *      data (e.g., reproductive attributes in Physicality).
+ *
+ * Usage Pattern:
+ *   - Define a derived class (e.g., Personality, Physicality) that implements
+ *     `construct_attributes()`.
+ *   - Access attributes via `Get_entity_attribute_value()` or `Get_attributes()`.
+ *
+ * #### Deriving a new attribute class from `Entity_attributes_base`
+ *
+ * `Entity_attributes_base` is a CRTP-style base class that handles common behavior for entities with enumerated attributes, including:
+ *
+ * - Storing the attribute map
+ * - Providing getters for attributes, number of attributes, and maximum score
+ * - Reducing boilerplate in constructors and initialization
+ *
+ * To create a new derived class:
+ *
+ * 1. **Define the attribute enum** (if not already defined) in the `Attribute_enums` namespace:
+ *
+ * ```cpp
+ * enum class ENewAttribute : uint8_t
+ * {
+ *     ATTRIBUTE_ONE,
+ *     ATTRIBUTE_TWO,
+ *     ATTRIBUTE_THREE
+ * };
+ *
+ * 2. Derive from the base class using CRTP:
+ * @code
+ * class NewEntity : public Entity_attributes_base<NewEntity, Attribute_enums::ENewAttribute>
+ * @endcode
+ *
+ * Notes:
+ * - **Static `construct_attributes()`**: Must be `static` so that the base class can call it
+ *   during construction without needing a fully constructed instance.
+ * - **CRTP Pattern**: `Derived` is passed as a template parameter to `Entity_attributes_base`.
+ *   This allows the base to call `Derived::construct_attributes()` at compile time.
+ * - **No runtime polymorphism**: This design is for compile-time code reuse and boilerplate
+ *   reduction, not for virtual dispatch.
+ * - **Adding extra attributes**: If your derived class has additional attribute sets
+ *   (e.g., reproductive attributes in `Physicality`), you can initialize them in the derived constructor
+ *   after the base class initialization.
  */
-template <typename Enum_type>
+template<typename Derived, typename EnumType>
 class Entity_attributes_base
 {
 public:
+  /**
+   * Facilitate derived class map usage
+   */
+  using Attribute_map = std::map<EnumType, uint8_t>;
+
   /**
    * @brief Destructor
    */
   virtual ~Entity_attributes_base() = default;
 
   /**
-   * @brief Get the attributes managed by the derived class
-   * @return A map with the Enum_type as the key and a uint8_t as the value
+   * @brief Get_attributes
+   * @return The map of attributes
    */
-  virtual std::map<Enum_type, uint8_t> Get_attributes() const = 0;
+  const Attribute_map& Get_attributes() const { return m_attributes; }
 
   /**
-   * @brief Implementing classes will use this function to return attribute values
-   * @param attr The attribute to get a value for
-   * @return The value of `attribute`
+   * @brief Get_number_of_attributes
+   * @return
    */
-  virtual uint8_t Get_entity_attribute_value(const Enum_type attribute) const = 0;
+  uint8_t Get_number_of_attributes() const { return m_num_attributes; }
 
-}; // class Entity_attributes_base
+  /**
+   * @brief Get_max_attribute_diff
+   * @return
+   */
+  uint16_t Get_max_attribute_diff() const { return m_max_attribute_score; }
+
+  /**
+     * @brief Get an attribute value from this entity
+     * @param attribute The enumerated attribute to get
+     * @return The value of this attribute
+     * @throws std::out_of_range Thrown if the attribute does not exist
+     */
+  uint8_t Get_entity_attribute_value(const EnumType attribute) const
+  {
+    auto it = m_attributes.find(attribute);
+    if (it == m_attributes.end())
+    {
+      throw std::out_of_range("Attribute not found");
+    }
+    return it->second;
+  }
+
+protected:
+
+  /**
+   * @brief m_attributes
+   */
+  Attribute_map m_attributes;
+
+  /**
+   * @brief m_num_attributes
+   */
+  uint8_t m_num_attributes;
+
+  /**
+   * @brief Maximum possible score of all attributes
+   */
+  uint16_t m_max_attribute_score;
+
+  // Implementation
+  /**
+   * @brief Entity_attributes_base
+   */
+  Entity_attributes_base()
+    :
+    m_attributes(Derived::construct_attributes()),
+    m_num_attributes(),
+    m_max_attribute_score() {}
+
+  /**
+   * @brief Set the internal attribute map, number of attributes,
+   * and the maximum attribute score for use in attraction determination.
+   * @param attrs The map of attributes to initialize
+   * @throws std::logic_error Thrown if attributes are already initialized
+   */
+  void set_attributes(const Attribute_map& attributes)
+  {
+    if (!m_attributes.empty())
+    {
+      throw std::logic_error("Attributes already initialized");
+    }
+    m_attributes = attributes;
+    m_num_attributes = m_attributes.size();
+    m_max_attribute_score = m_num_attributes * his_gen::ATTRIBUTE_MAX;
+  }
+
+  /**
+   * @brief Calculate the maximum
+   * @return
+   */
+  uint16_t calc_max_attribute_score() const
+  {
+    return m_attributes.size() * his_gen::ATTRIBUTE_MAX;
+  }
+
+}; // class Entity_attribute_base
 }  // namespace his_gen
 
 #endif // ENTITY_ATTRIBUTES_H

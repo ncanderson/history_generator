@@ -14,15 +14,12 @@ using personality = his_gen::Attribute_enums::EPersonality;
 
 his_gen::Personality::Personality()
   :
-  Entity_attributes_base<his_gen::Attribute_enums::EPersonality>(),
-  m_personality_attributes(construct_personality_attributes()),
-  m_num_attributes(m_personality_attributes.size()),
-  m_max_attribute_diff(his_gen::ATTRIBUTE_MAX * m_num_attributes)
+  Entity_attributes_base<Personality, his_gen::Attribute_enums::EPersonality>()
 { };
 
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::Personality::Personality_attribute_map his_gen::Personality::construct_personality_attributes()
+his_gen::Personality::Personality_attribute_map his_gen::Personality::construct_attributes()
 {
   Personality_attribute_map personality_attributes;
 
@@ -85,19 +82,6 @@ his_gen::Personality::Personality_attribute_map his_gen::Personality::construct_
   personality_attributes[personality::EPERSONALITY_Chaste] = his_gen::ATTRIBUTE_MAX - lustful_chaste;
 
   return personality_attributes;
-}
-
-///////////////////////////////////////////////////////////////////////
-
-uint8_t his_gen::Personality::Get_entity_attribute_value(const Attribute_enums::EPersonality attribute) const
-{
-  auto it = m_personality_attributes.find(attribute);
-  // Verify the attribute exists
-  if(it == m_personality_attributes.end())
-  {
-    throw std::out_of_range("Attribute not found");
-  }
-  return it->second;
 }
 
 ///////////////////////////////////////////////////////////////////////
