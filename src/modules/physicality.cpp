@@ -95,12 +95,18 @@ void his_gen::Physicality::Update_repro_dependent_attributes()
   {
     conditional_max = his_gen::ATTRIBUTE_MAX;
   }
-  m_attributes[physicality::EPHYSICALITY_Breast_cleavage_depth] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
-  m_attributes[physicality::EPHYSICALITY_Breast_shape_roundness] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
-  m_attributes[physicality::EPHYSICALITY_Breast_size] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
   m_attributes[physicality::EPHYSICALITY_Clitoris_size] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
   m_attributes[physicality::EPHYSICALITY_Labia_major_size] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
   m_attributes[physicality::EPHYSICALITY_Labia_minor_size] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
+
+  conditional_max = 1;
+  if(Can_nurse_young())
+  {
+    conditional_max = his_gen::ATTRIBUTE_MAX;
+  }
+  m_attributes[physicality::EPHYSICALITY_Breast_cleavage_depth] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
+  m_attributes[physicality::EPHYSICALITY_Breast_shape_roundness] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
+  m_attributes[physicality::EPHYSICALITY_Breast_size] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
 
   conditional_max = 1;
   if(Can_sire_young())
@@ -139,6 +145,13 @@ bool his_gen::Physicality::Can_bear_young()
 bool his_gen::Physicality::Can_sire_young()
 {
   return m_repro_attributes[repro::EREPRODUCTION_Can_sire_young];
+}
+
+///////////////////////////////////////////////////////////////////////
+
+bool his_gen::Physicality::Can_nurse_young()
+{
+  return m_repro_attributes[repro::EREPRODUCTION_Can_nurse_young];
 }
 
 ///////////////////////////////////////////////////////////////////////

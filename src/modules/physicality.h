@@ -74,6 +74,12 @@ public:
    */
   bool Can_sire_young();
 
+  /**
+   * @brief Can_nurse_young
+   * @return
+   */
+  bool Can_nurse_young();
+
 protected:
   // Attributes
   /**
