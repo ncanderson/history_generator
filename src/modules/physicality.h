@@ -38,22 +38,29 @@ public:
   ~Physicality() = default;
 
   /**
+   * @brief Update any attributes that are dependent on an instance's
+   * reproductive abilities.
+   * @details construct_attributes() will initialize the base class data
+   * member, but won't have acccess to instance-specific attributes. This
+   * function will fill out the missing attributes for a given instance
+   * of this class. This function expects the base class member m_attributes
+   * to be initialized.
+   */
+  void Update_repro_dependent_attributes();
+
+  /**
    * Usings
    */
   using Physical_attribute_map = std::map<Attribute_enums::EPhysicality, uint8_t>;
   using Repro_attribute_map = std::map<Attribute_enums::EReproduction, bool>;
 
   /**
-   * Getters
+   * Getters and setters
    */
   const Repro_attribute_map& Get_repro_attributes() const { return m_repro_attributes; }
-
-  /**
-   * @brief Get a repro attribute from this class
-   * @param attribute The enumerated attribute to get
-   * @return The value of this attribute
-   */
   bool Get_repro_attribute_value(const Attribute_enums::EReproduction repro_attribute) const;
+  void Set_repro_attribute_value(const Attribute_enums::EReproduction repro_attribute,
+                                 const bool value);
 
   /**
    * @brief Can_bear_young
@@ -79,17 +86,6 @@ protected:
    * @brief Construct attributes for this personality
    */
   static Physical_attribute_map construct_attributes();
-
-  /**
-   * @brief Update any attributes that are dependent on an instance's
-   * reproductive abilities.
-   * @details construct_attributes() will initialize the base class data
-   * member, but won't have acccess to instance-specific attributes. This
-   * function will fill out the missing attributes for a given instance
-   * of this class. This function expects the base class member m_attributes
-   * to be initialized.
-   */
-  void update_repro_dependent_attributes();
 
 private:
   // Attributes

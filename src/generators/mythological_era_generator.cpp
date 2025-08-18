@@ -64,7 +64,7 @@ void his_gen::Mythological_era_generator::Run()
 
     case STAGE_Terminate:
     {
-      // Define the sentients that will be created for later phases
+      // Define the entitiesthat will be created for later phases
       // establish how gods remove themselves from the world
 
       // Write the generated history out

@@ -6,6 +6,7 @@
 
 // Application files
 #include <generators/narrators/mythological_era_narrator.h>
+#include <models/entities//entity_deity.h>
 #include <models/entities/entity_sentient.h>
 #include <models/entities/entity_factory.h>
 #include <models/events/event_factory.h>
@@ -29,11 +30,9 @@ myth_nar::Mythological_era_narrator(const his_gen::Data_access_manager& data_acc
 
 void myth_nar::Create_progenitor_deity(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities)
 {
-  std::shared_ptr<his_gen::Entity_sentient> ptr =
-      std::make_shared<his_gen::Entity_sentient>("God",
-                                                 "the Allfather",
-                                                 EENTITY_TYPE_Deity,
-                                                 0);
+  std::shared_ptr<his_gen::Entity_base> ptr = std::make_shared<his_gen::Entity_deity>("God",
+                                                                                      "the Allfather",
+                                                                                      0);
   entities.push_back(ptr);
 }
 

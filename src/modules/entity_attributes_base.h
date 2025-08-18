@@ -275,7 +275,7 @@ inline std::string Get_entity_attribute_string(const EReproduction repro_attribu
  * @brief Base class template for managing enumerated attributes of an entity.
  *
  * @tparam Derived The derived class implementing this base.
- * @tparam EnumType The enumerated type representing the entity's attributes.
+ * @tparam Enum_type The enumerated type representing the entity's attributes.
  *
  * This class provides a standardized mechanism for derived classes to:
  *   - Store attributes in a uniform map keyed by an enumeration.
@@ -285,7 +285,7 @@ inline std::string Get_entity_attribute_string(const EReproduction repro_attribu
  *
  * Design Highlights:
  * 1. **Generic Attribute Storage**
- *    - Uses `std::map<EnumType, uint8_t>` to store attribute values.
+ *    - Uses `std::map<Enum_type, uint8_t>` to store attribute values.
  *    - Provides `Get_entity_attribute_value()` and `Get_attributes()` for safe access.
  *
  * 2. **Attribute Meta-Data**
@@ -319,9 +319,9 @@ inline std::string Get_entity_attribute_string(const EReproduction repro_attribu
  * ```cpp
  * enum class ENewAttribute : uint8_t
  * {
- *     ATTRIBUTE_ONE,
- *     ATTRIBUTE_TWO,
- *     ATTRIBUTE_THREE
+ *   ATTRIBUTE_ONE,
+ *   ATTRIBUTE_TWO,
+ *   ATTRIBUTE_THREE
  * };
  *
  * 2. Derive from the base class using CRTP:
@@ -340,14 +340,14 @@ inline std::string Get_entity_attribute_string(const EReproduction repro_attribu
  *   (e.g., reproductive attributes in `Physicality`), you can initialize them in the derived constructor
  *   after the base class initialization.
  */
-template<typename Derived, typename EnumType>
+template<typename Derived, typename Enum_type>
 class Entity_attributes_base
 {
 public:
   /**
    * Facilitate derived class map usage
    */
-  using Attribute_map = std::map<EnumType, uint8_t>;
+  using Attribute_map = std::map<Enum_type, uint8_t>;
 
   /**
    * @brief Destructor
@@ -378,7 +378,7 @@ public:
      * @return The value of this attribute
      * @throws std::out_of_range Thrown if the attribute does not exist
      */
-  uint8_t Get_entity_attribute_value(const EnumType attribute) const
+  uint8_t Get_entity_attribute_value(const Enum_type attribute) const
   {
     auto it = m_attributes.find(attribute);
     if (it == m_attributes.end())
@@ -386,6 +386,22 @@ public:
       throw std::out_of_range("Attribute not found");
     }
     return it->second;
+  }
+
+  /**
+   * @brief Set the value of an attribute
+   * @param attribute The enumerated attribute to set
+   * @param value The new value for this attribute
+   * @throws std::out_of_range Thrown if the attribute does not exist
+   */
+  void Set_attribute_value(const Enum_type attribute, uint8_t value)
+  {
+    auto it = m_attributes.find(attribute);
+    if (it == m_attributes.end())
+    {
+      throw std::out_of_range("Attribute not found");
+    }
+    it->second = value;
   }
 
 protected:

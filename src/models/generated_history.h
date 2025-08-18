@@ -16,7 +16,6 @@
 
 // Models
 #include <models/entities/entity_type.h>
-#include <models/entities/entity_sentient.h>
 #include <models/events/event_base.h>
 #include <models/relations/entity_relationship.h>
 #include <models/relations/entity_type_relationship_type.h>

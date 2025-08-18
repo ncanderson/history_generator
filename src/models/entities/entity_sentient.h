@@ -103,11 +103,6 @@ public:
 
 protected:
   // Attributes
-
-  // Implementation
-
-private:
-  // Attributes
   /**
    * @brief This entity's personality
    */
@@ -156,6 +151,11 @@ private:
   std::vector<std::shared_ptr<his_gen::Entity_base>> m_lovers;
 
   // Implementation
+
+private:
+  // Attributes
+
+  // Implementation
   /**
    * @brief Check the reproductive attraction of this compared to some other
    * entity.
@@ -165,7 +165,7 @@ private:
    * @param other_entity The entity to evaulate against this
    * @return True if attraced, otherwise false
    */
-  bool repro_attraction(std::shared_ptr<his_gen::Entity_sentient> other_entity);
+  virtual bool repro_attraction(std::shared_ptr<his_gen::Entity_sentient> other_entity);
 
   /**
    * @brief Calculate the compatibility threshold for this entity

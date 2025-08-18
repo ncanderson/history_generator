@@ -18,7 +18,7 @@ his_gen::Physicality::Physicality()
   Entity_attributes_base<Physicality, his_gen::Attribute_enums::EPhysicality>(),
   m_repro_attributes(construct_repro_attributes())
 {
-  update_repro_dependent_attributes();
+  Update_repro_dependent_attributes();
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -87,7 +87,7 @@ his_gen::Physicality::Physical_attribute_map his_gen::Physicality::construct_att
 
 ///////////////////////////////////////////////////////////////////////
 
-void his_gen::Physicality::update_repro_dependent_attributes()
+void his_gen::Physicality::Update_repro_dependent_attributes()
 {
   // Physical attributes that are dependent on others
   uint8_t conditional_max = 1;
@@ -117,6 +117,14 @@ void his_gen::Physicality::update_repro_dependent_attributes()
     conditional_max = his_gen::ATTRIBUTE_MAX;
   }
   m_attributes[physicality::EPHYSICALITY_Facial_hair_density] = his_gen::dice::Make_a_roll<uint8_t>(conditional_max);
+}
+
+///////////////////////////////////////////////////////////////////////
+
+void his_gen::Physicality::Set_repro_attribute_value(const Attribute_enums::EReproduction repro_attribute,
+                                                     const bool value)
+{
+  m_repro_attributes[repro_attribute] = value;
 }
 
 ///////////////////////////////////////////////////////////////////////
