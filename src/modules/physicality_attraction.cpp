@@ -15,7 +15,9 @@ his_gen::Physicality_attraction::Physicality_attraction(const Personality& entit
   :
   Physicality(),
   m_physical_attraction_flexibility(derive_physical_attraction_flexibility(entity_personality))
-{ }
+{
+  Update_repro_dependent_attributes();hjaldkjhfalksjdhflkasjhf
+}
 
 ///////////////////////////////////////////////////////////////////////
 

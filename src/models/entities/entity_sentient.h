@@ -59,6 +59,11 @@ public:
   ~Entity_sentient(){};
 
   /**
+   * @brief Initialize this class's attributes
+   */
+  void Initialize() override;
+
+  /**
    * @brief Check if this entity is attracted to `other_entity`
    * @param other_entity The entity to check
    * @return True if `this` is attracted to `other_entity`, otherwise false.

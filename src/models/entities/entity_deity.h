@@ -48,6 +48,11 @@ public:
   ~Entity_deity(){};
 
   /**
+   * @brief Initialize this class's attributes
+   */
+  void Initialize() override;
+
+  /**
    * Getters and Setters
    */
   bool Get_test_attr() const { return m_test_attr; }

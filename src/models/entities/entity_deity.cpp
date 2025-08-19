@@ -21,9 +21,7 @@ deity::Entity_deity(const uint64_t current_tick)
   :
   his_gen::Entity_sentient(his_gen::EENTITY_TYPE_Deity, current_tick),
   m_test_attr(false)
-{
-  update_divine_physicality();
-}
+{ }
 
 ///////////////////////////////////////////////////////////////////////
 
@@ -32,6 +30,11 @@ deity::Entity_deity(const std::string& name,
                     const uint64_t current_tick)
   :
   his_gen::Entity_sentient(name, title, his_gen::EENTITY_TYPE_Deity, current_tick)
+{ }
+
+///////////////////////////////////////////////////////////////////////
+
+void deity::Initialize()
 {
   update_divine_physicality();
 }

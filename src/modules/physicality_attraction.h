@@ -40,6 +40,17 @@ public:
   ~Physicality_attraction(){};
 
   /**
+   * @brief Update any attributes that are dependent on an instance's
+   * reproductive ability attraction.
+   * @details construct_attributes() will initialize the base class data
+   * member, but won't have acccess to instance-specific attributes. This
+   * function will fill out the missing attributes for a given instance
+   * of this class. This function expects the base class member m_attributes
+   * to be initialized.
+   */
+  void Update_repro_dependent_attributes() override;
+
+  /**
    * @brief Attracted_to_siring
    * @return
    */

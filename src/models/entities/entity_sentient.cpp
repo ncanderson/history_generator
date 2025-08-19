@@ -58,6 +58,13 @@ sentient::Entity_sentient(const std::string& name,
 
 ///////////////////////////////////////////////////////////////////////
 
+void sentient::Initialize()
+{
+  // NOOP
+}
+
+///////////////////////////////////////////////////////////////////////
+
 bool sentient::Is_attracted(std::shared_ptr<Entity_base> other_entity)
 {
   // Downcast to derived class from the base class pointer

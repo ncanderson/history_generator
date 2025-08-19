@@ -46,7 +46,7 @@ public:
    * of this class. This function expects the base class member m_attributes
    * to be initialized.
    */
-  void Update_repro_dependent_attributes();
+  virtual void Update_repro_dependent_attributes();
 
   /**
    * Usings

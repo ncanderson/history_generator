@@ -55,6 +55,17 @@ public:
   virtual ~Entity_base() = default;
 
   /**
+   * @brief Perform any necessary object initialization steps.
+   * @details As the entity classes will be part of polymorphic inheritance trees,
+   * it may be necessary for a derived class to perform instantiation steps,
+   * and the compiler will complain if calling a base class virtual member
+   * on a derived instance. By calling `Initialize()` from a factory, all necessary
+   * initialization steps can be performed after instantiation and the desired
+   * function will be called.
+   */
+  virtual void Initialize();
+
+  /**
    * @brief Is_attracted to other entity
    * @details This function is provided to allow for single entity comparisons
    * @param other_entity
