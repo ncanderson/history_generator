@@ -50,7 +50,7 @@ public:
   /**
    * @brief Initialize this class's attributes
    */
-  void Initialize() override;
+  //void Initialize() override;
 
   /**
    * Getters and Setters

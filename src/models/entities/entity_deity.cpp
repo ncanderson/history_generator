@@ -34,18 +34,18 @@ deity::Entity_deity(const std::string& name,
 
 ///////////////////////////////////////////////////////////////////////
 
-void deity::Initialize()
-{
-  update_divine_physicality();
-}
+//void deity::Initialize()
+//{
+//  update_divine_physicality();
+//}
 
 ///////////////////////////////////////////////////////////////////////
 
 void deity::update_divine_physicality()
 {
-  m_physicality.Set_repro_attribute_value(repro::EREPRODUCTION_Can_bear_young, his_gen::dice::Flip_a_coin());
-  m_physicality.Set_repro_attribute_value(repro::EREPRODUCTION_Can_sire_young, his_gen::dice::Flip_a_coin());
-  m_physicality.Set_repro_attribute_value(repro::EREPRODUCTION_Can_nurse_young, his_gen::dice::Flip_a_coin());
+  //m_physicality.Set_repro_attribute_value(repro::EREPRODUCTION_Can_bear_young, his_gen::dice::Flip_a_coin());
+  //m_physicality.Set_repro_attribute_value(repro::EREPRODUCTION_Can_sire_young, his_gen::dice::Flip_a_coin());
+  //m_physicality.Set_repro_attribute_value(repro::EREPRODUCTION_Can_nurse_young, his_gen::dice::Flip_a_coin());
 
   //m_physicality.update_repro_dependent_attributes();
 }
