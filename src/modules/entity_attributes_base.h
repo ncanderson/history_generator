@@ -429,7 +429,8 @@ protected:
     :
     m_attributes(Derived::construct_attributes()),
     m_num_attributes(),
-    m_max_attribute_score() {}
+    m_max_attribute_score()
+  { }
 
   /**
    * @brief Set the internal attribute map, number of attributes,
