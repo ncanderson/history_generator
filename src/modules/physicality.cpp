@@ -18,7 +18,7 @@ his_gen::Physicality::Physicality()
   Entity_attributes_base<Physicality, his_gen::Attribute_enums::EPhysicality>(),
   m_repro_attributes(construct_repro_attributes())
 {
-  Physicality::Update_repro_dependent_attributes();
+  Update_repro_dependent_attributes();
 }
 
 ///////////////////////////////////////////////////////////////////////
