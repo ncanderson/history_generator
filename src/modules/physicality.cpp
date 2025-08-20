@@ -18,7 +18,7 @@ his_gen::Physicality::Physicality()
   Entity_attributes_base<Physicality, his_gen::Attribute_enums::EPhysicality>(),
   m_repro_attributes(construct_repro_attributes())
 {
-  update_repro_dependent_attributes();
+  Update_repro_dependent_attributes();
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -87,7 +87,7 @@ his_gen::Physicality::Physical_attribute_map his_gen::Physicality::construct_att
 
 ///////////////////////////////////////////////////////////////////////
 
-void his_gen::Physicality::update_repro_dependent_attributes()
+void his_gen::Physicality::Update_repro_dependent_attributes()
 {
   // Physical attributes that are dependent on others
   uint8_t conditional_max = 1;

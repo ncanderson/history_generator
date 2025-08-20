@@ -69,6 +69,17 @@ public:
    */
   bool Can_nurse_young();
 
+  /**
+   * @brief Update any attributes that are dependent on an instance's
+   * reproductive abilities.
+   * @details construct_attributes() will initialize the base class data
+   * member, but won't have acccess to instance-specific attributes. This
+   * function will fill out the missing attributes for a given instance
+   * of this class. This function expects the base class member m_attributes
+   * to be initialized.
+   */
+  void Update_repro_dependent_attributes();
+
 protected:
   // Attributes
   /**
@@ -81,17 +92,6 @@ protected:
    * @brief Construct attributes for this personality
    */
   static Physical_attribute_map construct_attributes();
-
-  /**
-   * @brief Update any attributes that are dependent on an instance's
-   * reproductive abilities.
-   * @details construct_attributes() will initialize the base class data
-   * member, but won't have acccess to instance-specific attributes. This
-   * function will fill out the missing attributes for a given instance
-   * of this class. This function expects the base class member m_attributes
-   * to be initialized.
-   */
-  void update_repro_dependent_attributes();
 
 private:
   // Attributes
