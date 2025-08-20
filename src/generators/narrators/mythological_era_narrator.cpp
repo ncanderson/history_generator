@@ -6,6 +6,7 @@
 
 // Application files
 #include <generators/narrators/mythological_era_narrator.h>
+#include <models/entities/entity_deity.h>
 #include <models/entities/entity_sentient.h>
 #include <models/entities/entity_factory.h>
 #include <models/events/event_factory.h>

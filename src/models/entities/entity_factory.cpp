@@ -6,6 +6,7 @@
 #include <models/entities/entity_factory.h>
 #include <models/entities/entity_base.h>
 #include <models/entities/entity_sentient.h>
+#include <models/entities/entity_deity.h>
 
 ///////////////////////////////////////////////////////////////////////
 
@@ -15,6 +16,12 @@ std::shared_ptr<his_gen::Entity_base> his_gen::Entity_factory::Create_entity(con
   switch(entity_type)
   {
     case his_gen::EEntity_type::EENTITY_TYPE_Deity:
+    {
+      return std::make_shared<his_gen::Entity_deity>(current_tick);
+    }
+    break;
+
+    case his_gen::EEntity_type::EENTITY_TYPE_Sentient:
     {
       return std::make_shared<his_gen::Entity_sentient>(entity_type,
                                                         current_tick);

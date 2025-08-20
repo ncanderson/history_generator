@@ -121,6 +121,14 @@ void his_gen::Physicality::update_repro_dependent_attributes()
 
 ///////////////////////////////////////////////////////////////////////
 
+void his_gen::Physicality::Set_repro_attribute_value(const Attribute_enums::EReproduction repro_attribute,
+                                                     const bool value)
+{
+  m_repro_attributes[repro_attribute] = value;
+}
+
+///////////////////////////////////////////////////////////////////////
+
 bool his_gen::Physicality::Can_bear_young()
 {
   return m_repro_attributes[repro::EREPRODUCTION_Can_bear_young];
@@ -131,6 +139,13 @@ bool his_gen::Physicality::Can_bear_young()
 bool his_gen::Physicality::Can_sire_young()
 {
   return m_repro_attributes[repro::EREPRODUCTION_Can_sire_young];
+}
+
+///////////////////////////////////////////////////////////////////////
+
+bool his_gen::Physicality::Can_nurse_young()
+{
+  return m_repro_attributes[repro::EREPRODUCTION_Can_nurse_young];
 }
 
 ///////////////////////////////////////////////////////////////////////

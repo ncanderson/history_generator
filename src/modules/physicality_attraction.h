@@ -52,6 +52,12 @@ public:
   bool Attracted_to_bearing() const;
 
   /**
+   * @brief Attracted_to_nursing
+   * @return
+   */
+  bool Attracted_to_nursing() const;
+
+  /**
    * Getters and setters
    */
   int8_t Get_physical_attraction_flexibility() const { return m_physical_attraction_flexibility; }

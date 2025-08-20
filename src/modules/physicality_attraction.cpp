@@ -5,6 +5,11 @@
 // Standard
 #include <modules/physicality_attraction.h>
 
+// Application files
+#include <utils/dice_rolls.h>
+
+///////////////////////////////////////////////////////////////////////
+
 using personality = his_gen::Attribute_enums::EPersonality;
 using physical_attraction = his_gen::Attribute_enums::EPhysicality;
 using repro_attraction = his_gen::Attribute_enums::EReproduction;
@@ -29,6 +34,13 @@ bool his_gen::Physicality_attraction::Attracted_to_siring() const
 bool his_gen::Physicality_attraction::Attracted_to_bearing() const
 {
   return Get_repro_attribute_value(repro_attraction::EREPRODUCTION_Can_bear_young);
+}
+
+///////////////////////////////////////////////////////////////////////
+
+bool his_gen::Physicality_attraction::Attracted_to_nursing() const
+{
+  return Get_repro_attribute_value(repro_attraction::EREPRODUCTION_Can_nurse_young);
 }
 
 ///////////////////////////////////////////////////////////////////////

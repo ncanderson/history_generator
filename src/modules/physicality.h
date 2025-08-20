@@ -44,16 +44,12 @@ public:
   using Repro_attribute_map = std::map<Attribute_enums::EReproduction, bool>;
 
   /**
-   * Getters
+   * Getters and setters
    */
   const Repro_attribute_map& Get_repro_attributes() const { return m_repro_attributes; }
-
-  /**
-   * @brief Get a repro attribute from this class
-   * @param attribute The enumerated attribute to get
-   * @return The value of this attribute
-   */
   bool Get_repro_attribute_value(const Attribute_enums::EReproduction repro_attribute) const;
+  void Set_repro_attribute_value(const Attribute_enums::EReproduction repro_attribute,
+                                 const bool value);
 
   /**
    * @brief Can_bear_young
@@ -66,6 +62,12 @@ public:
    * @return
    */
   bool Can_sire_young();
+
+  /**
+   * @brief Can_nurse_young
+   * @return
+   */
+  bool Can_nurse_young();
 
 protected:
   // Attributes

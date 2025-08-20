@@ -103,11 +103,6 @@ public:
 
 protected:
   // Attributes
-
-  // Implementation
-
-private:
-  // Attributes
   /**
    * @brief This entity's personality
    */
@@ -154,6 +149,11 @@ private:
    * @brief Lovers of this entity (but not spouses)
    */
   std::vector<std::shared_ptr<his_gen::Entity_base>> m_lovers;
+
+  // Implementation
+
+private:
+  // Attributes
 
   // Implementation
   /**
