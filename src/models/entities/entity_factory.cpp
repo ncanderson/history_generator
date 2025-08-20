@@ -28,9 +28,54 @@ std::shared_ptr<his_gen::Entity_base> his_gen::Entity_factory::Create_entity(con
     }
     break;
 
+    //case his_gen::EEntity_type::EENTITY_TYPE_Unknown:
+    //break;
+    //case his_gen::EEntity_type::EENTITY_TYPE_Artifact:
+    //break;
+    //case his_gen::EEntity_type::EENTITY_TYPE_Beast:
+    //break;
+    //case his_gen::EEntity_type::EENTITY_TYPE_Clan_tribe:
+    //break;
+    //case his_gen::EEntity_type::EENTITY_TYPE_Culture:
+    //break;
+    //case his_gen::EEntity_type::EENTITY_TYPE_Ethnicity:
+    //break;
+    //case his_gen::EEntity_type::EENTITY_TYPE_Event:
+    //break;
+    //case his_gen::EEntity_type::EENTITY_TYPE_Faction:
+    //break;
+    //case his_gen::EEntity_type::EENTITY_TYPE_House:
+    //break;
+    //case his_gen::EEntity_type::EENTITY_TYPE_Idea:
+    //break;
+    //case his_gen::EEntity_type::EENTITY_TYPE_Institution:
+    //break;
+    //case his_gen::EEntity_type::EENTITY_TYPE_Language:
+    //break;
+    //case his_gen::EEntity_type::EENTITY_TYPE_Legend:
+    //break;
+    //case his_gen::EEntity_type::EENTITY_TYPE_Monster:
+    //break;
+    //case his_gen::EEntity_type::EENTITY_TYPE_Nation:
+    //break;
+    //case his_gen::EEntity_type::EENTITY_TYPE_Order:
+    //break;
+    //case his_gen::EEntity_type::EENTITY_TYPE_Pantheon:
+    //break;
+    //case his_gen::EEntity_type::EENTITY_TYPE_Phenomenon:
+    //break;
+    //case his_gen::EEntity_type::EENTITY_TYPE_Region:
+    //break;
+    //case his_gen::EEntity_type::EENTITY_TYPE_Religion:
+    //break;
+    //case his_gen::EEntity_type::EENTITY_TYPE_Ruin:
+    //break;
+    //case his_gen::EEntity_type::EENTITY_TYPE_Settlement:
+    //break;
     default:
       // Unrecognized value
-      throw std::invalid_argument("Event type enumeration not found");
+      his_gen::Print_to_cout("Entity type not implemented yet");
+      //throw std::invalid_argument("Entity type enumeration not found " + Get_entity_type_string(entity_type));
   }
 
 }
