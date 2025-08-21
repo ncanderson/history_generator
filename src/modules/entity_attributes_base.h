@@ -433,23 +433,6 @@ protected:
   { }
 
   /**
-   * @brief Set the internal attribute map, number of attributes,
-   * and the maximum attribute score for use in attraction determination.
-   * @param attrs The map of attributes to initialize
-   * @throws std::logic_error Thrown if attributes are already initialized
-   */
-  //void set_attributes(const Attribute_map& attributes)
-  //{
-  //  if (!m_attributes.empty())
-  //  {
-  //    throw std::logic_error("Attributes already initialized");
-  //  }
-  //  m_attributes = attributes;
-  //  m_num_attributes = m_attributes.size();
-  //  m_max_attribute_score = m_num_attributes * his_gen::ATTRIBUTE_MAX;
-  //}
-
-  /**
    * @brief Calculate the maximum
    * @return
    */
