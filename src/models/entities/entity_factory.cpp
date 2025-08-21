@@ -13,18 +13,20 @@
 std::shared_ptr<his_gen::Entity_base> his_gen::Entity_factory::Create_entity(const his_gen::EEntity_type entity_type,
                                                                              const uint64_t current_tick)
 {
+  std::shared_ptr<his_gen::Entity_base> new_entity;
+
   switch(entity_type)
   {
     case his_gen::EEntity_type::EENTITY_TYPE_Deity:
     {
-      return std::make_shared<his_gen::Entity_deity>(current_tick);
+      new_entity = std::make_shared<his_gen::Entity_deity>(current_tick);
     }
     break;
 
     case his_gen::EEntity_type::EENTITY_TYPE_Sentient:
     {
-      return std::make_shared<his_gen::Entity_sentient>(entity_type,
-                                                        current_tick);
+      new_entity = std::make_shared<his_gen::Entity_sentient>(entity_type,
+                                                              current_tick);
     }
     break;
 
@@ -78,6 +80,8 @@ std::shared_ptr<his_gen::Entity_base> his_gen::Entity_factory::Create_entity(con
       //throw std::invalid_argument("Entity type enumeration not found " + Get_entity_type_string(entity_type));
   }
 
+  new_entity->Initialize();
+  return new_entity;
 }
 
 ///////////////////////////////////////////////////////////////////////

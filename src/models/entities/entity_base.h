@@ -63,7 +63,7 @@ public:
    * initialization steps can be performed after instantiation and the desired
    * function will be called.
    */
-  virtual void Initialize();
+  virtual void Initialize() = 0;
 
   /**
    * @brief Is_attracted to other entity
