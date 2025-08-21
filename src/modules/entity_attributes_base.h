@@ -428,8 +428,8 @@ protected:
   Entity_attributes_base()
     :
     m_attributes(Derived::construct_attributes()),
-    m_num_attributes(),
-    m_max_attribute_score()
+    m_num_attributes(m_attributes.size()),
+    m_max_attribute_score(calc_max_attribute_score())
   { }
 
   /**
@@ -438,16 +438,16 @@ protected:
    * @param attrs The map of attributes to initialize
    * @throws std::logic_error Thrown if attributes are already initialized
    */
-  void set_attributes(const Attribute_map& attributes)
-  {
-    if (!m_attributes.empty())
-    {
-      throw std::logic_error("Attributes already initialized");
-    }
-    m_attributes = attributes;
-    m_num_attributes = m_attributes.size();
-    m_max_attribute_score = m_num_attributes * his_gen::ATTRIBUTE_MAX;
-  }
+  //void set_attributes(const Attribute_map& attributes)
+  //{
+  //  if (!m_attributes.empty())
+  //  {
+  //    throw std::logic_error("Attributes already initialized");
+  //  }
+  //  m_attributes = attributes;
+  //  m_num_attributes = m_attributes.size();
+  //  m_max_attribute_score = m_num_attributes * his_gen::ATTRIBUTE_MAX;
+  //}
 
   /**
    * @brief Calculate the maximum
