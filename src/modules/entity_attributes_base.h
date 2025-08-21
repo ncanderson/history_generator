@@ -374,6 +374,9 @@ public:
 
   /**
      * @brief Get an attribute value from this entity
+     * @details If an attribute is not found, a 0 will be returned. This will
+     * result in the attraction difference increasing by whatever amount
+     * the other entity is looking for.
      * @param attribute The enumerated attribute to get
      * @return The value of this attribute
      * @throws std::out_of_range Thrown if the attribute does not exist
