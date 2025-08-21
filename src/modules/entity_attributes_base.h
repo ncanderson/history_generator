@@ -383,7 +383,7 @@ public:
     auto it = m_attributes.find(attribute);
     if (it == m_attributes.end())
     {
-      throw std::out_of_range("Attribute not found");
+      return 0;
     }
     return it->second;
   }
