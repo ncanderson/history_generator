@@ -100,9 +100,6 @@ std::string his_gen::Data_access_dao_file::describe_entities(nlohmann::json& out
   {
     std::string description = Json_describer::Describe_physicality(entity);
 
-    // Store description in JSON
-    entity["physicality_description"] = description;
-
     // Collect all descriptions
     descriptions += description;
   }
