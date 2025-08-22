@@ -3,9 +3,12 @@
  */
 
 // Standard
-#include <models/data_definitions.h>
+
+// 3rd Party
+#include <deps/magic_enum.hpp>
 
 // Application Files
+#include <models/data_definitions.h>
 #include <utils/dice_rolls.h>
 
 ///////////////////////////////////////////////////////////////////////
@@ -20,6 +23,8 @@ his_gen::Data_definitions::Data_definitions()
   m_entity_events(),
   m_entity_relationships()
 {
+  // Populate data members from enums
+  initialize_members_from_enums();
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -72,6 +77,34 @@ void his_gen::Data_definitions::build_entity_relationships(const std::vector<his
 }
 
 ///////////////////////////////////////////////////////////////////////
+
+void his_gen::Data_definitions::initialize_members_from_enums()
+{
+  // Populate Entity_types from all enum values
+  Entity_types.clear();
+  for (auto e : magic_enum::enum_values<his_gen::EEntity_type>())
+  {
+    Entity_type ent_type = Entity_type(his_gen::Get_entity_type_string(e));
+    Entity_types.push_back(ent_type);
+  }
+
+  // Populate Relationship_types from all enum values
+  Relationship_types.clear();
+  for (auto r : magic_enum::enum_values<his_gen::ERelationship_type>())
+  {
+    Relationship_type rel_type = Relationship_type(his_gen::Get_relationship_type_string(r));
+    Relationship_types.push_back(rel_type);
+  }
+
+  // Populate Event_types from all enum values
+  Event_types.clear();
+  for (auto ev : magic_enum::enum_values<his_gen::EEvent_type>()) {
+    Event_type evt_type = Event_type(his_gen::Get_event_type_string(ev));
+    Event_types.push_back(evt_type);
+  }
+}
+
+///////////////////////////////////////////////////////////////////////
 // JSON Helpers
 
 void his_gen::to_json(nlohmann::json& json,
@@ -94,9 +127,6 @@ void his_gen::from_json(const nlohmann::json& json,
 {
   json.at("entity_type_relationship_types").get_to(data_definitions.Entity_type_relationship_types);
   json.at("entity_type_event_types").get_to(data_definitions.Entity_type_event_types);
-  json.at("entity_types").get_to(data_definitions.Entity_types);
-  json.at("relationship_types").get_to(data_definitions.Relationship_types);
-  json.at("event_types").get_to(data_definitions.Event_types);
 
   data_definitions.Initialize_composite_data();
 }

@@ -123,6 +123,11 @@ private:
    */
   void build_entity_relationships(const std::vector<his_gen::Entity_type_relationship_type>& ent_rel);
 
+  /**
+   * @brief Helper function to set up the vectors of basic data types
+   */
+  void initialize_members_from_enums();
+
 }; // class Data_definitions
 
 /**

@@ -46,11 +46,6 @@ void myth_nar::Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>
     // A random entity type
     EEntity_type entity_type = m_data_definitions->Get_rand_entity_type();
 
-    // TEMP
-    // Only deity is implemented right now
-    entity_type = EENTITY_TYPE_Deity;
-    //
-
     std::shared_ptr<his_gen::Entity_base> new_entity = his_gen::Entity_factory::Create_entity(entity_type,
                                                                                               current_tick);
 
