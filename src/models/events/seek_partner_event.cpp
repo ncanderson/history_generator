@@ -20,7 +20,8 @@ his_gen::Seek_partner_event::Seek_partner_event(std::shared_ptr<Entity_base>& tr
 
 //////////////////////////////////////////////////////////////////////
 
-void his_gen::Seek_partner_event::Run(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities)
+void his_gen::Seek_partner_event::Run(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
+                                      Event_scheduler& event_scheduler)
 {
   // Check for entity attraction
   std::vector<std::pair<std::shared_ptr<his_gen::Entity_base>,
@@ -48,6 +49,7 @@ void his_gen::Seek_partner_event::Run(std::vector<std::shared_ptr<his_gen::Entit
         // Add the target to this event's vector of targets if there is mutual attraction
         Add_target(it);
         meaningful_change_occurred(true);
+        schedule_next_event(event_scheduler);
         return;
       }
       else
@@ -58,6 +60,13 @@ void his_gen::Seek_partner_event::Run(std::vector<std::shared_ptr<his_gen::Entit
   }
   // It's done
   m_is_complete = true;
+}
+
+///////////////////////////////////////////////////////////////////////
+
+void his_gen::Seek_partner_event::schedule_next_event(Event_scheduler& event_scheduler)
+{
+  // NOOP
 }
 
 ///////////////////////////////////////////////////////////////////////

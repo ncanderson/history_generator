@@ -11,6 +11,7 @@
 #include <models/entities/entity_base.h>
 #include <models/events/event_base.h>
 #include <data_access/data_access_manager.h>
+#include <utils/event_scheduler.h>
 
 namespace his_gen
 {
@@ -43,7 +44,8 @@ public:
    */
   Narrator_base(const std::shared_ptr<his_gen::Data_definitions> data_definitions)
     :
-    m_data_definitions(data_definitions)
+    m_data_definitions(data_definitions),
+    m_event_scheduler()
   { }
 
   /**
@@ -69,6 +71,9 @@ public:
                              std::vector<std::shared_ptr<his_gen::Event_base>>& events,
                              const uint64_t current_tick) =0;
 
+
+  void Schedule_event();
+
 protected:
   // Attributes
   /**
@@ -76,12 +81,18 @@ protected:
    */
   const std::shared_ptr<his_gen::Data_definitions> m_data_definitions;
 
+  /**
+   * @brief Event scheduler for letting events determine the next step
+   */
+  Event_scheduler m_event_scheduler;
+
   // Implementation
 
 private:
   // Attributes
 
   // Implementation
+
 
 }; // class Narrator_base
 }  // namespace his_gen

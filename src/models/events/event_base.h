@@ -25,8 +25,18 @@
 // but if that becomes a requirement, more attention will be required.
 namespace his_gen
 {
+
+/**
+ * @brief Forward declaration of Event_scheduler
+ */
+class Event_scheduler;
+
 /**
  * @brief The base class for all event types
+ * @details Implementing class should call meaningful_change_occurred() to indicate
+ * if the event should be saved. If follow-up events are necessary, schedule_next_event()
+ * should be called to ensure that event will be triggered during the next
+ * event tick.
  */
 class Event_base
 {
@@ -43,6 +53,7 @@ public:
              std::shared_ptr<Entity_base>& triggering_entity,
              const uint64_t current_tick)
     :
+    m_event_id(boost::uuids::random_generator()()),
     m_event_tick(current_tick),
     m_event_type(event_type),
     m_name(his_gen::Get_event_type_string(event_type)),
@@ -65,7 +76,8 @@ public:
    * to determine if this event has created meaningful change that should be saved
    * @param entities The current set of entities, for resolving events
    */
-  virtual void Run(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities) = 0;
+  virtual void Run(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
+                   Event_scheduler& event_scheduler) = 0;
 
   /**
    * @brief If true, this event created meaningful change and should be saved.
@@ -78,6 +90,9 @@ public:
   /**
    * Getters and setters
    */
+  boost::uuids::uuid Get_event_id() const { return m_event_id; }
+  void Set_event_id(const boost::uuids::uuid& event_id) { m_event_id = event_id; }
+
   int64_t Get_event_tick() const { return m_event_tick; }
   void Set_event_tick(const int64_t event_tick) { m_event_tick = event_tick; }
 
@@ -125,6 +140,11 @@ public:
 protected:
   // Attributes
   /**
+   * @brief ID of this event
+   */
+  boost::uuids::uuid m_event_id;
+
+  /**
    * @brief The current generation tick
    */
   uint64_t m_event_tick;
@@ -171,6 +191,12 @@ protected:
 
   // Implementation
   /**
+   * @brief Schedule the next event
+   * @param event_scheduler The event scheduler instance to use for scheduling
+   */
+  virtual void schedule_next_event(Event_scheduler& event_scheduler) = 0;
+
+  /**
    * @brief Helper function to clarify this classes interface.
    * @details If necessary, derived classes can override this function. By default
    * this function will set the variable that will be checked externally to
@@ -196,6 +222,7 @@ inline void to_json(nlohmann::json& json, const his_gen::Event_base& event_base)
 {
   json = nlohmann::json
   {
+    {"event_id", event_base.Get_event_id()},
     {"type", his_gen::Get_event_type_string(event_base.Get_event_type())},
     {"event_tick", event_base.Get_event_tick()},
     {"triggering_entity_id", event_base.Get_triggering_entity()->Get_entity_id()},
@@ -217,6 +244,7 @@ inline void to_json(nlohmann::json& json, const his_gen::Event_base& event_base)
 inline void from_json(const nlohmann::json& json,
                       his_gen::Event_base& event_base)
 {
+  event_base.Set_event_id(json.at("event_id"));
   event_base.Set_name(json.at("name"));
   event_base.Set_event_tick(json.at("event_tick"));
   event_base.Set_event_type(his_gen::Get_event_type(json.at("name")));

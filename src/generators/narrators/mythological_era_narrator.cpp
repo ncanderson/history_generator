@@ -76,7 +76,7 @@ void myth_nar::Create_events(std::vector<std::shared_ptr<his_gen::Entity_base>>&
                                                                                           triggering_entity,
                                                                                           current_tick);
     // Run the event
-    new_event->Run(entities);
+    new_event->Run(entities, m_event_scheduler);
 
     // Add the event to the list if something changed
     if(new_event->Created_meaningful_change())

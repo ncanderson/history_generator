@@ -39,7 +39,8 @@ public:
    * @brief Run the event
    * @param entities The current set of entities, for check attraction
    */
-  void Run(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities);
+  void Run(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
+           Event_scheduler& event_scheduler);
 
   /**
    * Getters and setters
@@ -50,6 +51,7 @@ protected:
   // Attributes
 
   // Implementation
+  void schedule_next_event(Event_scheduler& event_scheduler);
 
 private:
   // Attributes
