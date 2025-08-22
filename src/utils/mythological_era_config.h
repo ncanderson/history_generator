@@ -40,11 +40,6 @@ public:
    */
   uint32_t Max_event_per_tick;
 
-  /**
-   * @brief Max_event_per_entity_per_tick
-   */
-  uint16_t Max_event_per_entity_per_tick;
-
   // Implementation
   /**
    * @brief Constructor

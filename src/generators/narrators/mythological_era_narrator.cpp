@@ -63,14 +63,16 @@ void myth_nar::Manage_events(std::vector<std::shared_ptr<his_gen::Entity_base>>&
   // Run events that were scheduled previously
   run_scheduled_events(entities);
 
+  // TODO Put this into another helper function or something?
   // Create new events and run them
   for(int64_t tick_count = 0; tick_count < m_config.Get_myth_config().Max_event_per_tick;tick_count++)
   {
     // A random entity
     std::shared_ptr<his_gen::Entity_base> triggering_entity = his_gen::dice::Get_random_element(entities);
 
-    // Make sure we don't create more than one event per entity per loop
-    if(triggering_entity->Get_last_event_triggered() >= current_tick)
+    // Make sure we don't create more than one event per entity per loop, but still allow events
+    // to fire on tick 0
+    if(triggering_entity->Get_last_event_triggered() >= current_tick && current_tick > 0)
     {
       // Continuing here will still increment the event counter, so the final 'events per tick' will
       // less than the max, but this will avoid infinite loops
@@ -89,6 +91,8 @@ void myth_nar::Manage_events(std::vector<std::shared_ptr<his_gen::Entity_base>>&
     // Add the event to the list if something changed
     if(new_event->Created_meaningful_change())
     {
+      // Set the tick on the entity, so it won't be selected again this loop
+      triggering_entity->Set_last_event_triggered(current_tick);
       events.push_back(new_event);
     }
     else

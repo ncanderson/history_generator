@@ -2,11 +2,10 @@
   "data_access_type": "file",
   "myth_gen_config": 
   {    
-    "myth_gen_ticks": 1,
+    "myth_gen_ticks": 100,
     "max_entity_per_tick": 20,
     "full_random_reproduction": true,
-    "max_event_per_tick": 20,
-    "max_event_per_entity": 1
+    "max_event_per_tick": 20
   },
   "hist_gen_config": 
   {
