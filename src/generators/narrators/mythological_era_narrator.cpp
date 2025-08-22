@@ -60,10 +60,23 @@ void myth_nar::Manage_events(std::vector<std::shared_ptr<his_gen::Entity_base>>&
                              std::vector<std::shared_ptr<his_gen::Event_base>>& events,
                              const uint64_t current_tick)
 {
-  for(int64_t tick_count = 0; tick_count < m_config.Get_myth_config().Max_event_per_tick; tick_count++)
+  // Run events that were scheduled previously
+  run_scheduled_events(entities);
+
+  // Create new events and run them
+  for(int64_t tick_count = 0; tick_count < m_config.Get_myth_config().Max_event_per_tick;tick_count++)
   {
     // A random entity
     std::shared_ptr<his_gen::Entity_base> triggering_entity = his_gen::dice::Get_random_element(entities);
+
+    // Make sure we don't create more than one event per entity per loop
+    if(triggering_entity->Get_last_event_triggered() >= current_tick)
+    {
+      // Continuing here will still increment the event counter, so the final 'events per tick' will
+      // less than the max, but this will avoid infinite loops
+      continue;
+    }
+
     // A random event
     EEvent_type event_type = m_data_definitions->Get_rand_entity_event(triggering_entity->Get_entity_type());
     // Create the event

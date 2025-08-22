@@ -72,9 +72,6 @@ public:
                              std::vector<std::shared_ptr<his_gen::Event_base>>& events,
                              const uint64_t current_tick) =0;
 
-
-  void Schedule_event();
-
 protected:
   // Attributes
   /**
@@ -88,12 +85,27 @@ protected:
   Event_scheduler m_event_scheduler;
 
   // Implementation
+  void run_scheduled_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities)
+  {
+    // Temp instance of scheduler, so we can avoid an infinte loop if using the
+    // class member to schedule
+    Event_scheduler temp_scheduler = Event_scheduler();
+
+    while (m_event_scheduler.More_events_to_run())
+    {
+      m_event_scheduler.Get_next_event()->Run(entities,
+                                              temp_scheduler);
+    }
+
+    // Merge any new events that were scheduled following scheduled events
+    // into the main event schedule
+    m_event_scheduler.Merge_scheduled_events(temp_scheduler);
+  }
 
 private:
   // Attributes
 
   // Implementation
-
 
 }; // class Narrator_base
 }  // namespace his_gen

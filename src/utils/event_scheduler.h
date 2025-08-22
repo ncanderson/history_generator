@@ -40,6 +40,8 @@ public:
    */
   ~Event_scheduler() = default;
 
+  using Scheduled_events = std::queue<std::shared_ptr<his_gen::Event_base>>;
+
   /**
    * @brief Schedule an event to run on the next tick
    * @param event_to_schedule
@@ -61,10 +63,24 @@ public:
   std::shared_ptr<Event_base> Get_next_event();
 
   /**
+   * @brief Get_all_scheduled_events
+   * @return All scheduled events
+   */
+  Scheduled_events Get_all_scheduled_events() const { return m_scheduled_events; }
+
+  /**
    * @brief More_events_to_run
    * @return True if there are more events to run, otherwise false.
    */
   bool More_events_to_run();
+
+  /**
+   * @brief Merge all scheduled events from another instance of this class
+   * into this one.
+   * @param scheduler_to_merge_into_this The other scheduler instance to
+   * merge.
+   */
+  void Merge_scheduled_events(Event_scheduler scheduler_to_merge);
 
 protected:
   // Attributes
@@ -76,7 +92,7 @@ private:
   /**
    * @brief Queue of events that have been scheduled for the next generation tick
    */
-  std::queue<std::shared_ptr<his_gen::Event_base>> m_scheduled_events;
+  Scheduled_events m_scheduled_events;
 
   // Implementation
 

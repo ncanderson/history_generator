@@ -46,7 +46,8 @@ public:
     m_entity_relationship_ids(),
     m_name(name),
     m_title(title),
-    m_creation_tick(current_tick)
+    m_creation_tick(current_tick),
+    m_last_event_triggered(0)
   { }
 
   /**
@@ -106,6 +107,9 @@ public:
   const uint64_t Get_creation_tick() const { return m_creation_tick; }
   void Set_creation_tick(const uint64_t tick) { m_creation_tick = tick; }
 
+  const uint64_t Get_last_event_triggered() const { return m_last_event_triggered; }
+  void Set_last_event_triggered(const uint64_t tick) { m_last_event_triggered = tick; }
+
 protected:
   // Attributes
   /**
@@ -139,6 +143,11 @@ protected:
    * @brief The current generation tick
    */
   uint64_t m_creation_tick;
+
+  /**
+   * @brief Last tick this entity triggered an event
+   */
+  uint64_t m_last_event_triggered;
 
   // Implementation
 
