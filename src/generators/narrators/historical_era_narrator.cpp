@@ -27,7 +27,7 @@ void hist_nar::Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>
 
 ///////////////////////////////////////////////////////////////////////
 
-void hist_nar::Create_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
+void hist_nar::Manage_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
                              std::vector<std::shared_ptr<his_gen::Event_base>>& events,
                              const uint64_t current_tick)
 {
