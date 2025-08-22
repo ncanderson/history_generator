@@ -19,7 +19,7 @@ hist_nar::Historical_era_narrator(const his_gen::Data_access_manager& data_acces
 
 ///////////////////////////////////////////////////////////////////////
 
-void hist_nar::Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
+void hist_nar::Create_entities(Entities& entities,
                                const uint64_t current_tick)
 {
   // NOOP
@@ -27,8 +27,9 @@ void hist_nar::Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>
 
 ///////////////////////////////////////////////////////////////////////
 
-void hist_nar::Manage_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
-                             std::vector<std::shared_ptr<his_gen::Event_base>>& events,
+void hist_nar::Manage_events(Entities& entities,
+                             Events& events,
+                             Entity_relationships& entity_relationships,
                              const uint64_t current_tick)
 {
   // NOOP

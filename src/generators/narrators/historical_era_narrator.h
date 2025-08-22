@@ -47,10 +47,12 @@ public:
    * @brief Create new events and run scheduled events
    * @param entities The vector of entity pointers to reference when creating events
    * @param events The vector of events to populate
+   * @param entity_relationships The vector of entity relationships to populate
    * @param current_tick The current generation tick
    */
-  void Manage_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
-                     std::vector<std::shared_ptr<his_gen::Event_base>>& events,
+  void Manage_events(Entities& entities,
+                     Events& events,
+                     Entity_relationships& entity_relationships,
                      const uint64_t current_tick) override;
 
 protected:

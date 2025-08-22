@@ -40,6 +40,7 @@ public:
    * @param entities The current set of entities, for check attraction
    */
   void Run(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
+           Entity_relationships& entity_relationships,
            Event_scheduler& event_scheduler);
 
   /**

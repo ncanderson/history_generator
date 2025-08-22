@@ -17,6 +17,7 @@
 #include <utils/history_generator_utils.h>
 #include <defs/history_generator_defs.h>
 #include <models/entities/entity_base.h>
+#include <models/relations/entity_relationship.h>
 
 // TODO Think a bit more about how this class manages the entities that it cares
 // about. Only the ID is being deserialized in the from_json function, meaning
@@ -70,13 +71,22 @@ public:
   virtual ~Event_base() = default;
 
   /**
+   * Usings
+   */
+  using Entities = std::vector<std::shared_ptr<his_gen::Entity_base>>;
+  using Entity_relationships = std::map<boost::uuids::uuid, std::shared_ptr<his_gen::Entity_relationship>>;
+
+  /**
    * @brief Run the event. Implementing functions will determine
    * what 'Run' means.
    * @details By default, the value of `m_event_changes_state` will be used
    * to determine if this event has created meaningful change that should be saved
    * @param entities The current set of entities, for resolving events
+   * @param entity_relationships Current set of relationships, if the event requires a new one be added
+   * @param event_scheduler Object to track upcoming events that result from this event
    */
-  virtual void Run(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
+  virtual void Run(Entities& entities,
+                   Entity_relationships& entity_relationships,
                    Event_scheduler& event_scheduler) = 0;
 
   /**
@@ -112,8 +122,8 @@ public:
   const boost::uuids::uuid Get_triggering_entity_id() const {return m_triggering_entity_id; }
   void Set_triggering_entity_id(const boost::uuids::uuid& triggering_entity_id) { m_triggering_entity_id = triggering_entity_id; }
 
-  const std::vector<std::shared_ptr<Entity_base>>& Get_targets() const { return m_targets; }
-  void Set_targets(const std::vector<std::shared_ptr<Entity_base>>& targets)
+  const Entities& Get_targets() const { return m_targets; }
+  void Set_targets(const Entities& targets)
   {
     // Entities
     m_targets = targets;
@@ -172,7 +182,7 @@ protected:
   /**
    * @brief Targets of this event
    */
-  std::vector<std::shared_ptr<Entity_base>> m_targets;
+  Entities m_targets;
 
   /**
    * @brief IDs of this event's targets

@@ -13,6 +13,7 @@
 
 // Application files
 #include <models/entities/entity_base.h>
+#include <models/relationships/relationship_type.h>
 #include <modules/personality.h>
 #include <modules/personality_attraction.h>
 #include <modules/physicality.h>
@@ -98,14 +99,6 @@ public:
   Physicality_attraction Get_physicality_attraction() const { return m_physicality_attraction; }
   void Set_physicality_attraction(const Physicality_attraction& physicality_attraction) { m_physicality_attraction = physicality_attraction; }
 
-  std::vector<std::shared_ptr<his_gen::Entity_base>> Get_spouses() const { return m_spouses; }
-  void Set_spouses(const std::vector<std::shared_ptr<his_gen::Entity_base>>& spouses) { m_spouses = spouses; }
-  void Add_spouse(const std::shared_ptr<his_gen::Entity_base>& spouse) { m_spouses.push_back(spouse); }
-
-  std::vector<std::shared_ptr<his_gen::Entity_base>> Get_lovers() const { return m_lovers; }
-  void Set_lovers(const std::vector<std::shared_ptr<his_gen::Entity_base>>& lovers) { m_lovers = lovers; }
-  void Add_lover(const std::shared_ptr<his_gen::Entity_base>& lover) { m_lovers.push_back(lover); }
-
 protected:
   // Attributes
   /**
@@ -144,16 +137,6 @@ protected:
    * @brief How likely this entity is to take a risk on more divergent attributes
    */
   double m_attraction_risk_appetite;
-
-  /**
-   * @brief m_spouses Spouses of this entity
-   */
-  std::vector<std::shared_ptr<his_gen::Entity_base>> m_spouses;
-
-  /**
-   * @brief Lovers of this entity (but not spouses)
-   */
-  std::vector<std::shared_ptr<his_gen::Entity_base>> m_lovers;
 
   // Implementation
 

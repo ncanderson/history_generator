@@ -54,11 +54,18 @@ public:
   virtual ~Narrator_base() = default;
 
   /**
+   * Usings
+   */
+  using Entities = std::vector<std::shared_ptr<his_gen::Entity_base>>;
+  using Events = std::vector<std::shared_ptr<his_gen::Event_base>>;
+  using Entity_relationships = std::map<boost::uuids::uuid, std::shared_ptr<his_gen::Entity_relationship>>;
+
+  /**
    * @brief Inheriting classes must implement this function to create new entities.
    * @param entities The vector of entity pointers to populate.
    * @current_tick The current generation tick
    */
-  virtual void Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
+  virtual void Create_entities(Entities& entities,
                                const uint64_t current_tick) = 0;
 
   /**
@@ -66,10 +73,12 @@ public:
    * and manage scheduled events.
    * @param entities The vector of entity pointers to reference when creating events
    * @param events The vector of events to populate
+   * @param entity_relationships The vector of entity relationships to populate
    * @current_tick The current generation tick
    */
-  virtual void Manage_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
-                             std::vector<std::shared_ptr<his_gen::Event_base>>& events,
+  virtual void Manage_events(Entities& entities,
+                             Events& events,
+                             Entity_relationships& entity_relationships,
                              const uint64_t current_tick) =0;
 
 protected:
@@ -85,7 +94,8 @@ protected:
   Event_scheduler m_event_scheduler;
 
   // Implementation
-  void run_scheduled_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities)
+  void run_scheduled_events(Event_base::Entities& entities,
+                            Event_base::Entity_relationships entity_relationships)
   {
     // Temp instance of scheduler, so we can avoid an infinte loop if using the
     // class member to schedule
@@ -94,6 +104,7 @@ protected:
     while (m_event_scheduler.More_events_to_run())
     {
       m_event_scheduler.Get_next_event()->Run(entities,
+                                              entity_relationships,
                                               temp_scheduler);
     }
 

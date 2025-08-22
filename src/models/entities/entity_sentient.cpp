@@ -32,9 +32,7 @@ sentient::Entity_sentient(const EEntity_type entity_type,
   m_physicality(),
   m_physicality_attraction(m_personality),
   m_physicality_attraction_thresh(derive_attraction_thresh(m_physicality_attraction.Get_physical_attraction_flexibility())),
-  m_attraction_risk_appetite(m_personality_attraction.Get_risk_appetite()),
-  m_lovers(),
-  m_spouses()
+  m_attraction_risk_appetite(m_personality_attraction.Get_risk_appetite())
 { }
 
 ///////////////////////////////////////////////////////////////////////
@@ -51,9 +49,7 @@ sentient::Entity_sentient(const std::string& name,
   m_physicality(),
   m_physicality_attraction(m_personality),
   m_physicality_attraction_thresh(derive_attraction_thresh(m_physicality_attraction.Get_physical_attraction_flexibility())),
-  m_attraction_risk_appetite(m_personality_attraction.Get_risk_appetite()),
-  m_lovers(),
-  m_spouses()
+  m_attraction_risk_appetite(m_personality_attraction.Get_risk_appetite())
 { }
 
 ///////////////////////////////////////////////////////////////////////
@@ -138,9 +134,7 @@ void his_gen::to_json(nlohmann::json& json,
     {"personality", entity_sentient.Get_personality()},
     {"attraction", entity_sentient.Get_personality_attraction()},
     {"physicality", entity_sentient.Get_physicality()},
-    {"physical_attraction", entity_sentient.Get_physicality_attraction()},
-    {"lovers", entity_sentient.Get_lovers()},
-    {"spouses", entity_sentient.Get_spouses()}
+    {"physical_attraction", entity_sentient.Get_physicality_attraction()}
   });
 }
 

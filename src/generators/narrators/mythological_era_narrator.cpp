@@ -38,7 +38,7 @@ void myth_nar::Create_progenitor_deity(std::vector<std::shared_ptr<his_gen::Enti
 
 ///////////////////////////////////////////////////////////////////////
 
-void myth_nar::Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
+void myth_nar::Create_entities(Entities& entities,
                                const uint64_t current_tick)
 {
   for(int64_t tick_count = 0; tick_count < m_config.Get_myth_config().Max_entity_per_tick; tick_count++)
@@ -56,12 +56,13 @@ void myth_nar::Create_entities(std::vector<std::shared_ptr<his_gen::Entity_base>
 
 ///////////////////////////////////////////////////////////////////////
 
-void myth_nar::Manage_events(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
-                             std::vector<std::shared_ptr<his_gen::Event_base>>& events,
+void myth_nar::Manage_events(Entities& entities,
+                             Events& events,
+                             Entity_relationships& entity_relationships,
                              const uint64_t current_tick)
 {
   // Run events that were scheduled previously
-  run_scheduled_events(entities);
+  run_scheduled_events(entities, entity_relationships);
 
   // TODO Put this into another helper function or something?
   // Create new events and run them
@@ -86,7 +87,7 @@ void myth_nar::Manage_events(std::vector<std::shared_ptr<his_gen::Entity_base>>&
                                                                                           triggering_entity,
                                                                                           current_tick);
     // Run the event
-    new_event->Run(entities, m_event_scheduler);
+    new_event->Run(entities, entity_relationships, m_event_scheduler);
 
     // Add the event to the list if something changed
     if(new_event->Created_meaningful_change())
@@ -94,11 +95,6 @@ void myth_nar::Manage_events(std::vector<std::shared_ptr<his_gen::Entity_base>>&
       // Set the tick on the entity, so it won't be selected again this loop
       triggering_entity->Set_last_event_triggered(current_tick);
       events.push_back(new_event);
-    }
-    else
-    {
-      his_gen::Print_to_cout(new_event->Get_name() + " " +
-                             "event run; no meaningful change occured");
     }
   }
 }

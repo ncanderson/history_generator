@@ -21,6 +21,7 @@ his_gen::Seek_partner_event::Seek_partner_event(std::shared_ptr<Entity_base>& tr
 //////////////////////////////////////////////////////////////////////
 
 void his_gen::Seek_partner_event::Run(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
+                                      Entity_relationships& entity_relationships,
                                       Event_scheduler& event_scheduler)
 {
   // Check for entity attraction
