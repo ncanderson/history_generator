@@ -59,6 +59,12 @@ private:
   // Attributes
 
   // Implementation
+  /**
+   * @brief describe_entities
+   * @param output_json The JSON to populate
+   * @return
+   */
+  std::string describe_entities(nlohmann::json& output_json);
 
 }; // class Data_access_dao_file
 }  // namespace his_gen

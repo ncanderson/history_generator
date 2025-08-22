@@ -13,6 +13,7 @@
 #include <deps/json.hpp>
 
 // Application files
+#include <modules/entity_attributes_base.h>
 
 namespace his_gen
 {
@@ -33,15 +34,14 @@ public:
    */
   static std::string Describe_physicality(const nlohmann::json &entity)
   {
-    std::string paragraph;
-
-    // Check for phsicality
     if (!entity.contains("physicality") || !entity["physicality"].contains("physicality"))
     {
       return "No physicality data found for this entity";
     }
 
-    // Start
+    std::string paragraph;
+
+    // Entity info
     paragraph += "This is the "
                  + entity["entity_type"].get<std::string>() + " "
                  + entity["name"].get<std::string>();
@@ -50,16 +50,29 @@ public:
     {
       paragraph += ", " + entity["title"].get<std::string>();
     }
+    paragraph += ". ";
 
-    // Iterate attrs
+    // Attributes
     const auto &physicality_map = entity["physicality"]["physicality"];
     for (auto it = physicality_map.begin(); it != physicality_map.end(); ++it)
     {
-      paragraph += "This entity's " + it.key() + " is " + classify_value(it.value()) + ". ";
+      // Lookup the enum corresponding to this attribute key
+      Attribute_enums::EPhysicality attr_enum = Attribute_enums::Get_entity_attribute(it.key());
+
+      Attribute_enums::EValue_type value_type = Attribute_enums::EValue_type::EVALUE_TYPE_Other;
+      auto map_it = Attribute_enums::physicality_value_type.find(attr_enum);
+      if (map_it != Attribute_enums::physicality_value_type.end())
+      {
+        value_type = map_it->second;
+      }
+
+      int attr_value = it.value().get<int>();
+      paragraph += "Their " + it.key() + " is " + classify_value(attr_value, value_type) + ". ";
     }
 
-    paragraph += "==================================================";
-    return paragraph.empty() ? "No physical attributes found." : paragraph;
+    paragraph += "\n==================================================\n";
+
+    return paragraph + "\n";
   }
 
 private:
@@ -71,37 +84,34 @@ private:
    * @param value The JSON value
    * @return
    */
-  static std::string classify_value(const nlohmann::json &value)
+  static std::string classify_value(int v, Attribute_enums::EValue_type value_type)
   {
-    if (!value.is_number_integer())
-    {
-      return "unknown";
-    }
-
-    // Define bounds
-    int v = value.get<int>();
     if (v < 1) v = 1;
     if (v > 100) v = 100;
 
-    // Map of the text output for each value
-    static const std::map<int, std::string> classifications =
+    int index = 0;
+    switch (value_type)
     {
-      {0, "extremely tiny"},
-      {1, "very small"},
-      {2, "small"},
-      {3, "below average in size"},
-      {4, "slightly small"},
-      {5, "average sized"},
-      {6, "slightly large"},
-      {7, "large"},
-      {8, "very large"},
-      {9, "extremely large"}
-    };
-
-    // Scale the attributes to the map range
-    int index = (v - 1) / 10;
-    // Get the text stub for the value
-    return classifications.at(index);
+      case Attribute_enums::EValue_type::EVALUE_TYPE_Size:
+        index = (v - 1) * Attribute_enums::size_descriptions.size() / 100;
+        return Attribute_enums::size_descriptions[index];
+      case Attribute_enums::EValue_type::EVALUE_TYPE_Density:
+        index = (v - 1) * Attribute_enums::density_descriptions.size() / 100;
+        return Attribute_enums::density_descriptions[index];
+      case Attribute_enums::EValue_type::EVALUE_TYPE_Presence:
+        index = (v - 1) * Attribute_enums::presence_descriptions.size() / 100;
+        return Attribute_enums::presence_descriptions[index];
+      case Attribute_enums::EValue_type::EVALUE_TYPE_Pitch:
+        index = (v - 1) * Attribute_enums::pitch_descriptions.size() / 100;
+        return Attribute_enums::pitch_descriptions[index];
+      case Attribute_enums::EValue_type::EVALUE_TYPE_Roundness:
+        index = (v - 1) * Attribute_enums::roundness_descriptions.size() / 100;
+        return Attribute_enums::roundness_descriptions[index];
+      case Attribute_enums::EValue_type::EVALUE_TYPE_Other:
+      default:
+        index = (v - 1) * Attribute_enums::default_descriptions.size() / 100;
+        return Attribute_enums::default_descriptions[index];
+    }
   }
 
 }; // class Json_Describer

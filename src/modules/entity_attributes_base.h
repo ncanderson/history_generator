@@ -10,12 +10,14 @@
 #include <string>
 #include <stdexcept>
 #include <map>
-#include <limits>
+#include <vector>
+#include <unordered_map>
 
 // JSON
 
 // Application files
 #include <defs/history_generator_defs.h>
+#include <utils/history_generator_utils.h>
 
 namespace his_gen
 {
@@ -180,7 +182,8 @@ enum class EPhysicality : uint8_t
   EPHYSICALITY_Penis_length,
   EPHYSICALITY_Penis_width,
   EPHYSICALITY_Testicle_size,
-  EPHYSICALITY_Facial_hair_density
+  EPHYSICALITY_Facial_hair_density,
+  EPHYSICALITY_Butt_roundness
 }; // enum EPhysicality
 
 /**
@@ -200,7 +203,7 @@ inline std::string Get_entity_attribute_string(const EPhysicality physical_attri
     case EPhysicality::EPHYSICALITY_Body_fat:               return "body_fat";
     case EPhysicality::EPHYSICALITY_Muscle_mass:            return "muscle_mass";
     case EPhysicality::EPHYSICALITY_Height:                 return "height";
-    case EPhysicality::EPHYSICALITY_Shoulder_width:         return "should_width";
+    case EPhysicality::EPHYSICALITY_Shoulder_width:         return "shoulder_width";
     case EPhysicality::EPHYSICALITY_Stomach_size:           return "stomach_size";
     case EPhysicality::EPHYSICALITY_Hip_width:              return "hip_width";
     case EPhysicality::EPHYSICALITY_Waist_circumference:    return "waist_circumference";
@@ -230,11 +233,173 @@ inline std::string Get_entity_attribute_string(const EPhysicality physical_attri
     case EPhysicality::EPHYSICALITY_Penis_width:            return "penis_width";
     case EPhysicality::EPHYSICALITY_Testicle_size:          return "testicle_size";
     case EPhysicality::EPHYSICALITY_Facial_hair_density:    return "facial_hair_density";
+    case EPhysicality::EPHYSICALITY_Butt_roundness:         return "butt_roundness";
     default:
       // Unrecognized value
       throw std::invalid_argument("Physical attribute not found");
   }
 }
+
+///////////////////////////////////////////////////////////////////////
+
+inline Attribute_enums::EPhysicality Get_entity_attribute(const std::string& attribute_name)
+{
+  static const std::unordered_map<std::string, Attribute_enums::EPhysicality> attribute_map =
+  {
+    {"hair_length", EPhysicality::EPHYSICALITY_Hair_length},
+    {"hair_thickness", EPhysicality::EPHYSICALITY_Hair_thickness},
+    {"hand_size", EPhysicality::EPHYSICALITY_Hand_size},
+    {"foot_size", EPhysicality::EPHYSICALITY_Foot_size},
+    {"nipple_size", EPhysicality::EPHYSICALITY_Nipple_size},
+    {"body_fat", EPhysicality::EPHYSICALITY_Body_fat},
+    {"muscle_mass", EPhysicality::EPHYSICALITY_Muscle_mass},
+    {"height", EPhysicality::EPHYSICALITY_Height},
+    {"shoulder_width", EPhysicality::EPHYSICALITY_Shoulder_width},
+    {"stomach_size", EPhysicality::EPHYSICALITY_Stomach_size},
+    {"hip_width", EPhysicality::EPHYSICALITY_Hip_width},
+    {"waist_circumference", EPhysicality::EPHYSICALITY_Waist_circumference},
+    {"posture_straightness", EPhysicality::EPHYSICALITY_Posture_straightness},
+    {"body_freckle_density", EPhysicality::EPHYSICALITY_Body_freckle_density},
+    {"body_hair_density", EPhysicality::EPHYSICALITY_Body_hair_density},
+    {"skin_color", EPhysicality::EPHYSICALITY_Skin_color},
+    {"skin_elasticity", EPhysicality::EPHYSICALITY_Skin_elasticity},
+    {"scar_coverage", EPhysicality::EPHYSICALITY_Scar_coverage},
+    {"voice_pitch", EPhysicality::EPHYSICALITY_Voice_pitch},
+    {"facial_angularity", EPhysicality::EPHYSICALITY_Facial_angularity},
+    {"cheekbone_prominence", EPhysicality::EPHYSICALITY_Cheekbone_prominence},
+    {"nose_size", EPhysicality::EPHYSICALITY_Nose_size},
+    {"jawline_sharpness", EPhysicality::EPHYSICALITY_Jawline_sharpness},
+    {"lip_fullness", EPhysicality::EPHYSICALITY_Lip_fullness},
+    {"eye_size", EPhysicality::EPHYSICALITY_Eye_size},
+    {"eye_spacing", EPhysicality::EPHYSICALITY_Eye_spacing},
+    {"eye_color_saturation", EPhysicality::EPHYSICALITY_Eye_color_saturation},
+    {"ear_size", EPhysicality::EPHYSICALITY_Ear_size},
+    {"breast_size", EPhysicality::EPHYSICALITY_Breast_size},
+    {"breast_shape_roundness", EPhysicality::EPHYSICALITY_Breast_shape_roundness},
+    {"breast_cleavage_depth", EPhysicality::EPHYSICALITY_Breast_cleavage_depth},
+    {"labia_major_size", EPhysicality::EPHYSICALITY_Labia_major_size},
+    {"labia_minor_size", EPhysicality::EPHYSICALITY_Labia_minor_size},
+    {"clitoris_size", EPhysicality::EPHYSICALITY_Clitoris_size},
+    {"penis_length", EPhysicality::EPHYSICALITY_Penis_length},
+    {"penis_width", EPhysicality::EPHYSICALITY_Penis_width},
+    {"testicle_size", EPhysicality::EPHYSICALITY_Testicle_size},
+    {"facial_hair_density", EPhysicality::EPHYSICALITY_Facial_hair_density},
+    {"butt_roundness", EPhysicality::EPHYSICALITY_Butt_roundness}
+  };
+
+  const std::string lc_attribute_name = his_gen::To_lowercase(attribute_name);
+
+  auto it = attribute_map.find(lc_attribute_name);
+  if (it != attribute_map.end())
+  {
+    return it->second;
+  }
+  else
+  {
+    his_gen::Print_to_cout(lc_attribute_name);
+    throw std::invalid_argument("Can't find physicality attribute from string");
+  }
+}
+
+///////////////////////////////////////////////////////////////////////
+
+/**
+ * @brief The EValueType enum, used to output text strings from attributes
+ */
+enum class EValue_type : uint8_t
+{
+  EVALUE_TYPE_Size,          ///< very small → very large
+  EVALUE_TYPE_Density,       ///< absent → very dense
+  EVALUE_TYPE_Pitch,         ///< low → high (voice)
+  EVALUE_TYPE_Roundness,     ///< flat → very round (e.g., butt, breast)
+  EVALUE_TYPE_Presence,      ///< absent → present (e.g., facial hair)
+  EVALUE_TYPE_Other          ///< default
+};
+
+///////////////////////////////////////////////////////////////////////
+
+/**
+ * @brief physicality_value_type, mapping physical attributes to their value type
+ */
+static const std::map<EPhysicality, EValue_type> physicality_value_type =
+{
+  {EPhysicality::EPHYSICALITY_Hair_length,            EValue_type::EVALUE_TYPE_Size},
+  {EPhysicality::EPHYSICALITY_Hair_thickness,         EValue_type::EVALUE_TYPE_Density},
+  {EPhysicality::EPHYSICALITY_Hand_size,              EValue_type::EVALUE_TYPE_Size},
+  {EPhysicality::EPHYSICALITY_Foot_size,              EValue_type::EVALUE_TYPE_Size},
+  {EPhysicality::EPHYSICALITY_Nipple_size,            EValue_type::EVALUE_TYPE_Size},
+  {EPhysicality::EPHYSICALITY_Body_fat,               EValue_type::EVALUE_TYPE_Size},
+  {EPhysicality::EPHYSICALITY_Muscle_mass,            EValue_type::EVALUE_TYPE_Size},
+  {EPhysicality::EPHYSICALITY_Height,                 EValue_type::EVALUE_TYPE_Size},
+  {EPhysicality::EPHYSICALITY_Shoulder_width,         EValue_type::EVALUE_TYPE_Size},
+  {EPhysicality::EPHYSICALITY_Stomach_size,           EValue_type::EVALUE_TYPE_Size},
+  {EPhysicality::EPHYSICALITY_Hip_width,              EValue_type::EVALUE_TYPE_Size},
+  {EPhysicality::EPHYSICALITY_Waist_circumference,    EValue_type::EVALUE_TYPE_Size},
+  {EPhysicality::EPHYSICALITY_Posture_straightness,   EValue_type::EVALUE_TYPE_Other},
+  {EPhysicality::EPHYSICALITY_Body_freckle_density,   EValue_type::EVALUE_TYPE_Density},
+  {EPhysicality::EPHYSICALITY_Body_hair_density,      EValue_type::EVALUE_TYPE_Density},
+  {EPhysicality::EPHYSICALITY_Skin_color,             EValue_type::EVALUE_TYPE_Other},
+  {EPhysicality::EPHYSICALITY_Skin_elasticity,        EValue_type::EVALUE_TYPE_Other},
+  {EPhysicality::EPHYSICALITY_Scar_coverage,          EValue_type::EVALUE_TYPE_Density},
+  {EPhysicality::EPHYSICALITY_Voice_pitch,            EValue_type::EVALUE_TYPE_Pitch},
+  {EPhysicality::EPHYSICALITY_Facial_angularity,      EValue_type::EVALUE_TYPE_Size},
+  {EPhysicality::EPHYSICALITY_Cheekbone_prominence,   EValue_type::EVALUE_TYPE_Size},
+  {EPhysicality::EPHYSICALITY_Nose_size,              EValue_type::EVALUE_TYPE_Size},
+  {EPhysicality::EPHYSICALITY_Jawline_sharpness,      EValue_type::EVALUE_TYPE_Size},
+  {EPhysicality::EPHYSICALITY_Lip_fullness,           EValue_type::EVALUE_TYPE_Size},
+  {EPhysicality::EPHYSICALITY_Eye_size,               EValue_type::EVALUE_TYPE_Size},
+  {EPhysicality::EPHYSICALITY_Eye_spacing,            EValue_type::EVALUE_TYPE_Size},
+  {EPhysicality::EPHYSICALITY_Eye_color_saturation,   EValue_type::EVALUE_TYPE_Other},
+  {EPhysicality::EPHYSICALITY_Ear_size,               EValue_type::EVALUE_TYPE_Size},
+  {EPhysicality::EPHYSICALITY_Breast_size,            EValue_type::EVALUE_TYPE_Size},
+  {EPhysicality::EPHYSICALITY_Breast_shape_roundness, EValue_type::EVALUE_TYPE_Roundness},
+  {EPhysicality::EPHYSICALITY_Breast_cleavage_depth,  EValue_type::EVALUE_TYPE_Size},
+  {EPhysicality::EPHYSICALITY_Labia_major_size,       EValue_type::EVALUE_TYPE_Size},
+  {EPhysicality::EPHYSICALITY_Labia_minor_size,       EValue_type::EVALUE_TYPE_Size},
+  {EPhysicality::EPHYSICALITY_Clitoris_size,          EValue_type::EVALUE_TYPE_Size},
+  {EPhysicality::EPHYSICALITY_Penis_length,           EValue_type::EVALUE_TYPE_Size},
+  {EPhysicality::EPHYSICALITY_Penis_width,            EValue_type::EVALUE_TYPE_Size},
+  {EPhysicality::EPHYSICALITY_Testicle_size,          EValue_type::EVALUE_TYPE_Size},
+  {EPhysicality::EPHYSICALITY_Facial_hair_density,    EValue_type::EVALUE_TYPE_Presence},
+  {EPhysicality::EPHYSICALITY_Butt_roundness,         EValue_type::EVALUE_TYPE_Roundness}
+};
+
+///////////////////////////////////////////////////////////////////////
+
+static const std::vector<std::string> size_descriptions =
+{
+  "very small", "small", "slightly small", "average sized",
+  "slightly large", "large", "very large", "extremely large"
+};
+
+static const std::vector<std::string> density_descriptions =
+{
+  "absent", "extremely sparse", "very sparse", "sparse",
+  "moderate", "dense", "very dense", "extremely dense"
+};
+
+static const std::vector<std::string> presence_descriptions =
+{
+  "absent", "barely present", "present", "prominent"
+};
+
+static const std::vector<std::string> pitch_descriptions =
+{
+  "very low", "low", "slightly low", "medium pitch",
+  "slightly high", "high", "very high"
+};
+
+static const std::vector<std::string> roundness_descriptions =
+{
+  "flat", "slightly rounded", "moderately rounded", "rounded",
+  "very rounded", "extremely rounded"
+};
+
+static const std::vector<std::string> default_descriptions =
+{
+  "minimal", "low", "slightly low", "medium",
+  "slightly high", "high", "very high"
+};
 
 ///////////////////////////////////////////////////////////////////////
 

@@ -58,6 +58,7 @@ his_gen::Physicality::Physical_attribute_map his_gen::Physicality::construct_att
   physical_attributes[physicality::EPHYSICALITY_Hip_width] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
   physical_attributes[physicality::EPHYSICALITY_Posture_straightness] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
   physical_attributes[physicality::EPHYSICALITY_Waist_circumference] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
+  physical_attributes[physicality::EPHYSICALITY_Butt_roundness] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);
 
   // Skin
   physical_attributes[physicality::EPHYSICALITY_Body_freckle_density] = his_gen::dice::Make_a_roll<uint8_t>(his_gen::ATTRIBUTE_MAX);

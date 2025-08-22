@@ -3,3 +3,4 @@ build/
 *.user
 
 output/sample_output.json
+output/entity_descriptions.txt
