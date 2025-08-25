@@ -20,74 +20,55 @@
 namespace his_gen
 {
 /**
- * @brief A generated entity
+ * @brief The data definitions used by all generators
+ * @details This class uses only static, private data members. All instance methods
+ * operate on these static members. This allows a single shared set of
+ * definitions throughout the application
  */
 class Data_definitions
 {
 public:
   // Attributes
-  /**
-   * @brief List of all possible entity relationship types based on entity type
-   */
-  std::vector<his_gen::Entity_type_relationship_type> Entity_type_relationship_types;
-
-  /**
-   * @brief List of all possible entity event types based on entity type
-   */
-  std::vector<his_gen::Entity_type_event_type> Entity_type_event_types;
-
-  /**
-   * @brief List of all entity types
-   */
-  std::vector<his_gen::Entity_type> Entity_types;
-
-  /**
-   * @brief List of all entity relationship types
-   */
-  std::vector<his_gen::Relationship_type> Relationship_types;
-
-  /**
-   * @brief Event_types
-   */
-  std::vector<his_gen::Event_type> Event_types;
 
   // Implementation
   /**
    * @brief Constructor
+   *
+   * Initializes static members if they have not yet been initialized.
    */
   Data_definitions();
 
   /**
    * @brief Destructor
    */
-  ~Data_definitions(){};
+  ~Data_definitions() {};
 
   /**
    * @brief When instantiated directly from JSON, this class won't necessarily
-   * have full acccess to all data in the constructor. This function allows
-   * the class to fully initialize any data members not fully constructible
+   * have full access to all data in the constructor. This function allows
+   * the class to fully initialize any static data members not fully constructible
    * from JSON.
    */
-  void Initialize_composite_data();
+  static void Initialize_composite_data();
 
   /**
    * @brief Return a random entity type
    */
-  his_gen::EEntity_type Get_rand_entity_type();
+  static his_gen::EEntity_type Get_rand_entity_type();
 
   /**
    * @brief Return a random valid event for this entity type
    * @param entity The entity to get an event for
    * @return A random valid event type
    */
-  his_gen::EEvent_type Get_rand_entity_event(his_gen::EEntity_type entity);
+  static his_gen::EEvent_type Get_rand_entity_event(his_gen::EEntity_type entity);
 
   /**
    * @brief Return a random valid relationship for this entity type
    * @param entity The entity to get a relationship for
    * @return A random valid relationship type
    */
-  his_gen::ERelationship_type Get_rand_entity_relationship(his_gen::EEntity_type entity);
+  static his_gen::ERelationship_type Get_rand_entity_relationship(his_gen::EEntity_type entity);
 
   /**
    * @brief Get the vector of all event types
@@ -103,36 +84,59 @@ protected:
 private:
   // Attributes
   /**
+   * @brief List of all possible entity relationship types based on entity type
+   */
+  static std::vector<his_gen::Entity_type_relationship_type> s_entity_type_relationship_types;
+
+  /**
+   * @brief List of all possible entity event types based on entity type
+   */
+  static std::vector<his_gen::Entity_type_event_type> s_entity_type_event_types;
+
+  /**
+   * @brief List of all entity types
+   */
+  static std::vector<his_gen::Entity_type> s_entity_types;
+
+  /**
+   * @brief List of all entity relationship types
+   */
+  static std::vector<his_gen::Relationship_type> s_relationship_types;
+
+  /**
+   * @brief List of all event types
+   */
+  static std::vector<his_gen::Event_type> s_event_types;
+
+  /**
    * @brief Map of entity type/event type pairs, re-ordered to facilitate
    * retrieval from outside this class.
    */
-  std::map<his_gen::EEntity_type, std::vector<his_gen::EEvent_type>> m_entity_events;
+  static std::map<his_gen::EEntity_type, std::vector<his_gen::EEvent_type>> s_entity_events;
 
   /**
    * @brief Map of entity type/relationship type pairs, re-ordered to facilitate
    * retrieval from outside this class.
    */
-  std::map<his_gen::EEntity_type, std::vector<his_gen::ERelationship_type>> m_entity_relationships;
+  static std::map<his_gen::EEntity_type, std::vector<his_gen::ERelationship_type>> s_entity_relationships;
 
   // Implementation
   /**
-   * @brief Populate the local map from external data
-   * @param ent_event A map of entity types as a key, with the corresponding
-   * event types as a value.
+   * @brief Populate the static entity/event map from external data
+   * @param ent_event A vector of entity type/event type pairs
    */
-  void build_entity_events(const std::vector<his_gen::Entity_type_event_type>& ent_event);
+  static void build_entity_events(const std::vector<his_gen::Entity_type_event_type>& ent_event);
 
   /**
-   * @brief Populate the local map from external data
-   * @param ent_rel A map of entity types as a key, with the corresponding
-   * relationship types as a value.
+   * @brief Populate the static entity/relationship map from external data
+   * @param ent_rel A vector of entity type/relationship type pairs
    */
-  void build_entity_relationships(const std::vector<his_gen::Entity_type_relationship_type>& ent_rel);
+  static void build_entity_relationships(const std::vector<his_gen::Entity_type_relationship_type>& ent_rel);
 
   /**
-   * @brief Helper function to set up the vectors of basic data types
+   * @brief Helper function to set up the static vectors of basic data types
    */
-  void initialize_members_from_enums();
+  static void initialize_members_from_enums();
 
 }; // class Data_definitions
 

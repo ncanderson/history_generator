@@ -56,7 +56,7 @@ sentient::Entity_sentient(const std::string& name,
 
 void sentient::Initialize()
 {
-  // NOOP
+  initialize_max_events_by_type();
 }
 
 ///////////////////////////////////////////////////////////////////////
