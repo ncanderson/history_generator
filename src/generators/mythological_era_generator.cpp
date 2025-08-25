@@ -49,7 +49,7 @@ void his_gen::Mythological_era_generator::Run()
 
       m_myth_narrator.Manage_events(m_generated_history.Entities,
                                     m_generated_history.Events,
-                                    m_generated_history.Entity_relationships,
+                                    m_generated_history.Get_entity_relationships(),
                                     m_ticks_completed);
 
       // Increment run-time ticks

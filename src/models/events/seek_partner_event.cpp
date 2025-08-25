@@ -50,6 +50,17 @@ void his_gen::Seek_partner_event::Run(std::vector<std::shared_ptr<his_gen::Entit
         // Add the target to this event's vector of targets if there is mutual attraction
         Add_target(it);
         meaningful_change_occurred(true);
+
+        // Create the new relationship for these entities
+        Entity_relationship::Entity_relationship_ptr new_relationship =
+            Entity_relationship::Entity_relationship_factory(triggering_entity,
+                                                             it,
+                                                             his_gen::ERELATIONSHIP_TYPE_Lover);
+
+        // Add the new relationship to the generated history reference
+        entity_relationships[new_relationship->Get_entity_relationship_id()] = new_relationship;
+
+        // Schedule the next event
         schedule_next_event(event_scheduler);
         return;
       }

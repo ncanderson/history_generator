@@ -24,10 +24,6 @@ class Relationship_type
 {
 public:
   // Attributes
-  /**
-   * @brief Relationship type name
-   */
-  std::string Name;
 
   // Implementation
   /**
@@ -37,9 +33,9 @@ public:
 
   /**
    * @brief Constructor
-   * @param name Relationship type name
+   * @param relationship_type The type of this relationship
    */
-  Relationship_type(const std::string& name);
+  Relationship_type(const his_gen::ERelationship_type& relationship_type);
 
   /**
    * @brief Destructor
@@ -49,10 +45,7 @@ public:
   /**
    * Getters and setters
    */
-  void Set_name(const std::string& name) { m_name = name; }
   std::string Get_name() const { return m_name; }
-
-  void Set_relationship_type(const his_gen::ERelationship_type& erelationship_type) { m_relationship_type = erelationship_type; }
   his_gen::ERelationship_type Get_relationship_type() const { return m_relationship_type; }
 
 protected:
@@ -76,9 +69,19 @@ private:
 
 }; // class Relationship_type
 
+/**
+ * @brief to_json
+ * @param json
+ * @param relationship_type
+ */
 void to_json(nlohmann::json& json,
              const his_gen::Relationship_type& relationship_type);
 
+/**
+ * @brief from_json
+ * @param json
+ * @param relationship_type
+ */
 void from_json(const nlohmann::json& json,
                his_gen::Relationship_type& relationship_type);
 

@@ -80,6 +80,8 @@ void his_gen::Data_definitions::build_entity_relationships(const std::vector<his
 
 void his_gen::Data_definitions::initialize_members_from_enums()
 {
+  // TODO Make entity type and event type instantiation match the relationship type instantiation
+
   // Populate Entity_types from all enum values
   Entity_types.clear();
   for (auto e : magic_enum::enum_values<his_gen::EEntity_type>())
@@ -92,7 +94,7 @@ void his_gen::Data_definitions::initialize_members_from_enums()
   Relationship_types.clear();
   for (auto r : magic_enum::enum_values<his_gen::ERelationship_type>())
   {
-    Relationship_type rel_type = Relationship_type(his_gen::Get_relationship_type_string(r));
+    Relationship_type rel_type = Relationship_type((r));
     Relationship_types.push_back(rel_type);
   }
 

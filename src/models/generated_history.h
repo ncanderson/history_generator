@@ -42,12 +42,6 @@ public:
    */
   std::vector<std::shared_ptr<his_gen::Event_base>> Events;
 
-  /**
-   * @brief List of all entity relationships
-   * @details This vector will hold all entity relationships,
-   */
-  std::map<boost::uuids::uuid, std::shared_ptr<his_gen::Entity_relationship>> Entity_relationships;
-
   // Implementation
   /**
    * @brief Constructor
@@ -59,6 +53,49 @@ public:
    */
   ~Generated_history(){};
 
+  /**
+   * Usings
+   */
+  using Entity_relationships = std::map<boost::uuids::uuid, std::shared_ptr<his_gen::Entity_relationship>>;
+
+  /**
+   * Getters and Setters
+   */
+  /**
+   * @brief Set_entity_relationships
+   * @param relationships
+   */
+  void Set_entity_relationships(const Entity_relationships& relationships) { m_entity_relationships = relationships; }
+  Entity_relationships& Get_entity_relationships() { return m_entity_relationships; }
+  const Entity_relationships& Get_entity_relationships() const { return m_entity_relationships; }
+
+  /**
+   * @brief Add_entity_relationship
+   * @param id
+   * @param relationship
+   */
+  void Add_entity_relationship(const boost::uuids::uuid& id,
+                               const std::shared_ptr<his_gen::Entity_relationship>& relationship)
+  {
+    m_entity_relationships[id] = relationship;
+  }
+
+  /**
+   * @brief Get_entity_relationship
+   * @param id ID of the Entity relationship to return
+   * @return The Entity_relationship object
+   * @throws std::out_of_range Thrown if the sought ID isn't found
+   */
+  std::shared_ptr<his_gen::Entity_relationship> Get_entity_relationship(const boost::uuids::uuid& id) const
+  {
+      auto it = m_entity_relationships.find(id);
+      if (it == m_entity_relationships.end())
+      {
+        throw std::out_of_range("Entity relationship not found for given UUID");
+      }
+      return it->second;
+  }
+
 protected:
   // Attributes
 
@@ -66,6 +103,12 @@ protected:
 
 private:
   // Attributes
+  /**
+   * @brief List of all entity relationships
+   * @details A map holding an ID key to an Entity_relationship instance. The key should be stored
+   * in the relationship IDs map of the entity this relationship is owned by.
+   */
+  std::map<boost::uuids::uuid, std::shared_ptr<his_gen::Entity_relationship>> m_entity_relationships;
 
   // Implementation
 

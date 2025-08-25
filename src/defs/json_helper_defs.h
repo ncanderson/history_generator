@@ -95,6 +95,44 @@ struct adl_serializer<boost::uuids::uuid>
   }
 }; // struct adl_serializer: boost::uuids::uuid
 
+/**
+ * @brief adl_serializer for a map with a boost UUID as a key
+ */
+template <typename T, typename Compare, typename Alloc>
+struct adl_serializer<std::map<boost::uuids::uuid, T, Compare, Alloc>>
+{
+  /**
+   * @brief to_json
+   * @param j
+   * @param m
+   */
+  static void to_json(json& j, const std::map<boost::uuids::uuid, T, Compare, Alloc>& m)
+  {
+    j = json::object();
+    for (const auto& [uuid, value] : m)
+    {
+      // uses T's to_json function
+      j[boost::uuids::to_string(uuid)] = value;
+    }
+  }
+
+  /**
+   * @brief from_json
+   * @param j
+   * @param m
+   */
+  static void from_json(const json& j, std::map<boost::uuids::uuid, T, Compare, Alloc>& m)
+  {
+    m.clear();
+    for (auto it = j.begin(); it != j.end(); ++it)
+    {
+      boost::uuids::uuid id = boost::uuids::string_generator()(it.key());
+      // uses T's from_json
+      m[id] = it.value().get<T>();
+    }
+  }
+}; // adl_serializer<std::map<boost::uuids::uuid, T, Compare, Alloc>>
+
 }  // namespace nlohmann
 
 /**
