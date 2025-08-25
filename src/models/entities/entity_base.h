@@ -47,7 +47,9 @@ public:
     m_name(name),
     m_title(title),
     m_creation_tick(current_tick),
-    m_last_event_triggered(0)
+    m_last_event_triggered(0),
+    m_max_events_by_type(),
+    m_count_events_by_type()
   { }
 
   /**
@@ -84,6 +86,18 @@ public:
    */
   virtual bool Is_attracted(std::shared_ptr<Entity_base> other_entity,
                             std::vector<std::shared_ptr<Entity_base>> attracted_to) = 0;
+
+  /**
+   * @brief The argued event type is valid for this entity
+   * @details Implementing classes should use this function to impose any necessary limits
+   * on triggered events. For example, a god might maintain 20 lovers but refuse to marry,
+   * or a particularly peaceful nation may never go to war. This function is implemented
+   * at the entity level since different entities will have different limits based
+   * on attributes.
+   * @param event_type The event type to check
+   * @return True if the event type is valid, otherwise false
+   */
+  virtual bool Event_is_valid(his_gen::EEvent_type event_type) = 0;
 
   /**
    * Getters and setters
@@ -149,7 +163,71 @@ protected:
    */
   uint64_t m_last_event_triggered;
 
+  /**
+   * @brief The maximum number of events of each type for this entity
+   */
+  std::map<his_gen::EEvent_type, uint16_t> m_max_events_by_type;
+
+  /**
+   * @brief The number of events for this entity, by type
+   */
+  std::map<his_gen::EEvent_type, uint16_t> m_count_events_by_type;
+
   // Implementation
+  /**
+   * @brief Use this entity's attributes to populate the 'max events'
+   * map.
+   * @details The base class function will default all values to 1; implementing classes
+   * can and should refine their own max values.
+   */
+  virtual void initialize_max_events_by_type() = 0;
+
+  /**
+   * @brief Get max event count by type
+   * @param event_type The event type to return
+   * @return The max count
+   */
+  uint16_t get_max_events(his_gen::EEvent_type event_type) const
+  {
+    auto it = m_max_events_by_type.find(event_type);
+    if (it == m_max_events_by_type.end())
+      throw std::out_of_range("Event type not found in max events map");
+    return it->second;
+  }
+
+  /**
+   * @brief Set the max event count by type
+   * @param event_type The event type to check
+   * @param value The max count
+   */
+  void set_max_events(his_gen::EEvent_type event_type, uint16_t value)
+  {
+    m_max_events_by_type[event_type] = value;
+  }
+
+  /**
+   * @brief Get this entity's current event count by type
+   * @param event_type The event type to return
+   * @return The entity's current event count of this type
+   */
+  uint16_t get_events_count(his_gen::EEvent_type event_type) const
+  {
+    auto it = m_count_events_by_type.find(event_type);
+    if (it == m_count_events_by_type.end())
+      throw std::out_of_range("Event type not found in count events map");
+    return it->second;
+  }
+
+  /**
+   * @brief Increment the count of this entity's events
+   * @param event_type The event type to check
+   * @param value The value to increment by, defaulting to 1
+   */
+  void increment_events_count(his_gen::EEvent_type event_type, uint16_t value = 1)
+  {
+    // If missing, insert with 0, then add value
+    m_count_events_by_type[event_type] += value;
+  }
 
 private:
   // Attributes

@@ -32,8 +32,9 @@ public:
 
   /**
    * @brief Constructor
+   * @param event_type The event type to instantiate
    */
-  Event_type(const std::string& name);
+  Event_type(const his_gen::EEvent_type& event_type);
 
   /**
    * @brief Destructor
@@ -43,10 +44,7 @@ public:
   /**
    * Getters and setters
    */
-  void Set_name(const std::string& name) { m_name = name; }
   std::string Get_name() const { return m_name; }
-
-  void Set_event_type(const his_gen::EEvent_type& eevent_type) { m_event_type = eevent_type; }
   his_gen::EEvent_type Get_event_type() const { return m_event_type; }
 
 protected:
@@ -70,9 +68,19 @@ private:
 
 }; // class Entity_type
 
+/**
+ * @brief to_json
+ * @param json
+ * @param event_type
+ */
 void to_json(nlohmann::json& json,
              const his_gen::Event_type& event_type);
 
+/**
+ * @brief from_json
+ * @param json
+ * @param event_type
+ */
 void from_json(const nlohmann::json& json,
                his_gen::Event_type& event_type);
 

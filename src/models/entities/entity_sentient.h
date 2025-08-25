@@ -139,6 +139,11 @@ protected:
   double m_attraction_risk_appetite;
 
   // Implementation
+  /**
+   * @brief Initialize the map this entity will use to track the max number of events
+   * by type
+   */
+  void initialize_max_events_by_type() override;
 
 private:
   // Attributes

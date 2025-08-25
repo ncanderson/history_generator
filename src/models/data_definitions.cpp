@@ -13,7 +13,11 @@
 
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::Data_definitions::Data_definitions()
+using dd = his_gen::Data_definitions;
+
+///////////////////////////////////////////////////////////////////////
+
+dd::Data_definitions()
   :
   Entity_type_relationship_types(),
   Entity_type_event_types(),
@@ -29,7 +33,7 @@ his_gen::Data_definitions::Data_definitions()
 
 ///////////////////////////////////////////////////////////////////////
 
-void his_gen::Data_definitions::Initialize_composite_data()
+void dd::Initialize_composite_data()
 {
   build_entity_relationships(Entity_type_relationship_types);
   build_entity_events(Entity_type_event_types);
@@ -37,28 +41,28 @@ void his_gen::Data_definitions::Initialize_composite_data()
 
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::EEntity_type his_gen::Data_definitions::Get_rand_entity_type()
+his_gen::EEntity_type dd::Get_rand_entity_type()
 {
   return his_gen::dice::Get_random_element(Entity_types).Get_entity_type();
 }
 
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::EEvent_type his_gen::Data_definitions::Get_rand_entity_event(his_gen::EEntity_type entity)
+his_gen::EEvent_type dd::Get_rand_entity_event(his_gen::EEntity_type entity)
 {
   return his_gen::dice::Get_random_element(m_entity_events[entity]);
 }
 
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::ERelationship_type his_gen::Data_definitions::Get_rand_entity_relationship(his_gen::EEntity_type entity)
+his_gen::ERelationship_type dd::Get_rand_entity_relationship(his_gen::EEntity_type entity)
 {
   return his_gen::dice::Get_random_element(m_entity_relationships[entity]);
 }
 
 ///////////////////////////////////////////////////////////////////////
 
-void his_gen::Data_definitions::build_entity_events(const std::vector<his_gen::Entity_type_event_type>& ent_event)
+void dd::build_entity_events(const std::vector<his_gen::Entity_type_event_type>& ent_event)
 {
   for(auto& it : ent_event)
   {
@@ -68,7 +72,7 @@ void his_gen::Data_definitions::build_entity_events(const std::vector<his_gen::E
 
 ///////////////////////////////////////////////////////////////////////
 
-void his_gen::Data_definitions::build_entity_relationships(const std::vector<his_gen::Entity_type_relationship_type>& ent_rel)
+void dd::build_entity_relationships(const std::vector<his_gen::Entity_type_relationship_type>& ent_rel)
 {
   for(auto& it : ent_rel)
   {
@@ -78,7 +82,7 @@ void his_gen::Data_definitions::build_entity_relationships(const std::vector<his
 
 ///////////////////////////////////////////////////////////////////////
 
-void his_gen::Data_definitions::initialize_members_from_enums()
+void dd::initialize_members_from_enums()
 {
   // TODO Make entity type and event type instantiation match the relationship type instantiation
 
@@ -101,9 +105,16 @@ void his_gen::Data_definitions::initialize_members_from_enums()
   // Populate Event_types from all enum values
   Event_types.clear();
   for (auto ev : magic_enum::enum_values<his_gen::EEvent_type>()) {
-    Event_type evt_type = Event_type(his_gen::Get_event_type_string(ev));
+    Event_type evt_type = Event_type(ev);
     Event_types.push_back(evt_type);
   }
+}
+
+///////////////////////////////////////////////////////////////////////
+
+std::vector<his_gen::Event_type> dd::Get_event_types()
+{
+  return dd::Event_types;
 }
 
 ///////////////////////////////////////////////////////////////////////

@@ -89,6 +89,12 @@ public:
    */
   his_gen::ERelationship_type Get_rand_entity_relationship(his_gen::EEntity_type entity);
 
+  /**
+   * @brief Get the vector of all event types
+   * @return The vector of all event types
+   */
+  static std::vector<his_gen::Event_type> Get_event_types();
+
 protected:
   // Attributes
 
