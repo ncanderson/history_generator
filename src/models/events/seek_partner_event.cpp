@@ -47,9 +47,18 @@ void his_gen::Seek_partner_event::Run(std::vector<std::shared_ptr<his_gen::Entit
       // If this entity is attracted to another entity, check for mutual attraction
       if(it->Is_attracted(triggering_entity))
       {
+        // TODO: Refactor this stuff into the base class I think, since there is boilerplate
+        // bookeeping that we have now
+
         // Add the target to this event's vector of targets if there is mutual attraction
         Add_target(it);
+        // Mark the internal flag so caller can know if this event did anything we care about
         meaningful_change_occurred(true);
+        // Increment the event counter for this entity, allowing it to decide
+        // if future events of this type are allowed
+        it->Increment_events_count(m_event_type);
+        // Set the tick on the entity, so it won't be selected again this loop
+        triggering_entity->Set_last_event_triggered(m_event_tick);
 
         // Create the new relationship for these entities
         Entity_relationship::Entity_relationship_ptr new_relationship =

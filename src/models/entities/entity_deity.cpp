@@ -36,22 +36,8 @@ deity::Entity_deity(const std::string& name,
 
 void deity::Initialize()
 {
+  initialize_max_events_by_type();
   update_divine_physicality();
-}
-
-///////////////////////////////////////////////////////////////////////
-
-bool deity::Event_is_valid(his_gen::EEvent_type event_type)
-{
-  // NOOP
-  return true;
-}
-
-///////////////////////////////////////////////////////////////////////
-
-void deity::initialize_max_events_by_type()
-{
-
 }
 
 ///////////////////////////////////////////////////////////////////////

@@ -15,6 +15,7 @@
 
 // Application files
 #include <utils/history_generator_utils.h>
+#include <models/data_definitions.h>
 
 namespace his_gen
 {
@@ -48,8 +49,9 @@ public:
     m_title(title),
     m_creation_tick(current_tick),
     m_last_event_triggered(0),
-    m_max_events_by_type(),
-    m_count_events_by_type()
+    m_max_events_by_type(initialize_events_maps()),
+    m_count_events_by_type(initialize_events_maps()),
+    m_default_max_event_type(1)
   { }
 
   /**
@@ -95,9 +97,31 @@ public:
    * at the entity level since different entities will have different limits based
    * on attributes.
    * @param event_type The event type to check
+   * @param current_tick The current generation tick, compared to the last time this entity
+   * has had an event of any type triggered.
    * @return True if the event type is valid, otherwise false
    */
-  virtual bool Event_is_valid(his_gen::EEvent_type event_type) = 0;
+  virtual bool Event_is_valid(his_gen::EEvent_type event_type,
+                              uint8_t current_tick)
+  {
+    // The entity has not had an event this tick, and this entity's event count
+    // does not exceed its max allowable value
+    return current_tick > m_last_event_triggered &&
+           get_events_count(event_type) < get_max_events(event_type);
+  }
+
+  /**
+   * @brief Increment the count of this entity's events
+   * @details This function allows anything that interacts with this entity
+   * to let it know that a new event has been created for it.
+   * @param event_type The event type to check
+   * @param value The value to increment by, defaulting to 1
+   */
+  void Increment_events_count(his_gen::EEvent_type event_type, uint16_t value = 1)
+  {
+    // If missing, insert with 0, then add value
+    m_count_events_by_type[event_type] += value;
+  }
 
   /**
    * Getters and setters
@@ -173,6 +197,11 @@ protected:
    */
   std::map<his_gen::EEvent_type, uint16_t> m_count_events_by_type;
 
+  /**
+   * @brief Start value for max event type
+   */
+  uint8_t m_default_max_event_type;
+
   // Implementation
   /**
    * @brief Use this entity's attributes to populate the 'max events'
@@ -183,6 +212,12 @@ protected:
   virtual void initialize_max_events_by_type() = 0;
 
   /**
+   * @brief get_default_max_event_type
+   * @return The default max event type
+   */
+  uint8_t get_default_max_event_type() const { return m_default_max_event_type; }
+
+  /**
    * @brief Get max event count by type
    * @param event_type The event type to return
    * @return The max count
@@ -191,7 +226,9 @@ protected:
   {
     auto it = m_max_events_by_type.find(event_type);
     if (it == m_max_events_by_type.end())
-      throw std::out_of_range("Event type not found in max events map");
+    {
+      throw std::out_of_range(his_gen::Get_event_type_string(event_type) + " not found in max events map");
+    }
     return it->second;
   }
 
@@ -214,25 +251,34 @@ protected:
   {
     auto it = m_count_events_by_type.find(event_type);
     if (it == m_count_events_by_type.end())
+    {
       throw std::out_of_range("Event type not found in count events map");
+    }
     return it->second;
-  }
-
-  /**
-   * @brief Increment the count of this entity's events
-   * @param event_type The event type to check
-   * @param value The value to increment by, defaulting to 1
-   */
-  void increment_events_count(his_gen::EEvent_type event_type, uint16_t value = 1)
-  {
-    // If missing, insert with 0, then add value
-    m_count_events_by_type[event_type] += value;
   }
 
 private:
   // Attributes
 
   // Implementation
+  /**
+   * @brief Initialize the events maps to 0 for this entity
+   * @details This function will take all valid events and insert them into the map
+   * with a value of 0, for both 'count' and 'max' maps.
+   * @return The now constucted events count map
+   */
+  std::map<his_gen::EEvent_type, uint16_t> initialize_events_maps()
+  {
+    std::map<his_gen::EEvent_type, uint16_t> initial_counts;
+    std::vector<his_gen::Event_type> events = his_gen::Data_definitions::Get_event_types();
+    // Loop through all events
+    for(const auto& event : events)
+    {
+      his_gen::EEvent_type event_enum = event.Get_event_type();
+      initial_counts[event_enum] = 0;
+    }
+    return initial_counts;
+  }
 
 }; // class Entity_base
 

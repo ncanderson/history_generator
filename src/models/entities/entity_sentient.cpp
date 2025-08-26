@@ -10,11 +10,13 @@
 // Application files
 #include <defs/json_helper_defs.h>
 #include <models/entities/entity_sentient.h>
+#include <models/data_definitions.h>
 #include <modules/names.h>
 
 ///////////////////////////////////////////////////////////////////////
 
 using sentient = his_gen::Entity_sentient;
+using personality_attr = his_gen::Attribute_enums::EPersonality;
 REGISTER_POLYMORPHIC_TYPE(his_gen::Entity_base, his_gen::Entity_sentient)
 
 ///////////////////////////////////////////////////////////////////////
@@ -95,17 +97,51 @@ bool sentient::Is_attracted(std::shared_ptr<Entity_base> other_entity,
 
 ///////////////////////////////////////////////////////////////////////
 
-bool sentient::Event_is_valid(his_gen::EEvent_type event_type)
-{
-  // NOOP
-  return true;
-}
-
-///////////////////////////////////////////////////////////////////////
-
 void sentient::initialize_max_events_by_type()
 {
+  std::vector<his_gen::Event_type> events = his_gen::Data_definitions::Get_event_types();
+  // Loop through all events
+  for(const auto& event : events)
+  {
+    his_gen::EEvent_type event_enum = event.Get_event_type();
+    uint16_t default_max_event = get_default_max_event_type();
 
+    switch(event_enum)
+    {
+      case his_gen::EEvent_type::EEVENT_TYPE_Seek_partner:
+      {
+        //Traits that push toward more lovers
+        double expansive =
+            0.6 * (m_personality.Get_entity_attribute_value(personality_attr::EPERSONALITY_Lustful) / 100.0) +
+            0.4 * (m_personality.Get_entity_attribute_value(personality_attr::EPERSONALITY_Sociable) / 100.0) +
+            0.3 * (m_personality.Get_entity_attribute_value(personality_attr::EPERSONALITY_Ambitious) / 100.0) +
+            0.2 * (m_personality.Get_entity_attribute_value(personality_attr::EPERSONALITY_Extravagant) / 100.0) +
+            0.2 * (m_personality.Get_entity_attribute_value(personality_attr::EPERSONALITY_Progressive) / 100.0);
+
+        // Traits that push toward fewer lovers
+        double restrictive =
+            0.6 * (m_personality.Get_entity_attribute_value(personality_attr::EPERSONALITY_Chaste) / 100.0) +
+            0.4 * (m_personality.Get_entity_attribute_value(personality_attr::EPERSONALITY_Conservative) / 100.0) +
+            0.3 * (m_personality.Get_entity_attribute_value(personality_attr::EPERSONALITY_Avoidant) / 100.0) +
+            0.2 * (m_personality.Get_entity_attribute_value(personality_attr::EPERSONALITY_Selfish) / 100.0);
+
+        // Compute a balance: positive minus negative
+        double drive = expansive - restrictive;
+
+        // Shape it so small differences don’t swing too wildly; this gives ~ [-1, +2] adjustment range
+        double adjustment = 3.0 * drive;
+        double adjusted_value = static_cast<double>(default_max_event) + adjustment;
+
+        // Set the max, including the adjustment, ensuring no negative values
+        set_max_events(event_enum, std::round(std::max(0.0, adjusted_value)));
+        break;
+      }
+
+      default:
+        // Unrecognized value
+        throw std::invalid_argument("Event type not handled by entity, can't determine max count");
+    }
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////

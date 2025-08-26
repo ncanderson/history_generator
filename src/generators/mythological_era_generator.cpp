@@ -35,9 +35,12 @@ void his_gen::Mythological_era_generator::Run()
       // Create a new ultimate parent entity
       m_myth_narrator.Create_progenitor_deity(m_generated_history.Entities);
 
+      // Increment run-time ticks, so the Run stage will start at 1
+      m_ticks_completed++;
+
       m_current_stage = STAGE_Run;
-    }
       break;
+    }
 
     case STAGE_Run:
     {
@@ -58,8 +61,8 @@ void his_gen::Mythological_era_generator::Run()
       {
         m_current_stage = STAGE_Terminate;
       }
-    }
       break;
+    }
 
     case STAGE_Terminate:
     {
@@ -71,8 +74,8 @@ void his_gen::Mythological_era_generator::Run()
 
       // TODO make this conditional?
       Set_generation_complete(true);
-    }
       break;
+    }
 
     default:
     {

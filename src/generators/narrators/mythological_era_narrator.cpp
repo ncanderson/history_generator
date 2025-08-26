@@ -71,29 +71,30 @@ void myth_nar::Manage_events(Entities& entities,
     // A random entity
     std::shared_ptr<his_gen::Entity_base> triggering_entity = his_gen::dice::Get_random_element(entities);
 
-    // Make sure we don't create more than one event per entity per loop, but still allow events
-    // to fire on tick 0
-    if(triggering_entity->Get_last_event_triggered() >= current_tick && current_tick > 0)
-    {
-      // Continuing here will still increment the event counter, so the final 'events per tick' will
-      // less than the max, but this will avoid infinite loops
-      continue;
-    }
-
     // A random event
     EEvent_type event_type = his_gen::Data_definitions::Get_rand_entity_event(triggering_entity->Get_entity_type());
     // Create the event
     std::shared_ptr<his_gen::Event_base> new_event = his_gen::Event_factory::Create_event(event_type,
                                                                                           triggering_entity,
                                                                                           current_tick);
-    // Run the event
-    new_event->Run(entities, entity_relationships, m_event_scheduler);
+
+    // Check the event for the entity
+    if(triggering_entity->Event_is_valid(new_event->Get_event_type(), current_tick))
+    {
+      // Run the event
+      new_event->Run(entities, entity_relationships, m_event_scheduler);
+    }
+    else
+    {
+      // Continuing here will still increment the event counter, so the final 'events per tick' will be
+      // less than the max, but this will avoid infinite loops, or cases where there are few enough entities
+      // that all of them trigger events this tick
+      continue;
+    }
 
     // Add the event to the list if something changed
     if(new_event->Created_meaningful_change())
     {
-      // Set the tick on the entity, so it won't be selected again this loop
-      triggering_entity->Set_last_event_triggered(current_tick);
       events.push_back(new_event);
     }
   }
