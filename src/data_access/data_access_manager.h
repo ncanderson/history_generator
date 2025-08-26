@@ -14,7 +14,6 @@
 
 // Models
 #include <models/generated_history.h>
-#include <models/data_definitions.h>
 
 namespace his_gen
 {
@@ -31,14 +30,12 @@ public:
   /**
    * @brief Constructor for a file-based data acces layer
    * @param params Parameters for a file connection
-   * @param data_definitions
    */
   Data_access_manager(const his_gen::DAL_file_params& params);
 
   /**
    * @brief Constructor for a PostgreSQL-based data acces layer
    * @param params Parameters for a PostgreSQL database connection
-   * @param data_definitions
    */
   Data_access_manager(const his_gen::DAL_PG_params& params);
 
@@ -57,9 +54,8 @@ public:
 
   /**
    * @brief Load_data_definitions
-   * @return Retrieved data definitions
    */
-  his_gen::Data_definitions Load_data_definitions() const;
+  void Load_data_definitions() const;
 
   /**
    * @brief Load_all_names

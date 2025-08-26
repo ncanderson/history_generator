@@ -41,6 +41,21 @@ void deity::Initialize()
 
 ///////////////////////////////////////////////////////////////////////
 
+bool deity::Event_is_valid(his_gen::EEvent_type event_type)
+{
+  // NOOP
+  return true;
+}
+
+///////////////////////////////////////////////////////////////////////
+
+void deity::initialize_max_events_by_type()
+{
+
+}
+
+///////////////////////////////////////////////////////////////////////
+
 void deity::update_divine_physicality()
 {
   m_physicality.Set_repro_attribute_value(repro::EREPRODUCTION_Can_bear_young, his_gen::dice::Flip_a_coin());

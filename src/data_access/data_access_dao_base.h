@@ -11,7 +11,6 @@
 
 // Models
 #include <models/generated_history.h>
-#include <models/data_definitions.h>
 
 namespace his_gen
 {
@@ -37,9 +36,8 @@ public:
 
   /**
    * @brief Load_data_definitions
-   * @return
    */
-  virtual his_gen::Data_definitions Load_data_definitions() = 0;
+  virtual void Load_data_definitions() = 0;
 
   /**
    * @brief Load_all_names

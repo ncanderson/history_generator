@@ -85,6 +85,13 @@ public:
                     std::vector<std::shared_ptr<Entity_base>> attracted_to) override;
 
   /**
+   * @brief Event_is_valid
+   * @param event_type
+   * @return
+   */
+  bool Event_is_valid(his_gen::EEvent_type event_type) override;
+
+  /**
    * Getters and Setters
    */
   Personality Get_personality() const { return m_personality; }

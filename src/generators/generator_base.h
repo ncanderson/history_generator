@@ -34,15 +34,13 @@ public:
    */
   Generator_base(const his_gen::History_generator_root_config& his_gen_config,
                  his_gen::Generated_history& generated_history,
-                 const his_gen::Data_access_manager& data_access_manager,
-                 const std::shared_ptr<his_gen::Data_definitions> data_definitions)
+                 const his_gen::Data_access_manager& data_access_manager)
     :
     m_generation_complete(false),
     m_current_stage(his_gen::Stage::STAGE_Init),
     m_his_gen_config(his_gen_config),
     m_generated_history(generated_history),
     m_data_access_manager(data_access_manager),
-    m_data_definitions(data_definitions),
     m_generator_ticks(0),
     m_entities_per_tick(0),
     m_ticks_completed(0)
@@ -92,12 +90,6 @@ protected:
    * @brief Pointer to shared data access manager
    */
   const his_gen::Data_access_manager& m_data_access_manager;
-
-  /**
-   * @brief Data definitions used to define the relationships between objects in
-   * generation.
-   */
-  const std::shared_ptr<his_gen::Data_definitions> m_data_definitions;
 
   /**
    * @brief m_generator_ticks

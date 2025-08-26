@@ -13,6 +13,7 @@
 // Application files
 #include <utils/history_generator_utils.h>
 #include <data_access/data_access_dao_file.h>
+#include <models/data_definitions.h>
 
 ///////////////////////////////////////////////////////////////////////
 
@@ -64,13 +65,22 @@ void his_gen::Data_access_dao_file::Write_history(his_gen::Generated_history& ge
 
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::Data_definitions his_gen::Data_access_dao_file::Load_data_definitions()
+void his_gen::Data_access_dao_file::Load_data_definitions()
 {
   std::ifstream data_definitions_file("/home/nanderson/nate_personal/projects/history_generator/data/data_definitions.json");
+
   nlohmann::json data = nlohmann::json::parse(data_definitions_file);
 
-  auto defs = data.template get<his_gen::Data_definitions>();
-  return his_gen::Data_definitions(defs);
+  // Deserialize JSON directly into the static members
+  his_gen::Data_definitions::Set_entity_type_relationship_types(data.
+                                                                at("entity_type_relationship_types").
+                                                                get<std::vector<his_gen::Entity_type_relationship_type>>());
+  his_gen::Data_definitions::Set_entity_type_event_types(data.
+                                                         at("entity_type_event_types").
+                                                         get<std::vector<his_gen::Entity_type_event_type>>());
+
+  // Rebuild composite structures
+  his_gen::Data_definitions::Initialize();
 }
 
 ///////////////////////////////////////////////////////////////////////

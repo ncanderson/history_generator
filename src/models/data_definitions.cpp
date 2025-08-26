@@ -29,19 +29,9 @@ std::map<his_gen::EEntity_type, std::vector<his_gen::ERelationship_type>> dd::s_
 
 ///////////////////////////////////////////////////////////////////////
 
-dd::Data_definitions()
+void dd::Initialize()
 {
-  // Populate static members from enums if empty
-  if (s_entity_types.empty())
-  {
-    initialize_members_from_enums();
-  }
-}
-
-///////////////////////////////////////////////////////////////////////
-
-void dd::Initialize_composite_data()
-{
+  initialize_members_from_enums();
   build_entity_relationships(s_entity_type_relationship_types);
   build_entity_events(s_entity_type_event_types);
 }
@@ -55,14 +45,14 @@ his_gen::EEntity_type dd::Get_rand_entity_type()
 
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::EEvent_type dd::Get_rand_entity_event(his_gen::EEntity_type entity)
+his_gen::EEvent_type dd::Get_rand_entity_event(const his_gen::EEntity_type& entity)
 {
   return his_gen::dice::Get_random_element(s_entity_events[entity]);
 }
 
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::ERelationship_type dd::Get_rand_entity_relationship(his_gen::EEntity_type entity)
+his_gen::ERelationship_type dd::Get_rand_entity_relationship(const his_gen::EEntity_type& entity)
 {
   return his_gen::dice::Get_random_element(s_entity_relationships[entity]);
 }
@@ -95,7 +85,7 @@ void dd::initialize_members_from_enums()
   s_entity_types.clear();
   for (auto e : magic_enum::enum_values<his_gen::EEntity_type>())
   {
-    Entity_type ent_type = Entity_type(his_gen::Get_entity_type_string(e));
+    Entity_type ent_type = Entity_type(e);
     s_entity_types.push_back(ent_type);
   }
 
@@ -117,37 +107,19 @@ void dd::initialize_members_from_enums()
 }
 
 ///////////////////////////////////////////////////////////////////////
-
-std::vector<his_gen::Event_type> dd::Get_event_types()
-{
-  return s_event_types;
-}
-
-///////////////////////////////////////////////////////////////////////
 // JSON Helpers
 
 void his_gen::to_json(nlohmann::json& json,
                       const his_gen::Data_definitions& /*data_definitions*/)
 {
   json = nlohmann::json
-      {
-          {"entity_type_relationship_types", dd::s_entity_type_relationship_types},
-          {"entity_type_event_types", dd::s_entity_type_event_types},
-          {"entity_types", dd::s_entity_types},
-          {"relationship_type", dd::s_relationship_types},
-          {"event_types", dd::s_event_types}
-      };
-}
-
-///////////////////////////////////////////////////////////////////////
-
-void his_gen::from_json(const nlohmann::json& json,
-                        his_gen::Data_definitions& /*data_definitions*/)
-{
-  json.at("entity_type_relationship_types").get_to(dd::s_entity_type_relationship_types);
-  json.at("entity_type_event_types").get_to(dd::s_entity_type_event_types);
-
-  dd::Initialize_composite_data();
+  {
+    {"entity_type_relationship_types", dd::Get_entity_type_relationship_types()},
+    {"entity_type_event_types", dd::Get_entity_type_event_types()},
+    {"entity_types", dd::Get_entity_types()},
+    {"relationship_type", dd::Get_relationship_types()},
+    {"event_types", dd::Get_event_types()}
+  };
 }
 
 ///////////////////////////////////////////////////////////////////////

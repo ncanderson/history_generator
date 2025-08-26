@@ -40,11 +40,9 @@ public:
   // Implementation
   /**
    * @brief Constructor
-   * @brief data_definitions The data definitions
    */
-  Narrator_base(const std::shared_ptr<his_gen::Data_definitions> data_definitions)
+  Narrator_base()
     :
-    m_data_definitions(data_definitions),
     m_event_scheduler()
   { }
 
@@ -83,11 +81,6 @@ public:
 
 protected:
   // Attributes
-  /**
-   * @brief Pointer to the data definitions
-   */
-  const std::shared_ptr<his_gen::Data_definitions> m_data_definitions;
-
   /**
    * @brief Event scheduler for letting events determine the next step
    */

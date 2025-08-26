@@ -33,20 +33,17 @@ public:
   /**
    * @brief Constructor
    */
-  Entity_type(const std::string& name);
+  Entity_type(const his_gen::EEntity_type& entity_type);
 
   /**
    * @brief Destructor
    */
-  ~Entity_type(){};
+  ~Entity_type() = default;
 
   /**
    * Getters and setters
    */
-  void Set_name(const std::string& name) { m_name = name; }
   std::string Get_name() const { return m_name; }
-
-  void Set_entity_type(const his_gen::EEntity_type& eentity_type) { m_entity_type = eentity_type; }
   his_gen::EEntity_type Get_entity_type() const { return m_entity_type; }
 
 protected:
@@ -70,9 +67,19 @@ private:
 
 }; // class Entity_type
 
+/**
+ * @brief to_json
+ * @param json
+ * @param entity_type
+ */
 void to_json(nlohmann::json& json,
              const his_gen::Entity_type& entity_type);
 
+/**
+ * @brief from_json
+ * @param json
+ * @param entity_type
+ */
 void from_json(const nlohmann::json& json,
                his_gen::Entity_type& entity_type);
 

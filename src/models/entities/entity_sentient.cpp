@@ -95,6 +95,21 @@ bool sentient::Is_attracted(std::shared_ptr<Entity_base> other_entity,
 
 ///////////////////////////////////////////////////////////////////////
 
+bool sentient::Event_is_valid(his_gen::EEvent_type event_type)
+{
+  // NOOP
+  return true;
+}
+
+///////////////////////////////////////////////////////////////////////
+
+void sentient::initialize_max_events_by_type()
+{
+
+}
+
+///////////////////////////////////////////////////////////////////////
+
 bool sentient::repro_attraction(std::shared_ptr<his_gen::Entity_sentient> other_entity)
 {
   // Attributes of self

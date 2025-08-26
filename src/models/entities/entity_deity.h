@@ -53,6 +53,13 @@ public:
   void Initialize() override;
 
   /**
+   * @brief Event_is_valid
+   * @param event_type
+   * @return
+   */
+  bool Event_is_valid(his_gen::EEvent_type event_type) override;
+
+  /**
    * Getters and Setters
    */
   bool Get_test_attr() const { return m_test_attr; }
@@ -61,6 +68,13 @@ protected:
   // Attributes
 
   // Implementation
+  /**
+   * @brief Use this deity's attributes to populate the 'max events'
+   * map.
+   * @details The base class function will default all values to 1; implementing classes
+   * can and should refine their own max values.
+   */
+  void initialize_max_events_by_type() override;
 
 private:
   // Attributes

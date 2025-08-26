@@ -32,7 +32,7 @@ void his_gen::from_json(const nlohmann::json& json,
                         his_gen::Relationship_type& relationship_type)
 {
   // NOOP
-  // The attrs are currently private, so this may not ever be required
+  // The attrs are currently private, and this may not ever be required
 }
 
 ///////////////////////////////////////////////////////////////////////

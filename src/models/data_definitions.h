@@ -32,24 +32,20 @@ public:
 
   // Implementation
   /**
-   * @brief Constructor
-   *
-   * Initializes static members if they have not yet been initialized.
+   * @brief Constructor deleted to prevent instantiation
    */
-  Data_definitions();
+  Data_definitions() = delete;
 
   /**
-   * @brief Destructor
+   * @brief Destructor deleted to prevent instantiation
    */
-  ~Data_definitions() {};
+  ~Data_definitions() = delete;
 
   /**
-   * @brief When instantiated directly from JSON, this class won't necessarily
-   * have full access to all data in the constructor. This function allows
-   * the class to fully initialize any static data members not fully constructible
-   * from JSON.
+   * @brief Additional initialization steps beyond the deserialization
+   * of any loaded JSON values
    */
-  static void Initialize_composite_data();
+  static void Initialize();
 
   /**
    * @brief Return a random entity type
@@ -61,20 +57,26 @@ public:
    * @param entity The entity to get an event for
    * @return A random valid event type
    */
-  static his_gen::EEvent_type Get_rand_entity_event(his_gen::EEntity_type entity);
+  static his_gen::EEvent_type Get_rand_entity_event(const his_gen::EEntity_type& entity);
 
   /**
    * @brief Return a random valid relationship for this entity type
    * @param entity The entity to get a relationship for
    * @return A random valid relationship type
    */
-  static his_gen::ERelationship_type Get_rand_entity_relationship(his_gen::EEntity_type entity);
+  static his_gen::ERelationship_type Get_rand_entity_relationship(const his_gen::EEntity_type& entity);
 
   /**
-   * @brief Get the vector of all event types
-   * @return The vector of all event types
+   * Getters and Setters
    */
-  static std::vector<his_gen::Event_type> Get_event_types();
+  static const std::vector<his_gen::Entity_type_relationship_type>& Get_entity_type_relationship_types() { return s_entity_type_relationship_types; }
+  static const std::vector<his_gen::Entity_type_event_type>& Get_entity_type_event_types() { return s_entity_type_event_types; }
+  static const std::vector<his_gen::Entity_type>& Get_entity_types() { return s_entity_types; }
+  static const std::vector<his_gen::Relationship_type>& Get_relationship_types() { return s_relationship_types; }
+  static const std::vector<his_gen::Event_type>& Get_event_types() { return s_event_types; }
+
+  static void Set_entity_type_relationship_types(const std::vector<his_gen::Entity_type_relationship_type>& v) { s_entity_type_relationship_types = v; }
+  static void Set_entity_type_event_types(const std::vector<his_gen::Entity_type_event_type>& v) { s_entity_type_event_types = v; }
 
 protected:
   // Attributes
@@ -147,14 +149,6 @@ private:
  */
 void to_json(nlohmann::json& json,
              const his_gen::Data_definitions& data_definitions);
-
-/**
- * @brief from_json
- * @param json
- * @param data_definitions
- */
-void from_json(const nlohmann::json& json,
-               his_gen::Data_definitions& data_definitions);
 
 }  // namespace his_gen
 

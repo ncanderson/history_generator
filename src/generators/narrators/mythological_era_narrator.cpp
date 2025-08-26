@@ -6,6 +6,7 @@
 
 // Application files
 #include <generators/narrators/mythological_era_narrator.h>
+#include <models/data_definitions.h>
 #include <models/entities/entity_deity.h>
 #include <models/entities/entity_sentient.h>
 #include <models/entities/entity_factory.h>
@@ -18,10 +19,9 @@ using myth_nar = his_gen::Mythological_era_narrator;
 ///////////////////////////////////////////////////////////////////////
 
 myth_nar::Mythological_era_narrator(const his_gen::Data_access_manager& data_access_manager,
-                                    const his_gen::History_generator_root_config& his_gen_config,
-                                    const std::shared_ptr<his_gen::Data_definitions> data_definitions)
+                                    const his_gen::History_generator_root_config& his_gen_config)
   :
-  Narrator_base(data_definitions),
+  Narrator_base(),
   m_config(his_gen_config)
 {
 }
@@ -44,7 +44,7 @@ void myth_nar::Create_entities(Entities& entities,
   for(int64_t tick_count = 0; tick_count < m_config.Get_myth_config().Max_entity_per_tick; tick_count++)
   {
     // A random entity type
-    EEntity_type entity_type = m_data_definitions->Get_rand_entity_type();
+    EEntity_type entity_type = his_gen::Data_definitions::Get_rand_entity_type();
 
     std::shared_ptr<his_gen::Entity_base> new_entity = his_gen::Entity_factory::Create_entity(entity_type,
                                                                                               current_tick);
@@ -81,7 +81,7 @@ void myth_nar::Manage_events(Entities& entities,
     }
 
     // A random event
-    EEvent_type event_type = m_data_definitions->Get_rand_entity_event(triggering_entity->Get_entity_type());
+    EEvent_type event_type = his_gen::Data_definitions::Get_rand_entity_event(triggering_entity->Get_entity_type());
     // Create the event
     std::shared_ptr<his_gen::Event_base> new_event = his_gen::Event_factory::Create_event(event_type,
                                                                                           triggering_entity,

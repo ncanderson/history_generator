@@ -38,9 +38,8 @@ public:
 
   /**
    * @brief Load_data_definitions
-   * @return
    */
-  his_gen::Data_definitions Load_data_definitions() override;
+  void Load_data_definitions() override;
 
   /**
    * @brief Load_all_names

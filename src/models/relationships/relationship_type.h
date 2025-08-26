@@ -40,7 +40,7 @@ public:
   /**
    * @brief Destructor
    */
-  ~Relationship_type(){};
+  ~Relationship_type() = default;
 
   /**
    * Getters and setters

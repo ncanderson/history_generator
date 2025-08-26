@@ -11,8 +11,8 @@
 ///////////////////////////////////////////////////////////////////////
 
 his_gen::Data_access_dao_pg::Data_access_dao_pg(const DAL_PG_params& params)
-    :
-    Data_access_dao_base()
+  :
+  Data_access_dao_base()
 {
 
 }
@@ -33,9 +33,9 @@ void his_gen::Data_access_dao_pg::Write_history(his_gen::Generated_history& gene
 
 ///////////////////////////////////////////////////////////////////////
 
-his_gen::Data_definitions his_gen::Data_access_dao_pg::Load_data_definitions()
+void his_gen::Data_access_dao_pg::Load_data_definitions()
 {
-  return his_gen::Data_definitions();
+  // NOOP
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -47,4 +47,3 @@ void his_gen::Data_access_dao_pg::Load_all_names(std::vector<std::string>& names
 }
 
 ///////////////////////////////////////////////////////////////////////
-// END OF FILE
