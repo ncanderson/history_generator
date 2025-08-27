@@ -14,14 +14,33 @@
 
 // Application file
 
-
 namespace his_gen
 {
-
 /**
  * @brief Forward declaration of Event_base
  */
 class Event_base;
+
+/**
+ * @brief Thin wrapper around Event_base to facilitate event scheduling
+ * in the future.
+ */
+struct Scheduled_event
+{
+
+  Scheduled_event
+
+  /**
+   * @brief The event to schedule
+   */
+  std::shared_ptr<his_gen::Event_base> m_scheduled_event;
+
+  /**
+   * @brief The tick to run this event on
+   */
+  uint32_t m_scheduled_tick;
+
+}; // struct Scheduled_event
 
 /**
  * @brief Physical attributes for an entity with a body
@@ -40,6 +59,9 @@ public:
    */
   ~Event_scheduler() = default;
 
+  /**
+   * Usings
+   */
   using Scheduled_events = std::queue<std::shared_ptr<his_gen::Event_base>>;
 
   /**
@@ -60,7 +82,7 @@ public:
    * @brief Return the next event, and remove it from the schedule
    * @return A pointer to the next event
    */
-  std::shared_ptr<Event_base> Get_next_event();
+  std::shared_ptr<Event_base> Handle_next_event();
 
   /**
    * @brief Get_all_scheduled_events

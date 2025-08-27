@@ -96,7 +96,7 @@ protected:
 
     while (m_event_scheduler.More_events_to_run())
     {
-      m_event_scheduler.Get_next_event()->Run(entities,
+      m_event_scheduler.Handle_next_event()->Run(entities,
                                               entity_relationships,
                                               temp_scheduler);
     }
