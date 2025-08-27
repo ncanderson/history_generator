@@ -62,7 +62,7 @@ void myth_nar::Manage_events(Entities& entities,
                              const uint64_t current_tick)
 {
   // Run events that were scheduled previously
-  run_scheduled_events(entities, entity_relationships);
+  run_scheduled_events(entities, entity_relationships, current_tick);
 
   // TODO Put this into another helper function or something?
   // Create new events and run them

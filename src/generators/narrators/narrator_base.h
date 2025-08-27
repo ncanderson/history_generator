@@ -88,17 +88,18 @@ protected:
 
   // Implementation
   void run_scheduled_events(Event_base::Entities& entities,
-                            Event_base::Entity_relationships entity_relationships)
+                            Event_base::Entity_relationships entity_relationships,
+                            const uint64_t current_tick)
   {
     // Temp instance of scheduler, so we can avoid an infinte loop if using the
     // class member to schedule
     Event_scheduler temp_scheduler = Event_scheduler();
 
-    while (m_event_scheduler.More_events_to_run())
+    while(m_event_scheduler.More_events_to_run(current_tick))
     {
-      m_event_scheduler.Handle_next_event()->Run(entities,
-                                              entity_relationships,
-                                              temp_scheduler);
+      m_event_scheduler.Prepare_next_event(current_tick)->Run(entities,
+                                                              entity_relationships,
+                                                              temp_scheduler);
     }
 
     // Merge any new events that were scheduled following scheduled events

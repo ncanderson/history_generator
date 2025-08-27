@@ -1,4 +1,4 @@
-/**
+  /**
  * Copyright (C) 2025 Nate Anderson - All Rights Reserved
  */
 
@@ -44,9 +44,9 @@ public:
    * @param current_tick The current generation tick
    * @return A pointer to Event_base, holding the instantiated derived event type
    */
-  static std::shared_ptr<his_gen::Event_base> Create_event(his_gen::EEvent_type event_type,
+  static std::shared_ptr<his_gen::Event_base> Create_event(const his_gen::EEvent_type event_type,
                                                            std::shared_ptr<Entity_base>& triggering_entity,
-                                                           uint64_t current_tick);
+                                                           const uint64_t current_tick);
 
 protected:
   // Attributes
