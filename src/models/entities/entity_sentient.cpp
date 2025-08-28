@@ -146,6 +146,9 @@ void sentient::initialize_max_events_by_type()
   }
 }
 
+//make each event tell you what it's default maximum is, then provide a virtual function in entity_base
+//    that will allow any entity to override the defaults
+
 ///////////////////////////////////////////////////////////////////////
 
 bool sentient::repro_attraction(std::shared_ptr<his_gen::Entity_sentient> other_entity)
