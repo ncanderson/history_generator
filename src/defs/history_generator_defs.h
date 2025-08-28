@@ -200,40 +200,9 @@ ERelationship_type Get_relationship_type(const std::string& relationship_type);
  */
 enum EEvent_type
 {
-  //EEVENT_TYPE_Absorbed_group,       ///< One group was absorbed into another.
-  //EEVENT_TYPE_Altered_identity,     ///< Entity changed its identity, name, or appearance.
-  //EEVENT_TYPE_Assassinated_leader,  ///< A leader was killed intentionally.
-  //EEVENT_TYPE_Attacked_entity,      ///< Entity launched an attack.
-  //EEVENT_TYPE_Bred,                 ///< Entity reproduced.
-  //EEVENT_TYPE_Changed_leadership,   ///< Leadership changed hands.
-  //EEVENT_TYPE_Initiated_conflict,   ///< Entity initiated a conflict or war.
-  //EEVENT_TYPE_Demanded_sacrifice,   ///< Sacrifice was demanded.
-  //EEVENT_TYPE_Died,                 ///< Entity died or ceased to exist.
-  //EEVENT_TYPE_Emerged,              ///< Entity came into existence or reappeared.
-  //EEVENT_TYPE_Enacted_policy,       ///< New rule or policy was implemented.
-  //EEVENT_TYPE_Established_lair,     ///< New home, lair, or center of power was established.
-  //EEVENT_TYPE_Formed_alliance,      ///< Alliance or pact was created.
-  //EEVENT_TYPE_Gained_follower,      ///< A follower or member was gained.
-  //EEVENT_TYPE_Initiated_revolt,     ///< Entity started a revolt or rebellion.
-  //EEVENT_TYPE_Intervened_in_world,  ///< Entity interfered in worldly affairs.
-  //EEVENT_TYPE_Joined_group,         ///< Entity became part of a group or faction.
-  //EEVENT_TYPE_Killed_entity,        ///< Entity killed another.
-  //EEVENT_TYPE_Lost_follower,        ///< A follower or member was lost.
-  //EEVENT_TYPE_Married,              ///< Marriage or union took place.
-  //EEVENT_TYPE_Merged_into_group,    ///< Entity was merged into another.
-  //EEVENT_TYPE_Moved_location,       ///< Entity changed location.
-  //EEVENT_TYPE_Moved_territory,      ///< Group relocated its territory.
-  //EEVENT_TYPE_Opposed_policy,       ///< An existing policy was resisted or challenged.
-  //EEVENT_TYPE_Performed_ritual,     ///< Ritual or ceremony was performed.
-  EEVENT_TYPE_Seek_partner          ///< Seek a partner, romatic or otherwise
-  //EEVENT_TYPE_Signed_treaty,        ///< Treaty or formal agreement signed.
-  //EEVENT_TYPE_Split_from_group,     ///< Entity split from a group or origin.
-  //EEVENT_TYPE_Spread_fear,          ///< Entity caused fear or panic.
-  //EEVENT_TYPE_Spread_influence,     ///< Entity extended its influence.
-  //EEVENT_TYPE_Subverted_rival,      ///< Undermined or sabotaged a rival.
-  //EEVENT_TYPE_Was_captured,         ///< Entity was captured.
-  //EEVENT_TYPE_Was_hunted,           ///< Entity was hunted or pursued.
-  //EEVENT_TYPE_Was_subdued,          ///< Entity was overpowered or suppressed.
+  EEVENT_TYPE_Courtship,    ///< Further a lover relationship, determine where it goes
+  EEVENT_TYPE_Reproduce,    ///< Create a new entity
+  EEVENT_TYPE_Seek_partner  ///< Seek a partner, romatic or otherwise
 };
 
 /**

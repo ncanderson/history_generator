@@ -4,8 +4,11 @@
 
 // Application files
 #include <models/events/event_factory.h>
-#include <models/events/seek_partner_event.h>
+// Events
 #include <models/events/event_base.h>
+#include <models/events/seek_partner_event.h>
+#include <models/events/courtship_event.h>
+#include <models/events/reproduce_event.h>
 
 ///////////////////////////////////////////////////////////////////////
 
@@ -19,8 +22,20 @@ std::shared_ptr<his_gen::Event_base> his_gen::Event_factory::Create_event(const 
     {
       return std::make_shared<his_gen::Seek_partner_event>(triggering_entity,
                                                            current_tick);
+      break;
     }
-    break;
+    case his_gen::EEvent_type::EEVENT_TYPE_Courtship:
+    {
+      return std::make_shared<his_gen::Courtship_event>(triggering_entity,
+                                                        current_tick);
+      break;
+    }
+    case his_gen::EEvent_type::EEVENT_TYPE_Reproduce:
+    {
+      return std::make_shared<his_gen::Reproduce_event>(triggering_entity,
+                                                        current_tick);
+      break;
+    }
 
     default:
       // Unrecognized value

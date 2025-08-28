@@ -136,6 +136,8 @@ void sentient::initialize_max_events_by_type()
         set_max_events(event_enum, std::round(std::max(0.0, adjusted_value)));
         break;
       }
+      case his_gen::EEvent_type::EEVENT_TYPE_Courtship:{ break; }
+      case his_gen::EEvent_type::EEVENT_TYPE_Reproduce:{ break; }
 
       default:
         // Unrecognized value

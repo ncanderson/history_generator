@@ -87,29 +87,29 @@ std::string his_gen::Get_entity_type_string(const his_gen::EEntity_type& entity_
 {
   switch(entity_type)
   {
-    case EENTITY_TYPE_Sentient:     return "sentient";
-    //case EENTITY_TYPE_Beast:        return "beast";
-    //case EENTITY_TYPE_Monster:      return "monster";
-    case EENTITY_TYPE_Deity:        return "deity";
-    //case EENTITY_TYPE_Clan_tribe:   return "clan/tribe";
-    //case EENTITY_TYPE_Faction:      return "faction";
-    //case EENTITY_TYPE_Nation:       return "nation";
-    //case EENTITY_TYPE_Settlement:   return "settlement";
-    //case EENTITY_TYPE_Religion:     return "religion";
-    //case EENTITY_TYPE_Artifact:     return "artifact";
-    //case EENTITY_TYPE_Region:       return "region";
-    //case EENTITY_TYPE_Order:        return "order";
-    //case EENTITY_TYPE_Institution:  return "institution";
-    //case EENTITY_TYPE_House:        return "house";
-    //case EENTITY_TYPE_Ethnicity:    return "ethnicity";
-    //case EENTITY_TYPE_Culture:      return "culture";
-    //case EENTITY_TYPE_Language:     return "language";
-    //case EENTITY_TYPE_Ruin:         return "ruin";
-    //case EENTITY_TYPE_Phenomenon:   return "phenomenon";
-    //case EENTITY_TYPE_Pantheon:     return "pantheon";
-    //case EENTITY_TYPE_Idea:         return "idea";
-    //case EENTITY_TYPE_Legend:       return "legend";
-    //case EENTITY_TYPE_Event:        return "event";
+    //case EENTITY_TYPE_Artifact:    return "artifact";
+    //case EENTITY_TYPE_Beast:       return "beast";
+    //case EENTITY_TYPE_Clan_tribe:  return "clan/tribe";
+    //case EENTITY_TYPE_Culture:     return "culture";
+    case EENTITY_TYPE_Deity:       return "deity";
+    //case EENTITY_TYPE_Ethnicity:   return "ethnicity";
+    //case EENTITY_TYPE_Event:       return "event";
+    //case EENTITY_TYPE_Faction:     return "faction";
+    //case EENTITY_TYPE_House:       return "house";
+    //case EENTITY_TYPE_Idea:        return "idea";
+    //case EENTITY_TYPE_Institution: return "institution";
+    //case EENTITY_TYPE_Language:    return "language";
+    //case EENTITY_TYPE_Legend:      return "legend";
+    //case EENTITY_TYPE_Monster:     return "monster";
+    //case EENTITY_TYPE_Nation:      return "nation";
+    //case EENTITY_TYPE_Order:       return "order";
+    //case EENTITY_TYPE_Pantheon:    return "pantheon";
+    //case EENTITY_TYPE_Phenomenon:  return "phenomenon";
+    //case EENTITY_TYPE_Region:      return "region";
+    //case EENTITY_TYPE_Religion:    return "religion";
+    //case EENTITY_TYPE_Ruin:        return "ruin";
+    case EENTITY_TYPE_Sentient:    return "sentient";
+    //case EENTITY_TYPE_Settlement:  return "settlement";
     default:
       throw std::invalid_argument("Entity type not found");
   }
@@ -122,29 +122,29 @@ his_gen::EEntity_type his_gen::Get_entity_type(const std::string& entity_type)
 {
   static const std::unordered_map<std::string, EEntity_type> entity_type_map =
   {
-    {"sentient",      EENTITY_TYPE_Sentient},
-    {"deity",         EENTITY_TYPE_Deity}
-    //{"beast",         EENTITY_TYPE_Beast},
-    //{"monster",       EENTITY_TYPE_Monster},
-    //{"clan/tribe",    EENTITY_TYPE_Clan_tribe},
-    //{"faction",       EENTITY_TYPE_Faction},
-    //{"nation",        EENTITY_TYPE_Nation},
-    //{"settlement",    EENTITY_TYPE_Settlement},
-    //{"religion",      EENTITY_TYPE_Religion},
-    //{"artifact",      EENTITY_TYPE_Artifact},
-    //{"region",        EENTITY_TYPE_Region},
-    //{"order",         EENTITY_TYPE_Order},
-    //{"institution",   EENTITY_TYPE_Institution},
-    //{"house",         EENTITY_TYPE_House},
-    //{"ethnicity",     EENTITY_TYPE_Ethnicity},
-    //{"culture",       EENTITY_TYPE_Culture},
-    //{"language",      EENTITY_TYPE_Language},
-    //{"ruin",          EENTITY_TYPE_Ruin},
-    //{"phenomenon",    EENTITY_TYPE_Phenomenon},
-    //{"pantheon",      EENTITY_TYPE_Pantheon},
-    //{"idea",          EENTITY_TYPE_Idea},
-    //{"legend",        EENTITY_TYPE_Legend},
-    //{"event",         EENTITY_TYPE_Event}
+    {"sentient",    EENTITY_TYPE_Sentient},
+    {"deity",       EENTITY_TYPE_Deity},
+    //{"beast",       EENTITY_TYPE_Beast},
+    //{"monster",     EENTITY_TYPE_Monster},
+    //{"clan/tribe",  EENTITY_TYPE_Clan_tribe},
+    //{"faction",     EENTITY_TYPE_Faction},
+    //{"nation",      EENTITY_TYPE_Nation},
+    //{"settlement",  EENTITY_TYPE_Settlement},
+    //{"religion",    EENTITY_TYPE_Religion},
+    //{"artifact",    EENTITY_TYPE_Artifact},
+    //{"region",      EENTITY_TYPE_Region},
+    //{"order",       EENTITY_TYPE_Order},
+    //{"institution", EENTITY_TYPE_Institution},
+    //{"house",       EENTITY_TYPE_House},
+    //{"ethnicity",   EENTITY_TYPE_Ethnicity},
+    //{"culture",     EENTITY_TYPE_Culture},
+    //{"language",    EENTITY_TYPE_Language},
+    //{"ruin",        EENTITY_TYPE_Ruin},
+    //{"phenomenon",  EENTITY_TYPE_Phenomenon},
+    //{"pantheon",    EENTITY_TYPE_Pantheon},
+    //{"idea",        EENTITY_TYPE_Idea},
+    //{"legend",      EENTITY_TYPE_Legend},
+    //{"event",       EENTITY_TYPE_Event}
   };
 
   const std::string lc_entity_type = his_gen::To_lowercase(entity_type);
@@ -218,40 +218,9 @@ std::string his_gen::Get_event_type_string(const EEvent_type& event_type)
 {
   switch (event_type)
   {
-    //case EEVENT_TYPE_Absorbed_group:      return "absorbed_group";
-    //case EEVENT_TYPE_Altered_identity:    return "altered_identity";
-    //case EEVENT_TYPE_Assassinated_leader: return "assassinated_leader";
-    //case EEVENT_TYPE_Attacked_entity:     return "attacked_entity";
-    //case EEVENT_TYPE_Bred:                return "bred";
-    //case EEVENT_TYPE_Changed_leadership:  return "changed_leadership";
-    //case EEVENT_TYPE_Initiated_conflict:  return "initiated_conflict";
-    //case EEVENT_TYPE_Demanded_sacrifice:  return "demanded_sacrifice";
-    //case EEVENT_TYPE_Died:                return "died";
-    //case EEVENT_TYPE_Emerged:             return "emerged";
-    //case EEVENT_TYPE_Enacted_policy:      return "enacted_policy";
-    //case EEVENT_TYPE_Established_lair:    return "established_lair";
-    //case EEVENT_TYPE_Formed_alliance:     return "formed_alliance";
-    //case EEVENT_TYPE_Gained_follower:     return "gained_follower";
-    //case EEVENT_TYPE_Initiated_revolt:    return "initiated_revolt";
-    //case EEVENT_TYPE_Intervened_in_world: return "intervened_in_world";
-    //case EEVENT_TYPE_Joined_group:        return "joined_group";
-    //case EEVENT_TYPE_Killed_entity:       return "killed_entity";
-    //case EEVENT_TYPE_Lost_follower:       return "lost_follower";
-    //case EEVENT_TYPE_Married:             return "married";
-    //case EEVENT_TYPE_Merged_into_group:   return "merged_into_group";
-    //case EEVENT_TYPE_Moved_location:      return "moved_location";
-    //case EEVENT_TYPE_Moved_territory:     return "moved_territory";
-    //case EEVENT_TYPE_Opposed_policy:      return "opposed_policy";
-    //case EEVENT_TYPE_Performed_ritual:    return "performed_ritual";
-    case EEVENT_TYPE_Seek_partner:        return "seek_partner";
-    //case EEVENT_TYPE_Signed_treaty:       return "signed_treaty";
-    //case EEVENT_TYPE_Split_from_group:    return "split_from_group";
-    //case EEVENT_TYPE_Spread_fear:         return "spread_fear";
-    //case EEVENT_TYPE_Spread_influence:    return "spread_influence";
-    //case EEVENT_TYPE_Subverted_rival:     return "subverted_rival";
-    //case EEVENT_TYPE_Was_captured:        return "was_captured";
-    //case EEVENT_TYPE_Was_hunted:          return "was_hunted";
-    //case EEVENT_TYPE_Was_subdued:         return "was_subdued";
+    case EEVENT_TYPE_Courtship:    return "courtship";
+    case EEVENT_TYPE_Reproduce:    return "reproduce";
+    case EEVENT_TYPE_Seek_partner: return "seek_partner";
     default:
       throw std::invalid_argument("Event type not found");
   }
@@ -262,40 +231,9 @@ std::string his_gen::Get_event_type_string(const EEvent_type& event_type)
 his_gen::EEvent_type his_gen::Get_event_type(const std::string& event_type)
 {
   static const std::unordered_map<std::string, EEvent_type> event_type_map = {
-    //{"absorbed_group",      EEVENT_TYPE_Absorbed_group},
-    //{"altered_identity",    EEVENT_TYPE_Altered_identity},
-    //{"assassinated_leader", EEVENT_TYPE_Assassinated_leader},
-    //{"attacked_entity",     EEVENT_TYPE_Attacked_entity},
-    //{"bred",                EEVENT_TYPE_Bred},
-    //{"changed_leadership",  EEVENT_TYPE_Changed_leadership},
-    //{"initiated_conflict",  EEVENT_TYPE_Initiated_conflict},
-    //{"demanded_sacrifice",  EEVENT_TYPE_Demanded_sacrifice},
-    //{"died",                EEVENT_TYPE_Died},
-    //{"emerged",             EEVENT_TYPE_Emerged},
-    //{"enacted_policy",      EEVENT_TYPE_Enacted_policy},
-    //{"established_lair",    EEVENT_TYPE_Established_lair},
-    //{"formed_alliance",     EEVENT_TYPE_Formed_alliance},
-    //{"gained_follower",     EEVENT_TYPE_Gained_follower},
-    //{"initiated_revolt",    EEVENT_TYPE_Initiated_revolt},
-    //{"intervened_in_world", EEVENT_TYPE_Intervened_in_world},
-    //{"joined_group",        EEVENT_TYPE_Joined_group},
-    //{"killed_entity",       EEVENT_TYPE_Killed_entity},
-    //{"lost_follower",       EEVENT_TYPE_Lost_follower},
-    //{"married",             EEVENT_TYPE_Married},
-    //{"merged_into_group",   EEVENT_TYPE_Merged_into_group},
-    //{"moved_location",      EEVENT_TYPE_Moved_location},
-    //{"moved_territory",     EEVENT_TYPE_Moved_territory},
-    //{"opposed_policy",      EEVENT_TYPE_Opposed_policy},
-    //{"performed_ritual",    EEVENT_TYPE_Performed_ritual},
-    {"seek_partner",        EEVENT_TYPE_Seek_partner},
-    //{"signed_treaty",       EEVENT_TYPE_Signed_treaty},
-    //{"split_from_group",    EEVENT_TYPE_Split_from_group},
-    //{"spread_fear",         EEVENT_TYPE_Spread_fear},
-    //{"spread_influence",    EEVENT_TYPE_Spread_influence},
-    //{"subverted_rival",     EEVENT_TYPE_Subverted_rival},
-    //{"was_captured",        EEVENT_TYPE_Was_captured},
-    //{"was_hunted",          EEVENT_TYPE_Was_hunted},
-    //{"was_subdued",         EEVENT_TYPE_Was_subdued}
+    {"courtship",    EEVENT_TYPE_Courtship},
+    {"reproduce",    EEVENT_TYPE_Reproduce},
+    {"seek_partner", EEVENT_TYPE_Seek_partner}
   };
 
   const std::string lc_event_type = his_gen::To_lowercase(event_type);

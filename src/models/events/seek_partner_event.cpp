@@ -6,6 +6,9 @@
 #include <models/events/seek_partner_event.h>
 #include <models/entities/entity_base.h>
 
+///////////////////////////////////////////////////////////////////////
+
+using er = his_gen::Entity_relationship;
 REGISTER_POLYMORPHIC_TYPE(his_gen::Event_base, his_gen::Seek_partner_event)
 
 ///////////////////////////////////////////////////////////////////////
@@ -61,10 +64,9 @@ void his_gen::Seek_partner_event::Run(std::vector<std::shared_ptr<his_gen::Entit
         triggering_entity->Set_last_event_triggered(m_event_tick);
 
         // Create the new relationship for these entities
-        Entity_relationship::Entity_relationship_ptr new_relationship =
-            Entity_relationship::Entity_relationship_factory(triggering_entity,
-                                                             it,
-                                                             his_gen::ERELATIONSHIP_TYPE_Lover);
+        er::Entity_relationship_ptr new_relationship = er::Entity_relationship_factory(triggering_entity,
+                                                                                       it,
+                                                                                       his_gen::ERELATIONSHIP_TYPE_Lover);
 
         // Add the new relationship to the generated history reference
         entity_relationships[new_relationship->Get_entity_relationship_id()] = new_relationship;

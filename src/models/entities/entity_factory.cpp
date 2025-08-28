@@ -29,9 +29,6 @@ std::shared_ptr<his_gen::Entity_base> his_gen::Entity_factory::Create_entity(con
                                                               current_tick);
     }
     break;
-
-    //case his_gen::EEntity_type::EENTITY_TYPE_Unknown:
-    //break;
     //case his_gen::EEntity_type::EENTITY_TYPE_Artifact:
     //break;
     //case his_gen::EEntity_type::EENTITY_TYPE_Beast:
@@ -77,7 +74,7 @@ std::shared_ptr<his_gen::Entity_base> his_gen::Entity_factory::Create_entity(con
     default:
       // Unrecognized value
       his_gen::Print_to_cout("Entity type not implemented yet");
-      //throw std::invalid_argument("Entity type enumeration not found " + Get_entity_type_string(entity_type));
+      throw std::invalid_argument("Entity type enumeration not found " + Get_entity_type_string(entity_type));
   }
 
   new_entity->Initialize();

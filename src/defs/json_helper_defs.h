@@ -259,6 +259,9 @@ namespace \
  */
 struct Polymorphic_serializer_registry
 {
+  /**
+   * @brief A vector of functions, that will be used to register polymorphic types
+   */
   std::vector<void(*)()> functions;
 
   /**
