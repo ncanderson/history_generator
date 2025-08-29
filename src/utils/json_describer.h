@@ -8,6 +8,7 @@
 // Standard libs
 #include <string>
 #include <vector>
+#include <algorithm>
 
 // JSON
 #include <deps/json.hpp>
@@ -56,19 +57,24 @@ public:
     }
     paragraph += ". ";
 
+    // Clothing
+    paragraph += "She is clothed in sheer, flowing silk. ";
+
     // Attributes
-    const auto &physicality_map = entity["physicality"]["physicality"];
+    const auto& physicality_map = entity["physicality"]["physicality"];
 
     // Attrs to exclude
     static const std::vector<Attribute_enums::EPhysicality> excluded_attrs = {
       Attribute_enums::EPhysicality::EPHYSICALITY_Breast_cleavage_depth,
       Attribute_enums::EPhysicality::EPHYSICALITY_Breast_shape_roundness,
+      Attribute_enums::EPhysicality::EPHYSICALITY_Breast_size,
       Attribute_enums::EPhysicality::EPHYSICALITY_Clitoris_size,
       Attribute_enums::EPhysicality::EPHYSICALITY_Testicle_size,
       Attribute_enums::EPhysicality::EPHYSICALITY_Penis_length,
       Attribute_enums::EPhysicality::EPHYSICALITY_Penis_width,
       Attribute_enums::EPhysicality::EPHYSICALITY_Labia_major_size,
-      Attribute_enums::EPhysicality::EPHYSICALITY_Labia_minor_size
+      Attribute_enums::EPhysicality::EPHYSICALITY_Labia_minor_size,
+      Attribute_enums::EPhysicality::EPHYSICALITY_Nipple_size
     };
 
     for (auto it = physicality_map.begin(); it != physicality_map.end(); ++it)
@@ -94,7 +100,7 @@ public:
       }
 
       int attr_value = it.value().get<int>();
-      paragraph += "Their " + it.key() + " is " + classify_value(attr_value, value_type) + ". ";
+      paragraph += "Her " + it.key() + " is " + classify_value(attr_value, value_type) + ". ";
     }
 
     paragraph += "\n==================================================\n";

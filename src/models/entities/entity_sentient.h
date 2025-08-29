@@ -145,6 +145,9 @@ protected:
    */
   void initialize_max_events_by_type() override;
 
+  // each entity class will call the initialize max events function. that function will loop through
+  // the entity_event_type list,
+
 private:
   // Attributes
 

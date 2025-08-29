@@ -368,14 +368,26 @@ static const std::map<EPhysicality, EValue_type> physicality_value_type =
 
 static const std::vector<std::string> size_descriptions =
 {
-  "very small", "small", "slightly small", "average sized",
-  "slightly large", "large", "very large", "extremely large"
+  "far below average",
+  "below average",
+  "slightly below average",
+  "average",
+  "slightly above average",
+  "above average",
+  "well above average",
+  "far above average"
 };
 
 static const std::vector<std::string> density_descriptions =
 {
-  "absent", "extremely sparse", "very sparse", "sparse",
-  "moderate", "dense", "very dense", "extremely dense"
+  "absent",
+  "extremely sparse",
+  "very sparse",
+  "sparse",
+  "moderate",
+  "dense",
+  "very dense",
+  "extremely dense"
 };
 
 static const std::vector<std::string> presence_descriptions =

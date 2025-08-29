@@ -75,6 +75,11 @@ public:
   static const std::vector<his_gen::Relationship_type>& Get_relationship_types() { return s_relationship_types; }
   static const std::vector<his_gen::Event_type>& Get_event_types() { return s_event_types; }
 
+  static const std::map<his_gen::EEntity_type, std::vector<his_gen::ERelationship_type>>& Get_entity_relationships() { return s_entity_relationships; }
+  static const std::vector<his_gen::ERelationship_type>& Get_entity_relationships(const his_gen::EEntity_type& entity_type) { return s_entity_relationships[entity_type]; }
+  static const std::map<his_gen::EEntity_type, std::vector<his_gen::EEvent_type>>& Get_entity_events() { return s_entity_events; }
+  static const std::vector<his_gen::EEvent_type>& Get_entity_events(const his_gen::EEntity_type& entity_type) { return s_entity_events[entity_type]; }
+
   static void Set_entity_type_relationship_types(const std::vector<his_gen::Entity_type_relationship_type>& v) { s_entity_type_relationship_types = v; }
   static void Set_entity_type_event_types(const std::vector<his_gen::Entity_type_event_type>& v) { s_entity_type_event_types = v; }
 
