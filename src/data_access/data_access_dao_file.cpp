@@ -65,19 +65,7 @@ void his_gen::Data_access_dao_file::Write_history(his_gen::Generated_history& ge
 
 void his_gen::Data_access_dao_file::Load_data_definitions()
 {
-  std::ifstream data_definitions_file("/home/nanderson/nate_personal/projects/history_generator/data/data_definitions.json");
-
-  nlohmann::json data = nlohmann::json::parse(data_definitions_file);
-
-  // Deserialize JSON directly into the static members
-  his_gen::Data_definitions::Set_entity_type_relationship_types(data.
-                                                                at("entity_type_relationship_types").
-                                                                get<std::vector<his_gen::Entity_type_relationship_type>>());
-  his_gen::Data_definitions::Set_entity_type_event_types(data.
-                                                         at("entity_type_event_types").
-                                                         get<std::vector<his_gen::Entity_type_event_type>>());
-
-  // Rebuild composite structures
+  // Build composite structures
   his_gen::Data_definitions::Initialize();
 }
 

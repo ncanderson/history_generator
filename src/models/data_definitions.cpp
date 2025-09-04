@@ -18,8 +18,6 @@ using dd = his_gen::Data_definitions;
 ///////////////////////////////////////////////////////////////////////
 
 // Static Member Definitions
-std::vector<his_gen::Entity_type_relationship_type> dd::s_entity_type_relationship_types;
-std::vector<his_gen::Entity_type_event_type> dd::s_entity_type_event_types;
 std::vector<his_gen::Entity_type> dd::s_entity_types;
 std::vector<his_gen::Relationship_type> dd::s_relationship_types;
 std::vector<his_gen::Event_type> dd::s_event_types;
@@ -59,7 +57,7 @@ his_gen::ERelationship_type dd::Get_rand_entity_relationship(const his_gen::EEnt
 
 ///////////////////////////////////////////////////////////////////////
 
-void dd::build_entity_events(const std::vector<his_gen::Entity_type_event_type>& ent_event)
+void dd::build_entity_events(const Entity_type_event_types& ent_event)
 {
   for (auto& it : ent_event)
   {
@@ -69,7 +67,7 @@ void dd::build_entity_events(const std::vector<his_gen::Entity_type_event_type>&
 
 ///////////////////////////////////////////////////////////////////////
 
-void dd::build_entity_relationships(const std::vector<his_gen::Entity_type_relationship_type>& ent_rel)
+void dd::build_entity_relationships(const Entity_type_relationship_types& ent_rel)
 {
   for (auto& it : ent_rel)
   {
