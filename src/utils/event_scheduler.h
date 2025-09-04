@@ -43,6 +43,11 @@ private:
   std::shared_ptr<his_gen::Entity_base>& m_triggering_entity;
 
   /**
+   * @brief IDs of this event's target(s)
+   */
+  const std::vector<boost::uuids::uuid>& m_target_ids;
+
+  /**
    * @brief The type of event that will be scheduled to run
    */
   const his_gen::EEvent_type m_scheduled_event_type;
@@ -53,10 +58,12 @@ private:
    * @param scheduled_event_type The type of event to be scheduled
    */
   Scheduled_event(std::shared_ptr<his_gen::Entity_base>& triggering_entity,
+                  const std::vector<boost::uuids::uuid>& target_ids,
                   const his_gen::EEvent_type scheduled_event_type)
     :
-      m_triggering_entity(triggering_entity),
-      m_scheduled_event_type(scheduled_event_type)
+    m_triggering_entity(triggering_entity),
+    m_target_ids(target_ids),
+    m_scheduled_event_type(scheduled_event_type)
   { }
 
 }; // class Scheduled_event
@@ -89,10 +96,12 @@ public:
   /**
    * @brief Schedule an event to run
    * @param triggering_entity The entity that will trigger this event
+   * @param target_ids The target(s) for this event
    * @param event_type_to_schedule The event type to schedule
    * @param tick_to_run The tick to run the event in
    */
   void Schedule_event(std::shared_ptr<his_gen::Entity_base>& triggering_entity,
+                      const std::vector<boost::uuids::uuid>& target_ids,
                       const his_gen::EEvent_type event_type_to_schedule,
                       const uint32_t tick_to_run);
 

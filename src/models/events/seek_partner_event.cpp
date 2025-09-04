@@ -5,6 +5,7 @@
 // Standard
 #include <models/events/seek_partner_event.h>
 #include <models/entities/entity_base.h>
+#include <utils/event_scheduler.h>
 
 ///////////////////////////////////////////////////////////////////////
 
@@ -89,7 +90,10 @@ void his_gen::Seek_partner_event::Run(std::vector<std::shared_ptr<his_gen::Entit
 
 void his_gen::Seek_partner_event::schedule_next_event(Event_scheduler& event_scheduler)
 {
-  // NOOP
+  event_scheduler.Schedule_event(m_triggering_entity,
+                                 Get_target_ids(),
+                                 his_gen::EEvent_type::EEVENT_TYPE_Courtship,
+                                 m_event_tick++);
 }
 
 ///////////////////////////////////////////////////////////////////////

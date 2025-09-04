@@ -20,10 +20,12 @@ sched::Event_scheduler()
 //////////////////////////////////////////////////////////////////////
 
 void sched::Schedule_event(std::shared_ptr<his_gen::Entity_base>& triggering_entity,
+                           const std::vector<boost::uuids::uuid>& target_ids,
                            const his_gen::EEvent_type event_type_to_schedule,
                            const uint32_t tick_to_run)
 {
   m_scheduled_events[tick_to_run].emplace_back(Scheduled_event(triggering_entity,
+                                                               target_ids,
                                                                event_type_to_schedule));
 }
 

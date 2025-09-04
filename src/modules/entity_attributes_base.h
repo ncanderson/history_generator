@@ -154,6 +154,7 @@ enum class EPhysicality : uint8_t
   EPHYSICALITY_Muscle_mass,
   EPHYSICALITY_Height,
   EPHYSICALITY_Shoulder_width,
+  EPHYSICALITY_Chest_circumference,
   EPHYSICALITY_Stomach_size,
   EPHYSICALITY_Hip_width,
   EPHYSICALITY_Waist_circumference,
@@ -204,6 +205,7 @@ inline std::string Get_entity_attribute_string(const EPhysicality physical_attri
     case EPhysicality::EPHYSICALITY_Muscle_mass:            return "muscle_mass";
     case EPhysicality::EPHYSICALITY_Height:                 return "height";
     case EPhysicality::EPHYSICALITY_Shoulder_width:         return "shoulder_width";
+    case EPhysicality::EPHYSICALITY_Chest_circumference:    return "chest_circumference";
     case EPhysicality::EPHYSICALITY_Stomach_size:           return "stomach_size";
     case EPhysicality::EPHYSICALITY_Hip_width:              return "hip_width";
     case EPhysicality::EPHYSICALITY_Waist_circumference:    return "waist_circumference";
@@ -255,6 +257,7 @@ inline Attribute_enums::EPhysicality Get_entity_attribute(const std::string& att
     {"muscle_mass", EPhysicality::EPHYSICALITY_Muscle_mass},
     {"height", EPhysicality::EPHYSICALITY_Height},
     {"shoulder_width", EPhysicality::EPHYSICALITY_Shoulder_width},
+    {"chest_circumference", EPhysicality::EPHYSICALITY_Chest_circumference},
     {"stomach_size", EPhysicality::EPHYSICALITY_Stomach_size},
     {"hip_width", EPhysicality::EPHYSICALITY_Hip_width},
     {"waist_circumference", EPhysicality::EPHYSICALITY_Waist_circumference},
@@ -333,6 +336,7 @@ static const std::map<EPhysicality, EValue_type> physicality_value_type =
   {EPhysicality::EPHYSICALITY_Height,                 EValue_type::EVALUE_TYPE_Size},
   {EPhysicality::EPHYSICALITY_Shoulder_width,         EValue_type::EVALUE_TYPE_Size},
   {EPhysicality::EPHYSICALITY_Stomach_size,           EValue_type::EVALUE_TYPE_Size},
+  {EPhysicality::EPHYSICALITY_Chest_circumference,    EValue_type::EVALUE_TYPE_Size},
   {EPhysicality::EPHYSICALITY_Hip_width,              EValue_type::EVALUE_TYPE_Size},
   {EPhysicality::EPHYSICALITY_Waist_circumference,    EValue_type::EVALUE_TYPE_Size},
   {EPhysicality::EPHYSICALITY_Posture_straightness,   EValue_type::EVALUE_TYPE_Other},
