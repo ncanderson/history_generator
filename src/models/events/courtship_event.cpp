@@ -31,8 +31,8 @@ void his_gen::Courtship_event::Run(his_gen::Entities& entities,
 {
   // The entity that triggered the event
   std::shared_ptr<his_gen::Entity_base> triggering_entity = Get_triggering_entity();
-  // The target(s) of this event
-  std::vector<boost::uuids::uuid> target_ids = Get_target_ids();
+  // The targets
+  std::vector<std::shared_ptr<his_gen::Entity_base>> target_entities = get_target_entities(entities);
 
 
   // TODO: Refactor this stuff into the base class I think, since there is boilerplate

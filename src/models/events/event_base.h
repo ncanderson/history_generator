@@ -210,6 +210,24 @@ protected:
    */
   virtual void meaningful_change_occurred(bool change_occurred) { m_event_changes_state = change_occurred; }
 
+  /**
+   * @brief Using the entity IDs stored on this event, get the pointer to the entity
+   * @param entities The full entity map
+   * @return The extracted target entities
+   */
+  virtual std::vector<std::shared_ptr<his_gen::Entity_base>> get_target_entities(his_gen::Entities& entities)
+  {
+    // The target ID(s) of this event
+    std::vector<boost::uuids::uuid> target_ids = Get_target_ids();
+    // Pull those entities out of the main strucutre to isolate them for simplicity
+    std::vector<std::shared_ptr<his_gen::Entity_base>> target_entities;
+    for(auto& it : target_ids)
+    {
+      target_entities.push_back(entities[it]);
+    }
+    return target_entities;
+  }
+
 private:
   // Attributes
 
