@@ -44,7 +44,7 @@ public:
    * @param entities
    * @param current_tick
    */
-  void Create_entities(Entities& entities,
+  void Create_entities(his_gen::Entities& entities,
                        const uint64_t current_tick) override;
 
   /**
@@ -54,15 +54,15 @@ public:
    * @param entity_relationships The vector of entity relationships to populate
    * @param current_tick The current generation tick
    */
-  void Manage_events(Entities& entities,
-                     Events& events,
-                     Entity_relationships& entity_relationships,
+  void Manage_events(his_gen::Entities& entities,
+                     his_gen::Events& events,
+                     his_gen::Entity_relationships& entity_relationships,
                      const uint64_t current_tick) override;
 
   /**
    * @brief The first being in this mythology
    */
-  void Create_progenitor_deity(Entities& entities);
+  void Create_progenitor_deity(his_gen::Entities& entities);
 
 protected:
   // Attributes

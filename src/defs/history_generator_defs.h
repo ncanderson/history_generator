@@ -5,8 +5,12 @@
 #ifndef HISTORY_GENERATOR_DEFS_H
 #define HISTORY_GENERATOR_DEFS_H
 
-// Standard libraries
+// Standard libs
 #include <string>
+
+// JSON
+
+// Application files
 
 namespace his_gen
 {

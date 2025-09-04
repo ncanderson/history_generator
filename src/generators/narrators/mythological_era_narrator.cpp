@@ -28,17 +28,17 @@ myth_nar::Mythological_era_narrator(const his_gen::Data_access_manager& data_acc
 
 ///////////////////////////////////////////////////////////////////////
 
-void myth_nar::Create_progenitor_deity(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities)
+void myth_nar::Create_progenitor_deity(his_gen::Entities& entities)
 {
   std::shared_ptr<his_gen::Entity_base> ptr = std::make_shared<his_gen::Entity_deity>("God",
-                                                                                      "the Allfather",
+                                                                                      "the First",
                                                                                       0);
-  entities.push_back(ptr);
+  entities[ptr->Get_entity_id()] = ptr;
 }
 
 ///////////////////////////////////////////////////////////////////////
 
-void myth_nar::Create_entities(Entities& entities,
+void myth_nar::Create_entities(his_gen::Entities& entities,
                                const uint64_t current_tick)
 {
   for(int64_t tick_count = 0; tick_count < m_config.Get_myth_config().Max_entity_per_tick; tick_count++)
@@ -50,15 +50,15 @@ void myth_nar::Create_entities(Entities& entities,
                                                                                               current_tick);
 
     // Create the entity
-    entities.push_back(new_entity);
+    entities[new_entity->Get_entity_id()] = new_entity;
   }
 }
 
 ///////////////////////////////////////////////////////////////////////
 
-void myth_nar::Manage_events(Entities& entities,
-                             Events& events,
-                             Entity_relationships& entity_relationships,
+void myth_nar::Manage_events(his_gen::Entities& entities,
+                             his_gen::Events& events,
+                             his_gen::Entity_relationships& entity_relationships,
                              const uint64_t current_tick)
 {
   // Run events that were scheduled previously
@@ -66,10 +66,13 @@ void myth_nar::Manage_events(Entities& entities,
 
   // TODO Put this into another helper function or something?
   // Create new events and run them
-  for(int64_t tick_count = 0; tick_count < m_config.Get_myth_config().Max_event_per_tick;tick_count++)
+  for(int64_t tick_count = 0;
+      tick_count < m_config.Get_myth_config().Max_event_per_tick;
+      tick_count++)
   {
     // A random entity
-    std::shared_ptr<his_gen::Entity_base> triggering_entity = his_gen::dice::Get_random_element(entities);
+    boost::uuids::uuid random_entity_id = his_gen::dice::Get_random_element(m_entity_ids);
+    std::shared_ptr<his_gen::Entity_base> triggering_entity = entities[random_entity_id];
 
     // A random event
     EEvent_type event_type = his_gen::Data_definitions::Get_rand_entity_event(triggering_entity->Get_entity_type());
@@ -95,7 +98,7 @@ void myth_nar::Manage_events(Entities& entities,
     // Add the event to the list if something changed
     if(new_event->Created_meaningful_change())
     {
-      events.push_back(new_event);
+      events[new_event->Get_event_id()] = new_event;
     }
   }
 }

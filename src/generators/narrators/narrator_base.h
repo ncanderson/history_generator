@@ -6,6 +6,8 @@
 #define NARRATOR_BASE_H
 
 // Standard libs
+#include <unordered_set>
+#include <boost/functional/hash.hpp>
 
 // Application files
 #include <models/entities/entity_base.h>
@@ -43,7 +45,9 @@ public:
    */
   Narrator_base()
     :
-    m_event_scheduler()
+    m_event_scheduler(),
+    m_entity_ids(),
+    m_event_ids()
   { }
 
   /**
@@ -52,18 +56,11 @@ public:
   virtual ~Narrator_base() = default;
 
   /**
-   * Usings
-   */
-  using Entities = std::vector<std::shared_ptr<his_gen::Entity_base>>;
-  using Events = std::vector<std::shared_ptr<his_gen::Event_base>>;
-  using Entity_relationships = std::map<boost::uuids::uuid, std::shared_ptr<his_gen::Entity_relationship>>;
-
-  /**
    * @brief Inheriting classes must implement this function to create new entities.
    * @param entities The vector of entity pointers to populate.
    * @current_tick The current generation tick
    */
-  virtual void Create_entities(Entities& entities,
+  virtual void Create_entities(his_gen::Entities& entities,
                                const uint64_t current_tick) = 0;
 
   /**
@@ -74,10 +71,52 @@ public:
    * @param entity_relationships The vector of entity relationships to populate
    * @current_tick The current generation tick
    */
-  virtual void Manage_events(Entities& entities,
-                             Events& events,
-                             Entity_relationships& entity_relationships,
+  virtual void Manage_events(his_gen::Entities& entities,
+                             his_gen::Events& events,
+                             his_gen::Entity_relationships& entity_relationships,
                              const uint64_t current_tick) =0;
+
+  /**
+   * @brief This class maintains a list of all entity and event IDs that are currently
+   * interesting, allowing those IDs to be used for random selection
+   * @param entities All entities, from which IDs will be extracted
+   * @param events All events, from which IDs will be extracted
+   */
+  void Refresh_generation_id_lists(const his_gen::Entities& entities,
+                                   const his_gen::Events& events)
+  {
+    // Entities
+    // Copy existing IDs into an unordered set to ensure duplicates are not inserted
+    std::unordered_set<boost::uuids::uuid,
+                       boost::hash<boost::uuids::uuid>> ents(m_entity_ids.begin(),
+                                                             m_entity_ids.end());
+
+    for(const auto& [id, _] : entities)
+    {
+      // Attempt to insert the ID, 'insert()' returns true if id was not
+      // already present, in that case insert to m_entity_ids
+      if(ents.insert(id).second)
+      {
+        m_entity_ids.push_back(id);
+      }
+    }
+
+    // Entities
+    // Copy existing IDs into an unordered set to ensure duplicates are not inserted
+    std::unordered_set<boost::uuids::uuid,
+                       boost::hash<boost::uuids::uuid>> evts(m_event_ids.begin(),
+                                                             m_event_ids.end());
+
+    for(const auto& [id, _] : events)
+    {
+      // Attempt to insert the ID, 'insert()' returns true if id was not
+      // already present, in that case insert to m_event_ids
+      if(evts.insert(id).second)
+      {
+        m_event_ids.push_back(id);
+      }
+    }
+  }
 
 protected:
   // Attributes
@@ -86,9 +125,25 @@ protected:
    */
   Event_scheduler m_event_scheduler;
 
+  /**
+   * @brief All entity IDs currently under management by this narrator
+   */
+  std::vector<boost::uuids::uuid> m_entity_ids;
+
+  /**
+   * @brief All event IDs currently under management by this narrator
+   */
+  std::vector<boost::uuids::uuid> m_event_ids;
+
   // Implementation
-  void run_scheduled_events(Event_base::Entities& entities,
-                            Event_base::Entity_relationships entity_relationships,
+  /**
+   * @brief Run events that have been scheduled by other events
+   * @param entities
+   * @param entity_relationships
+   * @param current_tick
+   */
+  void run_scheduled_events(his_gen::Entities& entities,
+                            his_gen::Entity_relationships entity_relationships,
                             const uint64_t current_tick)
   {
     // Temp instance of scheduler, so we can avoid an infinte loop if using the

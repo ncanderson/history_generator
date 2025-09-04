@@ -6,7 +6,6 @@
 #define GENERATED_HISTORY_H
 
 // Standard libs
-#include <vector>
 
 // JSON
 #include <deps/json.hpp>
@@ -30,17 +29,6 @@ class Generated_history
 {
 public:
   // Attributes
-  /**
-   * @brief List of all generated entities.
-   * @details This vector will hold any objects derived from the base class
-   */
-  std::vector<std::shared_ptr<his_gen::Entity_base>> Entities;
-
-  /**
-   * @brief List of all generated events.
-   * @details This vector will hold any objects derived from the base class
-   */
-  std::vector<std::shared_ptr<his_gen::Event_base>> Events;
 
   // Implementation
   /**
@@ -54,25 +42,32 @@ public:
   ~Generated_history(){};
 
   /**
-   * Usings
-   */
-  using Entity_relationships = std::map<boost::uuids::uuid, std::shared_ptr<his_gen::Entity_relationship>>;
-
-  /**
-   * Getters and Setters
-   */
-  /**
-   * @brief Set_entity_relationships
-   * @param relationships
+   * Simple Getters and Setters
    */
   void Set_entity_relationships(const Entity_relationships& relationships) { m_entity_relationships = relationships; }
   Entity_relationships& Get_entity_relationships() { return m_entity_relationships; }
+  // Extra getter to facilitate JSON serialization
   const Entity_relationships& Get_entity_relationships() const { return m_entity_relationships; }
+
+  void Set_entities(const Entities& entities) { m_entities = entities; }
+  Entities& Get_entities() { return m_entities; }
+  // Extra getter to facilitate JSON serialization
+  const Entities& Get_entities() const { return m_entities; }
+
+  void Set_events(const Events& events) { m_events = events; }
+  Events& Get_events() { return m_events; }
+  // Extra getter to facilitate JSON serialization
+  const Events& Get_events() const { return m_events; }
+
+  // TODO Refactor these into templates, as we're doing the same logic on different containers
+  /**
+   * More Complex Getters and Setters
+   */
 
   /**
    * @brief Add_entity_relationship
-   * @param id
-   * @param relationship
+   * @param id ID of the entity relationship
+   * @param relationship The object maintaining the relationship
    */
   void Add_entity_relationship(const boost::uuids::uuid& id,
                                const std::shared_ptr<his_gen::Entity_relationship>& relationship)
@@ -96,6 +91,60 @@ public:
       return it->second;
   }
 
+  /**
+   * @brief Add_entity
+   * @param id
+   * @param entity
+   */
+  void Add_entity(const boost::uuids::uuid& id,
+                  const std::shared_ptr<his_gen::Entity_base>& entity)
+  {
+    m_entities[id] = entity;
+  }
+
+  /**
+   * @brief Get_entity
+   * @param id ID of the Entity to return
+   * @return The entity pointer
+   * @throws std::out_of_range Thrown if the sought ID isn't found
+   */
+  std::shared_ptr<his_gen::Entity_base> Get_entity(const boost::uuids::uuid& id) const
+  {
+    auto it = m_entities.find(id);
+    if (it == m_entities.end())
+    {
+      throw std::out_of_range("Entity not found for given UUID");
+    }
+    return it->second;
+  }
+
+  /**
+   * @brief Add_event
+   * @param id
+   * @param event
+   */
+  void Add_event(const boost::uuids::uuid& id,
+                 const std::shared_ptr<his_gen::Event_base>& event)
+  {
+    m_events[id] = event;
+  }
+
+  /**
+   * @brief Get_event
+   * @param id ID of the Event to return
+   * @return The event pointer
+   * @throws std::out_of_range Thrown if the sought ID isn't found
+   */
+  std::shared_ptr<his_gen::Event_base> Get_event(const boost::uuids::uuid& id) const
+  {
+    auto it = m_events.find(id);
+    if (it == m_events.end())
+    {
+      throw std::out_of_range("Event not found for given UUID");
+    }
+    return it->second;
+  }
+
 protected:
   // Attributes
 
@@ -108,7 +157,21 @@ private:
    * @details A map holding an ID key to an Entity_relationship instance. The key should be stored
    * in the relationship IDs map of the entity this relationship is owned by.
    */
-  std::map<boost::uuids::uuid, std::shared_ptr<his_gen::Entity_relationship>> m_entity_relationships;
+  Entity_relationships m_entity_relationships;
+
+  /**
+   * @brief List of all generated entities.
+   * @details A map holding an ID key to an Entity_base instance. The key is stored on the entity,
+   * and can be used for lookup in this structure.
+   */
+  Entities m_entities;
+
+  /**
+   * @brief List of all generated events.
+   * @details A map holding an ID key to an Event_base instance. The key is stored on the event,
+   * and can be used for lookup in this structure.
+   */
+  Events m_events;
 
   // Implementation
 

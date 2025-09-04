@@ -33,7 +33,11 @@ void his_gen::Mythological_era_generator::Run()
     case STAGE_Init:
     {
       // Create a new ultimate parent entity
-      m_myth_narrator.Create_progenitor_deity(m_generated_history.Entities);
+      m_myth_narrator.Create_progenitor_deity(m_generated_history.Get_entities());
+
+      // Refresh the ID lists managed by the narrator
+      m_myth_narrator.Refresh_generation_id_lists(m_generated_history.Get_entities(),
+                                                  m_generated_history.Get_events());
 
       // Increment run-time ticks, so the Run stage will start at 1
       m_ticks_completed++;
@@ -45,13 +49,18 @@ void his_gen::Mythological_era_generator::Run()
     case STAGE_Run:
     {
       // Generate the desired number of entities for this tick
-      m_myth_narrator.Create_entities(m_generated_history.Entities,
+      m_myth_narrator.Create_entities(m_generated_history.Get_entities(),
                                       m_ticks_completed);
 
-      m_myth_narrator.Manage_events(m_generated_history.Entities,
-                                    m_generated_history.Events,
+      // With new entities involved, manage events, including scheduled events
+      m_myth_narrator.Manage_events(m_generated_history.Get_entities(),
+                                    m_generated_history.Get_events(),
                                     m_generated_history.Get_entity_relationships(),
                                     m_ticks_completed);
+
+      // Refresh the ID lists managed by the narrator
+      m_myth_narrator.Refresh_generation_id_lists(m_generated_history.Get_entities(),
+                                                  m_generated_history.Get_events());
 
       // Increment run-time ticks
       m_ticks_completed++;

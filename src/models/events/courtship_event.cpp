@@ -25,8 +25,8 @@ his_gen::Courtship_event::Courtship_event(std::shared_ptr<Entity_base>& triggeri
 
 //////////////////////////////////////////////////////////////////////
 
-void his_gen::Courtship_event::Run(std::vector<std::shared_ptr<his_gen::Entity_base>>& entities,
-                                   Entity_relationships& entity_relationships,
+void his_gen::Courtship_event::Run(his_gen::Entities& entities,
+                                   his_gen::Entity_relationships& entity_relationships,
                                    Event_scheduler& event_scheduler)
 {
   // The entity that triggered the event
