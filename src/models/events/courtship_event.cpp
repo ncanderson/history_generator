@@ -19,9 +19,7 @@ his_gen::Courtship_event::Courtship_event(std::shared_ptr<Entity_base>& triggeri
   Event_base(his_gen::EEvent_type::EEVENT_TYPE_Courtship,
              triggering_entity,
              current_tick)
-{
-  his_gen::Print_to_cout("New Courtship");
-}
+{ }
 
 //////////////////////////////////////////////////////////////////////
 
@@ -31,9 +29,18 @@ void his_gen::Courtship_event::Run(his_gen::Entities& entities,
 {
   // The entity that triggered the event
   std::shared_ptr<his_gen::Entity_base> triggering_entity = Get_triggering_entity();
-  // The targets
+  // The targets of this event
   std::vector<std::shared_ptr<his_gen::Entity_base>> target_entities = get_target_entities(entities);
 
+  for(std::shared_ptr<his_gen::Entity_base>& target_entity : target_entities)
+  {
+
+  }
+
+  /**
+   * Possible outcomes:
+   * Reproduction
+   */
 
   // TODO: Refactor this stuff into the base class I think, since there is boilerplate
   // bookeeping that we have now
@@ -62,7 +69,29 @@ void his_gen::Courtship_event::Run(his_gen::Entities& entities,
 
 void his_gen::Courtship_event::schedule_next_event(Event_scheduler& event_scheduler)
 {
-  // NOOP
+  /**
+   * Possible outcomes:
+   *
+   * Events to schedule
+   *   existing
+   * Reproduction
+   * Another round of courtship
+   *   new
+   * Elopement
+   * Secret Affair
+   * Social Scandal
+   * Unrequited Love / Longing
+   * Rivalry / Jealousy Triggered
+   * Abuse / Toxic Relationship
+   * Breakup
+   *
+   * Relationships
+   * Mentorship / Power Dynamic Shift
+   * Break up, end relationship
+   * Marriage
+   * Abandonment / Ghosting
+   * Platonic Bond / Close Friendship
+   */
 }
 
 ///////////////////////////////////////////////////////////////////////

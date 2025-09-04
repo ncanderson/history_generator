@@ -39,46 +39,78 @@ namespace Attribute_enums
  */
 enum class EPersonality : uint8_t
 {
+  /////////////////////////
   EPERSONALITY_Aggressive,
   EPERSONALITY_Passive,
+  /////////////////////////
   EPERSONALITY_Ambitious,
   EPERSONALITY_Content,
+  /////////////////////////
   EPERSONALITY_Avoidant,
   EPERSONALITY_Sociable,
+  /////////////////////////
   EPERSONALITY_Brave,
   EPERSONALITY_Cowardly,
+  /////////////////////////
   EPERSONALITY_Cooperative,
   EPERSONALITY_Difficult,
+  /////////////////////////
   EPERSONALITY_Cruel,
   EPERSONALITY_Kind,
+  /////////////////////////
   EPERSONALITY_Decisive,
   EPERSONALITY_Indecisive,
+  /////////////////////////
   EPERSONALITY_Diligent,
   EPERSONALITY_Lazy,
+  /////////////////////////
   EPERSONALITY_Flexible,
   EPERSONALITY_Extremist,
+  /////////////////////////
   EPERSONALITY_Frank,
   EPERSONALITY_Evasive,
+  /////////////////////////
   EPERSONALITY_Generous,
   EPERSONALITY_Selfish,
+  /////////////////////////
   EPERSONALITY_Jealous,
   EPERSONALITY_Compassionate,
+  /////////////////////////
   EPERSONALITY_Placid,
   EPERSONALITY_Excitable,
+  /////////////////////////
   EPERSONALITY_Thoughtful,
   EPERSONALITY_Rash,
+  /////////////////////////
   EPERSONALITY_Thrifty,
   EPERSONALITY_Extravagant,
+  /////////////////////////
   EPERSONALITY_Argumentative,
   EPERSONALITY_Amiable,
+  /////////////////////////
   EPERSONALITY_Witty,
   EPERSONALITY_Humorless,
+  /////////////////////////
   EPERSONALITY_Honest,
   EPERSONALITY_Deceitful,
+  /////////////////////////
   EPERSONALITY_Lustful,
   EPERSONALITY_Chaste,
+  /////////////////////////
   EPERSONALITY_Progressive,
-  EPERSONALITY_Conservative
+  EPERSONALITY_Conservative,
+  /////////////////////////
+  EPERSONALITY_Romantic,
+  EPERSONALITY_Pragmatic,
+  /////////////////////////
+  EPERSONALITY_Proud,
+  EPERSONALITY_Humble,
+  /////////////////////////
+  EPERSONALITY_Forgiving,
+  EPERSONALITY_Resentful,
+  /////////////////////////
+  EPERSONALITY_Flirtatious,
+  EPERSONALITY_Reserved
 }; // enum EPersonality
 
 /**
@@ -128,6 +160,14 @@ inline std::string Get_entity_attribute_string(const EPersonality personality_at
     case EPersonality::EPERSONALITY_Deceitful:     return "deceitful";
     case EPersonality::EPERSONALITY_Lustful:       return "lustful";
     case EPersonality::EPERSONALITY_Chaste:        return "chaste";
+    case EPersonality::EPERSONALITY_Romantic:      return "romantic";
+    case EPersonality::EPERSONALITY_Pragmatic:     return "pragmatic";
+    case EPersonality::EPERSONALITY_Proud:         return "proud";
+    case EPersonality::EPERSONALITY_Humble:        return "humble";
+    case EPersonality::EPERSONALITY_Forgiving:     return "forgiving";
+    case EPersonality::EPERSONALITY_Resentful:     return "resentful";
+    case EPersonality::EPERSONALITY_Flirtatious:   return "flirtatious";
+    case EPersonality::EPERSONALITY_Reserved:      return "reserved";
     default:
       // Unrecognized value
       throw std::invalid_argument("Attribute not found");
