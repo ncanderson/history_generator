@@ -72,25 +72,21 @@ void his_gen::Courtship_event::schedule_next_event(Event_scheduler& event_schedu
   /**
    * Possible outcomes:
    *
-   * Events to schedule
-   *   existing
+   * Another event
    * Reproduction
-   * Another round of courtship
-   *   new
-   * Elopement
-   * Secret Affair
+   * More courtship
    * Social Scandal
-   * Unrequited Love / Longing
-   * Rivalry / Jealousy Triggered
-   * Abuse / Toxic Relationship
-   * Breakup
-   *
-   * Relationships
-   * Mentorship / Power Dynamic Shift
-   * Break up, end relationship
+   * Secret Affair
+   * Elopement
    * Marriage
-   * Abandonment / Ghosting
-   * Platonic Bond / Close Friendship
+   * Abuse / Toxic Relationship
+   * Change in relationship, to:
+   *   - breakup
+   *   - mentorship or power dynamic
+   *   - platonic/close friend
+   *   - rivalry/jealousy
+   *   - unrequited love/longing
+   *   - abandonment/ghosting
    */
 }
 

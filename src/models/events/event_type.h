@@ -16,6 +16,37 @@
 
 namespace his_gen
 {
+
+/**
+ * @brief Enumerates all general event types used in the historical simulation.
+ */
+enum EEvent_type
+{
+  EEVENT_TYPE_Courtship,          ///< Further a relationship, determine where it goes
+  EEVENT_TYPE_Elopement,          ///<
+  EEVENT_TYPE_Marriage,           ///<
+  EEVENT_TYPE_Reproduce,          ///< Create a new entity
+  EEVENT_TYPE_Secret_affair,      ///<
+  EEVENT_TYPE_Seek_partner,       ///< Seek a partner, romatic or otherwise
+  EEVENT_TYPE_Social_scandal,     ///<
+  EEVENT_TYPE_Toxic_relationship  ///<
+};
+
+/**
+ * @brief Get the string representation of an EEvent_type.
+ * @param event_type The event type enum value.
+ * @return Lowercase string form (e.g. "died", "formed_alliance").
+ */
+std::string Get_event_type_string(const EEvent_type& event_type);
+
+/**
+ * @brief Convert a string to its corresponding EEvent_type enum value.
+ * @param event_type The string to convert (case-insensitive).
+ * @return Matching enum value.
+ * @throws std::invalid_argument Thrown if no match is found.
+ */
+EEvent_type Get_event_type(const std::string& event_type);
+
 /**
  * @brief The type of event
  */
@@ -86,4 +117,4 @@ void from_json(const nlohmann::json& json,
 
 }  // namespace his_gen
 
-#endif // EVENT_TYPE_H
+#endif

@@ -58,7 +58,7 @@ private:
 
   // Implementation
 
-}; // class Reproduce_event
-}  // namespace his_gen
+};
+}
 
-#endif  // REPRODUCE_EVENT_H
+#endif

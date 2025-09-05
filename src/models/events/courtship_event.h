@@ -18,7 +18,9 @@ namespace his_gen
 class Courtship_event : public Event_base
 {
 public:
+  // Attributes
 
+  // Implementation
   /**
    * @brief Constructor
    * @param triggering_entity The entity driving this event
@@ -58,7 +60,7 @@ private:
 
   // Implementation
 
-}; // class Courtship_event
-}  // namespace his_gen
+};
+}
 
-#endif  // COURTSHIP_EVENT_H
+#endif
