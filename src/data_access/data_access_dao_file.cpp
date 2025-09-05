@@ -87,17 +87,29 @@ std::string his_gen::Data_access_dao_file::describe_entities(nlohmann::json& out
 {
   std::string descriptions;
 
-  if (!output_json.contains("entities") || !output_json["entities"].is_array())
+  if (!output_json.contains("entities") || !output_json["entities"].is_object())
   {
     return "No entities found.\n";
   }
 
-  for (auto &entity : output_json["entities"])
+  for (auto it = output_json["entities"].begin(); it != output_json["entities"].end(); ++it)
   {
-    std::string description = Json_describer::Describe_physicality(entity, false);
+    const std::string& uuid = it.key();
+    const nlohmann::json& entity = it.value();
 
-    // Collect all descriptions
-    descriptions += description;
+    std::string description;
+
+    // Example: Describe physicality
+    if (entity.contains("physicality") && entity["physicality"].contains("physicality"))
+    {
+      description += "Physical attributes:\n";
+      for (auto& [attr, value] : entity["physicality"]["physicality"].items())
+      {
+        description += "  " + attr + ": " + std::to_string(value.get<int>()) + "\n";
+      }
+    }
+
+    descriptions += description + "\n";
   }
 
   return descriptions;
