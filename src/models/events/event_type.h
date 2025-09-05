@@ -22,30 +22,32 @@ namespace his_gen
  */
 enum EEvent_type
 {
-  EEVENT_TYPE_Courtship,          ///< Further a relationship, determine where it goes
-  EEVENT_TYPE_Elopement,          ///<
-  EEVENT_TYPE_Marriage,           ///<
-  EEVENT_TYPE_Reproduce,          ///< Create a new entity
-  EEVENT_TYPE_Secret_affair,      ///<
-  EEVENT_TYPE_Seek_partner,       ///< Seek a partner, romatic or otherwise
-  EEVENT_TYPE_Social_scandal,     ///<
-  EEVENT_TYPE_Toxic_relationship  ///<
+  EEVENT_TYPE_Courtship,
+  EEVENT_TYPE_Elopement,
+  EEVENT_TYPE_Marriage,
+  EEVENT_TYPE_Reproduce,
+  EEVENT_TYPE_Secret_affair,
+  EEVENT_TYPE_Seek_partner,
+  EEVENT_TYPE_Social_scandal,
+  EEVENT_TYPE_Toxic_relationship,
+  EEVENT_TYPE_Count
 };
 
 /**
- * @brief Get the string representation of an EEvent_type.
- * @param event_type The event type enum value.
- * @return Lowercase string form (e.g. "died", "formed_alliance").
+ * @brief Lookup table mapping all enumerated event types to their appropriate string
+ * representations.
  */
-std::string Get_event_type_string(const EEvent_type& event_type);
-
-/**
- * @brief Convert a string to its corresponding EEvent_type enum value.
- * @param event_type The string to convert (case-insensitive).
- * @return Matching enum value.
- * @throws std::invalid_argument Thrown if no match is found.
- */
-EEvent_type Get_event_type(const std::string& event_type);
+constexpr std::array<Enum_mapping<EEvent_type>,
+                     static_cast<size_t>(EEvent_type::EEVENT_TYPE_Count)> event_type_lookup = {
+  Enum_mapping{EEvent_type::EEVENT_TYPE_Courtship,           "courtship"},
+  Enum_mapping{EEvent_type::EEVENT_TYPE_Elopement,           "elopement"},
+  Enum_mapping{EEvent_type::EEVENT_TYPE_Marriage,            "marriage"},
+  Enum_mapping{EEvent_type::EEVENT_TYPE_Reproduce,           "reproduce"},
+  Enum_mapping{EEvent_type::EEVENT_TYPE_Secret_affair,       "secret_affair"},
+  Enum_mapping{EEvent_type::EEVENT_TYPE_Seek_partner,        "seek_partner"},
+  Enum_mapping{EEvent_type::EEVENT_TYPE_Social_scandal,      "social_scandal"},
+  Enum_mapping{EEvent_type::EEVENT_TYPE_Toxic_relationship,  "toxic_relationship"}
+};
 
 /**
  * @brief The type of event

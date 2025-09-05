@@ -99,6 +99,12 @@ void dd::initialize_members_from_enums()
   s_event_types.clear();
   for (auto ev : magic_enum::enum_values<his_gen::EEvent_type>())
   {
+    // This will skip the creation of an Event_type object for the 'Count' member,
+    // which is just used as a helper in the templated lookup schema
+    if (ev == his_gen::EEvent_type::EEVENT_TYPE_Count)
+    {
+      continue;
+    }
     Event_type evt_type = Event_type(ev);
     s_event_types.push_back(evt_type);
   }

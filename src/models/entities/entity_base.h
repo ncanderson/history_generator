@@ -227,7 +227,8 @@ protected:
     auto it = m_max_events_by_type.find(event_type);
     if (it == m_max_events_by_type.end())
     {
-      throw std::out_of_range(his_gen::Get_event_type_string(event_type) + " not found in max events map");
+      throw std::out_of_range(std::string(his_gen::Enum_to_string(event_type, event_type_lookup)) +
+                              " not found in max events map");
     }
     return it->second;
   }

@@ -15,7 +15,7 @@ et_et::Entity_type_event_type(const std::string& entity_type,
   m_entity_type_string(entity_type),
   m_entity_type(his_gen::Get_entity_type(entity_type)),
   m_event_type_string(event_type),
-  m_event_type(his_gen::Get_event_type(event_type))
+  m_event_type(his_gen::String_to_enum(event_type, event_type_lookup))
 {
 
 }
@@ -28,7 +28,7 @@ et_et::Entity_type_event_type(const his_gen::EEntity_type& entity_type,
   m_entity_type(entity_type),
   m_entity_type_string(his_gen::Get_entity_type_string(entity_type)),
   m_event_type(event_type),
-  m_event_type_string(his_gen::Get_event_type_string(event_type))
+  m_event_type_string(his_gen::Enum_to_string(event_type, event_type_lookup))
 {
 
 }
@@ -55,7 +55,8 @@ void his_gen::from_json(const nlohmann::json& json,
   entity_type_event_type.Set_entity_type(his_gen::Get_entity_type(entity_type_event_type.Get_entity_type_string()));
 
   entity_type_event_type.Set_event_type_string(his_gen::To_lowercase(json.at("event_type")));
-  entity_type_event_type.Set_event_type(his_gen::Get_event_type(entity_type_event_type.Get_event_type_string()));
+  entity_type_event_type.Set_event_type(his_gen::String_to_enum(entity_type_event_type.Get_event_type_string(),
+                                                                event_type_lookup));
 }
 
 ///////////////////////////////////////////////////////////////////////

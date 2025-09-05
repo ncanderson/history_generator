@@ -58,7 +58,7 @@ public:
     m_event_id(boost::uuids::random_generator()()),
     m_event_tick(current_tick),
     m_event_type(event_type),
-    m_name(his_gen::Get_event_type_string(event_type)),
+    m_name(his_gen::Enum_to_string(event_type, event_type_lookup)),
     m_triggering_entity(triggering_entity),
     m_triggering_entity_id(triggering_entity->Get_entity_id()),
     m_targets(),
@@ -233,7 +233,7 @@ private:
 
   // Implementation
 
-};  // class Event_base
+};
 
 /**
  * @brief JSON serializer, marked inline to keep this virtual base class
@@ -241,12 +241,13 @@ private:
  * @param json
  * @param entity_base
  */
-inline void to_json(nlohmann::json& json, const his_gen::Event_base& event_base)
+inline void to_json(nlohmann::json& json,
+                    const his_gen::Event_base& event_base)
 {
   json = nlohmann::json
   {
     {"event_id", event_base.Get_event_id()},
-    {"type", his_gen::Get_event_type_string(event_base.Get_event_type())},
+    {"type", his_gen::Enum_to_string(event_base.Get_event_type(), event_type_lookup)},
     {"event_tick", event_base.Get_event_tick()},
     {"triggering_entity_id", event_base.Get_triggering_entity()->Get_entity_id()},
     {"target_ids", event_base.Get_target_ids()},
@@ -269,8 +270,10 @@ inline void from_json(const nlohmann::json& json,
 {
   event_base.Set_event_id(json.at("event_id"));
   event_base.Set_name(json.at("name"));
+  // This has to be called after name, unless we want to write an adl deserializer
+  // for a string view, which we don't
+  event_base.Set_event_type(his_gen::String_to_enum(event_base.Get_name(), event_type_lookup));
   event_base.Set_event_tick(json.at("event_tick"));
-  event_base.Set_event_type(his_gen::Get_event_type(json.at("name")));
   event_base.Set_triggering_entity_id(json.at("triggering_entity_id"));
   event_base.Set_target_ids(json.at("target_ids"));
   event_base.Set_is_complete(json.at("is_complete"));
@@ -296,4 +299,4 @@ struct adl_serializer<his_gen::Event_base>
 
 } // namespace nlohmann
 
-#endif // EVENT_BASE_H
+#endif

@@ -59,7 +59,7 @@ private:
 
   // Implementation
 
-}; // class Seek_partner_event
-}  // namespace his_gen
+};
+}
 
-#endif  // SEEK_PARTNER_EVENT_H
+#endif

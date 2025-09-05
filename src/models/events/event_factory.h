@@ -58,7 +58,7 @@ private:
 
   // Implementation
 
-}; // class Event_factory
-}  // namespace his_gen
+};
+}
 
-#endif // EVENT_FACTORY_H
+#endif

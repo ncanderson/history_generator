@@ -60,7 +60,7 @@ private:
 
   // Implementation
 
-}; // class Courtship_event
-}  // namespace his_gen
+};
+}
 
-#endif  // COURTSHIP_EVENT_H
+#endif
