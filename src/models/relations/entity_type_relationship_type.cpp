@@ -13,12 +13,12 @@ et_rt::Entity_type_relationship_type(const std::string& entity_type,
                                      const std::string& relationship_type)
   :
   m_entity_type_string(entity_type),
-  m_entity_type(his_gen::Get_entity_type(entity_type)),
+  m_entity_type(his_gen::String_to_enum(entity_type,
+                                        entity_type_lookup)),
   m_relationship_type_string(relationship_type),
-  m_relationship_type(his_gen::Get_relationship_type(entity_type))
-{
-
-}
+  m_relationship_type(his_gen::String_to_enum(relationship_type,
+                                              relationship_type_lookup))
+{ }
 
 ///////////////////////////////////////////////////////////////////////
 
@@ -26,12 +26,12 @@ et_rt::Entity_type_relationship_type(const his_gen::EEntity_type& eentity_type,
                                      const his_gen::ERelationship_type& erelationship_type)
   :
   m_entity_type(eentity_type),
-  m_entity_type_string(his_gen::Get_entity_type_string(eentity_type)),
+  m_entity_type_string(his_gen::Enum_to_string(eentity_type,
+                                               entity_type_lookup)),
   m_relationship_type(erelationship_type),
-  m_relationship_type_string(his_gen::Get_relationship_type_string(erelationship_type))
-{
-
-}
+  m_relationship_type_string(his_gen::Enum_to_string(erelationship_type,
+                                                     relationship_type_lookup))
+{ }
 
 ///////////////////////////////////////////////////////////////////////
 // JSON Helpers
@@ -52,9 +52,9 @@ void his_gen::from_json(const nlohmann::json& json,
                         his_gen::Entity_type_relationship_type& entity_type_relationship_type)
 {
   entity_type_relationship_type.Set_entity_type_string(his_gen::To_lowercase(json.at("entity_type")));
-  entity_type_relationship_type.Set_entity_type(his_gen::Get_entity_type(entity_type_relationship_type.Get_entity_type_string()));
+  entity_type_relationship_type.Set_entity_type(entity_type_relationship_type.Get_entity_type());
   entity_type_relationship_type.Set_relationship_type_string(his_gen::To_lowercase(json.at("relationship_type")));
-  entity_type_relationship_type.Set_relationship_type(his_gen::Get_relationship_type(entity_type_relationship_type.Get_relationship_type_string()));
+  entity_type_relationship_type.Set_relationship_type(entity_type_relationship_type.Get_relationship_type());
 }
 
 ///////////////////////////////////////////////////////////////////////

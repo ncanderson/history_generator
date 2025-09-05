@@ -9,7 +9,7 @@
 
 his_gen::Relationship_type::Relationship_type(const his_gen::ERelationship_type& relationship_type)
   :
-  m_name(his_gen::Get_relationship_type_string(relationship_type)),
+  m_name(his_gen::Enum_to_string(relationship_type, relationship_type_lookup)),
   m_relationship_type(relationship_type)
 { }
 
@@ -22,7 +22,8 @@ void his_gen::to_json(nlohmann::json& json,
   json = nlohmann::json
   {
     {"name", relationship_type.Get_name()},
-    {"relationship_type", his_gen::Get_relationship_type_string(relationship_type.Get_relationship_type())}
+    {"relationship_type", his_gen::Enum_to_string(relationship_type.Get_relationship_type(),
+                                                  relationship_type_lookup)}
   };
 }
 

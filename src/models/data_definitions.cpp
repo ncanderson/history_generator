@@ -83,6 +83,12 @@ void dd::initialize_members_from_enums()
   s_entity_types.clear();
   for (auto e : magic_enum::enum_values<his_gen::EEntity_type>())
   {
+    // This will skip the creation of an Entity_type object for the 'Count' member,
+    // which is just used as a helper in the templated lookup schema
+    if (e == his_gen::EENTITY_TYPE_Count)
+    {
+      continue;
+    }
     Entity_type ent_type = Entity_type(e);
     s_entity_types.push_back(ent_type);
   }
@@ -91,6 +97,12 @@ void dd::initialize_members_from_enums()
   s_relationship_types.clear();
   for (auto r : magic_enum::enum_values<his_gen::ERelationship_type>())
   {
+    // This will skip the creation of a Relationship_type object for the 'Count' member,
+    // which is just used as a helper in the templated lookup schema
+    if (r == his_gen::ERELATIONSHIP_TYPE_Count)
+    {
+      continue;
+    }
     Relationship_type rel_type = Relationship_type(r);
     s_relationship_types.push_back(rel_type);
   }
@@ -101,29 +113,13 @@ void dd::initialize_members_from_enums()
   {
     // This will skip the creation of an Event_type object for the 'Count' member,
     // which is just used as a helper in the templated lookup schema
-    if (ev == his_gen::EEvent_type::EEVENT_TYPE_Count)
+    if (ev == his_gen::EEVENT_TYPE_Count)
     {
       continue;
     }
     Event_type evt_type = Event_type(ev);
     s_event_types.push_back(evt_type);
   }
-}
-
-///////////////////////////////////////////////////////////////////////
-// JSON Helpers
-
-void his_gen::to_json(nlohmann::json& json,
-                      const his_gen::Data_definitions& /*data_definitions*/)
-{
-  json = nlohmann::json
-  {
-    {"entity_type_relationship_types", dd::Get_entity_type_relationship_types()},
-    {"entity_type_event_types", dd::Get_entity_type_event_types()},
-    {"entity_types", dd::Get_entity_types()},
-    {"relationship_type", dd::Get_relationship_types()},
-    {"event_types", dd::Get_event_types()}
-  };
 }
 
 ///////////////////////////////////////////////////////////////////////

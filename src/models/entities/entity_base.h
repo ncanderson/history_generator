@@ -294,7 +294,8 @@ inline void to_json(nlohmann::json& json, const his_gen::Entity_base& entity_bas
   json = nlohmann::json
   {
     {"id", entity_base.Get_entity_id()},
-    {"entity_type", his_gen::Get_entity_type_string(entity_base.Get_entity_type())},
+    {"entity_type", his_gen::Enum_to_string(entity_base.Get_entity_type(),
+                                              entity_type_lookup)},
     {"name", entity_base.Get_name()},
     {"title", entity_base.Get_title()},
     {"relationship_ids", entity_base.Get_relationship_ids()},
@@ -311,7 +312,8 @@ inline void to_json(nlohmann::json& json, const his_gen::Entity_base& entity_bas
 inline void from_json(const nlohmann::json& json, his_gen::Entity_base& entity_base)
 {
   entity_base.Set_entity_id(json.at("id"));
-  entity_base.Set_entity_type(his_gen::Get_entity_type(json.at("entity_type")));
+  entity_base.Set_entity_type(his_gen::String_to_enum(std::string(json.at("entity_type")),
+                                                      entity_type_lookup));
   entity_base.Set_name(json.at("name"));
   entity_base.Set_title(json.at("title"));
   entity_base.Set_relationship_ids(json.at("relationship_ids"));

@@ -17,6 +17,39 @@
 
 namespace his_gen
 {
+
+/**
+ * @brief The ERelationship_type enum
+ */
+enum ERelationship_type
+{
+  ERELATIONSHIP_TYPE_Conflict,    ///< Conflict
+  ERELATIONSHIP_TYPE_Dominance,   ///< Dominance
+  ERELATIONSHIP_TYPE_Friendship,  ///< Friendship
+  ERELATIONSHIP_TYPE_Lover,       ///< Lover
+  ERELATIONSHIP_TYPE_Marriage,    ///< Marriage
+  ERELATIONSHIP_TYPE_Membership,  ///< Membership, like to an organization or nation
+  ERELATIONSHIP_TYPE_Ownership,   ///< Ownership over something
+  ERELATIONSHIP_TYPE_Parentage,   ///< Parentage
+  ERELATIONSHIP_TYPE_Count        ///< Sentinel
+};
+
+/**
+ * @brief Lookup table mapping all enumerated event types to their appropriate string
+ * representations.
+ */
+constexpr std::array<Enum_mapping<ERelationship_type>,
+                     static_cast<size_t>(ERelationship_type::ERELATIONSHIP_TYPE_Count)> relationship_type_lookup = {
+  Enum_mapping{ERelationship_type::ERELATIONSHIP_TYPE_Conflict,   "conflict"},
+  Enum_mapping{ERelationship_type::ERELATIONSHIP_TYPE_Dominance,  "dominance"},
+  Enum_mapping{ERelationship_type::ERELATIONSHIP_TYPE_Friendship, "friendship"},
+  Enum_mapping{ERelationship_type::ERELATIONSHIP_TYPE_Lover,      "lover"},
+  Enum_mapping{ERelationship_type::ERELATIONSHIP_TYPE_Marriage,   "marriage"},
+  Enum_mapping{ERelationship_type::ERELATIONSHIP_TYPE_Membership, "membership"},
+  Enum_mapping{ERelationship_type::ERELATIONSHIP_TYPE_Ownership,  "ownership"},
+  Enum_mapping{ERelationship_type::ERELATIONSHIP_TYPE_Parentage,  "parentage"}
+};
+
 /**
  * @brief The type of relationship between entities
  */

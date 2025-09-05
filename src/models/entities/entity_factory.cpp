@@ -74,7 +74,9 @@ std::shared_ptr<his_gen::Entity_base> his_gen::Entity_factory::Create_entity(con
     default:
       // Unrecognized value
       his_gen::Print_to_cout("Entity type not implemented yet");
-      throw std::invalid_argument("Entity type enumeration not found " + Get_entity_type_string(entity_type));
+      throw std::invalid_argument("Entity type enumeration not found " +
+                                  std::string(his_gen::Enum_to_string(entity_type,
+                                                                      entity_type_lookup)));
   }
 
   new_entity->Initialize();

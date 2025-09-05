@@ -16,6 +16,47 @@
 
 namespace his_gen
 {
+
+/**
+ * @brief Enumerates all entity types used in the historical simulation.
+ */
+enum EEntity_type
+{
+  //EENTITY_TYPE_Artifact,      ///< Powerful or significant object with historical weight.
+  //EENTITY_TYPE_Beast,         ///< Natural, non-sapient creature.
+  //EENTITY_TYPE_Clan_tribe,    ///< Kin-based or tribal social group.
+  //EENTITY_TYPE_Culture,       ///< Shared customs, norms, and artistic expression.
+  EENTITY_TYPE_Deity,         ///< Divine or supernatural being.
+  //EENTITY_TYPE_Ethnicity,     ///< Culturally or racially distinct group.
+  //EENTITY_TYPE_Event,         ///< A world-shaping historical moment; may reference other entities.
+  //EENTITY_TYPE_Faction,       ///< Political or ideological group.
+  //EENTITY_TYPE_House,         ///< Noble or dynastic lineage.
+  //EENTITY_TYPE_Idea,          ///< Philosophy, ideology, or memetic construct.
+  //EENTITY_TYPE_Institution,   ///< Academy, temple, court, guild, or bureaucracy.
+  //EENTITY_TYPE_Language,      ///< Linguistic group.
+  //EENTITY_TYPE_Legend,        ///< Story, myth, or persistent cultural narrative.
+  //EENTITY_TYPE_Monster,       ///< Dangerous or supernatural creature.
+  //EENTITY_TYPE_Nation,        ///< Sovereign political state.
+  //EENTITY_TYPE_Order,         ///< Knightly, arcane, or secret order.
+  //EENTITY_TYPE_Pantheon,      ///< Collection of related deities.
+  //EENTITY_TYPE_Phenomenon,    ///< Magical, natural, or supernatural occurrence.
+  //EENTITY_TYPE_Region,        ///< Geographic area (mountain, forest, desert, etc.).
+  //EENTITY_TYPE_Religion,      ///< Organized faith or belief system.
+  //EENTITY_TYPE_Ruin,          ///< Ancient or collapsed structure.
+  EENTITY_TYPE_Sentient,      ///< A sapient individual (human, elf, etc.).
+  EENTITY_TYPE_Count          ///< Sentinel
+};
+
+/**
+ * @brief Lookup table mapping all enumerated entity types to their appropriate string
+ * representations.
+ */
+constexpr std::array<Enum_mapping<EEntity_type>,
+                     static_cast<size_t>(EEntity_type::EENTITY_TYPE_Count)> entity_type_lookup = {
+  Enum_mapping{EEntity_type::EENTITY_TYPE_Deity,    "deity"},
+  Enum_mapping{EEntity_type::EENTITY_TYPE_Sentient, "sentient"}
+};
+
 /**
  * @brief The type of entity
  */

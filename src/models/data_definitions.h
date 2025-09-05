@@ -95,6 +95,7 @@ protected:
 
 private:
   // Attributes
+  // TODO Move this into the Entity_type_relationship_type class
   /**
    * @brief List of all possible entity relationship types based on entity type
    */
@@ -119,6 +120,7 @@ private:
       Entity_type_relationship_type(EEntity_type::EENTITY_TYPE_Sentient, ERelationship_type::ERELATIONSHIP_TYPE_Parentage)
   };
 
+  // TODO Move this into the Entity_type_event_type class
   /**
    * @brief List of all possible entity event types based on entity type
    */
@@ -178,16 +180,7 @@ private:
    */
   static void initialize_members_from_enums();
 
-}; // class Data_definitions
+};
+}
 
-/**
- * @brief to_json
- * @param json
- * @param data_definitions
- */
-void to_json(nlohmann::json& json,
-             const his_gen::Data_definitions& data_definitions);
-
-}  // namespace his_gen
-
-#endif // DATA_DEFINITIONS_H
+#endif
