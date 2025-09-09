@@ -25,7 +25,7 @@ his_gen::Seek_partner_event::Seek_partner_event(std::shared_ptr<Entity_base>& tr
                                                 int64_t current_tick)
   :
   Event_base(his_gen::EEvent_type::EEVENT_TYPE_Seek_partner,
-             triggering_entity,
+             triggering_entity->Get_entity_id(),
              current_tick)
 { }
 

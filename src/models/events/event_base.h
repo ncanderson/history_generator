@@ -21,14 +21,8 @@
 #include <models/entities/entity_base.h>
 #include <models/relations/entity_relationship.h>
 
-// TODO Think a bit more about how this class manages the entities that it cares
-// about. Only the ID is being deserialized in the from_json function, meaning
-// that any events loaded from file/db will require an additional lookup to
-// fully populate the pointer to that entity. In practice this might not matter,
-// but if that becomes a requirement, more attention will be required.
 namespace his_gen
 {
-
 /**
  * @brief Forward declaration of Event_scheduler
  */
@@ -53,16 +47,15 @@ public:
    * @param triggering_entity
    */
   Event_base(const his_gen::EEvent_type event_type,
-             std::shared_ptr<Entity_base>& triggering_entity,
+             const boost::uuids::uuid& triggering_entity_id,
              const uint64_t current_tick)
     :
     m_event_id(boost::uuids::random_generator()()),
     m_event_tick(current_tick),
     m_event_type(event_type),
     m_name(his_gen::Enum_to_string(event_type, event_type_lookup)),
-    m_triggering_entity(triggering_entity),
-    m_triggering_entity_id(triggering_entity->Get_entity_id()),
-    m_targets(),
+    m_triggering_entity_id(triggering_entity_id),
+
     m_target_ids(),
     m_is_complete(false)
   { }
@@ -108,33 +101,8 @@ public:
   const std::string& Get_name() const { return m_name; }
   void Set_name(const std::string& name) { m_name = name; }
 
-  std::shared_ptr<Entity_base> Get_triggering_entity() const { return m_triggering_entity; }
-  void Set_triggering_entity(const std::shared_ptr<Entity_base>& entity)
-  {
-    m_triggering_entity = entity;
-    m_triggering_entity_id = entity->Get_entity_id();
-  }
-
   const boost::uuids::uuid Get_triggering_entity_id() const {return m_triggering_entity_id; }
   void Set_triggering_entity_id(const boost::uuids::uuid& triggering_entity_id) { m_triggering_entity_id = triggering_entity_id; }
-
-  const his_gen::Entities& Get_targets() const { return m_targets; }
-  void Set_targets(const his_gen::Entities& targets)
-  {
-    // Entities
-    m_targets = targets;
-    // IDs
-    m_target_ids.clear();
-    for(auto& it : m_targets)
-    {
-      m_target_ids.push_back(it.second->Get_entity_id());
-    }
-  }
-  void Add_target(const std::shared_ptr<Entity_base>& target)
-  {
-    m_targets[target->Get_entity_id()] = target;
-    m_target_ids.push_back(target->Get_entity_id());
-  }
 
   const std::vector<boost::uuids::uuid>& Get_target_ids() const { return m_target_ids; }
   void Set_target_ids(const std::vector<boost::uuids::uuid>& target_ids) { m_target_ids = target_ids; }
@@ -175,22 +143,12 @@ protected:
   std::string m_name;
 
   /**
-   * @brief m_triggering_entity
-   */
-  std::shared_ptr<Entity_base> m_triggering_entity;
-
-  /**
    * @brief ID of the triggering entity, used for deserialization
    */
   boost::uuids::uuid m_triggering_entity_id;
 
   /**
-   * @brief Targets of this event
-   */
-  his_gen::Entities m_targets;
-
-  /**
-   * @brief IDs of this event's targets
+   * @brief Entity IDs of this event's targets
    */
   std::vector<boost::uuids::uuid> m_target_ids;
 
@@ -259,7 +217,7 @@ inline void to_json(nlohmann::json& json,
     {"event_id", event_base.Get_event_id()},
     {"type", his_gen::Enum_to_string(event_base.Get_event_type(), event_type_lookup)},
     {"event_tick", event_base.Get_event_tick()},
-    {"triggering_entity_id", event_base.Get_triggering_entity()->Get_entity_id()},
+    {"triggering_entity_id", event_base.Get_triggering_entity_id()},
     {"target_ids", event_base.Get_target_ids()},
     {"is_complete", event_base.Is_complete()},
   };

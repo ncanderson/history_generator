@@ -9,6 +9,7 @@
 
 // Application files
 #include <models/events/event_base.h>
+#include <models/entities/entity_sentient.h>
 #include <utils/dice_rolls.h>
 
 namespace his_gen
@@ -27,7 +28,7 @@ public:
    * @param triggering_entity The entity driving this event
    * @parma current_tick The current tick
    */
-  Courtship_event(std::shared_ptr<his_gen::Entity_base>& triggering_entity,
+  Courtship_event(std::shared_ptr<Entity_base>&  triggering_entity,
                   int64_t current_tick);
 
   /**
@@ -93,7 +94,7 @@ private:
    * @param triggering_entity The entity triggering this event
    * @return The full, constructed transtion matrix for this entity
    */
-  dice::Transition_matrix<ERelationship_type> define_relationship_matrix(std::shared_ptr<Entity_base> triggering_entity);
+  dice::Transition_matrix<ERelationship_type> define_relationship_matrix(const std::shared_ptr<Entity_sentient>& triggering_entity);
 
 };
 }

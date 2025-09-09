@@ -17,10 +17,10 @@ const std::unordered_set<his_gen::EEvent_type> his_gen::Secret_affair_event::m_p
 
 his_gen::Secret_affair_event::Secret_affair_event(std::shared_ptr<Entity_base>& triggering_entity,
                                                   int64_t current_tick)
-    :
-    Event_base(his_gen::EEvent_type::EEVENT_TYPE_Reproduce,
-               triggering_entity,
-               current_tick)
+  :
+  Event_base(his_gen::EEvent_type::EEVENT_TYPE_Reproduce,
+             triggering_entity->Get_entity_id(),
+             current_tick)
 { }
 
 //////////////////////////////////////////////////////////////////////

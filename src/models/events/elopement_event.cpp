@@ -19,7 +19,7 @@ his_gen::Elopement_event::Elopement_event(std::shared_ptr<Entity_base>& triggeri
                                           int64_t current_tick)
   :
   Event_base(his_gen::EEvent_type::EEVENT_TYPE_Elopement,
-             triggering_entity,
+             triggering_entity->Get_entity_id(),
              current_tick)
 { }
 

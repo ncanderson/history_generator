@@ -4,7 +4,6 @@
 
 // Standard
 #include <models/events/courtship_event.h>
-#include <models/entities/entity_base.h>
 
 ///////////////////////////////////////////////////////////////////////
 
@@ -105,7 +104,7 @@ his_gen::Courtship_event::Courtship_event(std::shared_ptr<Entity_base>& triggeri
                                           int64_t current_tick)
   :
   Event_base(his_gen::EEvent_type::EEVENT_TYPE_Courtship,
-             triggering_entity,
+             triggering_entity->Get_entity_id(),
              current_tick),
   m_relationship_transition_matrix(define_relationship_matrix(triggering_entity))
 { }
@@ -116,42 +115,42 @@ void his_gen::Courtship_event::Run(his_gen::Entities& entities,
                                    his_gen::Entity_relationships& entity_relationships,
                                    Event_scheduler& event_scheduler)
 {
-  // The entity that triggered the event
-  std::shared_ptr<his_gen::Entity_base> triggering_entity = Get_triggering_entity();
-  // The targets of this event
-  std::vector<std::shared_ptr<his_gen::Entity_base>> target_entities = get_target_entities(entities);
-
-  for(std::shared_ptr<his_gen::Entity_base>& target_entity : target_entities)
-  {
-
-  }
-
-
-
-
-
-
-  // TODO: Refactor this stuff into the base class I think, since there is boilerplate
-  // bookeeping that we have now
-
-  //// Add event target
-  //Add_target(it);
-
-  // Mark the internal flag so caller can know if this event did anything we care about
-  meaningful_change_occurred(true);
-
-  // Increment the event counter for this entity, allowing it to decide
-  // if future events of this type are allowed
-  triggering_entity->Increment_events_count(m_event_type);
-
-  // Set the tick on the entity, so it won't be selected again this loop
-  triggering_entity->Set_last_event_triggered(m_event_tick);
-
-  // Schedule the next event
-  schedule_next_event(event_scheduler);
-
-  // It's done
-  m_is_complete = true;
+//  // The entity that triggered the event
+//  std::shared_ptr<his_gen::Entity_base> triggering_entity = Get_triggering_entity();
+//  // The targets of this event
+//  std::vector<std::shared_ptr<his_gen::Entity_base>> target_entities = get_target_entities(entities);
+//
+//  for(std::shared_ptr<his_gen::Entity_base>& target_entity : target_entities)
+//  {
+//
+//  }
+//
+//
+//
+//
+//
+//
+//  // TODO: Refactor this stuff into the base class I think, since there is boilerplate
+//  // bookeeping that we have now
+//
+//  //// Add event target
+//  //Add_target(it);
+//
+//  // Mark the internal flag so caller can know if this event did anything we care about
+//  meaningful_change_occurred(true);
+//
+//  // Increment the event counter for this entity, allowing it to decide
+//  // if future events of this type are allowed
+//  triggering_entity->Increment_events_count(m_event_type);
+//
+//  // Set the tick on the entity, so it won't be selected again this loop
+//  triggering_entity->Set_last_event_triggered(m_event_tick);
+//
+//  // Schedule the next event
+//  schedule_next_event(event_scheduler);
+//
+//  // It's done
+//  m_is_complete = true;
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -163,7 +162,7 @@ void his_gen::Courtship_event::schedule_next_event(Event_scheduler& event_schedu
 
 ///////////////////////////////////////////////////////////////////////
 
-Rel_matrix his_gen::Courtship_event::define_relationship_matrix(std::shared_ptr<Entity_base> triggering_entity)
+Rel_matrix his_gen::Courtship_event::define_relationship_matrix(const std::shared_ptr<Entity_base>& triggering_entity)
 {
   Rel_matrix matrix;
 
@@ -181,13 +180,13 @@ Rel_matrix his_gen::Courtship_event::define_relationship_matrix(std::shared_ptr<
       // Add positive influence
       for (auto attr : drivers.m_positive_drivers)
       {
-        weight += static_cast<double>(triggering_entity->Get_personality()->Get_entity_attribute_value(attr)) / 100.0;
+        weight += static_cast<double>(triggering_entity->Get_personality().Get_entity_attribute_value(attr)) / 100.0;
       }
 
       // Subtract negative influence
       for (auto attr : drivers.m_negative_drivers)
       {
-        weight -= static_cast<double>(triggering_entity->Get_personality()->Get_entity_attribute_value(attr)) / 100.0;
+        weight -= static_cast<double>(triggering_entity->Get_personality().Get_entity_attribute_value(attr)) / 100.0;
       }
 
       // Clamp weight to avoid negative or zero
