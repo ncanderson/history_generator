@@ -42,23 +42,35 @@ public:
    */
   void Run(his_gen::Entities& entities,
            his_gen::Entity_relationships& entity_relationships,
-           Event_scheduler& event_scheduler);
+           Event_scheduler& event_scheduler) override;
 
   /**
-   * Getters and setters
+   * @brief The list of possible next events
+   * @return An unordered set of the possible next events
    */
-  // TODO
+  const std::unordered_set<his_gen::EEvent_type>& Get_possible_next_events() const override
+  {
+    return m_possible_next_events;
+  }
 
 protected:
   // Attributes
 
   // Implementation
-  void schedule_next_event(Event_scheduler& event_scheduler);
+  /**
+   * @brief Schedule the next event
+   * @param event_scheduler The event scheduler instance to use for scheduling
+   */
+  void schedule_next_event(Event_scheduler& event_scheduler) override;
 
 private:
   // Attributes
 
   // Implementation
+  /**
+   * @brief Static list of all possible next events that could be triggered from this event.
+   */
+  static const std::unordered_set<his_gen::EEvent_type> m_possible_next_events;
 
 };
 }

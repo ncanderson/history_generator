@@ -12,6 +12,13 @@
 using er = his_gen::Entity_relationship;
 REGISTER_POLYMORPHIC_TYPE(his_gen::Event_base, his_gen::Seek_partner_event)
 
+// Definition of possible next events
+const std::unordered_set<his_gen::EEvent_type> his_gen::Seek_partner_event::m_possible_next_events = {
+  EEVENT_TYPE_Courtship,
+  EEVENT_TYPE_Marriage,
+  EEVENT_TYPE_Reproduce
+};
+
 ///////////////////////////////////////////////////////////////////////
 
 his_gen::Seek_partner_event::Seek_partner_event(std::shared_ptr<Entity_base>& triggering_entity,

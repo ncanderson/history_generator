@@ -123,6 +123,7 @@ private:
   // TODO Move this into the Entity_type_event_type class
   /**
    * @brief List of all possible entity event types based on entity type
+   * @details This
    */
   inline static const Entity_type_event_types s_entity_type_event_types = {
       // Deity

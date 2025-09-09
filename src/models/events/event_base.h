@@ -9,6 +9,7 @@
 #include <vector>
 #include <memory>
 #include <string>
+#include <unordered_set>
 
 // JSON
 #include <deps/json.hpp>
@@ -141,6 +142,15 @@ public:
 
   bool Is_complete() const { return m_is_complete; }
   void Set_is_complete(bool complete) { m_is_complete = complete; }
+
+  /**
+   * @brief Return the derived class's list of possible next events
+   * @details The data type returned from this function isn't declared as a
+   * data member in this base class; derived classes are expected to define
+   * an unordered set of possible next evets for return by this function.
+   * @return An unordered set of the possible next events
+   */
+  virtual const std::unordered_set<his_gen::EEvent_type>& Get_possible_next_events() const = 0;
 
 protected:
   // Attributes

@@ -9,6 +9,7 @@
 
 // Application files
 #include <models/events/event_base.h>
+#include <utils/dice_rolls.h>
 
 namespace his_gen
 {
@@ -42,23 +43,57 @@ public:
    */
   void Run(his_gen::Entities& entities,
            his_gen::Entity_relationships& entity_relationships,
-           Event_scheduler& event_scheduler);
+           Event_scheduler& event_scheduler) override;
 
   /**
-   * Getters and setters
+   * @brief The list of possible next events
+   * @return An unordered set of the possible next events
    */
-  // TODO
+  const std::unordered_set<his_gen::EEvent_type>& Get_possible_next_events() const override
+  {
+    return m_possible_next_events;
+  }
 
 protected:
   // Attributes
 
   // Implementation
-  void schedule_next_event(Event_scheduler& event_scheduler);
+  /**
+   * @brief Schedule the next event
+   * @param event_scheduler The event scheduler instance to use for scheduling
+   */
+  void schedule_next_event(Event_scheduler& event_scheduler) override;
 
 private:
+  /**
+   * The pattern this event will use to define each entity's transition matrix
+   */
+  using Relationship_transition_pattern = his_gen::dice::Transition_pattern<ERelationship_type, Attribute_enums::EPersonality>;
+
   // Attributes
+  /**
+   * @brief Static list of all possible next events that could be triggered from this event.
+   */
+  static const std::unordered_set<his_gen::EEvent_type> m_possible_next_events;
+
+  /**
+   * @brief Transition matrix for determining new relationships
+   */
+  static const Relationship_transition_pattern m_relationship_transition_map;
+
+  /**
+   * @brief The relationship transition matrix for this entity
+   */
+  const dice::Transition_matrix<ERelationship_type> m_relationship_transition_matrix;
 
   // Implementation
+  /**
+   * @brief Use the triggering entity's attributes to build the full relationship
+   * transition matrix
+   * @param triggering_entity The entity triggering this event
+   * @return The full, constructed transtion matrix for this entity
+   */
+  dice::Transition_matrix<ERelationship_type> define_relationship_matrix(std::shared_ptr<Entity_base> triggering_entity);
 
 };
 }

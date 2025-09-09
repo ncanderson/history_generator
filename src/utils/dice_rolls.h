@@ -5,9 +5,15 @@
 #ifndef DICE_ROLLS_H
 #define DICE_ROLLS_H
 
+// Standard libs
 #include <stdint.h>
 #include <stdexcept>
 #include <random>
+#include <map>
+
+// JSON
+
+// Application files
 
 namespace his_gen
 {
@@ -16,6 +22,59 @@ namespace his_gen
  */
 namespace dice
 {
+
+/**
+ * @brief Wrapper struct for defining the positive and negative
+ * drivers in a given row of a state transition matrix.
+ * @tparam Enum_t The enumeration to build the row out of
+ */
+template <typename Enum_t,
+          typename = std::enable_if_t<std::is_enum_v<Enum_t>>>
+struct Transition_drivers
+{
+  /**
+   * @brief Enumerated values that will increase the probabilty
+   * of a given enumeration being selected
+   */
+  std::vector<Enum_t> m_positive_drivers;
+
+  /**
+   * @brief Enumerated values that will decrease the probabilty
+   * of a given enumeration being selected
+   */
+  std::vector<Enum_t> m_negative_drivers;
+
+  /**
+   * @brief Constructor
+   * @param positive_drivers Vector of attributes
+   * @param negative_drivers Vector of attributes
+   */
+  Transition_drivers(std::vector<Enum_t> positive_drivers,
+                     std::vector<Enum_t> negative_drivers)
+    :
+    m_positive_drivers(positive_drivers),
+    m_negative_drivers(negative_drivers)
+  { }
+
+}; // struct Transition_drivers
+
+/**
+ * @brief Templated using statement for building transition matrix patterns
+ * @tparam Enum_key The enumeration to use when building the transition
+ * matrix rows.
+ * @tparam Enum_value The type of value container to use for positive and negative
+ * drivers
+ */
+template <typename Enum_key, typename Enum_value>
+using Transition_pattern = std::map<Enum_key, Transition_drivers<Enum_value>>;
+
+/**
+ * @brief Templated using statement for building transition matrices
+ * @tparam Enum_key The enumeration to use when building the transition
+ * matrix rows.
+ */
+template <typename Enum_key>
+using Transition_matrix = std::map<Enum_key, std::map<Enum_key, double>>;
 
 /**
  * @brief Singleton RNG generator accessor

@@ -8,8 +8,10 @@
 
 ///////////////////////////////////////////////////////////////////////
 
-using er = his_gen::Entity_relationship;
 REGISTER_POLYMORPHIC_TYPE(his_gen::Event_base, his_gen::Reproduce_event)
+
+// Definition of possible next events
+const std::unordered_set<his_gen::EEvent_type> his_gen::Reproduce_event::m_possible_next_events = {};
 
 ///////////////////////////////////////////////////////////////////////
 

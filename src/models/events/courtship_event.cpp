@@ -8,8 +8,96 @@
 
 ///////////////////////////////////////////////////////////////////////
 
-using er = his_gen::Entity_relationship;
+using attrs = his_gen::Attribute_enums::EPersonality;
+using Rel_matrix = his_gen::dice::Transition_matrix<his_gen::ERelationship_type>;
+
 REGISTER_POLYMORPHIC_TYPE(his_gen::Event_base, his_gen::Courtship_event)
+
+// Definition of possible next events
+const std::unordered_set<his_gen::EEvent_type> his_gen::Courtship_event::m_possible_next_events = {
+  EEVENT_TYPE_Courtship,
+  EEVENT_TYPE_Elopement,
+  EEVENT_TYPE_Marriage,
+  EEVENT_TYPE_Reproduce,
+  EEVENT_TYPE_Secret_affair,
+  EEVENT_TYPE_Social_scandal,
+  EEVENT_TYPE_Toxic_relationship
+};
+
+// Definition of possible relationship changes
+const his_gen::Courtship_event::Relationship_transition_pattern his_gen::Courtship_event::m_relationship_transition_map {
+  // Lover
+  {
+    his_gen::ERelationship_type::ERELATIONSHIP_TYPE_Lover,
+    his_gen::dice::Transition_drivers<attrs>({attrs::EPERSONALITY_Romantic,
+                                              attrs::EPERSONALITY_Flirtatious,
+                                              attrs::EPERSONALITY_Amiable,
+                                              attrs::EPERSONALITY_Sociable,
+                                              attrs::EPERSONALITY_Compassionate},
+                                             {attrs::EPERSONALITY_Avoidant,
+                                              attrs::EPERSONALITY_Reserved,
+                                              attrs::EPERSONALITY_Chaste})
+  },
+  // Breakup
+  {
+      his_gen::ERelationship_type::ERELATIONSHIP_TYPE_Breakup,
+      his_gen::dice::Transition_drivers<attrs>({attrs::EPERSONALITY_Aggressive,
+                                                attrs::EPERSONALITY_Argumentative,
+                                                attrs::EPERSONALITY_Cruel,
+                                                attrs::EPERSONALITY_Resentful,
+                                                attrs::EPERSONALITY_Avoidant},
+                                               {attrs::EPERSONALITY_Forgiving,
+                                                attrs::EPERSONALITY_Compassionate,
+                                                attrs::EPERSONALITY_Amiable})
+  },
+  // Platonic / Close friend
+  {
+      his_gen::ERelationship_type::ERELATIONSHIP_TYPE_Friendship,
+      his_gen::dice::Transition_drivers<attrs>({attrs::EPERSONALITY_Amiable,
+                                                attrs::EPERSONALITY_Sociable,
+                                                attrs::EPERSONALITY_Compassionate,
+                                                attrs::EPERSONALITY_Kind,
+                                                attrs::EPERSONALITY_Witty},
+                                               {attrs::EPERSONALITY_Cruel,
+                                                attrs::EPERSONALITY_Aggressive,
+                                                attrs::EPERSONALITY_Selfish})
+  },
+  // Rivalry / Jealousy
+  {
+      his_gen::ERelationship_type::ERELATIONSHIP_TYPE_Rivalry,
+      his_gen::dice::Transition_drivers<attrs>({attrs::EPERSONALITY_Jealous,
+                                                attrs::EPERSONALITY_Ambitious,
+                                                attrs::EPERSONALITY_Proud,
+                                                attrs::EPERSONALITY_Argumentative,
+                                                attrs::EPERSONALITY_Aggressive},
+                                               {attrs::EPERSONALITY_Humble,
+                                                attrs::EPERSONALITY_Cooperative,
+                                                attrs::EPERSONALITY_Forgiving})
+  },
+  // Unrequited love / Longing
+  {
+      his_gen::ERelationship_type::ERELATIONSHIP_TYPE_Unrequited,
+      his_gen::dice::Transition_drivers<attrs>({attrs::EPERSONALITY_Romantic,
+                                                attrs::EPERSONALITY_Reserved,
+                                                attrs::EPERSONALITY_Avoidant,
+                                                attrs::EPERSONALITY_Pragmatic},
+                                               {attrs::EPERSONALITY_Frank,
+                                                attrs::EPERSONALITY_Aggressive,
+                                                attrs::EPERSONALITY_Flirtatious})
+  },
+  // Abandonment / Ghosting
+  {
+      his_gen::ERelationship_type::ERELATIONSHIP_TYPE_Abandonment,
+      his_gen::dice::Transition_drivers<attrs>({attrs::EPERSONALITY_Avoidant,
+                                                attrs::EPERSONALITY_Evasive,
+                                                attrs::EPERSONALITY_Selfish,
+                                                attrs::EPERSONALITY_Cruel,
+                                                attrs::EPERSONALITY_Pragmatic},
+                                               {attrs::EPERSONALITY_Compassionate,
+                                                attrs::EPERSONALITY_Forgiving,
+                                                attrs::EPERSONALITY_Cooperative})
+  }
+};
 
 ///////////////////////////////////////////////////////////////////////
 
@@ -18,7 +106,8 @@ his_gen::Courtship_event::Courtship_event(std::shared_ptr<Entity_base>& triggeri
   :
   Event_base(his_gen::EEvent_type::EEVENT_TYPE_Courtship,
              triggering_entity,
-             current_tick)
+             current_tick),
+  m_relationship_transition_matrix(define_relationship_matrix(triggering_entity))
 { }
 
 //////////////////////////////////////////////////////////////////////
@@ -37,10 +126,10 @@ void his_gen::Courtship_event::Run(his_gen::Entities& entities,
 
   }
 
-  /**
-   * Possible outcomes:
-   * Reproduction
-   */
+
+
+
+
 
   // TODO: Refactor this stuff into the base class I think, since there is boilerplate
   // bookeeping that we have now
@@ -69,25 +158,53 @@ void his_gen::Courtship_event::Run(his_gen::Entities& entities,
 
 void his_gen::Courtship_event::schedule_next_event(Event_scheduler& event_scheduler)
 {
-  /**
-   * Possible outcomes:
-   *
-   * Another event
-   * Reproduction
-   * More courtship
-   * Social Scandal
-   * Secret Affair
-   * Elopement
-   * Marriage
-   * Abuse / Toxic Relationship
-   * Change in relationship, to:
-   *   - breakup
-   *   - mentorship or power dynamic
-   *   - platonic/close friend
-   *   - rivalry/jealousy
-   *   - unrequited love/longing
-   *   - abandonment/ghosting
-   */
+
+}
+
+///////////////////////////////////////////////////////////////////////
+
+Rel_matrix his_gen::Courtship_event::define_relationship_matrix(std::shared_ptr<Entity_base> triggering_entity)
+{
+  Rel_matrix matrix;
+
+  for (const auto& [current_state, _] : m_relationship_transition_map)
+  {
+    double row_sum = 0.0;
+
+    // Temporary map to hold unnormalized weights
+    std::map<ERelationship_type, double> weights;
+
+    for (const auto& [next_state, drivers] : m_relationship_transition_map)
+    {
+      double weight = 1.0; // base weight
+
+      // Add positive influence
+      for (auto attr : drivers.m_positive_drivers)
+      {
+        weight += static_cast<double>(triggering_entity->Get_personality()->Get_entity_attribute_value(attr)) / 100.0;
+      }
+
+      // Subtract negative influence
+      for (auto attr : drivers.m_negative_drivers)
+      {
+        weight -= static_cast<double>(triggering_entity->Get_personality()->Get_entity_attribute_value(attr)) / 100.0;
+      }
+
+      // Clamp weight to avoid negative or zero
+      if (weight < 0.01) weight = 0.01;
+
+      weights[next_state] = weight;
+      row_sum += weight;
+    }
+
+    // Normalize the row
+    for (auto& [next_state, w] : weights)
+    {
+      matrix[current_state][next_state] = w / row_sum;
+    }
+  }
+
+  return matrix;
 }
 
 ///////////////////////////////////////////////////////////////////////

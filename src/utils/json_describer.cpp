@@ -30,7 +30,7 @@ std::string his_gen::Json_describer::Describe_physicality(const nlohmann::json &
   std::string paragraph;
 
   // Entity info
-  paragraph += "This is a detailed, realistic photograph of the "
+  paragraph += "This is a crisply focused, realistic full-body color photograph of the middle-aged "
                + entity["entity_type"].get<std::string>() + " "
                + entity["name"].get<std::string>();
 
@@ -41,9 +41,9 @@ std::string his_gen::Json_describer::Describe_physicality(const nlohmann::json &
   paragraph += ". ";
 
   // Clothing
-  paragraph += "She is clothed in sheer black silk and heeled boots. ";
+  paragraph += "She is clothed in flowing garments of medieval styles. ";
   // Location
-  paragraph += "She stands surrounded by her favorite things, brightly lit in the afternoon sun.";
+  paragraph += "She is in a brightly lit bedroom, surrounded by opulence. ";
 
   // Attributes
   const auto& physicality_map = entity["physicality"]["physicality"];
@@ -53,6 +53,7 @@ std::string his_gen::Json_describer::Describe_physicality(const nlohmann::json &
       attrs::EPHYSICALITY_Breast_cleavage_depth,
       attrs::EPHYSICALITY_Breast_shape_roundness,
       attrs::EPHYSICALITY_Breast_size,
+      attrs::EPHYSICALITY_Butt_roundness,
       attrs::EPHYSICALITY_Clitoris_size,
       attrs::EPHYSICALITY_Testicle_size,
       attrs::EPHYSICALITY_Penis_length,
@@ -88,10 +89,9 @@ std::string his_gen::Json_describer::Describe_physicality(const nlohmann::json &
     std::string key_string = it.key();
     paragraph += "Her " + format_output(key_string) + " is " + classify_value(attr_value, value_type) + ". ";
   }
-
-  paragraph += "\n==================================================\n";
-
-  return paragraph + "\n";
+  return paragraph +
+         "The lighting combines cool and warm tones, giving the image a cinematic feel, with a shallow depth of field and high dynamic range. "
+         "Award-winning photography of the highest quality, Ultra HD, 8K. --no animation --ar 2:3" + "\n";
 }
 
 ///////////////////////////////////////////////////////////////////////

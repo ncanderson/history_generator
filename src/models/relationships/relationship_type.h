@@ -23,15 +23,19 @@ namespace his_gen
  */
 enum ERelationship_type
 {
-  ERELATIONSHIP_TYPE_Conflict,    ///< Conflict
-  ERELATIONSHIP_TYPE_Dominance,   ///< Dominance
-  ERELATIONSHIP_TYPE_Friendship,  ///< Friendship
-  ERELATIONSHIP_TYPE_Lover,       ///< Lover
-  ERELATIONSHIP_TYPE_Marriage,    ///< Marriage
-  ERELATIONSHIP_TYPE_Membership,  ///< Membership, like to an organization or nation
-  ERELATIONSHIP_TYPE_Ownership,   ///< Ownership over something
-  ERELATIONSHIP_TYPE_Parentage,   ///< Parentage
-  ERELATIONSHIP_TYPE_Count        ///< Sentinel
+  ERELATIONSHIP_TYPE_Abandonment,
+  ERELATIONSHIP_TYPE_Breakup,
+  ERELATIONSHIP_TYPE_Conflict,
+  ERELATIONSHIP_TYPE_Dominance,
+  ERELATIONSHIP_TYPE_Friendship,
+  ERELATIONSHIP_TYPE_Lover,
+  ERELATIONSHIP_TYPE_Marriage,
+  ERELATIONSHIP_TYPE_Membership,
+  ERELATIONSHIP_TYPE_Ownership,
+  ERELATIONSHIP_TYPE_Parentage,
+  ERELATIONSHIP_TYPE_Rivalry,
+  ERELATIONSHIP_TYPE_Unrequited,
+  ERELATIONSHIP_TYPE_Count
 };
 
 /**
@@ -40,14 +44,18 @@ enum ERelationship_type
  */
 constexpr std::array<Enum_mapping<ERelationship_type>,
                      static_cast<size_t>(ERelationship_type::ERELATIONSHIP_TYPE_Count)> relationship_type_lookup = {
-  Enum_mapping{ERelationship_type::ERELATIONSHIP_TYPE_Conflict,   "conflict"},
-  Enum_mapping{ERelationship_type::ERELATIONSHIP_TYPE_Dominance,  "dominance"},
-  Enum_mapping{ERelationship_type::ERELATIONSHIP_TYPE_Friendship, "friendship"},
-  Enum_mapping{ERelationship_type::ERELATIONSHIP_TYPE_Lover,      "lover"},
-  Enum_mapping{ERelationship_type::ERELATIONSHIP_TYPE_Marriage,   "marriage"},
-  Enum_mapping{ERelationship_type::ERELATIONSHIP_TYPE_Membership, "membership"},
-  Enum_mapping{ERelationship_type::ERELATIONSHIP_TYPE_Ownership,  "ownership"},
-  Enum_mapping{ERelationship_type::ERELATIONSHIP_TYPE_Parentage,  "parentage"}
+  Enum_mapping{ERelationship_type::ERELATIONSHIP_TYPE_Abandonment,  "abandonment"},
+  Enum_mapping{ERelationship_type::ERELATIONSHIP_TYPE_Breakup,      "breakup"},
+  Enum_mapping{ERelationship_type::ERELATIONSHIP_TYPE_Conflict,     "conflict"},
+  Enum_mapping{ERelationship_type::ERELATIONSHIP_TYPE_Dominance,    "dominance"},
+  Enum_mapping{ERelationship_type::ERELATIONSHIP_TYPE_Friendship,   "friendship"},
+  Enum_mapping{ERelationship_type::ERELATIONSHIP_TYPE_Lover,        "lover"},
+  Enum_mapping{ERelationship_type::ERELATIONSHIP_TYPE_Marriage,     "marriage"},
+  Enum_mapping{ERelationship_type::ERELATIONSHIP_TYPE_Membership,   "membership"},
+  Enum_mapping{ERelationship_type::ERELATIONSHIP_TYPE_Ownership,    "ownership"},
+  Enum_mapping{ERelationship_type::ERELATIONSHIP_TYPE_Parentage,    "parentage"},
+  Enum_mapping{ERelationship_type::ERELATIONSHIP_TYPE_Rivalry,      "rivalry"},
+  Enum_mapping{ERelationship_type::ERELATIONSHIP_TYPE_Unrequited,   "unrequited"}
 };
 
 /**
