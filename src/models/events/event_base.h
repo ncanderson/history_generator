@@ -20,6 +20,7 @@
 #include <defs/history_generator_defs.h>
 #include <models/entities/entity_base.h>
 #include <models/relations/entity_relationship.h>
+#include <models/event_visitor.h>
 
 namespace his_gen
 {
@@ -35,7 +36,7 @@ class Event_scheduler;
  * should be called to ensure that event will be triggered during the next
  * event tick.
  */
-class Event_base
+class Event_base : public Event_visitor
 {
 public:
   // Attributes
@@ -55,7 +56,6 @@ public:
     m_event_type(event_type),
     m_name(his_gen::Enum_to_string(event_type, event_type_lookup)),
     m_triggering_entity_id(triggering_entity_id),
-
     m_target_ids(),
     m_is_complete(false)
   { }
@@ -87,8 +87,17 @@ public:
   virtual bool Created_meaningful_change() const { return m_event_changes_state; }
 
   /**
-   * Getters and setters
+   * @brief Return the derived class's list of possible next events
+   * @details The data type returned from this function isn't declared as a
+   * data member in this base class; derived classes are expected to define
+   * an unordered set of possible next evets for return by this function.
+   * @return An unordered set of the possible next events
    */
+  virtual const std::unordered_set<his_gen::EEvent_type>& Get_possible_next_events() const = 0;
+
+  /////////////////////////////////////////////////
+  // Getters and setters
+
   boost::uuids::uuid Get_event_id() const { return m_event_id; }
   void Set_event_id(const boost::uuids::uuid& event_id) { m_event_id = event_id; }
 
@@ -110,15 +119,6 @@ public:
 
   bool Is_complete() const { return m_is_complete; }
   void Set_is_complete(bool complete) { m_is_complete = complete; }
-
-  /**
-   * @brief Return the derived class's list of possible next events
-   * @details The data type returned from this function isn't declared as a
-   * data member in this base class; derived classes are expected to define
-   * an unordered set of possible next evets for return by this function.
-   * @return An unordered set of the possible next events
-   */
-  virtual const std::unordered_set<his_gen::EEvent_type>& Get_possible_next_events() const = 0;
 
 protected:
   // Attributes

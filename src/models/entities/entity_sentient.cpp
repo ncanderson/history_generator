@@ -97,6 +97,12 @@ bool sentient::Is_attracted(std::shared_ptr<Entity_base> other_entity,
 
 ///////////////////////////////////////////////////////////////////////
 
+void sentient::Accept_event(Event_visitor& visitor)
+{
+  visitor.Visit_entity(*this);
+}
+///////////////////////////////////////////////////////////////////////
+
 void sentient::initialize_max_events_by_type()
 {
   // make each event tell you what it's default maximum is, then provide a virtual function in entity_base

@@ -19,6 +19,13 @@
 
 namespace his_gen
 {
+
+/**
+ * Forward declaration allowing usage of the Event_visitor class,
+ * itself providing events access to entity-specific behaviors.
+ */
+class Event_visitor;
+
 /**
  * @brief Base class for generated entities
  */
@@ -122,6 +129,14 @@ public:
     // If missing, insert with 0, then add value
     m_count_events_by_type[event_type] += value;
   }
+
+  /**
+   * @brief Helper function allowing events the ability to call functions
+   * from derived entities.
+   * @param visitor An Event_visitor instance that bridges specific derived
+   * class functionality between events and entities.
+   */
+  virtual void Accept_event(his_gen::Event_visitor& visitor) = 0;
 
   /**
    * Getters and setters

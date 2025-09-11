@@ -106,7 +106,8 @@ his_gen::Courtship_event::Courtship_event(std::shared_ptr<Entity_base>& triggeri
   Event_base(his_gen::EEvent_type::EEVENT_TYPE_Courtship,
              triggering_entity->Get_entity_id(),
              current_tick),
-  m_relationship_transition_matrix(define_relationship_matrix(triggering_entity))
+  m_relationship_transition_matrix(),
+  m_trans_matrix_bounds(0, 1)
 { }
 
 //////////////////////////////////////////////////////////////////////
@@ -115,6 +116,11 @@ void his_gen::Courtship_event::Run(his_gen::Entities& entities,
                                    his_gen::Entity_relationships& entity_relationships,
                                    Event_scheduler& event_scheduler)
 {
+
+  //need to have a field for triggering events, since if we modify a relationship
+  //for an event, we need to know the relationship that should change
+
+
 //  // The entity that triggered the event
 //  std::shared_ptr<his_gen::Entity_base> triggering_entity = Get_triggering_entity();
 //  // The targets of this event
@@ -155,6 +161,13 @@ void his_gen::Courtship_event::Run(his_gen::Entities& entities,
 
 ///////////////////////////////////////////////////////////////////////
 
+void his_gen::Courtship_event::Visit_entity(Entity_sentient& sentient)
+{
+  define_relationship_matrix(sentient);
+}
+
+///////////////////////////////////////////////////////////////////////
+
 void his_gen::Courtship_event::schedule_next_event(Event_scheduler& event_scheduler)
 {
 
@@ -162,48 +175,53 @@ void his_gen::Courtship_event::schedule_next_event(Event_scheduler& event_schedu
 
 ///////////////////////////////////////////////////////////////////////
 
-Rel_matrix his_gen::Courtship_event::define_relationship_matrix(const std::shared_ptr<Entity_base>& triggering_entity)
+void his_gen::Courtship_event::define_relationship_matrix(const Entity_sentient& triggering_entity)
 {
-  Rel_matrix matrix;
-
-  for (const auto& [current_state, _] : m_relationship_transition_map)
+  // Iterate over relationship transition map, and discard the values (for now)
+  for(const auto& [current_state, _] : m_relationship_transition_map)
   {
+    // Running total of a row's weights
     double row_sum = 0.0;
 
     // Temporary map to hold unnormalized weights
     std::map<ERelationship_type, double> weights;
 
-    for (const auto& [next_state, drivers] : m_relationship_transition_map)
+    // Inner loop to build the full matrix for the 'current_state'
+    for(const auto& [next_state, drivers] : m_relationship_transition_map)
     {
-      double weight = 1.0; // base weight
+      // base weight, the baseline chance for this relationship
+      double weight = 1.0;
 
-      // Add positive influence
+      // Add positive influence, checking the entity for all personality traits
+      // relevant to this relationship
       for (auto attr : drivers.m_positive_drivers)
       {
-        weight += static_cast<double>(triggering_entity->Get_personality().Get_entity_attribute_value(attr)) / 100.0;
+        weight += static_cast<double>(triggering_entity.Get_personality().Get_entity_attribute_value(attr)) / 100.0;
       }
 
-      // Subtract negative influence
+      // Subtract negative influence, checking the entity for all personality traits
+      // relevant to this relationship
       for (auto attr : drivers.m_negative_drivers)
       {
-        weight -= static_cast<double>(triggering_entity->Get_personality().Get_entity_attribute_value(attr)) / 100.0;
+        weight -= static_cast<double>(triggering_entity.Get_personality().Get_entity_attribute_value(attr)) / 100.0;
       }
 
       // Clamp weight to avoid negative or zero
-      if (weight < 0.01) weight = 0.01;
+      m_trans_matrix_bounds.Enforce(weight);
 
+      // Cache the fully calculated weights
       weights[next_state] = weight;
+
+      // Get the running total of all weights
       row_sum += weight;
     }
 
-    // Normalize the row
-    for (auto& [next_state, w] : weights)
+    // Normalize the row so the full row will add up to 100%
+    for (auto& [next_state, weight] : weights)
     {
-      matrix[current_state][next_state] = w / row_sum;
+      m_relationship_transition_matrix[current_state][next_state] = weight / row_sum;
     }
   }
-
-  return matrix;
 }
 
 ///////////////////////////////////////////////////////////////////////

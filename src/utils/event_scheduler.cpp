@@ -19,26 +19,24 @@ sched::Event_scheduler()
 
 //////////////////////////////////////////////////////////////////////
 
-void sched::Schedule_event(std::shared_ptr<his_gen::Entity_base>& triggering_entity,
+void sched::Schedule_event(const boost::uuids::uuid& triggering_entity,
+                           const boost::uuids::uuid& triggering_event,
                            const std::vector<boost::uuids::uuid>& target_ids,
                            const his_gen::EEvent_type event_type_to_schedule,
                            const uint32_t tick_to_run)
 {
   m_scheduled_events[tick_to_run].emplace_back(Scheduled_event(triggering_entity,
+                                                               triggering_event,
                                                                target_ids,
                                                                event_type_to_schedule));
 }
 
 ///////////////////////////////////////////////////////////////////////
 
-std::shared_ptr<his_gen::Event_base> sched::Prepare_next_event(const uint32_t current_tick)
+his_gen::Scheduled_event sched::Get_next_event(const uint32_t current_tick)
 {
-  Scheduled_event event_to_handle = pop_next_event(current_tick);
-
-  // Construct and return the Event_base pointer
-  return his_gen::Event_factory::Create_event(event_to_handle.m_scheduled_event_type,
-                                              event_to_handle.m_triggering_entity,
-                                              current_tick);
+  // It's late and I'm high so we probably don't need this. Just make pop current public
+  return pop_next_event(current_tick);
 }
 
 ///////////////////////////////////////////////////////////////////////

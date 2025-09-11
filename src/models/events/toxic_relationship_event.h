@@ -9,6 +9,9 @@
 
 // Application files
 #include <models/events/event_base.h>
+// Implementing entities
+#include <models/entities/entity_sentient.h>
+#include <models/entities/entity_deity.h>
 
 namespace his_gen
 {

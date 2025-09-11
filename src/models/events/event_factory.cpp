@@ -16,24 +16,26 @@ std::shared_ptr<his_gen::Event_base> his_gen::Event_factory::Create_event(const 
                                                                           std::shared_ptr<Entity_base>& triggering_entity,
                                                                           const uint64_t current_tick)
 {
+  std::shared_ptr<his_gen::Event_base> created_event;
+
   switch(event_type)
   {
     case his_gen::EEvent_type::EEVENT_TYPE_Seek_partner:
     {
-      return std::make_shared<his_gen::Seek_partner_event>(triggering_entity,
-                                                           current_tick);
+      created_event = std::make_shared<his_gen::Seek_partner_event>(triggering_entity,
+                                                                    current_tick);
       break;
     }
     case his_gen::EEvent_type::EEVENT_TYPE_Courtship:
     {
-      return std::make_shared<his_gen::Courtship_event>(triggering_entity,
-                                                        current_tick);
+      created_event = std::make_shared<his_gen::Courtship_event>(triggering_entity,
+                                                                 current_tick);
       break;
     }
     case his_gen::EEvent_type::EEVENT_TYPE_Reproduce:
     {
-      return std::make_shared<his_gen::Reproduce_event>(triggering_entity,
-                                                        current_tick);
+      created_event = std::make_shared<his_gen::Reproduce_event>(triggering_entity,
+                                                                 current_tick);
       break;
     }
 
@@ -41,7 +43,8 @@ std::shared_ptr<his_gen::Event_base> his_gen::Event_factory::Create_event(const 
       // Unrecognized value
       throw std::invalid_argument("Event type enumeration not found");
   }
-
+  triggering_entity->Accept_event(*created_event);
+  return created_event;
 }
 
 ///////////////////////////////////////////////////////////////////////

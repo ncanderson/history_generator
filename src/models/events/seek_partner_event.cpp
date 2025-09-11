@@ -39,7 +39,7 @@ void his_gen::Seek_partner_event::Run(his_gen::Entities& entities,
   std::vector<std::pair<std::shared_ptr<his_gen::Entity_base>,
                         std::shared_ptr<his_gen::Entity_base>>> pairs;
 
-  std::shared_ptr<his_gen::Entity_base> triggering_entity = Get_triggering_entity();
+  std::shared_ptr<his_gen::Entity_base> triggering_entity = entities[Get_triggering_entity_id()];
 
   // Loop through all entities
   for(auto& it : entities)
@@ -62,7 +62,7 @@ void his_gen::Seek_partner_event::Run(his_gen::Entities& entities,
         // bookeeping that we have now
 
         // Add the target to this event's vector of targets if there is mutual attraction
-        Add_target(it.second);
+        Add_target_id(it.second->Get_entity_id());
 
         // Increment the event counter for this entity, allowing it to decide
         // if future events of this type are allowed
@@ -101,7 +101,8 @@ void his_gen::Seek_partner_event::Run(his_gen::Entities& entities,
 
 void his_gen::Seek_partner_event::schedule_next_event(Event_scheduler& event_scheduler)
 {
-  event_scheduler.Schedule_event(m_triggering_entity,
+  event_scheduler.Schedule_event(m_triggering_entity_id,
+                                 Get_event_id(),
                                  Get_target_ids(),
                                  his_gen::EEvent_type::EEVENT_TYPE_Courtship,
                                  m_event_tick++);

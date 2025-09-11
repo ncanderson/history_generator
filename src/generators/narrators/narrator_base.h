@@ -10,21 +10,14 @@
 #include <boost/functional/hash.hpp>
 
 // Application files
+#include <data_access/data_access_manager.h>
 #include <models/entities/entity_base.h>
 #include <models/events/event_base.h>
-#include <data_access/data_access_manager.h>
+#include <models/events/event_factory.h>
 #include <utils/event_scheduler.h>
 
 namespace his_gen
 {
-// TODO: Single base class, specific impl for each generator
-
-// TODO: Add an event manager that will handle the creation of event chains.
-// These chains could be loaded from config, but will use event types to
-// construct a series of events. So the generator would say 'give me marriages',
-// the narrator for the era would do what needs doing. The event manager will
-// just accept a given event type, maybe some additional params, and then return
-// the next action. The narrator will have to parse that return
 
 /**
  * @brief Base class for the generator narrators
@@ -152,9 +145,16 @@ protected:
 
     while(m_event_scheduler.More_events_to_run(current_tick))
     {
-      m_event_scheduler.Prepare_next_event(current_tick)->Run(entities,
-                                                              entity_relationships,
-                                                              temp_scheduler);
+      // Get it
+      Scheduled_event sched = m_event_scheduler.Get_next_event(current_tick);
+      // Make it
+      std::shared_ptr<Event_base> scheduled = his_gen::Event_factory::Create_event(sched.Get_scheduled_event_type(),
+                                                                                   entities[sched.Get_triggering_entity()],
+                                                                                   current_tick);
+      // Run it
+      scheduled->Run(entities,
+                     entity_relationships,
+                     temp_scheduler);
     }
 
     // Merge any new events that were scheduled following scheduled events

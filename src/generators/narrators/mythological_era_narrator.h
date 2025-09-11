@@ -12,7 +12,6 @@
 #include <generators/narrators/narrator_base.h>
 #include <models/entities/entity_base.h>
 #include <models/events/event_base.h>
-#include <models/events/event_factory.h>
 
 // Modules
 #include <modules/names.h>

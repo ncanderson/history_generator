@@ -85,6 +85,13 @@ public:
                     std::vector<std::shared_ptr<Entity_base>> attracted_to) override;
 
   /**
+   * @brief Scepter acceptor for the visitor pattern
+   * @param visitor The Event visitor, which will allow events to call entity-specific
+   * functions
+   */
+  void Accept_event(Event_visitor& visitor) override;
+
+  /**
    * Getters and Setters
    */
   Personality Get_personality() const { return m_personality; }

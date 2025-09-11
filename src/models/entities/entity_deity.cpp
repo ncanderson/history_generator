@@ -7,6 +7,7 @@
 // JSON
 
 // Application files
+#include <models/event_visitor.h>
 #include <models/entities/entity_deity.h>
 
 ///////////////////////////////////////////////////////////////////////
@@ -41,6 +42,13 @@ void deity::Initialize()
 {
   initialize_max_events_by_type();
   update_divine_physicality();
+}
+
+///////////////////////////////////////////////////////////////////////
+
+void deity::Accept_event(Event_visitor& visitor)
+{
+  visitor.Visit_entity(*this);
 }
 
 ///////////////////////////////////////////////////////////////////////
