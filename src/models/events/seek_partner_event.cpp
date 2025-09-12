@@ -22,11 +22,13 @@ const std::unordered_set<his_gen::EEvent_type> his_gen::Seek_partner_event::m_po
 ///////////////////////////////////////////////////////////////////////
 
 his_gen::Seek_partner_event::Seek_partner_event(std::shared_ptr<Entity_base>& triggering_entity,
-                                                int64_t current_tick)
+                                                int64_t current_tick,
+                                                const boost::uuids::uuid triggering_event_id)
   :
   Event_base(his_gen::EEvent_type::EEVENT_TYPE_Seek_partner,
              triggering_entity->Get_entity_id(),
-             current_tick)
+             current_tick,
+             triggering_event_id)
 { }
 
 //////////////////////////////////////////////////////////////////////
@@ -80,11 +82,15 @@ void his_gen::Seek_partner_event::Run(his_gen::Entities& entities,
                                                                                        it.second,
                                                                                        his_gen::ERELATIONSHIP_TYPE_Lover);
 
+        // Add the new relationship to the base class vector so any subsequent scheduled events can modify it
+        Add_relationship_id(new_relationship->Get_entity_relationship_id());
+
         // Add the new relationship to the generated history reference
         entity_relationships[new_relationship->Get_entity_relationship_id()] = new_relationship;
 
         // Schedule the next event
         schedule_next_event(event_scheduler);
+
         return;
       }
       else

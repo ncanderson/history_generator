@@ -79,7 +79,8 @@ void myth_nar::Manage_events(his_gen::Entities& entities,
     // Create the event
     std::shared_ptr<his_gen::Event_base> new_event = his_gen::Event_factory::Create_event(event_type,
                                                                                           triggering_entity,
-                                                                                          current_tick);
+                                                                                          current_tick,
+                                                                                          boost::uuids::nil_uuid());
 
     // Check the event for the entity
     if(triggering_entity->Event_is_valid(new_event->Get_event_type(), current_tick))

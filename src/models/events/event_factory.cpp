@@ -14,7 +14,8 @@
 
 std::shared_ptr<his_gen::Event_base> his_gen::Event_factory::Create_event(const his_gen::EEvent_type event_type,
                                                                           std::shared_ptr<Entity_base>& triggering_entity,
-                                                                          const uint64_t current_tick)
+                                                                          const uint64_t current_tick,
+                                                                          const boost::uuids::uuid triggering_event_id)
 {
   std::shared_ptr<his_gen::Event_base> created_event;
 
@@ -23,19 +24,22 @@ std::shared_ptr<his_gen::Event_base> his_gen::Event_factory::Create_event(const 
     case his_gen::EEvent_type::EEVENT_TYPE_Seek_partner:
     {
       created_event = std::make_shared<his_gen::Seek_partner_event>(triggering_entity,
-                                                                    current_tick);
+                                                                    current_tick,
+                                                                    triggering_event_id);
       break;
     }
     case his_gen::EEvent_type::EEVENT_TYPE_Courtship:
     {
       created_event = std::make_shared<his_gen::Courtship_event>(triggering_entity,
-                                                                 current_tick);
+                                                                 current_tick,
+                                                                 triggering_event_id);
       break;
     }
     case his_gen::EEvent_type::EEVENT_TYPE_Reproduce:
     {
       created_event = std::make_shared<his_gen::Reproduce_event>(triggering_entity,
-                                                                 current_tick);
+                                                                 current_tick,
+                                                                 triggering_event_id);
       break;
     }
 

@@ -16,11 +16,13 @@ const std::unordered_set<his_gen::EEvent_type> his_gen::Marriage_event::m_possib
 ///////////////////////////////////////////////////////////////////////
 
 his_gen::Marriage_event::Marriage_event(std::shared_ptr<Entity_base>& triggering_entity,
-                                        int64_t current_tick)
+                                        int64_t current_tick,
+                                        const boost::uuids::uuid triggering_event_id)
   :
   Event_base(his_gen::EEvent_type::EEVENT_TYPE_Elopement,
              triggering_entity->Get_entity_id(),
-             current_tick)
+             current_tick,
+             triggering_event_id)
 { }
 
 //////////////////////////////////////////////////////////////////////

@@ -150,7 +150,8 @@ protected:
       // Make it
       std::shared_ptr<Event_base> scheduled = his_gen::Event_factory::Create_event(sched.Get_scheduled_event_type(),
                                                                                    entities[sched.Get_triggering_entity()],
-                                                                                   current_tick);
+                                                                                   current_tick,
+                                                                                   sched.Get_triggering_event());
       // Run it
       scheduled->Run(entities,
                      entity_relationships,

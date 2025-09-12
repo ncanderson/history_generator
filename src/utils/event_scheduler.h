@@ -42,6 +42,7 @@ public:
    * Getters
    */
   const boost::uuids::uuid& Get_triggering_entity() const { return m_triggering_entity; }
+  const boost::uuids::uuid& Get_triggering_event() const { return m_triggering_event; }
   const std::vector<boost::uuids::uuid>& Get_target_ids() const { return m_target_ids; }
   his_gen::EEvent_type Get_scheduled_event_type() const { return m_scheduled_event_type; }
 

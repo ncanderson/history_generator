@@ -16,7 +16,7 @@
 namespace his_gen
 {
 /**
- * @brief Represents the 'secrete affair' event
+ * @brief Represents the 'secret affair' event
  */
 class Secret_affair_event : public Event_base
 {
@@ -30,7 +30,8 @@ public:
    * @parma current_tick The current tick
    */
   Secret_affair_event(std::shared_ptr<his_gen::Entity_base>& triggering_entity,
-                      int64_t current_tick);
+                      int64_t current_tick,
+                      const boost::uuids::uuid triggering_event_id = boost::uuids::nil_uuid());
 
   /**
    * @brief Destructor

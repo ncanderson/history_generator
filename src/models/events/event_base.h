@@ -10,6 +10,7 @@
 #include <memory>
 #include <string>
 #include <unordered_set>
+#include <boost/uuid/nil_generator.hpp>
 
 // JSON
 #include <deps/json.hpp>
@@ -43,21 +44,27 @@ public:
 
   // Implementation
   /**
-   * @brief Constructor
+   * @brief Event_base
    * @param event_type
-   * @param triggering_entity
+   * @param triggering_entity_id
+   * @param current_tick
+   * @param triggering_event_id
    */
   Event_base(const his_gen::EEvent_type event_type,
              const boost::uuids::uuid& triggering_entity_id,
-             const uint64_t current_tick)
+             const uint64_t current_tick,
+             const boost::uuids::uuid triggering_event_id = boost::uuids::nil_uuid())
     :
     m_event_id(boost::uuids::random_generator()()),
     m_event_tick(current_tick),
     m_event_type(event_type),
     m_name(his_gen::Enum_to_string(event_type, event_type_lookup)),
     m_triggering_entity_id(triggering_entity_id),
+    m_triggering_event_id(triggering_event_id),
     m_target_ids(),
-    m_is_complete(false)
+    m_relationship_ids(),
+    m_is_complete(false),
+    m_event_changes_state(false)
   { }
 
   /**
@@ -113,9 +120,16 @@ public:
   const boost::uuids::uuid Get_triggering_entity_id() const {return m_triggering_entity_id; }
   void Set_triggering_entity_id(const boost::uuids::uuid& triggering_entity_id) { m_triggering_entity_id = triggering_entity_id; }
 
+  const boost::uuids::uuid Get_triggering_event_id() const {return m_triggering_event_id; }
+  void Set_triggering_event_id(const boost::uuids::uuid& triggering_event_id) { m_triggering_event_id = triggering_event_id; }
+
   const std::vector<boost::uuids::uuid>& Get_target_ids() const { return m_target_ids; }
   void Set_target_ids(const std::vector<boost::uuids::uuid>& target_ids) { m_target_ids = target_ids; }
   void Add_target_id(const boost::uuids::uuid& target_id) { m_target_ids.push_back(target_id); }
+
+  const std::vector<boost::uuids::uuid>& Get_relationship_ids() const { return m_relationship_ids; }
+  void Set_relationship_ids(const std::vector<boost::uuids::uuid>& relationship_ids) { m_relationship_ids = relationship_ids; }
+  void Add_relationship_id(const boost::uuids::uuid& relationship_id) { m_relationship_ids.push_back(relationship_id); }
 
   bool Is_complete() const { return m_is_complete; }
   void Set_is_complete(bool complete) { m_is_complete = complete; }
@@ -148,9 +162,22 @@ protected:
   boost::uuids::uuid m_triggering_entity_id;
 
   /**
+   * @brief ID of the triggering event, if applicable
+   */
+  boost::uuids::uuid m_triggering_event_id;
+
+  /**
    * @brief Entity IDs of this event's targets
    */
   std::vector<boost::uuids::uuid> m_target_ids;
+
+  /**
+   * @brief IDs for any relationships created or modified by this event
+   * @details Since some event chains have the potential to modify relationships
+   * established in prior events, this vector will allow scheduled events
+   * to find and modify the relationships that are changed.
+   */
+  std::vector<boost::uuids::uuid> m_relationship_ids;
 
   /**
    * @brief m_is_complete
@@ -218,7 +245,9 @@ inline void to_json(nlohmann::json& json,
     {"type", his_gen::Enum_to_string(event_base.Get_event_type(), event_type_lookup)},
     {"event_tick", event_base.Get_event_tick()},
     {"triggering_entity_id", event_base.Get_triggering_entity_id()},
+    {"triggering_event_id", event_base.Get_triggering_event_id()},
     {"target_ids", event_base.Get_target_ids()},
+    {"relationship_ids", event_base.Get_relationship_ids()},
     {"is_complete", event_base.Is_complete()},
   };
 }
@@ -243,7 +272,9 @@ inline void from_json(const nlohmann::json& json,
   event_base.Set_event_type(his_gen::String_to_enum(event_base.Get_name(), event_type_lookup));
   event_base.Set_event_tick(json.at("event_tick"));
   event_base.Set_triggering_entity_id(json.at("triggering_entity_id"));
+  event_base.Set_triggering_event_id(json.at("triggering_event_id"));
   event_base.Set_target_ids(json.at("target_ids"));
+  event_base.Set_relationship_ids(json.at("relationship_ids"));
   event_base.Set_is_complete(json.at("is_complete"));
 }
 

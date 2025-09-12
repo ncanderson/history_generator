@@ -28,12 +28,14 @@ public:
 
   // Implementation
   /**
-   * @brief Constructor
-   * @param triggering_entity The entity driving this event
-   * @parma current_tick The current tick
+   * @brief Courtship_event
+   * @param triggering_entity
+   * @param current_tick
+   * @param triggering_event_id
    */
   Courtship_event(std::shared_ptr<Entity_base>&  triggering_entity,
-                  int64_t current_tick);
+                  int64_t current_tick,
+                  const boost::uuids::uuid triggering_event_id = boost::uuids::nil_uuid());
 
   /**
    * @brief Destructor

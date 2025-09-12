@@ -101,13 +101,15 @@ const his_gen::Courtship_event::Relationship_transition_pattern his_gen::Courtsh
 ///////////////////////////////////////////////////////////////////////
 
 his_gen::Courtship_event::Courtship_event(std::shared_ptr<Entity_base>& triggering_entity,
-                                          int64_t current_tick)
+                                          int64_t current_tick,
+                                          const boost::uuids::uuid triggering_event_id)
   :
   Event_base(his_gen::EEvent_type::EEVENT_TYPE_Courtship,
              triggering_entity->Get_entity_id(),
-             current_tick),
-  m_relationship_transition_matrix(),
-  m_trans_matrix_bounds(0, 1)
+             current_tick,
+             triggering_event_id),
+  m_trans_matrix_bounds(0, 1),
+  m_relationship_transition_matrix()
 { }
 
 //////////////////////////////////////////////////////////////////////
@@ -116,9 +118,7 @@ void his_gen::Courtship_event::Run(his_gen::Entities& entities,
                                    his_gen::Entity_relationships& entity_relationships,
                                    Event_scheduler& event_scheduler)
 {
-
-  //need to have a field for triggering events, since if we modify a relationship
-  //for an event, we need to know the relationship that should change
+  // Check in coming relationship for the triggering event
 
 
 //  // The entity that triggered the event
