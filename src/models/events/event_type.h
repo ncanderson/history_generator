@@ -16,6 +16,39 @@
 
 namespace his_gen
 {
+
+/**
+ * @brief Enumerates all general event types used in the historical simulation.
+ */
+enum EEvent_type
+{
+  EEVENT_TYPE_Courtship,
+  EEVENT_TYPE_Elopement,
+  EEVENT_TYPE_Marriage,
+  EEVENT_TYPE_Reproduce,
+  EEVENT_TYPE_Secret_affair,
+  EEVENT_TYPE_Seek_partner,
+  EEVENT_TYPE_Social_scandal,
+  EEVENT_TYPE_Toxic_relationship,
+  EEVENT_TYPE_Count
+};
+
+/**
+ * @brief Lookup table mapping all enumerated event types to their appropriate string
+ * representations.
+ */
+constexpr std::array<Enum_mapping<EEvent_type>,
+                     static_cast<size_t>(EEvent_type::EEVENT_TYPE_Count)> event_type_lookup = {
+  Enum_mapping{EEvent_type::EEVENT_TYPE_Courtship,           "courtship"},
+  Enum_mapping{EEvent_type::EEVENT_TYPE_Elopement,           "elopement"},
+  Enum_mapping{EEvent_type::EEVENT_TYPE_Marriage,            "marriage"},
+  Enum_mapping{EEvent_type::EEVENT_TYPE_Reproduce,           "reproduce"},
+  Enum_mapping{EEvent_type::EEVENT_TYPE_Secret_affair,       "secret_affair"},
+  Enum_mapping{EEvent_type::EEVENT_TYPE_Seek_partner,        "seek_partner"},
+  Enum_mapping{EEvent_type::EEVENT_TYPE_Social_scandal,      "social_scandal"},
+  Enum_mapping{EEvent_type::EEVENT_TYPE_Toxic_relationship,  "toxic_relationship"}
+};
+
 /**
  * @brief The type of event
  */
@@ -86,4 +119,4 @@ void from_json(const nlohmann::json& json,
 
 }  // namespace his_gen
 
-#endif // EVENT_TYPE_H
+#endif

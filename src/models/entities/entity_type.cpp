@@ -9,7 +9,7 @@
 
 his_gen::Entity_type::Entity_type(const his_gen::EEntity_type& entity_type)
   :
-  m_name(his_gen::Get_entity_type_string(entity_type)),
+  m_name(his_gen::Enum_to_string(entity_type, entity_type_lookup)),
   m_entity_type(entity_type)
 { }
 
@@ -22,7 +22,8 @@ void his_gen::to_json(nlohmann::json& json,
   json = nlohmann::json
   {
     {"name", entity_type.Get_name()},
-    {"entity_type", his_gen::Get_entity_type_string(entity_type.Get_entity_type())}
+    {"entity_type", his_gen::Enum_to_string(entity_type.Get_entity_type(),
+                                            entity_type_lookup)}
   };
 }
 

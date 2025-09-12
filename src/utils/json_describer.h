@@ -7,7 +7,6 @@
 
 // Standard libs
 #include <string>
-#include <vector>
 
 // JSON
 #include <deps/json.hpp>
@@ -30,50 +29,12 @@ public:
   /**
    * @brief Convert a JSON object to a paragraph
    * @param entity The entity to convert
+   * @param output_genitals Some AI image generators won't output images
+   * if certain physical features are described. Argue false to suppress those.
    * @return A converted paragraph describing this entity
    */
-  static std::string Describe_physicality(const nlohmann::json &entity)
-  {
-    if (!entity.contains("physicality") || !entity["physicality"].contains("physicality"))
-    {
-      return "No physicality data found for this entity";
-    }
-
-    std::string paragraph;
-
-    // Entity info
-    paragraph += "This is the "
-                 + entity["entity_type"].get<std::string>() + " "
-                 + entity["name"].get<std::string>();
-
-    if (entity.contains("title"))
-    {
-      paragraph += ", " + entity["title"].get<std::string>();
-    }
-    paragraph += ". ";
-
-    // Attributes
-    const auto &physicality_map = entity["physicality"]["physicality"];
-    for (auto it = physicality_map.begin(); it != physicality_map.end(); ++it)
-    {
-      // Lookup the enum corresponding to this attribute key
-      Attribute_enums::EPhysicality attr_enum = Attribute_enums::Get_entity_attribute(it.key());
-
-      Attribute_enums::EValue_type value_type = Attribute_enums::EValue_type::EVALUE_TYPE_Other;
-      auto map_it = Attribute_enums::physicality_value_type.find(attr_enum);
-      if (map_it != Attribute_enums::physicality_value_type.end())
-      {
-        value_type = map_it->second;
-      }
-
-      int attr_value = it.value().get<int>();
-      paragraph += "Their " + it.key() + " is " + classify_value(attr_value, value_type) + ". ";
-    }
-
-    paragraph += "\n==================================================\n";
-
-    return paragraph + "\n";
-  }
+  static std::string Describe_physicality(const nlohmann::json &entity,
+                                          const bool output_genitals = true);
 
 private:
   // Attributes
@@ -84,35 +45,14 @@ private:
    * @param value The JSON value
    * @return
    */
-  static std::string classify_value(int v, Attribute_enums::EValue_type value_type)
-  {
-    if (v < 1) v = 1;
-    if (v > 100) v = 100;
+  static std::string classify_value(uint8_t v, Attribute_enums::EValue_type value_type);
 
-    int index = 0;
-    switch (value_type)
-    {
-      case Attribute_enums::EValue_type::EVALUE_TYPE_Size:
-        index = (v - 1) * Attribute_enums::size_descriptions.size() / 100;
-        return Attribute_enums::size_descriptions[index];
-      case Attribute_enums::EValue_type::EVALUE_TYPE_Density:
-        index = (v - 1) * Attribute_enums::density_descriptions.size() / 100;
-        return Attribute_enums::density_descriptions[index];
-      case Attribute_enums::EValue_type::EVALUE_TYPE_Presence:
-        index = (v - 1) * Attribute_enums::presence_descriptions.size() / 100;
-        return Attribute_enums::presence_descriptions[index];
-      case Attribute_enums::EValue_type::EVALUE_TYPE_Pitch:
-        index = (v - 1) * Attribute_enums::pitch_descriptions.size() / 100;
-        return Attribute_enums::pitch_descriptions[index];
-      case Attribute_enums::EValue_type::EVALUE_TYPE_Roundness:
-        index = (v - 1) * Attribute_enums::roundness_descriptions.size() / 100;
-        return Attribute_enums::roundness_descriptions[index];
-      case Attribute_enums::EValue_type::EVALUE_TYPE_Other:
-      default:
-        index = (v - 1) * Attribute_enums::default_descriptions.size() / 100;
-        return Attribute_enums::default_descriptions[index];
-    }
-  }
+  /**
+   * @brief Format the output of some output text
+   * @param input_string
+   * @return
+   */
+  static std::string format_output(std::string& input_string);
 
 }; // class Json_Describer
 }  // namespace his_gen

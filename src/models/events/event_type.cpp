@@ -8,9 +8,9 @@
 ///////////////////////////////////////////////////////////////////////
 
 his_gen::Event_type::Event_type(const his_gen::EEvent_type& event_type)
-  :
-  m_name(his_gen::Get_event_type_string(event_type)),
-  m_event_type(event_type)
+    :
+    m_name(his_gen::Enum_to_string(event_type, event_type_lookup)),
+    m_event_type(event_type)
 { }
 
 ///////////////////////////////////////////////////////////////////////
@@ -22,7 +22,7 @@ void his_gen::to_json(nlohmann::json& json,
   json = nlohmann::json
   {
     {"name", event_type.Get_name()},
-    {"event_type", his_gen::Get_event_type_string(event_type.Get_event_type())}
+    {"event_type", his_gen::Enum_to_string(event_type.Get_event_type(), event_type_lookup)}
   };
 }
 

@@ -9,9 +9,9 @@
 
 his_gen::Generated_history::Generated_history()
   :
-  Entities(),
-  Events(),
-  m_entity_relationships()
+  m_entity_relationships(),
+  m_entities(),
+  m_events()
 { }
 
 ///////////////////////////////////////////////////////////////////////
@@ -21,8 +21,8 @@ void his_gen::to_json(nlohmann::json& json,
 {
   json = nlohmann::json
   {
-    {"entities", generated_history.Entities},
-    {"events", generated_history.Events},
+    {"entities", generated_history.Get_entities()},
+    {"events", generated_history.Get_events()},
     {"entity_relationships", generated_history.Get_entity_relationships()}
   };
 }

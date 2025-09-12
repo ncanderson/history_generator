@@ -65,19 +65,7 @@ void his_gen::Data_access_dao_file::Write_history(his_gen::Generated_history& ge
 
 void his_gen::Data_access_dao_file::Load_data_definitions()
 {
-  std::ifstream data_definitions_file("/home/nanderson/nate_personal/projects/history_generator/data/data_definitions.json");
-
-  nlohmann::json data = nlohmann::json::parse(data_definitions_file);
-
-  // Deserialize JSON directly into the static members
-  his_gen::Data_definitions::Set_entity_type_relationship_types(data.
-                                                                at("entity_type_relationship_types").
-                                                                get<std::vector<his_gen::Entity_type_relationship_type>>());
-  his_gen::Data_definitions::Set_entity_type_event_types(data.
-                                                         at("entity_type_event_types").
-                                                         get<std::vector<his_gen::Entity_type_event_type>>());
-
-  // Rebuild composite structures
+  // Build composite structures
   his_gen::Data_definitions::Initialize();
 }
 
@@ -99,17 +87,21 @@ std::string his_gen::Data_access_dao_file::describe_entities(nlohmann::json& out
 {
   std::string descriptions;
 
-  if (!output_json.contains("entities") || !output_json["entities"].is_array())
+  if (!output_json.contains("entities") || !output_json["entities"].is_object())
   {
     return "No entities found.\n";
   }
 
-  for (auto &entity : output_json["entities"])
+  // Iterate over UUID -> entity map
+  for (auto& [uuid, entity] : output_json["entities"].items())
   {
-    std::string description = Json_describer::Describe_physicality(entity);
+    if (entity.contains("physicality"))
+    {
+      descriptions += Json_describer::Describe_physicality(entity, false);
+    }
 
-    // Collect all descriptions
-    descriptions += description;
+    // Separator for readability
+    descriptions += "\n==================================================\n\n";
   }
 
   return descriptions;

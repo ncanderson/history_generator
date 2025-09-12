@@ -2,12 +2,10 @@
  * Copyright (C) 2025 Nate Anderson - All Rights Reserved
  */
 
-#ifndef SEEK_PARTNER_EVENT_H
-#define SEEK_PARTNER_EVENT_H
+#ifndef SOCIAL_SCANDAL_EVENT_H
+#define SOCIAL_SCANDAL_EVENT_H
 
 // Standard libs
-#include <memory>
-#include <unordered_set>
 
 // Application files
 #include <models/events/event_base.h>
@@ -18,30 +16,33 @@
 namespace his_gen
 {
 /**
- * @class Seek_partner_event
- * @brief Represents the 'seek partner' event
+ * @brief Represents the 'social scandal' event
  */
-class Seek_partner_event : public Event_base
+class Social_scandal_event : public Event_base
 {
 public:
+  // Attributes
 
+  // Implementation
   /**
    * @brief Constructor
    * @param triggering_entity The entity driving this event
    * @parma current_tick The current tick
    */
-  Seek_partner_event(std::shared_ptr<his_gen::Entity_base>& triggering_entity,
-                     int64_t current_tick,
-                     const boost::uuids::uuid triggering_event_id = boost::uuids::nil_uuid());
+  Social_scandal_event(std::shared_ptr<his_gen::Entity_base>& triggering_entity,
+                       int64_t current_tick,
+                       const boost::uuids::uuid triggering_event_id = boost::uuids::nil_uuid());
 
   /**
    * @brief Destructor
    */
-  ~Seek_partner_event(){}
+  ~Social_scandal_event (){}
 
   /**
-   * @brief Run the event
-   * @param entities The current set of entities, for check attraction
+   * @brief Run
+   * @param entities
+   * @param entity_relationships
+   * @param event_scheduler
    */
   void Run(his_gen::Entities& entities,
            his_gen::Entity_relationships& entity_relationships,
@@ -68,12 +69,12 @@ protected:
 
 private:
   // Attributes
+
+  // Implementation
   /**
    * @brief Static list of all possible next events that could be triggered from this event.
    */
   static const std::unordered_set<his_gen::EEvent_type> m_possible_next_events;
-
-  // Implementation
 
 };
 }

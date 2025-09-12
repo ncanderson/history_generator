@@ -39,46 +39,78 @@ namespace Attribute_enums
  */
 enum class EPersonality : uint8_t
 {
+  /////////////////////////
   EPERSONALITY_Aggressive,
   EPERSONALITY_Passive,
+  /////////////////////////
   EPERSONALITY_Ambitious,
   EPERSONALITY_Content,
+  /////////////////////////
   EPERSONALITY_Avoidant,
   EPERSONALITY_Sociable,
+  /////////////////////////
   EPERSONALITY_Brave,
   EPERSONALITY_Cowardly,
+  /////////////////////////
   EPERSONALITY_Cooperative,
   EPERSONALITY_Difficult,
+  /////////////////////////
   EPERSONALITY_Cruel,
   EPERSONALITY_Kind,
+  /////////////////////////
   EPERSONALITY_Decisive,
   EPERSONALITY_Indecisive,
+  /////////////////////////
   EPERSONALITY_Diligent,
   EPERSONALITY_Lazy,
+  /////////////////////////
   EPERSONALITY_Flexible,
   EPERSONALITY_Extremist,
+  /////////////////////////
   EPERSONALITY_Frank,
   EPERSONALITY_Evasive,
+  /////////////////////////
   EPERSONALITY_Generous,
   EPERSONALITY_Selfish,
+  /////////////////////////
   EPERSONALITY_Jealous,
   EPERSONALITY_Compassionate,
+  /////////////////////////
   EPERSONALITY_Placid,
   EPERSONALITY_Excitable,
+  /////////////////////////
   EPERSONALITY_Thoughtful,
   EPERSONALITY_Rash,
+  /////////////////////////
   EPERSONALITY_Thrifty,
   EPERSONALITY_Extravagant,
+  /////////////////////////
   EPERSONALITY_Argumentative,
   EPERSONALITY_Amiable,
+  /////////////////////////
   EPERSONALITY_Witty,
   EPERSONALITY_Humorless,
+  /////////////////////////
   EPERSONALITY_Honest,
   EPERSONALITY_Deceitful,
+  /////////////////////////
   EPERSONALITY_Lustful,
   EPERSONALITY_Chaste,
+  /////////////////////////
   EPERSONALITY_Progressive,
-  EPERSONALITY_Conservative
+  EPERSONALITY_Conservative,
+  /////////////////////////
+  EPERSONALITY_Romantic,
+  EPERSONALITY_Pragmatic,
+  /////////////////////////
+  EPERSONALITY_Proud,
+  EPERSONALITY_Humble,
+  /////////////////////////
+  EPERSONALITY_Forgiving,
+  EPERSONALITY_Resentful,
+  /////////////////////////
+  EPERSONALITY_Flirtatious,
+  EPERSONALITY_Reserved
 }; // enum EPersonality
 
 /**
@@ -128,6 +160,14 @@ inline std::string Get_entity_attribute_string(const EPersonality personality_at
     case EPersonality::EPERSONALITY_Deceitful:     return "deceitful";
     case EPersonality::EPERSONALITY_Lustful:       return "lustful";
     case EPersonality::EPERSONALITY_Chaste:        return "chaste";
+    case EPersonality::EPERSONALITY_Romantic:      return "romantic";
+    case EPersonality::EPERSONALITY_Pragmatic:     return "pragmatic";
+    case EPersonality::EPERSONALITY_Proud:         return "proud";
+    case EPersonality::EPERSONALITY_Humble:        return "humble";
+    case EPersonality::EPERSONALITY_Forgiving:     return "forgiving";
+    case EPersonality::EPERSONALITY_Resentful:     return "resentful";
+    case EPersonality::EPERSONALITY_Flirtatious:   return "flirtatious";
+    case EPersonality::EPERSONALITY_Reserved:      return "reserved";
     default:
       // Unrecognized value
       throw std::invalid_argument("Attribute not found");
@@ -154,6 +194,7 @@ enum class EPhysicality : uint8_t
   EPHYSICALITY_Muscle_mass,
   EPHYSICALITY_Height,
   EPHYSICALITY_Shoulder_width,
+  EPHYSICALITY_Chest_circumference,
   EPHYSICALITY_Stomach_size,
   EPHYSICALITY_Hip_width,
   EPHYSICALITY_Waist_circumference,
@@ -204,6 +245,7 @@ inline std::string Get_entity_attribute_string(const EPhysicality physical_attri
     case EPhysicality::EPHYSICALITY_Muscle_mass:            return "muscle_mass";
     case EPhysicality::EPHYSICALITY_Height:                 return "height";
     case EPhysicality::EPHYSICALITY_Shoulder_width:         return "shoulder_width";
+    case EPhysicality::EPHYSICALITY_Chest_circumference:    return "chest_circumference";
     case EPhysicality::EPHYSICALITY_Stomach_size:           return "stomach_size";
     case EPhysicality::EPHYSICALITY_Hip_width:              return "hip_width";
     case EPhysicality::EPHYSICALITY_Waist_circumference:    return "waist_circumference";
@@ -255,6 +297,7 @@ inline Attribute_enums::EPhysicality Get_entity_attribute(const std::string& att
     {"muscle_mass", EPhysicality::EPHYSICALITY_Muscle_mass},
     {"height", EPhysicality::EPHYSICALITY_Height},
     {"shoulder_width", EPhysicality::EPHYSICALITY_Shoulder_width},
+    {"chest_circumference", EPhysicality::EPHYSICALITY_Chest_circumference},
     {"stomach_size", EPhysicality::EPHYSICALITY_Stomach_size},
     {"hip_width", EPhysicality::EPHYSICALITY_Hip_width},
     {"waist_circumference", EPhysicality::EPHYSICALITY_Waist_circumference},
@@ -333,6 +376,7 @@ static const std::map<EPhysicality, EValue_type> physicality_value_type =
   {EPhysicality::EPHYSICALITY_Height,                 EValue_type::EVALUE_TYPE_Size},
   {EPhysicality::EPHYSICALITY_Shoulder_width,         EValue_type::EVALUE_TYPE_Size},
   {EPhysicality::EPHYSICALITY_Stomach_size,           EValue_type::EVALUE_TYPE_Size},
+  {EPhysicality::EPHYSICALITY_Chest_circumference,    EValue_type::EVALUE_TYPE_Size},
   {EPhysicality::EPHYSICALITY_Hip_width,              EValue_type::EVALUE_TYPE_Size},
   {EPhysicality::EPHYSICALITY_Waist_circumference,    EValue_type::EVALUE_TYPE_Size},
   {EPhysicality::EPHYSICALITY_Posture_straightness,   EValue_type::EVALUE_TYPE_Other},
@@ -368,14 +412,26 @@ static const std::map<EPhysicality, EValue_type> physicality_value_type =
 
 static const std::vector<std::string> size_descriptions =
 {
-  "very small", "small", "slightly small", "average sized",
-  "slightly large", "large", "very large", "extremely large"
+  "far below average",
+  "below average",
+  "slightly below average",
+  "average",
+  "slightly above average",
+  "above average",
+  "well above average",
+  "far above average"
 };
 
 static const std::vector<std::string> density_descriptions =
 {
-  "absent", "extremely sparse", "very sparse", "sparse",
-  "moderate", "dense", "very dense", "extremely dense"
+  "absent",
+  "extremely sparse",
+  "very sparse",
+  "sparse",
+  "moderate",
+  "dense",
+  "very dense",
+  "extremely dense"
 };
 
 static const std::vector<std::string> presence_descriptions =

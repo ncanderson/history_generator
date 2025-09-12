@@ -97,16 +97,25 @@ bool sentient::Is_attracted(std::shared_ptr<Entity_base> other_entity,
 
 ///////////////////////////////////////////////////////////////////////
 
+void sentient::Accept_event(Event_visitor& visitor)
+{
+  visitor.Visit_entity(*this);
+}
+///////////////////////////////////////////////////////////////////////
+
 void sentient::initialize_max_events_by_type()
 {
-  std::vector<his_gen::Event_type> events = his_gen::Data_definitions::Get_event_types();
+  // make each event tell you what it's default maximum is, then provide a virtual function in entity_base
+  // that will allow any entity to override the defaults
+  std::vector<his_gen::EEvent_type> entity_events = his_gen::Data_definitions::Get_entity_events(Get_entity_type());
+
   // Loop through all events
-  for(const auto& event : events)
+  for(const auto& event : entity_events)
   {
-    his_gen::EEvent_type event_enum = event.Get_event_type();
+    // Start with the default derived from the base class
     uint16_t default_max_event = get_default_max_event_type();
 
-    switch(event_enum)
+    switch(event)
     {
       case his_gen::EEvent_type::EEVENT_TYPE_Seek_partner:
       {
@@ -133,7 +142,18 @@ void sentient::initialize_max_events_by_type()
         double adjusted_value = static_cast<double>(default_max_event) + adjustment;
 
         // Set the max, including the adjustment, ensuring no negative values
-        set_max_events(event_enum, std::round(std::max(0.0, adjusted_value)));
+        set_max_events(event, std::round(std::max(0.0, adjusted_value)));
+        break;
+      }
+      case his_gen::EEvent_type::EEVENT_TYPE_Courtship:
+      {
+        set_max_events(event, 10);
+        break;
+      }
+      case his_gen::EEvent_type::EEVENT_TYPE_Reproduce:
+      {
+        // TODO something here?
+        set_max_events(event, 10);
         break;
       }
 

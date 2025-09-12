@@ -18,8 +18,6 @@ using dd = his_gen::Data_definitions;
 ///////////////////////////////////////////////////////////////////////
 
 // Static Member Definitions
-std::vector<his_gen::Entity_type_relationship_type> dd::s_entity_type_relationship_types;
-std::vector<his_gen::Entity_type_event_type> dd::s_entity_type_event_types;
 std::vector<his_gen::Entity_type> dd::s_entity_types;
 std::vector<his_gen::Relationship_type> dd::s_relationship_types;
 std::vector<his_gen::Event_type> dd::s_event_types;
@@ -59,7 +57,7 @@ his_gen::ERelationship_type dd::Get_rand_entity_relationship(const his_gen::EEnt
 
 ///////////////////////////////////////////////////////////////////////
 
-void dd::build_entity_events(const std::vector<his_gen::Entity_type_event_type>& ent_event)
+void dd::build_entity_events(const Entity_type_event_types& ent_event)
 {
   for (auto& it : ent_event)
   {
@@ -69,7 +67,7 @@ void dd::build_entity_events(const std::vector<his_gen::Entity_type_event_type>&
 
 ///////////////////////////////////////////////////////////////////////
 
-void dd::build_entity_relationships(const std::vector<his_gen::Entity_type_relationship_type>& ent_rel)
+void dd::build_entity_relationships(const Entity_type_relationship_types& ent_rel)
 {
   for (auto& it : ent_rel)
   {
@@ -85,6 +83,12 @@ void dd::initialize_members_from_enums()
   s_entity_types.clear();
   for (auto e : magic_enum::enum_values<his_gen::EEntity_type>())
   {
+    // This will skip the creation of an Entity_type object for the 'Count' member,
+    // which is just used as a helper in the templated lookup schema
+    if (e == his_gen::EENTITY_TYPE_Count)
+    {
+      continue;
+    }
     Entity_type ent_type = Entity_type(e);
     s_entity_types.push_back(ent_type);
   }
@@ -93,6 +97,12 @@ void dd::initialize_members_from_enums()
   s_relationship_types.clear();
   for (auto r : magic_enum::enum_values<his_gen::ERelationship_type>())
   {
+    // This will skip the creation of a Relationship_type object for the 'Count' member,
+    // which is just used as a helper in the templated lookup schema
+    if (r == his_gen::ERELATIONSHIP_TYPE_Count)
+    {
+      continue;
+    }
     Relationship_type rel_type = Relationship_type(r);
     s_relationship_types.push_back(rel_type);
   }
@@ -101,25 +111,15 @@ void dd::initialize_members_from_enums()
   s_event_types.clear();
   for (auto ev : magic_enum::enum_values<his_gen::EEvent_type>())
   {
+    // This will skip the creation of an Event_type object for the 'Count' member,
+    // which is just used as a helper in the templated lookup schema
+    if (ev == his_gen::EEVENT_TYPE_Count)
+    {
+      continue;
+    }
     Event_type evt_type = Event_type(ev);
     s_event_types.push_back(evt_type);
   }
-}
-
-///////////////////////////////////////////////////////////////////////
-// JSON Helpers
-
-void his_gen::to_json(nlohmann::json& json,
-                      const his_gen::Data_definitions& /*data_definitions*/)
-{
-  json = nlohmann::json
-  {
-    {"entity_type_relationship_types", dd::Get_entity_type_relationship_types()},
-    {"entity_type_event_types", dd::Get_entity_type_event_types()},
-    {"entity_types", dd::Get_entity_types()},
-    {"relationship_type", dd::Get_relationship_types()},
-    {"event_types", dd::Get_event_types()}
-  };
 }
 
 ///////////////////////////////////////////////////////////////////////

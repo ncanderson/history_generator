@@ -15,6 +15,58 @@
 namespace his_gen
 {
 /**
+ * @brief The Data_access_type enum
+ * @details Determine the type of data source we'll be accessing
+ */
+enum Data_access_type
+{
+  DATA_ACCESS_TYPE_Unknown,   ///< Unknown data access type
+  DATA_ACCESS_TYPE_File,      ///< File
+  DATA_ACCESS_TYPE_Postgres,  ///< PostgreSQL database
+  DATA_ACCESS_TYPE_Count      ///< Count
+};
+
+/**
+ * @brief Lookup table mapping all enumerated data access types to their appropriate string
+ * representations.
+ */
+constexpr std::array<Enum_mapping<Data_access_type>,
+                     static_cast<size_t>(Data_access_type::DATA_ACCESS_TYPE_Count)> data_access_type_lookup = {
+  Enum_mapping{Data_access_type::DATA_ACCESS_TYPE_Unknown,  "unknown"},
+  Enum_mapping{Data_access_type::DATA_ACCESS_TYPE_File,     "file"},
+  Enum_mapping{Data_access_type::DATA_ACCESS_TYPE_Postgres, "postgres"}
+};
+
+/**
+ * @brief Struct to hold the details necessary to create a file data connection
+ */
+struct DAL_file_params
+{
+  /**
+   * @brief Data file name
+   */
+  std::string filename;
+
+  /**
+   * @brief Path to data file to load
+   */
+  std::string file_path;
+}; // struct DAL_file_details
+
+/**
+ * @brief Struct to hold the details necessary to create a PostgreSQL data
+ * connection
+ */
+struct DAL_PG_params
+{
+  /**
+   * @brief Database name
+   */
+  std::string db_name;
+
+}; // struct DAL_PG_details
+
+/**
  * @brief The Data_access_dao_base class
  */
 class Data_access_dao_base

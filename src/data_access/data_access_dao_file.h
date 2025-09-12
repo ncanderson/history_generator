@@ -23,7 +23,7 @@ public:
   /**
    * @brief Constructor
    */
-  Data_access_dao_file(const DAL_file_params& params);
+  Data_access_dao_file(const his_gen::DAL_file_params& params);
 
   /**
    * @brief Destructor

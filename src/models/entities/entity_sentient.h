@@ -85,6 +85,13 @@ public:
                     std::vector<std::shared_ptr<Entity_base>> attracted_to) override;
 
   /**
+   * @brief Scepter acceptor for the visitor pattern
+   * @param visitor The Event visitor, which will allow events to call entity-specific
+   * functions
+   */
+  void Accept_event(Event_visitor& visitor) override;
+
+  /**
    * Getters and Setters
    */
   Personality Get_personality() const { return m_personality; }
@@ -144,6 +151,9 @@ protected:
    * by type
    */
   void initialize_max_events_by_type() override;
+
+  // each entity class will call the initialize max events function. that function will loop through
+  // the entity_event_type list,
 
 private:
   // Attributes

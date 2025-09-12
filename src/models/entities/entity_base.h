@@ -19,6 +19,13 @@
 
 namespace his_gen
 {
+
+/**
+ * Forward declaration allowing usage of the Event_visitor class,
+ * itself providing events access to entity-specific behaviors.
+ */
+class Event_visitor;
+
 /**
  * @brief Base class for generated entities
  */
@@ -124,6 +131,14 @@ public:
   }
 
   /**
+   * @brief Helper function allowing events the ability to call functions
+   * from derived entities.
+   * @param visitor An Event_visitor instance that bridges specific derived
+   * class functionality between events and entities.
+   */
+  virtual void Accept_event(his_gen::Event_visitor& visitor) = 0;
+
+  /**
    * Getters and setters
    */
   const boost::uuids::uuid Get_entity_id() const { return m_entity_id; }
@@ -227,7 +242,8 @@ protected:
     auto it = m_max_events_by_type.find(event_type);
     if (it == m_max_events_by_type.end())
     {
-      throw std::out_of_range(his_gen::Get_event_type_string(event_type) + " not found in max events map");
+      throw std::out_of_range(std::string(his_gen::Enum_to_string(event_type, event_type_lookup)) +
+                              " not found in max events map");
     }
     return it->second;
   }
@@ -293,7 +309,8 @@ inline void to_json(nlohmann::json& json, const his_gen::Entity_base& entity_bas
   json = nlohmann::json
   {
     {"id", entity_base.Get_entity_id()},
-    {"entity_type", his_gen::Get_entity_type_string(entity_base.Get_entity_type())},
+    {"entity_type", his_gen::Enum_to_string(entity_base.Get_entity_type(),
+                                              entity_type_lookup)},
     {"name", entity_base.Get_name()},
     {"title", entity_base.Get_title()},
     {"relationship_ids", entity_base.Get_relationship_ids()},
@@ -310,7 +327,8 @@ inline void to_json(nlohmann::json& json, const his_gen::Entity_base& entity_bas
 inline void from_json(const nlohmann::json& json, his_gen::Entity_base& entity_base)
 {
   entity_base.Set_entity_id(json.at("id"));
-  entity_base.Set_entity_type(his_gen::Get_entity_type(json.at("entity_type")));
+  entity_base.Set_entity_type(his_gen::String_to_enum(std::string(json.at("entity_type")),
+                                                      entity_type_lookup));
   entity_base.Set_name(json.at("name"));
   entity_base.Set_title(json.at("title"));
   entity_base.Set_relationship_ids(json.at("relationship_ids"));

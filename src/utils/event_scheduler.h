@@ -8,7 +8,6 @@
 // Standard libs
 #include <map>
 #include <deque>
-#include <memory>
 #include <boost/uuid/uuid.hpp>
 
 // JSON
@@ -34,13 +33,36 @@ class Scheduled_event
 {
 public:
 
+  /**
+   * Maybe not necessary anymore depending on changed usage
+   */
   friend class Event_scheduler;
+
+  /**
+   * Getters
+   */
+  const boost::uuids::uuid& Get_triggering_entity() const { return m_triggering_entity; }
+  const boost::uuids::uuid& Get_triggering_event() const { return m_triggering_event; }
+  const std::vector<boost::uuids::uuid>& Get_target_ids() const { return m_target_ids; }
+  his_gen::EEvent_type Get_scheduled_event_type() const { return m_scheduled_event_type; }
 
 private:
   /**
    * @brief The entity that will trigger this event
    */
-  std::shared_ptr<his_gen::Entity_base>& m_triggering_entity;
+  const boost::uuids::uuid& m_triggering_entity;
+
+  /**
+   * @brief The event triggering the scheduled event.
+   * @details Some events may modify things created by previous events; this attribute
+   * allows subsequent events to 'know' about what preceeded them.
+   */
+  const boost::uuids::uuid& m_triggering_event;
+
+  /**
+   * @brief IDs of this event's target(s)
+   */
+  const std::vector<boost::uuids::uuid>& m_target_ids;
 
   /**
    * @brief The type of event that will be scheduled to run
@@ -52,11 +74,15 @@ private:
    * @param triggering_entity The entity that will trigger this event
    * @param scheduled_event_type The type of event to be scheduled
    */
-  Scheduled_event(std::shared_ptr<his_gen::Entity_base>& triggering_entity,
+  Scheduled_event(const boost::uuids::uuid& triggering_entity,
+                  const boost::uuids::uuid& triggering_event,
+                  const std::vector<boost::uuids::uuid>& target_ids,
                   const his_gen::EEvent_type scheduled_event_type)
     :
-      m_triggering_entity(triggering_entity),
-      m_scheduled_event_type(scheduled_event_type)
+    m_triggering_entity(triggering_entity),
+    m_triggering_event(triggering_event),
+    m_target_ids(target_ids),
+    m_scheduled_event_type(scheduled_event_type)
   { }
 
 }; // class Scheduled_event
@@ -89,19 +115,23 @@ public:
   /**
    * @brief Schedule an event to run
    * @param triggering_entity The entity that will trigger this event
+   * @param triggering_event  The event that triggered this event
+   * @param target_ids The target(s) for this event
    * @param event_type_to_schedule The event type to schedule
    * @param tick_to_run The tick to run the event in
    */
-  void Schedule_event(std::shared_ptr<his_gen::Entity_base>& triggering_entity,
+  void Schedule_event(const boost::uuids::uuid& triggering_entity,
+                      const boost::uuids::uuid& triggering_event,
+                      const std::vector<boost::uuids::uuid>& target_ids,
                       const his_gen::EEvent_type event_type_to_schedule,
                       const uint32_t tick_to_run);
 
   /**
    * @brief Return the next event, and remove it from the schedule
    * @param current_tick The tick to get an event from
-   * @return A pointer to the next event
+   * @return The next scheduled event
    */
-  std::shared_ptr<Event_base> Prepare_next_event(const uint32_t current_tick);
+  Scheduled_event Get_next_event(const uint32_t current_tick);
 
   /**
    * @brief More_events_to_run

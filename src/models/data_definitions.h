@@ -6,6 +6,7 @@
 #define DATA_DEFINITIONS_H
 
 // Standard libs
+#include <array>
 
 // JSON
 #include <deps/json.hpp>
@@ -29,6 +30,12 @@ class Data_definitions
 {
 public:
   // Attributes
+
+  /**
+   * Using
+   */
+  using Entity_type_event_types = std::array<his_gen::Entity_type_event_type, 6>;
+  using Entity_type_relationship_types = std::array<his_gen::Entity_type_relationship_type, 16>;
 
   // Implementation
   /**
@@ -69,14 +76,17 @@ public:
   /**
    * Getters and Setters
    */
-  static const std::vector<his_gen::Entity_type_relationship_type>& Get_entity_type_relationship_types() { return s_entity_type_relationship_types; }
-  static const std::vector<his_gen::Entity_type_event_type>& Get_entity_type_event_types() { return s_entity_type_event_types; }
+  static const Entity_type_relationship_types& Get_entity_type_relationship_types() { return s_entity_type_relationship_types; }
+  static const Entity_type_event_types& Get_entity_type_event_types() { return s_entity_type_event_types; }
+
   static const std::vector<his_gen::Entity_type>& Get_entity_types() { return s_entity_types; }
   static const std::vector<his_gen::Relationship_type>& Get_relationship_types() { return s_relationship_types; }
   static const std::vector<his_gen::Event_type>& Get_event_types() { return s_event_types; }
 
-  static void Set_entity_type_relationship_types(const std::vector<his_gen::Entity_type_relationship_type>& v) { s_entity_type_relationship_types = v; }
-  static void Set_entity_type_event_types(const std::vector<his_gen::Entity_type_event_type>& v) { s_entity_type_event_types = v; }
+  static const std::map<his_gen::EEntity_type, std::vector<his_gen::ERelationship_type>>& Get_entity_relationships() { return s_entity_relationships; }
+  static const std::vector<his_gen::ERelationship_type>& Get_entity_relationships(const his_gen::EEntity_type& entity_type) { return s_entity_relationships[entity_type]; }
+  static const std::map<his_gen::EEntity_type, std::vector<his_gen::EEvent_type>>& Get_entity_events() { return s_entity_events; }
+  static const std::vector<his_gen::EEvent_type>& Get_entity_events(const his_gen::EEntity_type& entity_type) { return s_entity_events[entity_type]; }
 
 protected:
   // Attributes
@@ -85,15 +95,46 @@ protected:
 
 private:
   // Attributes
+  // TODO Move this into the Entity_type_relationship_type class
   /**
    * @brief List of all possible entity relationship types based on entity type
    */
-  static std::vector<his_gen::Entity_type_relationship_type> s_entity_type_relationship_types;
+  inline static const Entity_type_relationship_types s_entity_type_relationship_types = {
+      // Deity
+      Entity_type_relationship_type(EEntity_type::EENTITY_TYPE_Deity, ERelationship_type::ERELATIONSHIP_TYPE_Conflict),
+      Entity_type_relationship_type(EEntity_type::EENTITY_TYPE_Deity, ERelationship_type::ERELATIONSHIP_TYPE_Dominance),
+      Entity_type_relationship_type(EEntity_type::EENTITY_TYPE_Deity, ERelationship_type::ERELATIONSHIP_TYPE_Friendship),
+      Entity_type_relationship_type(EEntity_type::EENTITY_TYPE_Deity, ERelationship_type::ERELATIONSHIP_TYPE_Lover),
+      Entity_type_relationship_type(EEntity_type::EENTITY_TYPE_Deity, ERelationship_type::ERELATIONSHIP_TYPE_Marriage),
+      Entity_type_relationship_type(EEntity_type::EENTITY_TYPE_Deity, ERelationship_type::ERELATIONSHIP_TYPE_Membership),
+      Entity_type_relationship_type(EEntity_type::EENTITY_TYPE_Deity, ERelationship_type::ERELATIONSHIP_TYPE_Ownership),
+      Entity_type_relationship_type(EEntity_type::EENTITY_TYPE_Deity, ERelationship_type::ERELATIONSHIP_TYPE_Parentage),
+      // Sentient
+      Entity_type_relationship_type(EEntity_type::EENTITY_TYPE_Sentient, ERelationship_type::ERELATIONSHIP_TYPE_Conflict),
+      Entity_type_relationship_type(EEntity_type::EENTITY_TYPE_Sentient, ERelationship_type::ERELATIONSHIP_TYPE_Dominance),
+      Entity_type_relationship_type(EEntity_type::EENTITY_TYPE_Sentient, ERelationship_type::ERELATIONSHIP_TYPE_Friendship),
+      Entity_type_relationship_type(EEntity_type::EENTITY_TYPE_Sentient, ERelationship_type::ERELATIONSHIP_TYPE_Lover),
+      Entity_type_relationship_type(EEntity_type::EENTITY_TYPE_Sentient, ERelationship_type::ERELATIONSHIP_TYPE_Marriage),
+      Entity_type_relationship_type(EEntity_type::EENTITY_TYPE_Sentient, ERelationship_type::ERELATIONSHIP_TYPE_Membership),
+      Entity_type_relationship_type(EEntity_type::EENTITY_TYPE_Sentient, ERelationship_type::ERELATIONSHIP_TYPE_Ownership),
+      Entity_type_relationship_type(EEntity_type::EENTITY_TYPE_Sentient, ERelationship_type::ERELATIONSHIP_TYPE_Parentage)
+  };
 
+  // TODO Move this into the Entity_type_event_type class
   /**
    * @brief List of all possible entity event types based on entity type
+   * @details This
    */
-  static std::vector<his_gen::Entity_type_event_type> s_entity_type_event_types;
+  inline static const Entity_type_event_types s_entity_type_event_types = {
+      // Deity
+      Entity_type_event_type(EEntity_type::EENTITY_TYPE_Deity, EEvent_type::EEVENT_TYPE_Courtship),
+      Entity_type_event_type(EEntity_type::EENTITY_TYPE_Deity, EEvent_type::EEVENT_TYPE_Reproduce),
+      Entity_type_event_type(EEntity_type::EENTITY_TYPE_Deity, EEvent_type::EEVENT_TYPE_Seek_partner),
+      // Sentient
+      Entity_type_event_type(EEntity_type::EENTITY_TYPE_Sentient, EEvent_type::EEVENT_TYPE_Courtship),
+      Entity_type_event_type(EEntity_type::EENTITY_TYPE_Sentient, EEvent_type::EEVENT_TYPE_Reproduce),
+      Entity_type_event_type(EEntity_type::EENTITY_TYPE_Sentient, EEvent_type::EEVENT_TYPE_Seek_partner)
+  };
 
   /**
    * @brief List of all entity types
@@ -127,29 +168,20 @@ private:
    * @brief Populate the static entity/event map from external data
    * @param ent_event A vector of entity type/event type pairs
    */
-  static void build_entity_events(const std::vector<his_gen::Entity_type_event_type>& ent_event);
+  static void build_entity_events(const Entity_type_event_types& ent_event);
 
   /**
    * @brief Populate the static entity/relationship map from external data
    * @param ent_rel A vector of entity type/relationship type pairs
    */
-  static void build_entity_relationships(const std::vector<his_gen::Entity_type_relationship_type>& ent_rel);
+  static void build_entity_relationships(const Entity_type_relationship_types& ent_rel);
 
   /**
    * @brief Helper function to set up the static vectors of basic data types
    */
   static void initialize_members_from_enums();
 
-}; // class Data_definitions
+};
+}
 
-/**
- * @brief to_json
- * @param json
- * @param data_definitions
- */
-void to_json(nlohmann::json& json,
-             const his_gen::Data_definitions& data_definitions);
-
-}  // namespace his_gen
-
-#endif // DATA_DEFINITIONS_H
+#endif
