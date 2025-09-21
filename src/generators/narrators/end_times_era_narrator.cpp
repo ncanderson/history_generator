@@ -26,9 +26,7 @@ void et_nar::Create_entities(his_gen::Entities& entities,
 
 ///////////////////////////////////////////////////////////////////////
 
-void et_nar::Manage_events(his_gen::Entities& entities,
-                           his_gen::Events& events,
-                           his_gen::Entity_relationships& entity_relationships,
+void et_nar::Manage_events(his_gen::Generated_history& history_of_the_world,
                            const uint64_t current_tick)
 {
   // NOOP

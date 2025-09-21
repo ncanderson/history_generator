@@ -114,12 +114,11 @@ his_gen::Courtship_event::Courtship_event(std::shared_ptr<Entity_base>& triggeri
 
 //////////////////////////////////////////////////////////////////////
 
-void his_gen::Courtship_event::Run(his_gen::Entities& entities,
-                                   his_gen::Entity_relationships& entity_relationships,
+void his_gen::Courtship_event::Run(his_gen::Generated_history& history_of_the_world,
                                    Event_scheduler& event_scheduler)
 {
   // Check in coming relationship for the triggering event
-
+  Get_triggering_event_id();
 
 //  // The entity that triggered the event
 //  std::shared_ptr<his_gen::Entity_base> triggering_entity = Get_triggering_entity();

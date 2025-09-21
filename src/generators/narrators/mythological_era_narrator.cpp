@@ -56,13 +56,17 @@ void myth_nar::Create_entities(his_gen::Entities& entities,
 
 ///////////////////////////////////////////////////////////////////////
 
-void myth_nar::Manage_events(his_gen::Entities& entities,
-                             his_gen::Events& events,
-                             his_gen::Entity_relationships& entity_relationships,
+void myth_nar::Manage_events(his_gen::Generated_history& history_of_the_world,
                              const uint64_t current_tick)
 {
   // Run events that were scheduled previously
-  run_scheduled_events(entities, entity_relationships, current_tick);
+  run_scheduled_events(history_of_the_world,
+                       current_tick);
+
+  // Refs to main history object, for convienence
+  Entities& entities = history_of_the_world.Get_entities();
+  Events& events = history_of_the_world.Get_events();
+  Entity_relationships& entity_relationships = history_of_the_world.Get_entity_relationships();
 
   // TODO Put this into another helper function or something?
   // Create new events and run them
@@ -86,7 +90,7 @@ void myth_nar::Manage_events(his_gen::Entities& entities,
     if(triggering_entity->Event_is_valid(new_event->Get_event_type(), current_tick))
     {
       // Run the event
-      new_event->Run(entities, entity_relationships, m_event_scheduler);
+      new_event->Run(history_of_the_world, m_event_scheduler);
     }
     else
     {

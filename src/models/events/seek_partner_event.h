@@ -40,11 +40,11 @@ public:
   ~Seek_partner_event(){}
 
   /**
-   * @brief Run the event
-   * @param entities The current set of entities, for check attraction
+   * @brief Run
+   * @param history_of_the_world
+   * @param event_scheduler
    */
-  void Run(his_gen::Entities& entities,
-           his_gen::Entity_relationships& entity_relationships,
+  void Run(his_gen::Generated_history& history_of_the_world,
            Event_scheduler& event_scheduler) override;
 
   /**

@@ -12,16 +12,16 @@
 
 // Application files
 #include <utils/history_generator_utils.h>
+#include <defs/history_generator_aliases.h>
 
 // Models
-#include <models/entities/entity_type.h>
-#include <models/events/event_base.h>
-#include <models/relations/entity_relationship.h>
-#include <models/relations/entity_type_relationship_type.h>
 #include <models/relationships/relationship_type.h>
 
 namespace his_gen
 {
+
+class Entity_type_relationship_type;
+
 /**
  * @brief The 'master' data type to contain vectors of all generated history
  */
