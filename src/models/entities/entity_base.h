@@ -16,6 +16,7 @@
 // Application files
 #include <utils/history_generator_utils.h>
 #include <models/data_definitions.h>
+#include <models/events/event_base.h>
 
 namespace his_gen
 {

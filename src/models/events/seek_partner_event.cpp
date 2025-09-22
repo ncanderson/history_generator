@@ -5,6 +5,7 @@
 // Standard
 #include <models/events/seek_partner_event.h>
 #include <models/entities/entity_base.h>
+#include <models/relations/entity_relationship.h>
 #include <utils/event_scheduler.h>
 
 ///////////////////////////////////////////////////////////////////////

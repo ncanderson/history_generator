@@ -10,17 +10,22 @@
 #include <memory>
 #include <string>
 #include <unordered_set>
-#include <boost/uuid/nil_generator.hpp>
 
-// JSON
+// 3rd party
+#include <boost/uuid/nil_generator.hpp>
+#include <boost/uuid/random_generator.hpp>
 #include <deps/json.hpp>
 
 // Application files
 #include <defs/history_generator_aliases.h>
-#include <utils/history_generator_utils.h>
 #include <defs/history_generator_defs.h>
+#include <defs/json_helper_defs.h>
+
+#include <models/data_definitions.h>
 #include <models/generated_history.h>
 #include <models/event_visitor.h>
+
+#include <utils/history_generator_utils.h>
 
 namespace his_gen
 {
