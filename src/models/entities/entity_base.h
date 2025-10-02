@@ -16,6 +16,7 @@
 // Application files
 #include <utils/history_generator_utils.h>
 #include <models/data_definitions.h>
+#include <models/events/event_base.h>
 
 namespace his_gen
 {
@@ -310,7 +311,7 @@ inline void to_json(nlohmann::json& json, const his_gen::Entity_base& entity_bas
   {
     {"id", entity_base.Get_entity_id()},
     {"entity_type", his_gen::Enum_to_string(entity_base.Get_entity_type(),
-                                              entity_type_lookup)},
+                                            entity_type_lookup)},
     {"name", entity_base.Get_name()},
     {"title", entity_base.Get_title()},
     {"relationship_ids", entity_base.Get_relationship_ids()},

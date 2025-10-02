@@ -5,6 +5,7 @@
 // Standard
 #include <models/events/seek_partner_event.h>
 #include <models/entities/entity_base.h>
+#include <models/relations/entity_relationship.h>
 #include <utils/event_scheduler.h>
 
 ///////////////////////////////////////////////////////////////////////
@@ -33,14 +34,18 @@ his_gen::Seek_partner_event::Seek_partner_event(std::shared_ptr<Entity_base>& tr
 
 //////////////////////////////////////////////////////////////////////
 
-void his_gen::Seek_partner_event::Run(his_gen::Entities& entities,
-                                      his_gen::Entity_relationships& entity_relationships,
+void his_gen::Seek_partner_event::Run(his_gen::Generated_history& history_of_the_world,
                                       Event_scheduler& event_scheduler)
 {
-  // Check for entity attraction
+  // Pairs to hold attracted entities
   std::vector<std::pair<std::shared_ptr<his_gen::Entity_base>,
                         std::shared_ptr<his_gen::Entity_base>>> pairs;
 
+  // Generated history refs for convienence
+  Entities& entities = history_of_the_world.Get_entities();
+  Entity_relationships& entity_relationships = history_of_the_world.Get_entity_relationships();
+
+  // Get the entity we'll be working wtih
   std::shared_ptr<his_gen::Entity_base> triggering_entity = entities[Get_triggering_entity_id()];
 
   // Loop through all entities

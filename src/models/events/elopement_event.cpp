@@ -27,8 +27,7 @@ his_gen::Elopement_event::Elopement_event(std::shared_ptr<Entity_base>& triggeri
 
 //////////////////////////////////////////////////////////////////////
 
-void his_gen::Elopement_event::Run(his_gen::Entities& entities,
-                                   his_gen::Entity_relationships& entity_relationships,
+void his_gen::Elopement_event::Run(his_gen::Generated_history& history_of_the_world,
                                    Event_scheduler& event_scheduler)
 {
 

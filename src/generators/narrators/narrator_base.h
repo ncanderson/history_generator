@@ -59,14 +59,10 @@ public:
   /**
    * @brief Inheriting classes must implement this function to create new events
    * and manage scheduled events.
-   * @param entities The vector of entity pointers to reference when creating events
-   * @param events The vector of events to populate
-   * @param entity_relationships The vector of entity relationships to populate
+   * @param history_of_the_world
    * @current_tick The current generation tick
    */
-  virtual void Manage_events(his_gen::Entities& entities,
-                             his_gen::Events& events,
-                             his_gen::Entity_relationships& entity_relationships,
+  virtual void Manage_events(his_gen::Generated_history& history_of_the_world,
                              const uint64_t current_tick) =0;
 
   /**
@@ -131,12 +127,10 @@ protected:
   // Implementation
   /**
    * @brief Run events that have been scheduled by other events
-   * @param entities
-   * @param entity_relationships
+   * @param history_of_the_world
    * @param current_tick
    */
-  void run_scheduled_events(his_gen::Entities& entities,
-                            his_gen::Entity_relationships entity_relationships,
+  void run_scheduled_events(his_gen::Generated_history& history_of_the_world,
                             const uint64_t current_tick)
   {
     // Temp instance of scheduler, so we can avoid an infinte loop if using the
@@ -149,12 +143,11 @@ protected:
       Scheduled_event sched = m_event_scheduler.Get_next_event(current_tick);
       // Make it
       std::shared_ptr<Event_base> scheduled = his_gen::Event_factory::Create_event(sched.Get_scheduled_event_type(),
-                                                                                   entities[sched.Get_triggering_entity()],
+                                                                                   history_of_the_world.Get_entities()[sched.Get_triggering_entity()],
                                                                                    current_tick,
                                                                                    sched.Get_triggering_event());
       // Run it
-      scheduled->Run(entities,
-                     entity_relationships,
+      scheduled->Run(history_of_the_world,
                      temp_scheduler);
     }
 

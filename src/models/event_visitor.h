@@ -11,7 +11,6 @@
 
 // Application files
 #include <utils/history_generator_utils.h>
-#include <models/entities/entity_base.h>
 
 namespace his_gen
 {

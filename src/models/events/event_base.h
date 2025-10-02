@@ -10,18 +10,22 @@
 #include <memory>
 #include <string>
 #include <unordered_set>
-#include <boost/uuid/nil_generator.hpp>
 
-// JSON
+// 3rd party
+#include <boost/uuid/nil_generator.hpp>
+#include <boost/uuid/random_generator.hpp>
 #include <deps/json.hpp>
 
 // Application files
 #include <defs/history_generator_aliases.h>
-#include <utils/history_generator_utils.h>
 #include <defs/history_generator_defs.h>
-#include <models/entities/entity_base.h>
-#include <models/relations/entity_relationship.h>
+#include <defs/json_helper_defs.h>
+
+#include <models/data_definitions.h>
+#include <models/generated_history.h>
 #include <models/event_visitor.h>
+
+#include <utils/history_generator_utils.h>
 
 namespace his_gen
 {
@@ -77,12 +81,10 @@ public:
    * what 'Run' means.
    * @details By default, the value of `m_event_changes_state` will be used
    * to determine if this event has created meaningful change that should be saved
-   * @param entities The current set of entities, for resolving events
-   * @param entity_relationships Current set of relationships, if the event requires a new one be added
+   * @param history_of_the_world The current `Generated_history` object
    * @param event_scheduler Object to track upcoming events that result from this event
    */
-  virtual void Run(his_gen::Entities& entities,
-                   his_gen::Entity_relationships& entity_relationships,
+  virtual void Run(his_gen::Generated_history& history_of_the_world,
                    Event_scheduler& event_scheduler) = 0;
 
   /**

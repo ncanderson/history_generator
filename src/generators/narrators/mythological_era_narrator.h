@@ -53,9 +53,7 @@ public:
    * @param entity_relationships The vector of entity relationships to populate
    * @param current_tick The current generation tick
    */
-  void Manage_events(his_gen::Entities& entities,
-                     his_gen::Events& events,
-                     his_gen::Entity_relationships& entity_relationships,
+  void Manage_events(his_gen::Generated_history& history_of_the_world,
                      const uint64_t current_tick) override;
 
   /**

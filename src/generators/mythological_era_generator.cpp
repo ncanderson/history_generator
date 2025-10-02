@@ -53,9 +53,7 @@ void his_gen::Mythological_era_generator::Run()
                                       m_ticks_completed);
 
       // With new entities involved, manage events, including scheduled events
-      m_myth_narrator.Manage_events(m_generated_history.Get_entities(),
-                                    m_generated_history.Get_events(),
-                                    m_generated_history.Get_entity_relationships(),
+      m_myth_narrator.Manage_events(m_generated_history,
                                     m_ticks_completed);
 
       // Refresh the ID lists managed by the narrator

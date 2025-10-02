@@ -27,8 +27,7 @@ his_gen::Toxic_relationship_event::Toxic_relationship_event(std::shared_ptr<Enti
 
 //////////////////////////////////////////////////////////////////////
 
-void his_gen::Toxic_relationship_event::Run(his_gen::Entities& entities,
-                                            his_gen::Entity_relationships& entity_relationships,
+void his_gen::Toxic_relationship_event::Run(his_gen::Generated_history& history_of_the_world,
                                             Event_scheduler& event_scheduler)
 {
 
