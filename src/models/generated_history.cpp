@@ -2,8 +2,17 @@
  * Copyright (C) 2024 Nate Anderson - All Rights Reserved
  */
 
-// Standard
+// Standard libs
+
+// JSON
+
+// Application files
 #include <models/generated_history.h>
+
+// Models
+#include <models/entities/entity_base.h>
+#include <models/events/event_base.h>
+#include <models/relations/entity_relationship.h>
 
 ///////////////////////////////////////////////////////////////////////
 
