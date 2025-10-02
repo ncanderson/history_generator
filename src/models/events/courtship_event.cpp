@@ -118,7 +118,7 @@ void his_gen::Courtship_event::Run(his_gen::Generated_history& history_of_the_wo
                                    Event_scheduler& event_scheduler)
 {
   // Check in coming relationship for the triggering event
-  Get_triggering_event_id();
+  //std::shared_ptr<Entity_base> trig_notaro = history_of_the_world. Get_triggering_event_id();
 
 //  // The entity that triggered the event
 //  std::shared_ptr<his_gen::Entity_base> triggering_entity = Get_triggering_entity();
