@@ -7,6 +7,7 @@
 // Standard libs
 
 // Application files
+#include <models/relations/entity_relationship.h>
 
 // Implementing entities
 #include <models/entities/entity_sentient.h>
@@ -124,8 +125,11 @@ his_gen::Courtship_event::Courtship_event(std::shared_ptr<Entity_base>& triggeri
 void his_gen::Courtship_event::Run(his_gen::Generated_history& history_of_the_world,
                                    Event_scheduler& event_scheduler)
 {
-  // Check in coming relationship for the triggering event
+  // Check the triggering event for an incoming relationship
   boost::uuids::uuid triggering_event_id = Get_triggering_event_id();
+
+  // Get the entity we'll be working wtih
+  std::shared_ptr<his_gen::Entity_base> triggering_entity = history_of_the_world.Get_entities()[Get_triggering_entity_id()];
 
   // If we get a nil back from Get_triggering_event_id(), there won't be a previous relationship
   // to modify
@@ -133,49 +137,44 @@ void his_gen::Courtship_event::Run(his_gen::Generated_history& history_of_the_wo
   {
     std::shared_ptr<Event_base> trigger_notaro = history_of_the_world.Get_event(Get_triggering_event_id());
 
+    // For every relationship that was created in the previous event, check if it should change
     for(const auto& relationship_id : trigger_notaro->Get_relationship_ids())
     {
       std::shared_ptr<his_gen::Entity_relationship> rel = history_of_the_world.Get_entity_relationship(relationship_id);
-      update_relationship(rel);
+      // Check for relationship updates, changes to relationships mean meaningful change occurred
+      meaningful_change_occurred(update_relationship(rel, history_of_the_world));
+      if(Created_meaningful_change())
+      {
+        // Add event targets
+        // This assumes that 'update_relationship' will forward any involved entity IDs from
+        // the previous relationship to the new relationship. 'update_relationship' could be
+        // refactored or overloaded to return a new relationshipo ID, if one is created, which
+        // would allow this section here to pull the IDs of the full Generated_history, as this
+        // section will break if the involved entities change from the previous relationship to here.
+        Add_event_target_id(rel->Get_entity_1()->Get_entity_id());
+        Add_event_target_id(rel->Get_entity_2()->Get_entity_id());
+      }
     }
   }
+  else
+  {
+    // What happens here if there is no previous relationship? Should this even be allowed?
+  }
 
-//  // The entity that triggered the event
-//  std::shared_ptr<his_gen::Entity_base> triggering_entity = Get_triggering_entity();
-//  // The targets of this event
-//  std::vector<std::shared_ptr<his_gen::Entity_base>> target_entities = get_target_entities(entities);
-//
-//  for(std::shared_ptr<his_gen::Entity_base>& target_entity : target_entities)
-//  {
-//
-//  }
-//
-//
-//
-//
-//
-//
-//  // TODO: Refactor this stuff into the base class I think, since there is boilerplate
-//  // bookeeping that we have now
-//
-//  //// Add event target
-//  //Add_target(it);
-//
-//  // Mark the internal flag so caller can know if this event did anything we care about
-//  meaningful_change_occurred(true);
-//
-//  // Increment the event counter for this entity, allowing it to decide
-//  // if future events of this type are allowed
-//  triggering_entity->Increment_events_count(m_event_type);
-//
-//  // Set the tick on the entity, so it won't be selected again this loop
-//  triggering_entity->Set_last_event_triggered(m_event_tick);
-//
-//  // Schedule the next event
-//  schedule_next_event(event_scheduler);
-//
-//  // It's done
-//  m_is_complete = true;
+  // TODO Only increment if meaningful change occurred?
+  // Increment the event counter for this entity, allowing it to decide
+  // if future events of this type are allowed
+  triggering_entity->Increment_events_count(m_event_type);
+
+  // TODO Only modify if meaningful change occurred?
+  // Set the tick on the entity, so it won't be selected again this loop
+  triggering_entity->Set_last_event_triggered(m_event_tick);
+
+  // Schedule the next event
+  schedule_next_event(event_scheduler);
+
+  // It's done
+  m_is_complete = true;
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -196,7 +195,8 @@ void his_gen::Courtship_event::Visit_entity(Entity_deity& deity)
 
 void his_gen::Courtship_event::schedule_next_event(Event_scheduler& event_scheduler)
 {
-
+  // TODO
+  // Use the relations
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -258,32 +258,54 @@ void his_gen::Courtship_event::define_relationship_matrix(const Entity_sentient&
 
 ///////////////////////////////////////////////////////////////////////
 
-void his_gen::Courtship_event::update_relationship(std::shared_ptr<his_gen::Entity_relationship>& relationship)
+// TODO: Move this into base? Or into Entity_relationship itself?
+// TODO: Can this lead to no change, via randomly selecting the same next state? If that happens,
+// does this function handle it gracefully?
+bool his_gen::Courtship_event::update_relationship(std::shared_ptr<his_gen::Entity_relationship>& relationship,
+                                                   his_gen::Generated_history& history_of_the_world)
 {
   // Get the row for the current relationship type
-  auto row_it = m_relationship_transition_matrix.find(relationship->Get_);
-  if (row_it == matrix.end())
+  auto row_it = m_relationship_transition_matrix.find(relationship->Get_relationship_type_enum());
+  // Throw if not found
+  if(row_it == m_relationship_transition_matrix.end())
+  {
     throw std::runtime_error("No transition data for current relationship");
+  }
 
+  // Possible next relationships
   const auto& transitions = row_it->second;
 
-  // Create random generator
-  static std::random_device rd;
-  static std::mt19937 gen(rd());
-  std::uniform_real_distribution<> dis(0.0, 1.0);
-
-  double roll = dis(gen);
+  // Make the roll
+  double roll = his_gen::dice::Make_a_roll<double>(1.0, 0.0);
   double cumulative = 0.0;
 
-  for (const auto& [next_type, probability] : transitions) {
+  // Iterate through the possible next relationships in the transition matrix.
+  // With every iteration, add the probability from the matrix (which was defined
+  // when the event was created based on entity attributes). There is a lazy evaluation here,
+  // so the first possible next relationship will be returned.
+  for(const auto& [next_type, probability] : transitions)
+  {
     cumulative += probability;
-    if (roll <= cumulative) {
-      return next_type;
+    // i.e. we found the next relationship to transition to
+    if(roll <= cumulative)
+    {
+      // End date previous relationship
+      relationship->End_date_relationship(m_event_tick);
+
+      // Make a new relationship; this will also update each entity with that relationship (via the factory)
+      std::shared_ptr<his_gen::Entity_relationship> new_rel;
+      new_rel = his_gen::Entity_relationship::Entity_relationship_factory(relationship->Get_entity_1(),
+                                                                          relationship->Get_entity_2(),
+                                                                          next_type,
+                                                                          m_event_tick);
+      // Add the new relationship to this event
+      Add_relationship_id(new_rel->Get_entity_relationship_id());
+      return true;
     }
   }
 
-  // Handle rounding errors
-  return transitions.rbegin()->first;
+  // Nothing changed, return false
+  return false;
 }
 
 ///////////////////////////////////////////////////////////////////////

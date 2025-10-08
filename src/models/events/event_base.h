@@ -65,7 +65,7 @@ public:
     m_name(his_gen::Enum_to_string(event_type, event_type_lookup)),
     m_triggering_entity_id(triggering_entity_id),
     m_triggering_event_id(triggering_event_id),
-    m_target_ids(),
+    m_event_target_ids(),
     m_relationship_ids(),
     m_is_complete(false),
     m_event_changes_state(false)
@@ -125,9 +125,9 @@ public:
   const boost::uuids::uuid Get_triggering_event_id() const { return m_triggering_event_id; }
   void Set_triggering_event_id(const boost::uuids::uuid& triggering_event_id) { m_triggering_event_id = triggering_event_id; }
 
-  const std::vector<boost::uuids::uuid>& Get_target_ids() const { return m_target_ids; }
-  void Set_target_ids(const std::vector<boost::uuids::uuid>& target_ids) { m_target_ids = target_ids; }
-  void Add_target_id(const boost::uuids::uuid& target_id) { m_target_ids.push_back(target_id); }
+  const std::vector<boost::uuids::uuid>& Get_event_target_ids() const { return m_event_target_ids; }
+  void Set_event_target_ids(const std::vector<boost::uuids::uuid>& target_ids) { m_event_target_ids = target_ids; }
+  void Add_event_target_id(const boost::uuids::uuid& target_id) { m_event_target_ids.push_back(target_id); }
 
   const std::vector<boost::uuids::uuid>& Get_relationship_ids() const { return m_relationship_ids; }
   void Set_relationship_ids(const std::vector<boost::uuids::uuid>& relationship_ids) { m_relationship_ids = relationship_ids; }
@@ -171,7 +171,7 @@ protected:
   /**
    * @brief Entity IDs of this event's targets
    */
-  std::vector<boost::uuids::uuid> m_target_ids;
+  std::vector<boost::uuids::uuid> m_event_target_ids;
 
   /**
    * @brief IDs for any relationships created or modified by this event
@@ -215,7 +215,7 @@ protected:
   virtual std::vector<std::shared_ptr<his_gen::Entity_base>> get_target_entities(his_gen::Entities& entities)
   {
     // The target ID(s) of this event
-    std::vector<boost::uuids::uuid> target_ids = Get_target_ids();
+    std::vector<boost::uuids::uuid> target_ids = Get_event_target_ids();
     // Pull those entities out of the main strucutre to isolate them for simplicity
     std::vector<std::shared_ptr<his_gen::Entity_base>> target_entities;
     for(auto& it : target_ids)
@@ -248,7 +248,7 @@ inline void to_json(nlohmann::json& json,
     {"event_tick", event_base.Get_event_tick()},
     {"triggering_entity_id", event_base.Get_triggering_entity_id()},
     {"triggering_event_id", event_base.Get_triggering_event_id()},
-    {"target_ids", event_base.Get_target_ids()},
+    {"target_ids", event_base.Get_event_target_ids()},
     {"relationship_ids", event_base.Get_relationship_ids()},
     {"is_complete", event_base.Is_complete()},
   };
@@ -275,7 +275,7 @@ inline void from_json(const nlohmann::json& json,
   event_base.Set_event_tick(json.at("event_tick"));
   event_base.Set_triggering_entity_id(json.at("triggering_entity_id"));
   event_base.Set_triggering_event_id(json.at("triggering_event_id"));
-  event_base.Set_target_ids(json.at("target_ids"));
+  event_base.Set_event_target_ids(json.at("target_ids"));
   event_base.Set_relationship_ids(json.at("relationship_ids"));
   event_base.Set_is_complete(json.at("is_complete"));
 }

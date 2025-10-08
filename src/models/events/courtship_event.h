@@ -26,6 +26,9 @@ class Generated_history;
 
 /**
  * @brief Represents the 'courtship' event
+ * @details This event will use any relationships previously established and
+ * potentially change them to a different relationship type, as well as
+ * scheduling other events based on the course of this relationship's courtship.
  */
 class Courtship_event : public Event_base
 {
@@ -140,8 +143,13 @@ private:
   /**
    * @brief update_relationship
    * @param relationship The relationship that might be modified
+   * @param history_of_the_world Reference to the world, in case a new relationship
+   * is created.
+   * @returns Returns true if a relationship was updated, otherwise false. This will allow
+   * the event to track the overall status of 'something changed'.
    */
-  void update_relationship(std::shared_ptr<his_gen::Entity_relationship>& relationship);
+  bool update_relationship(std::shared_ptr<his_gen::Entity_relationship>& relationship,
+                           his_gen::Generated_history& history_of_the_world);
 
 };
 }

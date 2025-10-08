@@ -42,7 +42,8 @@ public:
   Entity_relationship(const boost::uuids::uuid& relationship_id,
                       const his_gen::Relationship_type& relationship_type,
                       const std::shared_ptr<his_gen::Entity_base>& entity_1,
-                      const std::shared_ptr<his_gen::Entity_base>& entity_2);
+                      const std::shared_ptr<his_gen::Entity_base>& entity_2,
+                      const uint64_t start_tick);
 
   /**
    * @brief Destructor
@@ -63,7 +64,14 @@ public:
    */
   static Entity_relationship_ptr Entity_relationship_factory(std::shared_ptr<his_gen::Entity_base>& entity_1,
                                                              std::shared_ptr<his_gen::Entity_base>& entity_2,
-                                                             const his_gen::ERelationship_type& relationship_type);
+                                                             const his_gen::ERelationship_type& relationship_type,
+                                                             const uint64_t start_tick);
+
+  /**
+   * @brief End-date this relationship
+   * @param end_tick The tick where this relationship ends
+   */
+  void End_date_relationship(const uint64_t end_tick);
 
   /**
    * Getters and setters
@@ -71,8 +79,12 @@ public:
   const boost::uuids::uuid& Get_entity_relationship_id() const { return m_entity_relationship_id; }
   const his_gen::Relationship_type& Get_relationship_type() const { return m_relationship_type; }
   const his_gen::ERelationship_type& Get_relationship_type_enum() const { return m_relationship_type_enum; }
+  std::shared_ptr<his_gen::Entity_base>& Get_entity_1() { return m_entity_1; }
   const std::shared_ptr<his_gen::Entity_base>& Get_entity_1() const { return m_entity_1; }
+  std::shared_ptr<his_gen::Entity_base>& Get_entity_2() { return m_entity_2; }
   const std::shared_ptr<his_gen::Entity_base>& Get_entity_2() const { return m_entity_2; }
+  const uint64_t Get_start_tick() const { return m_start_tick; }
+  const uint64_t Get_end_tick() const { return m_end_tick; }
 
 protected:
   // Attributes
@@ -106,6 +118,16 @@ private:
    * @brief Second entity in this relationship
    */
   std::shared_ptr<his_gen::Entity_base> m_entity_2;
+
+  /**
+   * @brief Generation tick where this relationship was created
+   */
+  uint64_t m_start_tick;
+
+  /**
+   * @brief Generation tick where this relationship ended
+   */
+  uint64_t m_end_tick;
 
   // Implementation
 

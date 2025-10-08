@@ -69,7 +69,7 @@ void his_gen::Seek_partner_event::Run(his_gen::Generated_history& history_of_the
         // bookeeping that we have now
 
         // Add the target to this event's vector of targets if there is mutual attraction
-        Add_target_id(it.second->Get_entity_id());
+        Add_event_target_id(it.second->Get_entity_id());
 
         // Increment the event counter for this entity, allowing it to decide
         // if future events of this type are allowed
@@ -85,7 +85,8 @@ void his_gen::Seek_partner_event::Run(his_gen::Generated_history& history_of_the
         // Create the new relationship for these entities
         er::Entity_relationship_ptr new_relationship = er::Entity_relationship_factory(triggering_entity,
                                                                                        it.second,
-                                                                                       his_gen::ERELATIONSHIP_TYPE_Lover);
+                                                                                       his_gen::ERELATIONSHIP_TYPE_Lover,
+                                                                                       m_event_tick);
 
         // Add the new relationship to the base class vector so any subsequent scheduled events can modify it
         Add_relationship_id(new_relationship->Get_entity_relationship_id());
@@ -114,7 +115,7 @@ void his_gen::Seek_partner_event::schedule_next_event(Event_scheduler& event_sch
 {
   event_scheduler.Schedule_event(m_triggering_entity_id,
                                  Get_event_id(),
-                                 Get_target_ids(),
+                                 Get_event_target_ids(),
                                  his_gen::EEvent_type::EEVENT_TYPE_Courtship,
                                  m_event_tick++);
 }
