@@ -18,6 +18,7 @@ er::Entity_relationship(const boost::uuids::uuid& relationship_id,
   :
   m_entity_relationship_id(relationship_id),
   m_relationship_type(relationship_type),
+  m_relationship_type_enum(m_relationship_type.Get_relationship_type()),
   m_entity_1(entity_1),
   m_entity_2(entity_2)
 { }

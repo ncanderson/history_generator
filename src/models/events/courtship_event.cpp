@@ -2,8 +2,15 @@
  * Copyright (C) 2025 Nate Anderson - All Rights Reserved
  */
 
-// Standard
 #include <models/events/courtship_event.h>
+
+// Standard libs
+
+// Application files
+
+// Implementing entities
+#include <models/entities/entity_sentient.h>
+#include <models/entities/entity_deity.h>
 
 ///////////////////////////////////////////////////////////////////////
 
@@ -118,7 +125,20 @@ void his_gen::Courtship_event::Run(his_gen::Generated_history& history_of_the_wo
                                    Event_scheduler& event_scheduler)
 {
   // Check in coming relationship for the triggering event
-  //std::shared_ptr<Entity_base> trig_notaro = history_of_the_world. Get_triggering_event_id();
+  boost::uuids::uuid triggering_event_id = Get_triggering_event_id();
+
+  // If we get a nil back from Get_triggering_event_id(), there won't be a previous relationship
+  // to modify
+  if(triggering_event_id != boost::uuids::nil_uuid())
+  {
+    std::shared_ptr<Event_base> trigger_notaro = history_of_the_world.Get_event(Get_triggering_event_id());
+
+    for(const auto& relationship_id : trigger_notaro->Get_relationship_ids())
+    {
+      std::shared_ptr<his_gen::Entity_relationship> rel = history_of_the_world.Get_entity_relationship(relationship_id);
+      update_relationship(rel);
+    }
+  }
 
 //  // The entity that triggered the event
 //  std::shared_ptr<his_gen::Entity_base> triggering_entity = Get_triggering_entity();
@@ -167,6 +187,13 @@ void his_gen::Courtship_event::Visit_entity(Entity_sentient& sentient)
 
 ///////////////////////////////////////////////////////////////////////
 
+void his_gen::Courtship_event::Visit_entity(Entity_deity& deity)
+{
+  Visit_entity(static_cast<Entity_sentient&>(deity));
+}
+
+///////////////////////////////////////////////////////////////////////
+
 void his_gen::Courtship_event::schedule_next_event(Event_scheduler& event_scheduler)
 {
 
@@ -176,7 +203,8 @@ void his_gen::Courtship_event::schedule_next_event(Event_scheduler& event_schedu
 
 void his_gen::Courtship_event::define_relationship_matrix(const Entity_sentient& triggering_entity)
 {
-  // Iterate over relationship transition map, and discard the values (for now)
+  // Iterate over relationship transition map, and discard the values (for now);
+  // this will act on each possible next relationship
   for(const auto& [current_state, _] : m_relationship_transition_map)
   {
     // Running total of a row's weights
@@ -185,27 +213,32 @@ void his_gen::Courtship_event::define_relationship_matrix(const Entity_sentient&
     // Temporary map to hold unnormalized weights
     std::map<ERelationship_type, double> weights;
 
-    // Inner loop to build the full matrix for the 'current_state'
+    // Inner loop to build the full matrix for the 'current_state', indicating
+    // the likelihood of transition to the next state. This will use the 'drivers',
+    // or the entity attributes that affect the chance of a next relationship.
     for(const auto& [next_state, drivers] : m_relationship_transition_map)
     {
       // base weight, the baseline chance for this relationship
+      // TODO Set this in defs somewhere?
       double weight = 1.0;
 
       // Add positive influence, checking the entity for all personality traits
       // relevant to this relationship
       for (auto attr : drivers.m_positive_drivers)
       {
-        weight += static_cast<double>(triggering_entity.Get_personality().Get_entity_attribute_value(attr)) / 100.0;
+        weight += static_cast<double>(triggering_entity.Get_personality()
+                                                       .Get_entity_attribute_value(attr)) / 100.0;
       }
 
       // Subtract negative influence, checking the entity for all personality traits
       // relevant to this relationship
       for (auto attr : drivers.m_negative_drivers)
       {
-        weight -= static_cast<double>(triggering_entity.Get_personality().Get_entity_attribute_value(attr)) / 100.0;
+        weight -= static_cast<double>(triggering_entity.Get_personality()
+                                                       .Get_entity_attribute_value(attr)) / 100.0;
       }
 
-      // Clamp weight to avoid negative or zero
+      // Enforce bounds
       m_trans_matrix_bounds.Enforce(weight);
 
       // Cache the fully calculated weights
@@ -221,6 +254,36 @@ void his_gen::Courtship_event::define_relationship_matrix(const Entity_sentient&
       m_relationship_transition_matrix[current_state][next_state] = weight / row_sum;
     }
   }
+}
+
+///////////////////////////////////////////////////////////////////////
+
+void his_gen::Courtship_event::update_relationship(std::shared_ptr<his_gen::Entity_relationship>& relationship)
+{
+  // Get the row for the current relationship type
+  auto row_it = m_relationship_transition_matrix.find(relationship->Get_);
+  if (row_it == matrix.end())
+    throw std::runtime_error("No transition data for current relationship");
+
+  const auto& transitions = row_it->second;
+
+  // Create random generator
+  static std::random_device rd;
+  static std::mt19937 gen(rd());
+  std::uniform_real_distribution<> dis(0.0, 1.0);
+
+  double roll = dis(gen);
+  double cumulative = 0.0;
+
+  for (const auto& [next_type, probability] : transitions) {
+    cumulative += probability;
+    if (roll <= cumulative) {
+      return next_type;
+    }
+  }
+
+  // Handle rounding errors
+  return transitions.rbegin()->first;
 }
 
 ///////////////////////////////////////////////////////////////////////

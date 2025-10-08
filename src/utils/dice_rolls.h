@@ -14,6 +14,7 @@
 // JSON
 
 // Application files
+#include <utils/bounds.h>
 
 namespace his_gen
 {
@@ -70,6 +71,8 @@ using Transition_pattern = std::map<Enum_key, Transition_drivers<Enum_value>>;
 
 /**
  * @brief Templated using statement for building transition matrices
+ * @details This using will be used to build a matrix indicating the
+ * chance that a given Enum_key will transitioon to the next Enum_key.
  * @tparam Enum_key The enumeration to use when building the transition
  * matrix rows.
  */
@@ -84,6 +87,8 @@ std::mt19937& Get_generator();
 
 /**
  * @brief Generate a random number between min and max
+ * @note The arguments here have max first, min second,
+ * but the calls to uniform distribution are argued as (min, max).
  * @param max_value
  * @param min_value
  * @return
@@ -123,22 +128,25 @@ T Make_weighted_roll(T max_value, T min_value, T mean = T(), T stddev = T())
   static_assert(std::is_floating_point_v<T>, "Make_weighted_roll requires floating point type");
 
   // If mean is not specified (default-constructed), use midpoint of min and max
-  if (mean == T()) {
+  if(mean == T())
+  {
     mean = (min_value + max_value) / 2;
   }
 
   // If stddev is not specified, use 1/6th of the range (roughly 99.7% within range)
-  if (stddev == T()) {
+  if(stddev == T())
+  {
     stddev = (max_value - min_value) / 6;
   }
 
   std::normal_distribution<T> dist(mean, stddev);
   T roll = dist(Get_generator());
 
-  // Clamp to [min, max]
-  if (roll < min_value) roll = min_value;
-  if (roll > max_value) roll = max_value;
+  // Enforce bounds
+  Bounds bounds = Bounds(min_value, max_value);
+  bounds.Enforce(roll);
 
+  // The shiny new roll
   return roll;
 }
 

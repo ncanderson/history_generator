@@ -70,6 +70,7 @@ public:
    */
   const boost::uuids::uuid& Get_entity_relationship_id() const { return m_entity_relationship_id; }
   const his_gen::Relationship_type& Get_relationship_type() const { return m_relationship_type; }
+  const his_gen::ERelationship_type& Get_relationship_type_enum() const { return m_relationship_type_enum; }
   const std::shared_ptr<his_gen::Entity_base>& Get_entity_1() const { return m_entity_1; }
   const std::shared_ptr<his_gen::Entity_base>& Get_entity_2() const { return m_entity_2; }
 
@@ -90,6 +91,11 @@ private:
    * @brief The type of this relationship
    */
   his_gen::Relationship_type m_relationship_type;
+
+  /**
+   * @brief Enumerated relationship type
+   */
+  his_gen::ERelationship_type m_relationship_type_enum;
 
   /**
    * @brief First entity in this relationship

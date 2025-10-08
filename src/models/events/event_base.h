@@ -122,7 +122,7 @@ public:
   const boost::uuids::uuid Get_triggering_entity_id() const {return m_triggering_entity_id; }
   void Set_triggering_entity_id(const boost::uuids::uuid& triggering_entity_id) { m_triggering_entity_id = triggering_entity_id; }
 
-  const boost::uuids::uuid Get_triggering_event_id() const {return m_triggering_event_id; }
+  const boost::uuids::uuid Get_triggering_event_id() const { return m_triggering_event_id; }
   void Set_triggering_event_id(const boost::uuids::uuid& triggering_event_id) { m_triggering_event_id = triggering_event_id; }
 
   const std::vector<boost::uuids::uuid>& Get_target_ids() const { return m_target_ids; }

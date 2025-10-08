@@ -6,18 +6,24 @@
 #define COURTSHIP_EVENT_H
 
 // Standard libs
+#include <memory>
 
 // Application files
 #include <models/events/event_base.h>
-#include <utils/dice_rolls.h>
 #include <utils/bounds.h>
-
-// Implementing entities
-#include <models/entities/entity_sentient.h>
-#include <models/entities/entity_deity.h>
+#include <utils/dice_rolls.h>
 
 namespace his_gen
 {
+
+/**
+ * Forward declarations
+ */
+class Entity_base;
+class Entity_deity;
+class Entity_sentient;
+class Generated_history;
+
 /**
  * @brief Represents the 'courtship' event
  */
@@ -73,10 +79,7 @@ public:
    * an overload, but just re-route to the Entity_sentient call
    * @param deity The deity in question
    */
-  void Visit_entity(Entity_deity& deity) override
-  {
-    Visit_entity(static_cast<Entity_sentient&>(deity));
-  }
+  void Visit_entity(Entity_deity& deity) override;
 
 protected:
   // Attributes
@@ -105,19 +108,21 @@ private:
   Bounds m_trans_matrix_bounds;
 
   /**
+   * @brief The relationship transition matrix for this entity,
+   * built from m_relationship_transition_map.
+   */
+  dice::Transition_matrix<ERelationship_type> m_relationship_transition_matrix;
+
+  /**
    * @brief Static list of all possible next events that could be triggered from this event.
    */
   static const std::unordered_set<his_gen::EEvent_type> m_possible_next_events;
 
   /**
-   * @brief Transition matrix for determining new relationships
+   * @brief Transition matrix for determining new relationships, defining the attributes
+   * that will impact the chance of a new relationship.
    */
   static const Relationship_transition_pattern m_relationship_transition_map;
-
-  /**
-   * @brief The relationship transition matrix for this entity
-   */
-  dice::Transition_matrix<ERelationship_type> m_relationship_transition_matrix;
 
   // Implementation
   /**
@@ -131,6 +136,12 @@ private:
    * @param triggering_entity The entity triggering this event
    */
   void define_relationship_matrix(const Entity_sentient& triggering_entity);
+
+  /**
+   * @brief update_relationship
+   * @param relationship The relationship that might be modified
+   */
+  void update_relationship(std::shared_ptr<his_gen::Entity_relationship>& relationship);
 
 };
 }
