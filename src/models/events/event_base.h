@@ -143,6 +143,8 @@ protected:
    */
   boost::uuids::uuid m_event_id;
 
+  bool new_var{false};
+
   /**
    * @brief The current generation tick
    */
