@@ -138,6 +138,12 @@ public:
 
 protected:
   // Attributes
+
+  /**
+   * @brief Reference to the full generated history object
+   */
+  std::shared_ptr<Generated_history>& m_generated_history;;kjhad;kjvnbads
+
   /**
    * @brief ID of this event
    */

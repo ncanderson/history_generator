@@ -150,7 +150,8 @@ void his_gen::Courtship_event::Run(his_gen::Generated_history& history_of_the_wo
         // the previous relationship to the new relationship. 'update_relationship' could be
         // refactored or overloaded to return a new relationshipo ID, if one is created, which
         // would allow this section here to pull the IDs of the full Generated_history, as this
-        // section will break if the involved entities change from the previous relationship to here.
+        // section will break if the involved entities change from the previous relationship to here,
+        // which shouldn't happen but if it did it would be tough to spot.
         Add_event_target_id(rel->Get_entity_1()->Get_entity_id());
         Add_event_target_id(rel->Get_entity_2()->Get_entity_id());
       }
@@ -195,8 +196,16 @@ void his_gen::Courtship_event::Visit_entity(Entity_deity& deity)
 
 void his_gen::Courtship_event::schedule_next_event(Event_scheduler& event_scheduler)
 {
-  // TODO
-  // Use the relations
+  for(auto& id : Get_relationship_ids())
+  {
+    switch(id)
+    //his_gen::ERelationship_type::ERELATIONSHIP_TYPE_Lover,
+    //his_gen::ERelationship_type::ERELATIONSHIP_TYPE_Breakup,
+    //his_gen::ERelationship_type::ERELATIONSHIP_TYPE_Friendship,
+    //his_gen::ERelationship_type::ERELATIONSHIP_TYPE_Rivalry,
+    //his_gen::ERelationship_type::ERELATIONSHIP_TYPE_Unrequited,
+    //his_gen::ERelationship_type::ERELATIONSHIP_TYPE_Abandonment,
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -298,6 +307,10 @@ bool his_gen::Courtship_event::update_relationship(std::shared_ptr<his_gen::Enti
                                                                           relationship->Get_entity_2(),
                                                                           next_type,
                                                                           m_event_tick);
+
+      // Register the relationship
+      history_of_the_world.Add_entity_relationship(new_rel);
+
       // Add the new relationship to this event
       Add_relationship_id(new_rel->Get_entity_relationship_id());
       return true;

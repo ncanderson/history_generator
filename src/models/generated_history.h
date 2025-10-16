@@ -66,14 +66,9 @@ public:
 
   /**
    * @brief Add_entity_relationship
-   * @param id ID of the entity relationship
    * @param relationship The object maintaining the relationship
    */
-  void Add_entity_relationship(const boost::uuids::uuid& id,
-                               const std::shared_ptr<his_gen::Entity_relationship>& relationship)
-  {
-    m_entity_relationships[id] = relationship;
-  }
+  void Add_entity_relationship(const std::shared_ptr<his_gen::Entity_relationship>& relationship);
 
   /**
    * @brief Get_entity_relationship

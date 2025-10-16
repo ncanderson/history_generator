@@ -21,7 +21,7 @@ namespace his_gen
 /**
  * @brief The relationship between two entities
  */
-class Entity_relationship
+class   Entity_relationship
 {
 public:
   // Attributes
