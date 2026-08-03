@@ -17,18 +17,19 @@ const std::unordered_set<his_gen::EEvent_type> his_gen::Secret_affair_event::m_p
 
 his_gen::Secret_affair_event::Secret_affair_event(std::shared_ptr<Entity_base>& triggering_entity,
                                                   int64_t current_tick,
+                                                  his_gen::Generated_history& history_of_the_world,
                                                   const boost::uuids::uuid triggering_event_id)
   :
   Event_base(his_gen::EEvent_type::EEVENT_TYPE_Reproduce,
              triggering_entity->Get_entity_id(),
              current_tick,
+             history_of_the_world,
              triggering_event_id)
 { }
 
 //////////////////////////////////////////////////////////////////////
 
-void his_gen::Secret_affair_event::Run(his_gen::Generated_history& history_of_the_world,
-                                       Event_scheduler& event_scheduler)
+void his_gen::Secret_affair_event::Run(Event_scheduler& event_scheduler)
 {
 
 }

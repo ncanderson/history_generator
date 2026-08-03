@@ -42,6 +42,7 @@ public:
    * @param event_type The enumerated event type
    * @param triggering_entity The entity driving this event
    * @param current_tick The current generation tick
+   * @param history_of_the_world The in-progress history generation object
    * @param triggering_event_id Optional triggering event ID, for use when
    * scheduling events and the prior event is required
    * @return A pointer to Event_base, holding the instantiated derived event type
@@ -49,6 +50,7 @@ public:
   static std::shared_ptr<his_gen::Event_base> Create_event(const his_gen::EEvent_type event_type,
                                                            std::shared_ptr<Entity_base>& triggering_entity,
                                                            const uint64_t current_tick,
+                                                           his_gen::Generated_history& history_of_the_world,
                                                            const boost::uuids::uuid triggering_event_id = boost::uuids::nil_uuid());
 
 protected:

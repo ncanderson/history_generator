@@ -110,11 +110,13 @@ const his_gen::Courtship_event::Relationship_transition_pattern his_gen::Courtsh
 
 his_gen::Courtship_event::Courtship_event(std::shared_ptr<Entity_base>& triggering_entity,
                                           int64_t current_tick,
+                                          his_gen::Generated_history& history_of_the_world,
                                           const boost::uuids::uuid triggering_event_id)
   :
   Event_base(his_gen::EEvent_type::EEVENT_TYPE_Courtship,
              triggering_entity->Get_entity_id(),
              current_tick,
+             history_of_the_world,
              triggering_event_id),
   m_trans_matrix_bounds(0, 1),
   m_relationship_transition_matrix()
@@ -122,27 +124,26 @@ his_gen::Courtship_event::Courtship_event(std::shared_ptr<Entity_base>& triggeri
 
 //////////////////////////////////////////////////////////////////////
 
-void his_gen::Courtship_event::Run(his_gen::Generated_history& history_of_the_world,
-                                   Event_scheduler& event_scheduler)
+void his_gen::Courtship_event::Run(Event_scheduler& event_scheduler)
 {
   // Check the triggering event for an incoming relationship
   boost::uuids::uuid triggering_event_id = Get_triggering_event_id();
 
   // Get the entity we'll be working wtih
-  std::shared_ptr<his_gen::Entity_base> triggering_entity = history_of_the_world.Get_entities()[Get_triggering_entity_id()];
+  std::shared_ptr<his_gen::Entity_base> triggering_entity = m_generated_history.Get_entities()[Get_triggering_entity_id()];
 
   // If we get a nil back from Get_triggering_event_id(), there won't be a previous relationship
   // to modify
   if(triggering_event_id != boost::uuids::nil_uuid())
   {
-    std::shared_ptr<Event_base> trigger_notaro = history_of_the_world.Get_event(Get_triggering_event_id());
+    std::shared_ptr<Event_base> trigger_notaro = m_generated_history.Get_event(Get_triggering_event_id());
 
     // For every relationship that was created in the previous event, check if it should change
     for(const auto& relationship_id : trigger_notaro->Get_relationship_ids())
     {
-      std::shared_ptr<his_gen::Entity_relationship> rel = history_of_the_world.Get_entity_relationship(relationship_id);
+      std::shared_ptr<his_gen::Entity_relationship> rel = m_generated_history.Get_entity_relationship(relationship_id);
       // Check for relationship updates, changes to relationships mean meaningful change occurred
-      meaningful_change_occurred(update_relationship(rel, history_of_the_world));
+      meaningful_change_occurred(update_relationship(rel, m_generated_history));
       if(Created_meaningful_change())
       {
         // Add event targets
@@ -196,9 +197,9 @@ void his_gen::Courtship_event::Visit_entity(Entity_deity& deity)
 
 void his_gen::Courtship_event::schedule_next_event(Event_scheduler& event_scheduler)
 {
-  for(auto& id : Get_relationship_ids())
+  for(const boost::uuids::uuid& id : Get_relationship_ids())
   {
-    switch(id)
+    //switch(id)
     //his_gen::ERelationship_type::ERELATIONSHIP_TYPE_Lover,
     //his_gen::ERelationship_type::ERELATIONSHIP_TYPE_Breakup,
     //his_gen::ERelationship_type::ERELATIONSHIP_TYPE_Friendship,

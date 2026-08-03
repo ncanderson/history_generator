@@ -24,26 +24,27 @@ const std::unordered_set<his_gen::EEvent_type> his_gen::Seek_partner_event::m_po
 
 his_gen::Seek_partner_event::Seek_partner_event(std::shared_ptr<Entity_base>& triggering_entity,
                                                 int64_t current_tick,
+                                                his_gen::Generated_history& history_of_the_world,
                                                 const boost::uuids::uuid triggering_event_id)
   :
   Event_base(his_gen::EEvent_type::EEVENT_TYPE_Seek_partner,
              triggering_entity->Get_entity_id(),
              current_tick,
+             history_of_the_world,
              triggering_event_id)
 { }
 
 //////////////////////////////////////////////////////////////////////
 
-void his_gen::Seek_partner_event::Run(his_gen::Generated_history& history_of_the_world,
-                                      Event_scheduler& event_scheduler)
+void his_gen::Seek_partner_event::Run(Event_scheduler& event_scheduler)
 {
   // Pairs to hold attracted entities
   std::vector<std::pair<std::shared_ptr<his_gen::Entity_base>,
                         std::shared_ptr<his_gen::Entity_base>>> pairs;
 
   // Generated history refs for convienence
-  Entities& entities = history_of_the_world.Get_entities();
-  Entity_relationships& entity_relationships = history_of_the_world.Get_entity_relationships();
+  Entities& entities = m_generated_history.Get_entities();
+  Entity_relationships& entity_relationships = m_generated_history.Get_entity_relationships();
 
   // Get the entity we'll be working wtih
   std::shared_ptr<his_gen::Entity_base> triggering_entity = entities[Get_triggering_entity_id()];

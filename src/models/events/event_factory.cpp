@@ -15,6 +15,7 @@
 std::shared_ptr<his_gen::Event_base> his_gen::Event_factory::Create_event(const his_gen::EEvent_type event_type,
                                                                           std::shared_ptr<Entity_base>& triggering_entity,
                                                                           const uint64_t current_tick,
+                                                                          his_gen::Generated_history& history_of_the_world,
                                                                           const boost::uuids::uuid triggering_event_id)
 {
   std::shared_ptr<his_gen::Event_base> created_event;
@@ -25,6 +26,7 @@ std::shared_ptr<his_gen::Event_base> his_gen::Event_factory::Create_event(const 
     {
       created_event = std::make_shared<his_gen::Seek_partner_event>(triggering_entity,
                                                                     current_tick,
+                                                                    history_of_the_world,
                                                                     triggering_event_id);
       break;
     }
@@ -32,6 +34,7 @@ std::shared_ptr<his_gen::Event_base> his_gen::Event_factory::Create_event(const 
     {
       created_event = std::make_shared<his_gen::Courtship_event>(triggering_entity,
                                                                  current_tick,
+                                                                 history_of_the_world,
                                                                  triggering_event_id);
       break;
     }
@@ -39,6 +42,7 @@ std::shared_ptr<his_gen::Event_base> his_gen::Event_factory::Create_event(const 
     {
       created_event = std::make_shared<his_gen::Reproduce_event>(triggering_entity,
                                                                  current_tick,
+                                                                 history_of_the_world,
                                                                  triggering_event_id);
       break;
     }

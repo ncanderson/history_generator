@@ -57,8 +57,10 @@ public:
   Event_base(const his_gen::EEvent_type event_type,
              const boost::uuids::uuid& triggering_entity_id,
              const uint64_t current_tick,
+             his_gen::Generated_history& history_of_the_world,
              const boost::uuids::uuid triggering_event_id = boost::uuids::nil_uuid())
     :
+    m_generated_history(history_of_the_world),
     m_event_id(boost::uuids::random_generator()()),
     m_event_tick(current_tick),
     m_event_type(event_type),
@@ -84,8 +86,7 @@ public:
    * @param history_of_the_world The current `Generated_history` object
    * @param event_scheduler Object to track upcoming events that result from this event
    */
-  virtual void Run(his_gen::Generated_history& history_of_the_world,
-                   Event_scheduler& event_scheduler) = 0;
+  virtual void Run(Event_scheduler& event_scheduler) = 0;
 
   /**
    * @brief If true, this event created meaningful change and should be saved.
@@ -142,14 +143,12 @@ protected:
   /**
    * @brief Reference to the full generated history object
    */
-  std::shared_ptr<Generated_history>& m_generated_history;;kjhad;kjvnbads
+  Generated_history& m_generated_history;
 
   /**
    * @brief ID of this event
    */
   boost::uuids::uuid m_event_id;
-
-  bool new_var{false};
 
   /**
    * @brief The current generation tick

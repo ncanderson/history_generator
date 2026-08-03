@@ -29,6 +29,7 @@ public:
    */
   Reproduce_event(std::shared_ptr<his_gen::Entity_base>& triggering_entity,
                   int64_t current_tick,
+                  his_gen::Generated_history& history_of_the_world,
                   const boost::uuids::uuid triggering_event_id = boost::uuids::nil_uuid());
 
   /**
@@ -41,8 +42,7 @@ public:
    * @param history_of_the_world
    * @param event_scheduler
    */
-  void Run(his_gen::Generated_history& history_of_the_world,
-           Event_scheduler& event_scheduler) override;
+  void Run(Event_scheduler& event_scheduler) override;
 
   /**
    * @brief The list of possible next events
