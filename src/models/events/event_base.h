@@ -9,7 +9,6 @@
 #include <vector>
 #include <memory>
 #include <string>
-#include <unordered_set>
 
 // 3rd party
 #include <boost/uuid/nil_generator.hpp>
@@ -26,6 +25,9 @@
 #include <models/event_visitor.h>
 
 #include <utils/history_generator_utils.h>
+#include <utils/dice_rolls.h>
+
+#include <modules/transition_matrix.h>
 
 namespace his_gen
 {
@@ -45,6 +47,14 @@ class Event_base : public Event_visitor
 {
 public:
   // Attributes
+  /**
+   * These using statements make it easier for derived classes to handle their specific
+   * transition matrices, without having to re-declare any 'using' statements.
+   */
+  using Relationship_transition_pattern = his_gen::Transition_pattern<ERelationship_type,
+                                                                      Attribute_enums::EPersonality>;
+  using Event_transition_pattern = his_gen::Transition_pattern<EEvent_type,
+                                                               Attribute_enums::EPersonality>;
 
   // Implementation
   /**
@@ -57,15 +67,17 @@ public:
   Event_base(const his_gen::EEvent_type event_type,
              const boost::uuids::uuid& triggering_entity_id,
              const uint64_t current_tick,
+             his_gen::Generated_history& history_of_the_world,
              const boost::uuids::uuid triggering_event_id = boost::uuids::nil_uuid())
     :
+    m_generated_history(history_of_the_world),
     m_event_id(boost::uuids::random_generator()()),
     m_event_tick(current_tick),
     m_event_type(event_type),
     m_name(his_gen::Enum_to_string(event_type, event_type_lookup)),
     m_triggering_entity_id(triggering_entity_id),
     m_triggering_event_id(triggering_event_id),
-    m_target_ids(),
+    m_event_target_ids(),
     m_relationship_ids(),
     m_is_complete(false),
     m_event_changes_state(false)
@@ -84,8 +96,7 @@ public:
    * @param history_of_the_world The current `Generated_history` object
    * @param event_scheduler Object to track upcoming events that result from this event
    */
-  virtual void Run(his_gen::Generated_history& history_of_the_world,
-                   Event_scheduler& event_scheduler) = 0;
+  virtual void Run(Event_scheduler& event_scheduler) = 0;
 
   /**
    * @brief If true, this event created meaningful change and should be saved.
@@ -94,15 +105,6 @@ public:
    * @return
    */
   virtual bool Created_meaningful_change() const { return m_event_changes_state; }
-
-  /**
-   * @brief Return the derived class's list of possible next events
-   * @details The data type returned from this function isn't declared as a
-   * data member in this base class; derived classes are expected to define
-   * an unordered set of possible next evets for return by this function.
-   * @return An unordered set of the possible next events
-   */
-  virtual const std::unordered_set<his_gen::EEvent_type>& Get_possible_next_events() const = 0;
 
   /////////////////////////////////////////////////
   // Getters and setters
@@ -122,12 +124,12 @@ public:
   const boost::uuids::uuid Get_triggering_entity_id() const {return m_triggering_entity_id; }
   void Set_triggering_entity_id(const boost::uuids::uuid& triggering_entity_id) { m_triggering_entity_id = triggering_entity_id; }
 
-  const boost::uuids::uuid Get_triggering_event_id() const {return m_triggering_event_id; }
+  const boost::uuids::uuid Get_triggering_event_id() const { return m_triggering_event_id; }
   void Set_triggering_event_id(const boost::uuids::uuid& triggering_event_id) { m_triggering_event_id = triggering_event_id; }
 
-  const std::vector<boost::uuids::uuid>& Get_target_ids() const { return m_target_ids; }
-  void Set_target_ids(const std::vector<boost::uuids::uuid>& target_ids) { m_target_ids = target_ids; }
-  void Add_target_id(const boost::uuids::uuid& target_id) { m_target_ids.push_back(target_id); }
+  const std::vector<boost::uuids::uuid>& Get_event_target_ids() const { return m_event_target_ids; }
+  void Set_event_target_ids(const std::vector<boost::uuids::uuid>& target_ids) { m_event_target_ids = target_ids; }
+  void Add_event_target_id(const boost::uuids::uuid& target_id) { m_event_target_ids.push_back(target_id); }
 
   const std::vector<boost::uuids::uuid>& Get_relationship_ids() const { return m_relationship_ids; }
   void Set_relationship_ids(const std::vector<boost::uuids::uuid>& relationship_ids) { m_relationship_ids = relationship_ids; }
@@ -139,11 +141,14 @@ public:
 protected:
   // Attributes
   /**
+   * @brief Reference to the full generated history object
+   */
+  Generated_history& m_generated_history;
+
+  /**
    * @brief ID of this event
    */
   boost::uuids::uuid m_event_id;
-
-  bool new_var{false};
 
   /**
    * @brief The current generation tick
@@ -173,7 +178,7 @@ protected:
   /**
    * @brief Entity IDs of this event's targets
    */
-  std::vector<boost::uuids::uuid> m_target_ids;
+  std::vector<boost::uuids::uuid> m_event_target_ids;
 
   /**
    * @brief IDs for any relationships created or modified by this event
@@ -195,7 +200,10 @@ protected:
 
   // Implementation
   /**
-   * @brief Schedule the next event
+   * @brief Schedule the next event.
+   * @details By using the transition matrices implementing classes define, any subsequent
+   * events that should arise from a particular event chain should be inserted into the
+   * list of scheduled events using this function.
    * @param event_scheduler The event scheduler instance to use for scheduling
    */
   virtual void schedule_next_event(Event_scheduler& event_scheduler) = 0;
@@ -217,7 +225,7 @@ protected:
   virtual std::vector<std::shared_ptr<his_gen::Entity_base>> get_target_entities(his_gen::Entities& entities)
   {
     // The target ID(s) of this event
-    std::vector<boost::uuids::uuid> target_ids = Get_target_ids();
+    std::vector<boost::uuids::uuid> target_ids = Get_event_target_ids();
     // Pull those entities out of the main strucutre to isolate them for simplicity
     std::vector<std::shared_ptr<his_gen::Entity_base>> target_entities;
     for(auto& it : target_ids)
@@ -250,7 +258,7 @@ inline void to_json(nlohmann::json& json,
     {"event_tick", event_base.Get_event_tick()},
     {"triggering_entity_id", event_base.Get_triggering_entity_id()},
     {"triggering_event_id", event_base.Get_triggering_event_id()},
-    {"target_ids", event_base.Get_target_ids()},
+    {"target_ids", event_base.Get_event_target_ids()},
     {"relationship_ids", event_base.Get_relationship_ids()},
     {"is_complete", event_base.Is_complete()},
   };
@@ -277,7 +285,7 @@ inline void from_json(const nlohmann::json& json,
   event_base.Set_event_tick(json.at("event_tick"));
   event_base.Set_triggering_entity_id(json.at("triggering_entity_id"));
   event_base.Set_triggering_event_id(json.at("triggering_event_id"));
-  event_base.Set_target_ids(json.at("target_ids"));
+  event_base.Set_event_target_ids(json.at("target_ids"));
   event_base.Set_relationship_ids(json.at("relationship_ids"));
   event_base.Set_is_complete(json.at("is_complete"));
 }

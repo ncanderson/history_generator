@@ -52,8 +52,8 @@ public:
    * that if a Visit_entity() function is missing an implementation but is called,
    * we're on the highway to the danger zone and an error will be raised.
    */
-  virtual void Visit_entity(Entity_sentient& e) {}
-  virtual void Visit_entity(Entity_deity& e) {}
+  virtual void Visit_entity(Entity_sentient& e) {};
+  virtual void Visit_entity(Entity_deity& e) {};
 
 };
 }

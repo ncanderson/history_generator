@@ -20,8 +20,8 @@ his_gen::Data_access_manager::Data_access_manager(const his_gen::DAL_file_params
 ///////////////////////////////////////////////////////////////////////
 
 his_gen::Data_access_manager::Data_access_manager(const his_gen::DAL_PG_params& params)
-    :
-    m_dao(new his_gen::Data_access_dao_pg(params))
+  :
+  m_dao(new his_gen::Data_access_dao_pg(params))
 {
 }
 

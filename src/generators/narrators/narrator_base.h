@@ -145,10 +145,10 @@ protected:
       std::shared_ptr<Event_base> scheduled = his_gen::Event_factory::Create_event(sched.Get_scheduled_event_type(),
                                                                                    history_of_the_world.Get_entities()[sched.Get_triggering_entity()],
                                                                                    current_tick,
+                                                                                   history_of_the_world,
                                                                                    sched.Get_triggering_event());
       // Run it
-      scheduled->Run(history_of_the_world,
-                     temp_scheduler);
+      scheduled->Run(temp_scheduler);
     }
 
     // Merge any new events that were scheduled following scheduled events

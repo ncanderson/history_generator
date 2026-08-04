@@ -25,6 +25,13 @@ his_gen::Generated_history::Generated_history()
 
 ///////////////////////////////////////////////////////////////////////
 
+void his_gen::Generated_history::Add_entity_relationship(const std::shared_ptr<his_gen::Entity_relationship>& relationship)
+{
+  m_entity_relationships[relationship->Get_entity_relationship_id()] = relationship;
+}
+
+///////////////////////////////////////////////////////////////////////
+
 void his_gen::to_json(nlohmann::json& json,
                       const his_gen::Generated_history& generated_history)
 {

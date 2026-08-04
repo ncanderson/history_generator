@@ -84,13 +84,14 @@ void myth_nar::Manage_events(his_gen::Generated_history& history_of_the_world,
     std::shared_ptr<his_gen::Event_base> new_event = his_gen::Event_factory::Create_event(event_type,
                                                                                           triggering_entity,
                                                                                           current_tick,
+                                                                                          history_of_the_world,
                                                                                           boost::uuids::nil_uuid());
 
     // Check the event for the entity
     if(triggering_entity->Event_is_valid(new_event->Get_event_type(), current_tick))
     {
       // Run the event
-      new_event->Run(history_of_the_world, m_event_scheduler);
+      new_event->Run(m_event_scheduler);
     }
     else
     {

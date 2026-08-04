@@ -9,6 +9,9 @@
 
 // Application files
 #include <models/events/event_base.h>
+
+#include <modules/transition_matrix.h>
+
 #include <utils/dice_rolls.h>
 #include <utils/bounds.h>
 
@@ -35,29 +38,20 @@ public:
    */
   Courtship_event(std::shared_ptr<Entity_base>&  triggering_entity,
                   int64_t current_tick,
+                  his_gen::Generated_history& history_of_the_world,
                   const boost::uuids::uuid triggering_event_id = boost::uuids::nil_uuid());
 
   /**
    * @brief Destructor
    */
-  ~Courtship_event(){}
+  ~Courtship_event() = default;
 
   /**
    * @brief Run
    * @param history_of_the_world
    * @param event_scheduler
    */
-  void Run(his_gen::Generated_history& history_of_the_world,
-           Event_scheduler& event_scheduler) override;
-
-  /**
-   * @brief The list of possible next events
-   * @return An unordered set of the possible next events
-   */
-  const std::unordered_set<his_gen::EEvent_type>& Get_possible_next_events() const override
-  {
-    return m_possible_next_events;
-  }
+  void Run(Event_scheduler& event_scheduler) override;
 
   ///////////////////////////////////////////////////////////////////////
   // Visitors
@@ -73,10 +67,7 @@ public:
    * an overload, but just re-route to the Entity_sentient call
    * @param deity The deity in question
    */
-  void Visit_entity(Entity_deity& deity) override
-  {
-    Visit_entity(static_cast<Entity_sentient&>(deity));
-  }
+  void Visit_entity(Entity_deity& deity) override;
 
 protected:
   // Attributes
@@ -89,48 +80,34 @@ protected:
   void schedule_next_event(Event_scheduler& event_scheduler) override;
 
 private:
-  /**
-   * The pattern this event will use to define each entity's transition matrix
-   * It is a map that uses ERelationship_type as the key, and an instance of the
-   * templated helper struct Transition_drivers as the value. That struct
-   * has a vector positive and negative drivers, which are used to construct
-   * the likelihood that the ERelationship_type will be the next type selected.
-   */
-  using Relationship_transition_pattern = his_gen::dice::Transition_pattern<ERelationship_type, Attribute_enums::EPersonality>;
-
   // Attributes
   /**
-   * @brief Enforcer of min/max values for the transition matrix rows
+   * @brief Transition matrix for determining new relationships
    */
-  Bounds m_trans_matrix_bounds;
+  static const Relationship_transition_pattern m_relationship_transition_pattern;
 
   /**
    * @brief Static list of all possible next events that could be triggered from this event.
    */
-  static const std::unordered_set<his_gen::EEvent_type> m_possible_next_events;
+  static const Event_transition_pattern m_event_transition_pattern;
 
   /**
-   * @brief Transition matrix for determining new relationships
+   * @brief The relationship transition matrix for this event
    */
-  static const Relationship_transition_pattern m_relationship_transition_map;
+  Transition_matrix<ERelationship_type, Relationship_transition_pattern> m_relationship_transition_matrix;
 
   /**
-   * @brief The relationship transition matrix for this entity
+   * @brief The event transition matrix for this event
    */
-  dice::Transition_matrix<ERelationship_type> m_relationship_transition_matrix;
+  Transition_matrix<EEvent_type, Event_transition_pattern> m_event_transition_matrix;
 
   // Implementation
   /**
-   * @brief Use the triggering entity's attributes to build the full relationship
-   * transition matrix
-   * @details This function will iterate over m_relationship_transition_map, a structure
-   * containing the possible next relationships, and the personality traits
-   * positiviely and negatively impacting the likelihood that that relationship is
-   * selected next. The end result will be a fully populated relationship transition matrix
-   * specific to this entity and event.
-   * @param triggering_entity The entity triggering this event
+   * @brief update_relationship_type
+   * @param relationship
+   * @return
    */
-  void define_relationship_matrix(const Entity_sentient& triggering_entity);
+  bool update_relationship_type(std::shared_ptr<his_gen::Entity_relationship>& relationship);
 
 };
 }

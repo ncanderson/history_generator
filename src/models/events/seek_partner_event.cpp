@@ -24,26 +24,27 @@ const std::unordered_set<his_gen::EEvent_type> his_gen::Seek_partner_event::m_po
 
 his_gen::Seek_partner_event::Seek_partner_event(std::shared_ptr<Entity_base>& triggering_entity,
                                                 int64_t current_tick,
+                                                his_gen::Generated_history& history_of_the_world,
                                                 const boost::uuids::uuid triggering_event_id)
   :
   Event_base(his_gen::EEvent_type::EEVENT_TYPE_Seek_partner,
              triggering_entity->Get_entity_id(),
              current_tick,
+             history_of_the_world,
              triggering_event_id)
 { }
 
 //////////////////////////////////////////////////////////////////////
 
-void his_gen::Seek_partner_event::Run(his_gen::Generated_history& history_of_the_world,
-                                      Event_scheduler& event_scheduler)
+void his_gen::Seek_partner_event::Run(Event_scheduler& event_scheduler)
 {
   // Pairs to hold attracted entities
   std::vector<std::pair<std::shared_ptr<his_gen::Entity_base>,
                         std::shared_ptr<his_gen::Entity_base>>> pairs;
 
   // Generated history refs for convienence
-  Entities& entities = history_of_the_world.Get_entities();
-  Entity_relationships& entity_relationships = history_of_the_world.Get_entity_relationships();
+  Entities& entities = m_generated_history.Get_entities();
+  Entity_relationships& entity_relationships = m_generated_history.Get_entity_relationships();
 
   // Get the entity we'll be working wtih
   std::shared_ptr<his_gen::Entity_base> triggering_entity = entities[Get_triggering_entity_id()];
@@ -69,7 +70,7 @@ void his_gen::Seek_partner_event::Run(his_gen::Generated_history& history_of_the
         // bookeeping that we have now
 
         // Add the target to this event's vector of targets if there is mutual attraction
-        Add_target_id(it.second->Get_entity_id());
+        Add_event_target_id(it.second->Get_entity_id());
 
         // Increment the event counter for this entity, allowing it to decide
         // if future events of this type are allowed
@@ -85,7 +86,8 @@ void his_gen::Seek_partner_event::Run(his_gen::Generated_history& history_of_the
         // Create the new relationship for these entities
         er::Entity_relationship_ptr new_relationship = er::Entity_relationship_factory(triggering_entity,
                                                                                        it.second,
-                                                                                       his_gen::ERELATIONSHIP_TYPE_Lover);
+                                                                                       his_gen::ERELATIONSHIP_TYPE_Lover,
+                                                                                       m_event_tick);
 
         // Add the new relationship to the base class vector so any subsequent scheduled events can modify it
         Add_relationship_id(new_relationship->Get_entity_relationship_id());
@@ -114,7 +116,7 @@ void his_gen::Seek_partner_event::schedule_next_event(Event_scheduler& event_sch
 {
   event_scheduler.Schedule_event(m_triggering_entity_id,
                                  Get_event_id(),
-                                 Get_target_ids(),
+                                 Get_event_target_ids(),
                                  his_gen::EEvent_type::EEVENT_TYPE_Courtship,
                                  m_event_tick++);
 }

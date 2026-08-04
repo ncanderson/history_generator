@@ -32,29 +32,20 @@ public:
    */
   Seek_partner_event(std::shared_ptr<his_gen::Entity_base>& triggering_entity,
                      int64_t current_tick,
+                     his_gen::Generated_history& history_of_the_world,
                      const boost::uuids::uuid triggering_event_id = boost::uuids::nil_uuid());
 
   /**
    * @brief Destructor
    */
-  ~Seek_partner_event(){}
+  ~Seek_partner_event() = default;
 
   /**
    * @brief Run
    * @param history_of_the_world
    * @param event_scheduler
    */
-  void Run(his_gen::Generated_history& history_of_the_world,
-           Event_scheduler& event_scheduler) override;
-
-  /**
-   * @brief The list of possible next events
-   * @return An unordered set of the possible next events
-   */
-  const std::unordered_set<his_gen::EEvent_type>& Get_possible_next_events() const override
-  {
-    return m_possible_next_events;
-  }
+  void Run(Event_scheduler& event_scheduler) override;
 
 protected:
   // Attributes
