@@ -79,37 +79,32 @@ public:
    */
   Transition_matrix()
     :
-    m_trans_matrix_bounds(1,0)
+    m_trans_matrix_bounds(1, 0)
   { }
 
   /**
    * @brief Destructor
    */
   ~Transition_matrix() = default;
-
-protected:
-  // Attributes
-
-  // Implementation
-
-private:
-  // Attributes
   /**
-   * @brief Enforcer of min/max values for the transition matrix rows
+   * @brief The point of all this; the actual matrix to be constructed by this
+   * templated wrapper
    */
-  Bounds m_trans_matrix_bounds;
+  std::map<Enum_key, std::map<Enum_key, double>> m_transition_matrix;
 
   // Implementation
   /**
    * @brief Define a transition matrix using a Personality
+   * @param Pattern The pattern for the transition matrix, which will contain the
+   * positive and negative personality drivers for the transitions
    * @param entity_personality The personality of this entity which will determine
    * the probabilities in the transition matrix
    */
-  void define_transition_matrix(const Pattern& transition_pattern,
+  void Define_transition_matrix(const Pattern& transition_pattern,
                                 const Personality& entity_personality)
   {
-    // Iterate over relationship transition map, and discard the values (for now);
-    // this will act on each possible next relationship
+    // Iterate over the transition pattern, and discard the values (for now);
+    // this will act on each possible next Enum_key in the transition matrix
     for(const auto& [current_state, _] : transition_pattern)
     {
       // Running total of a row's weights
@@ -120,22 +115,20 @@ private:
 
       // Inner loop to build the full matrix for the 'current_state', indicating
       // the likelihood of transition to the next state. This will use the 'drivers',
-      // or the entity attributes that affect the chance of a next relationship.
+      // or the entity attributes that affect the chance of a next state.
       for(const auto& [next_state, drivers] : transition_pattern)
       {
-        // base weight, the baseline chance for this relationship
+        // base weight, the baseline chance for this transition
         // TODO Set this in defs somewhere?
         double weight = 1.0;
 
-        // Add positive influence, checking the entity for all personality traits
-        // relevant to this relationship
+        // Add positive influence, checking the entity for all relevant personality traits
         for (auto attr : drivers.m_positive_drivers)
         {
           weight += static_cast<double>(entity_personality.Get_entity_attribute_value(attr)) / 100.0;
         }
 
-        // Subtract negative influence, checking the entity for all personality traits
-        // relevant to this relationship
+        // Subtract negative influence, checking the entity for all relevant personality traits
         for (auto attr : drivers.m_negative_drivers)
         {
           weight -= static_cast<double>(entity_personality.Get_entity_attribute_value(attr)) / 100.0;
@@ -154,10 +147,22 @@ private:
       // Normalize the row so the full row will add up to 100%
       for (auto& [next_state, weight] : weights)
       {
-        m_relationship_transition_matrix[current_state][next_state] = weight / row_sum;
+        m_transition_matrix[current_state][next_state] = weight / row_sum;
       }
     }
   }
+
+protected:
+  // Attributes
+
+  // Implementation
+
+private:
+  // Attributes
+  /**
+   * @brief Enforcer of min/max values for the transition matrix rows
+   */
+  Bounds m_trans_matrix_bounds;
 
 };
 }

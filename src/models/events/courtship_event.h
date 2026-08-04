@@ -90,19 +90,19 @@ private:
   static const Relationship_transition_pattern m_relationship_transition_pattern;
 
   /**
-   * @brief The relationship transition matrix for this event
-   */
-  his_gen::Transition_matrix<ERelationship_type> m_relationship_trans_matrix;
-
-  /**
    * @brief Static list of all possible next events that could be triggered from this event.
    */
   static const Event_transition_pattern m_event_transition_pattern;
 
   /**
+   * @brief The relationship transition matrix for this event
+   */
+  Transition_matrix<ERelationship_type, Relationship_transition_pattern> m_relationship_transition_matrix;
+
+  /**
    * @brief The event transition matrix for this event
    */
-  his_gen::Transition_matrix<EEvent_type> m_event_trans_matrix;
+  Transition_matrix<EEvent_type, Event_transition_pattern> m_event_transition_matrix;
 
   // Implementation
   /**

@@ -265,8 +265,11 @@ void his_gen::Courtship_event::Run(Event_scheduler& event_scheduler)
 
 void his_gen::Courtship_event::Visit_entity(Entity_sentient& sentient)
 {
-  define_relationship_matrix(sentient);
-  define_event_matrix(sentient);
+  Personality entity_personality = m_generated_history.Get_entities()[Get_triggering_entity_id()]
+  m_relationship_transition_matrix.Define_transition_matrix(m_relationship_transition_pattern,
+                                                            );
+  // define_relationship_matrix(sentient);
+  // define_event_matrix(sentient);
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -300,120 +303,6 @@ void his_gen::Courtship_event::schedule_next_event(Event_scheduler& event_schedu
     //his_gen::ERelationship_type::ERELATIONSHIP_TYPE_Unrequited,
     //his_gen::ERelationship_type::ERELATIONSHIP_TYPE_Abandonment,
   // }
-}
-
-///////////////////////////////////////////////////////////////////////
-
-void his_gen::Courtship_event::define_relationship_matrix(const Entity_sentient& triggering_entity)
-{
-  // Iterate over relationship transition map, and discard the values (for now);
-  // this will act on each possible next relationship
-  for(const auto& [current_state, _] : m_relationship_transition_pattern)
-  {
-    // Running total of a row's weights
-    double row_sum = 0.0;
-
-    // Temporary map to hold unnormalized weights
-    std::map<ERelationship_type, double> weights;
-
-    // Inner loop to build the full matrix for the 'current_state', indicating
-    // the likelihood of transition to the next state. This will use the 'drivers',
-    // or the entity attributes that affect the chance of a next relationship.
-    for(const auto& [next_state, drivers] : m_relationship_transition_pattern)
-    {
-      // base weight, the baseline chance for this relationship
-      // TODO Set this in defs somewhere?
-      double weight = 1.0;
-
-      // Add positive influence, checking the entity for all personality traits
-      // relevant to this relationship
-      for (auto attr : drivers.m_positive_drivers)
-      {
-        weight += static_cast<double>(triggering_entity.Get_personality()
-                                                       .Get_entity_attribute_value(attr)) / 100.0;
-      }
-
-      // Subtract negative influence, checking the entity for all personality traits
-      // relevant to this relationship
-      for (auto attr : drivers.m_negative_drivers)
-      {
-        weight -= static_cast<double>(triggering_entity.Get_personality()
-                                                       .Get_entity_attribute_value(attr)) / 100.0;
-      }
-
-      // Enforce bounds
-      m_trans_matrix_bounds.Enforce(weight);
-
-      // Cache the fully calculated weights
-      weights[next_state] = weight;
-
-      // Get the running total of all weights
-      row_sum += weight;
-    }
-
-    // Normalize the row so the full row will add up to 100%
-    for (auto& [next_state, weight] : weights)
-    {
-      m_relationship_transition_matrix[current_state][next_state] = weight / row_sum;
-    }
-  }
-}
-
-///////////////////////////////////////////////////////////////////////
-
-void his_gen::Courtship_event::define_event_matrix(const Entity_sentient& triggering_entity)
-{
-  // Iterate over relationship transition map, and discard the values (for now);
-  // this will act on each possible next event
-  for(const auto& [current_state, _] : m_event_transition_pattern)
-  {
-    // Running total of a row's weights
-    double row_sum = 0.0;
-
-    // Temporary map to hold unnormalized weights
-    std::map<EEvent_type, double> weights;
-
-    // Inner loop to build the full matrix for the 'current_state', indicating
-    // the likelihood of transition to the next state. This will use the 'drivers',
-    // or the entity attributes that affect the chance of a next relationship.
-    for(const auto& [next_state, drivers] : m_event_transition_pattern)
-    {
-      // base weight, the baseline chance for this event
-      // TODO Set this in defs somewhere?
-      double weight = 1.0;
-
-      // Add positive influence, checking the entity for all personality traits
-      // relevant to this relationship
-      for (auto attr : drivers.m_positive_drivers)
-      {
-        weight += static_cast<double>(triggering_entity.Get_personality()
-                                                       .Get_entity_attribute_value(attr)) / 100.0;
-      }
-
-      // Subtract negative influence, checking the entity for all personality traits
-      // relevant to this relationship
-      for (auto attr : drivers.m_negative_drivers)
-      {
-        weight -= static_cast<double>(triggering_entity.Get_personality()
-                                                       .Get_entity_attribute_value(attr)) / 100.0;
-      }
-
-      // Enforce bounds
-      m_trans_matrix_bounds.Enforce(weight);
-
-      // Cache the fully calculated weights
-      weights[next_state] = weight;
-
-      // Get the running total of all weights
-      row_sum += weight;
-    }
-
-    // Normalize the row so the full row will add up to 100%
-    for (auto& [next_state, weight] : weights)
-    {
-      m_event_transition_matrix[current_state][next_state] = weight / row_sum;
-    }
-  }
 }
 
 ///////////////////////////////////////////////////////////////////////
