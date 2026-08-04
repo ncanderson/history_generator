@@ -64,19 +64,6 @@ void sentient::Initialize()
 
 bool sentient::Is_attracted(std::shared_ptr<Entity_base> other_entity)
 {
-//   // Downcast to derived class from the base class pointer
-//   std::shared_ptr<sentient> other = std::dynamic_pointer_cast<sentient>(other_entity);
-
-//   // Check reproduction attraction first, and ensure we're not comparing an entity to itself
-//   if(other == shared_from_this() || !repro_attraction(other))
-//   {
-//     return false;
-//   }
-
-//   return compare_attributes<his_gen::Personality>(m_personality, *other->Get_personality()) &&
-//          compare_attributes<his_gen::Physicality>(m_physicality, other->Get_physicality());
-// }
-
   // Downcast from the base-class pointer.
   std::shared_ptr<sentient> other = std::dynamic_pointer_cast<sentient>(other_entity);
 
