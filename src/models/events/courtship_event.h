@@ -80,6 +80,16 @@ protected:
   void schedule_next_event(Event_scheduler& event_scheduler) override;
 
 private:
+  /**
+   * The pattern this event will use to define each entity's transition matrix
+   * It is a map that uses ERelationship_type as the key, and an instance of the
+   * templated helper struct Transition_drivers as the value. That struct
+   * has a vector positive and negative drivers, which are used to construct
+   * the likelihood that the ERelationship_type will be the next type selected.
+   */
+  using Relationship_transition_pattern = his_gen::dice::Transition_pattern<ERelationship_type,
+                                                                            Attribute_enums::EPersonality>;
+
   // Attributes
   /**
    * @brief Transition matrix for determining new relationships
