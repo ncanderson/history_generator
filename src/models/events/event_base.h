@@ -9,7 +9,6 @@
 #include <vector>
 #include <memory>
 #include <string>
-#include <unordered_set>
 
 // 3rd party
 #include <boost/uuid/nil_generator.hpp>
@@ -26,6 +25,8 @@
 #include <models/event_visitor.h>
 
 #include <utils/history_generator_utils.h>
+#include <utils/dice_rolls.h>
+#include <utils/transition_matrix.h>
 
 namespace his_gen
 {
@@ -96,15 +97,6 @@ public:
    */
   virtual bool Created_meaningful_change() const { return m_event_changes_state; }
 
-  /**
-   * @brief Return the derived class's list of possible next events
-   * @details The data type returned from this function isn't declared as a
-   * data member in this base class; derived classes are expected to define
-   * an unordered set of possible next evets for return by this function.
-   * @return An unordered set of the possible next events
-   */
-  virtual const std::unordered_set<his_gen::EEvent_type>& Get_possible_next_events() const = 0;
-
   /////////////////////////////////////////////////
   // Getters and setters
 
@@ -139,7 +131,6 @@ public:
 
 protected:
   // Attributes
-
   /**
    * @brief Reference to the full generated history object
    */
@@ -198,9 +189,22 @@ protected:
    */
   bool m_event_changes_state;
 
+  // Types for defining transition matrices.
+  /**
+   * These using statements make it easier for derived classes to handle their specific
+   * transition matrices, without having to re-declare any 'using' statements.
+   */
+  using Relationship_transition_pattern = his_gen::Transition_pattern<ERelationship_type,
+                                                                      Attribute_enums::EPersonality>;
+  using Event_transition_pattern = his_gen::Transition_pattern<EEvent_type,
+                                                               Attribute_enums::EPersonality>;
+
   // Implementation
   /**
-   * @brief Schedule the next event
+   * @brief Schedule the next event.
+   * @details By using the transition matrices implementing classes define, any subsequent
+   * events that should arise from a particular event chain should be inserted into the
+   * list of scheduled events using this function.
    * @param event_scheduler The event scheduler instance to use for scheduling
    */
   virtual void schedule_next_event(Event_scheduler& event_scheduler) = 0;

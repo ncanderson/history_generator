@@ -288,46 +288,46 @@ inline Attribute_enums::EPhysicality Get_entity_attribute(const std::string& att
 {
   static const std::unordered_map<std::string, Attribute_enums::EPhysicality> attribute_map =
   {
-    {"hair_length", EPhysicality::EPHYSICALITY_Hair_length},
-    {"hair_thickness", EPhysicality::EPHYSICALITY_Hair_thickness},
-    {"hand_size", EPhysicality::EPHYSICALITY_Hand_size},
-    {"foot_size", EPhysicality::EPHYSICALITY_Foot_size},
-    {"nipple_size", EPhysicality::EPHYSICALITY_Nipple_size},
-    {"body_fat", EPhysicality::EPHYSICALITY_Body_fat},
-    {"muscle_mass", EPhysicality::EPHYSICALITY_Muscle_mass},
-    {"height", EPhysicality::EPHYSICALITY_Height},
-    {"shoulder_width", EPhysicality::EPHYSICALITY_Shoulder_width},
-    {"chest_circumference", EPhysicality::EPHYSICALITY_Chest_circumference},
-    {"stomach_size", EPhysicality::EPHYSICALITY_Stomach_size},
-    {"hip_width", EPhysicality::EPHYSICALITY_Hip_width},
-    {"waist_circumference", EPhysicality::EPHYSICALITY_Waist_circumference},
-    {"posture_straightness", EPhysicality::EPHYSICALITY_Posture_straightness},
-    {"body_freckle_density", EPhysicality::EPHYSICALITY_Body_freckle_density},
-    {"body_hair_density", EPhysicality::EPHYSICALITY_Body_hair_density},
-    {"skin_color", EPhysicality::EPHYSICALITY_Skin_color},
-    {"skin_elasticity", EPhysicality::EPHYSICALITY_Skin_elasticity},
-    {"scar_coverage", EPhysicality::EPHYSICALITY_Scar_coverage},
-    {"voice_pitch", EPhysicality::EPHYSICALITY_Voice_pitch},
-    {"facial_angularity", EPhysicality::EPHYSICALITY_Facial_angularity},
-    {"cheekbone_prominence", EPhysicality::EPHYSICALITY_Cheekbone_prominence},
-    {"nose_size", EPhysicality::EPHYSICALITY_Nose_size},
-    {"jawline_sharpness", EPhysicality::EPHYSICALITY_Jawline_sharpness},
-    {"lip_fullness", EPhysicality::EPHYSICALITY_Lip_fullness},
-    {"eye_size", EPhysicality::EPHYSICALITY_Eye_size},
-    {"eye_spacing", EPhysicality::EPHYSICALITY_Eye_spacing},
-    {"eye_color_saturation", EPhysicality::EPHYSICALITY_Eye_color_saturation},
-    {"ear_size", EPhysicality::EPHYSICALITY_Ear_size},
-    {"breast_size", EPhysicality::EPHYSICALITY_Breast_size},
+    {"hair_length",            EPhysicality::EPHYSICALITY_Hair_length},
+    {"hair_thickness",         EPhysicality::EPHYSICALITY_Hair_thickness},
+    {"hand_size",              EPhysicality::EPHYSICALITY_Hand_size},
+    {"foot_size",              EPhysicality::EPHYSICALITY_Foot_size},
+    {"nipple_size",            EPhysicality::EPHYSICALITY_Nipple_size},
+    {"body_fat",               EPhysicality::EPHYSICALITY_Body_fat},
+    {"muscle_mass",            EPhysicality::EPHYSICALITY_Muscle_mass},
+    {"height",                 EPhysicality::EPHYSICALITY_Height},
+    {"shoulder_width",         EPhysicality::EPHYSICALITY_Shoulder_width},
+    {"chest_circumference",    EPhysicality::EPHYSICALITY_Chest_circumference},
+    {"stomach_size",           EPhysicality::EPHYSICALITY_Stomach_size},
+    {"hip_width",              EPhysicality::EPHYSICALITY_Hip_width},
+    {"waist_circumference",    EPhysicality::EPHYSICALITY_Waist_circumference},
+    {"posture_straightness",   EPhysicality::EPHYSICALITY_Posture_straightness},
+    {"body_freckle_density",   EPhysicality::EPHYSICALITY_Body_freckle_density},
+    {"body_hair_density",      EPhysicality::EPHYSICALITY_Body_hair_density},
+    {"skin_color",             EPhysicality::EPHYSICALITY_Skin_color},
+    {"skin_elasticity",        EPhysicality::EPHYSICALITY_Skin_elasticity},
+    {"scar_coverage",          EPhysicality::EPHYSICALITY_Scar_coverage},
+    {"voice_pitch",            EPhysicality::EPHYSICALITY_Voice_pitch},
+    {"facial_angularity",      EPhysicality::EPHYSICALITY_Facial_angularity},
+    {"cheekbone_prominence",   EPhysicality::EPHYSICALITY_Cheekbone_prominence},
+    {"nose_size",              EPhysicality::EPHYSICALITY_Nose_size},
+    {"jawline_sharpness",      EPhysicality::EPHYSICALITY_Jawline_sharpness},
+    {"lip_fullness",           EPhysicality::EPHYSICALITY_Lip_fullness},
+    {"eye_size",               EPhysicality::EPHYSICALITY_Eye_size},
+    {"eye_spacing",            EPhysicality::EPHYSICALITY_Eye_spacing},
+    {"eye_color_saturation",   EPhysicality::EPHYSICALITY_Eye_color_saturation},
+    {"ear_size",               EPhysicality::EPHYSICALITY_Ear_size},
+    {"breast_size",            EPhysicality::EPHYSICALITY_Breast_size},
     {"breast_shape_roundness", EPhysicality::EPHYSICALITY_Breast_shape_roundness},
-    {"breast_cleavage_depth", EPhysicality::EPHYSICALITY_Breast_cleavage_depth},
-    {"labia_major_size", EPhysicality::EPHYSICALITY_Labia_major_size},
-    {"labia_minor_size", EPhysicality::EPHYSICALITY_Labia_minor_size},
-    {"clitoris_size", EPhysicality::EPHYSICALITY_Clitoris_size},
-    {"penis_length", EPhysicality::EPHYSICALITY_Penis_length},
-    {"penis_width", EPhysicality::EPHYSICALITY_Penis_width},
-    {"testicle_size", EPhysicality::EPHYSICALITY_Testicle_size},
-    {"facial_hair_density", EPhysicality::EPHYSICALITY_Facial_hair_density},
-    {"butt_roundness", EPhysicality::EPHYSICALITY_Butt_roundness}
+    {"breast_cleavage_depth",  EPhysicality::EPHYSICALITY_Breast_cleavage_depth},
+    {"labia_major_size",       EPhysicality::EPHYSICALITY_Labia_major_size},
+    {"labia_minor_size",       EPhysicality::EPHYSICALITY_Labia_minor_size},
+    {"clitoris_size",          EPhysicality::EPHYSICALITY_Clitoris_size},
+    {"penis_length",           EPhysicality::EPHYSICALITY_Penis_length},
+    {"penis_width",            EPhysicality::EPHYSICALITY_Penis_width},
+    {"testicle_size",          EPhysicality::EPHYSICALITY_Testicle_size},
+    {"facial_hair_density",    EPhysicality::EPHYSICALITY_Facial_hair_density},
+    {"butt_roundness",         EPhysicality::EPHYSICALITY_Butt_roundness}
   };
 
   const std::string lc_attribute_name = his_gen::To_lowercase(attribute_name);
@@ -544,6 +544,7 @@ inline std::string Get_entity_attribute_string(const EReproduction repro_attribu
  *   ATTRIBUTE_TWO,
  *   ATTRIBUTE_THREE
  * };
+ * ```
  *
  * 2. Derive from the base class using CRTP:
  * @code
@@ -605,7 +606,7 @@ public:
   uint8_t Get_entity_attribute_value(const Enum_type attribute) const
   {
     auto it = m_attributes.find(attribute);
-    if (it == m_attributes.end())
+    if(it == m_attributes.end())
     {
       return 0;
     }
@@ -621,7 +622,7 @@ public:
   void Set_attribute_value(const Enum_type attribute, uint8_t value)
   {
     auto it = m_attributes.find(attribute);
-    if (it == m_attributes.end())
+    if(it == m_attributes.end())
     {
       throw std::out_of_range("Attribute not found");
     }
@@ -657,8 +658,8 @@ protected:
   { }
 
   /**
-   * @brief Calculate the maximum
-   * @return
+   * @brief Calculate the maximum possible score for all of this entity's attributes
+   * @return Total number of attributes times the max score
    */
   uint16_t calc_max_attribute_score() const
   {

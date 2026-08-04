@@ -46,15 +46,6 @@ public:
    */
   void Run(Event_scheduler& event_scheduler) override;
 
-  /**
-   * @brief The list of possible next events
-   * @return An unordered set of the possible next events
-   */
-  const std::unordered_set<his_gen::EEvent_type>& Get_possible_next_events() const override
-  {
-    return m_possible_next_events;
-  }
-
 protected:
   // Attributes
 
@@ -69,10 +60,6 @@ private:
   // Attributes
 
   // Implementation
-  /**
-   * @brief Static list of all possible next events that could be triggered from this event.
-   */
-  static const std::unordered_set<his_gen::EEvent_type> m_possible_next_events;
 
 };
 }

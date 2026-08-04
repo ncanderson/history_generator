@@ -11,7 +11,6 @@
 // Application files
 #include <models/events/event_base.h>
 #include <utils/bounds.h>
-#include <utils/dice_rolls.h>
 
 namespace his_gen
 {
@@ -59,20 +58,13 @@ public:
    */
   void Run(Event_scheduler& event_scheduler) override;
 
-  /**
-   * @brief The list of possible next events
-   * @return An unordered set of the possible next events
-   */
-  const std::unordered_set<his_gen::EEvent_type>& Get_possible_next_events() const override
-  {
-    return m_possible_next_events;
-  }
-
   ///////////////////////////////////////////////////////////////////////
   // Visitors
 
   /**
-   * @brief Visitor for sentient entities
+   * @brief Visitor for sentient entities.
+   * @details This function allows this event to perform the necessary initialization
+   * of the the entities in question.
    * @param sentient The entity in question
    */
   void Visit_entity(Entity_sentient& sentient) override;
@@ -95,43 +87,24 @@ protected:
   void schedule_next_event(Event_scheduler& event_scheduler) override;
 
 private:
-  /**
-   * The pattern this event will use to define each entity's transition matrix
-   * It is a map that uses ERelationship_type as the key, and an instance of the
-   * templated helper struct Transition_drivers as the value. That struct
-   * has a vector positive and negative drivers, which are used to construct
-   * the likelihood that the ERelationship_type will be the next type selected.
-   */
-  using Relationship_transition_pattern = his_gen::dice::Transition_pattern<ERelationship_type, Attribute_enums::EPersonality>;
-
   // Attributes
   /**
-   * @brief Enforcer of min/max values for the transition matrix rows
+   * @brief Transition pattern used for determining the new transition matrix, defining the attributes
+   * that will impact the chance of a specific next event.
    */
-  Bounds m_trans_matrix_bounds;
+  static const Event_transition_pattern m_event_transition_pattern;
 
   /**
-   * @brief The relationship transition matrix for this entity,
-   * built from m_relationship_transition_map.
+   * @brief Transition pattern used for determining the new transition matrix, defining the attributes
+   * that will impact the chance of a specific next relationship.
    */
-  dice::Transition_matrix<ERelationship_type> m_relationship_transition_matrix;
-
-  /**
-   * @brief Static list of all possible next events that could be triggered from this event.
-   */
-  static const std::unordered_set<his_gen::EEvent_type> m_possible_next_events;
-
-  /**
-   * @brief Transition matrix for determining new relationships, defining the attributes
-   * that will impact the chance of a new relationship.
-   */
-  static const Relationship_transition_pattern m_relationship_transition_map;
+  static const Relationship_transition_pattern m_relationship_transition_pattern;
 
   // Implementation
   /**
    * @brief Use the triggering entity's attributes to build the full relationship
    * transition matrix
-   * @details This function will iterate over m_relationship_transition_map, a structure
+   * @details This function will iterate over m_relationship_transition_pattern, a structure
    * containing the possible next relationships, and the personality traits
    * positiviely and negatively impacting the likelihood that that relationship is
    * selected next. The end result will be a fully populated relationship transition matrix
@@ -141,15 +114,24 @@ private:
   void define_relationship_matrix(const Entity_sentient& triggering_entity);
 
   /**
-   * @brief update_relationship
+   * @brief Use the triggering entity's attributes to build the full event
+   * transition matrix
+   * @details This function will iterate over m_event_transition_pattern, a structure
+   * containing the possible next events, and the personality traits
+   * positiviely and negatively impacting the likelihood that that event is
+   * selected next. The end result will be a fully populated event transition matrix
+   * specific to this entity and event.
+   * @param triggering_entity The entity triggering this event
+   */
+  void define_event_matrix(const Entity_sentient& triggering_entity);
+
+  /**
+   * @brief update_relationship_type
    * @param relationship The relationship that might be modified
-   * @param history_of_the_world Reference to the world, in case a new relationship
-   * is created.
    * @returns Returns true if a relationship was updated, otherwise false. This will allow
    * the event to track the overall status of 'something changed'.
    */
-  bool update_relationship(std::shared_ptr<his_gen::Entity_relationship>& relationship,
-                           his_gen::Generated_history& history_of_the_world);
+  bool update_relationship_type(std::shared_ptr<his_gen::Entity_relationship>& relationship);
 
 };
 }
