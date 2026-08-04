@@ -265,11 +265,13 @@ void his_gen::Courtship_event::Run(Event_scheduler& event_scheduler)
 
 void his_gen::Courtship_event::Visit_entity(Entity_sentient& sentient)
 {
-  Personality entity_personality = m_generated_history.Get_entities()[Get_triggering_entity_id()]
+  Entities entities = m_generated_history.Get_entities();
+  const Personality* entity_personality = entities[Get_triggering_entity_id()]->Get_personality();
+
   m_relationship_transition_matrix.Define_transition_matrix(m_relationship_transition_pattern,
-                                                            );
-  // define_relationship_matrix(sentient);
-  // define_event_matrix(sentient);
+                                                            entity_personality);
+  m_event_transition_matrix.Define_transition_matrix(m_event_transition_pattern,
+                                                     entity_personality);
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -312,52 +314,36 @@ void his_gen::Courtship_event::schedule_next_event(Event_scheduler& event_schedu
 // does this function handle it gracefully?
 bool his_gen::Courtship_event::update_relationship_type(std::shared_ptr<his_gen::Entity_relationship>& relationship)
 {
-  // Get the row for the current relationship type
-  auto row_it = m_relationship_transition_matrix.find(relationship->Get_relationship_type_enum());
-  // Throw if not found
-  if(row_it == m_relationship_transition_matrix.end())
+  // Helper to cut down line length
+  using er = his_gen::Entity_relationship;
+
+  // Get the current relationship type
+  const his_gen::ERelationship_type& rel = relationship->Get_relationship_type_enum();
+  // Use functionality defined in the Transition_matrix class to roll for a relationship transition
+  const std::optional<his_gen::ERelationship_type> next_type = m_relationship_transition_matrix.Roll_transition(rel);
+
+  // If no transition:
+  if(!next_type)
   {
-    throw std::runtime_error("No transition data for current relationship");
+    return false;
   }
 
-  // Possible next relationships by grabbing the row corresponding to the relationship type
-  const auto& transitions = row_it->second;
+  // Otherwise, end the previous relationship,
+  relationship->End_date_relationship(m_event_tick);
 
-  // Make the roll
-  double roll = his_gen::dice::Make_a_roll<double>(1.0, 0.0);
-  double cumulative = 0.0;
+  // Create the new relationship.
+  std::shared_ptr<er> new_rel = er::Entity_relationship_factory(relationship->Get_entity_1(),
+                                                                relationship->Get_entity_2(),
+                                                                *next_type,
+                                                                m_event_tick);
 
-  // Iterate through the possible next relationships in the transition matrix row for this event type.
-  // With every iteration, add the probability from the matrix (which was defined
-  // when the event was created based on entity attributes). There is a lazy evaluation here,
-  // so the first possible next relationship will be returned.
-  for(const auto& [next_type, probability] : transitions)
-  {
-    cumulative += probability;
-    // i.e. we found the next relationship to transition to
-    if(roll <= cumulative)
-    {
-      // End date previous relationship
-      relationship->End_date_relationship(m_event_tick);
+  // Register the new relationship.
+  m_generated_history.Add_entity_relationship(new_rel);
 
-      // Make a new relationship; this will also update each entity with that relationship (via the factory)
-      std::shared_ptr<his_gen::Entity_relationship> new_rel;
-      new_rel = his_gen::Entity_relationship::Entity_relationship_factory(relationship->Get_entity_1(),
-                                                                          relationship->Get_entity_2(),
-                                                                          next_type,
-                                                                          m_event_tick);
+  // Associate the relationship with this event.
+  Add_relationship_id(new_rel->Get_entity_relationship_id());
 
-      // Register the relationship
-      m_generated_history.Add_entity_relationship(new_rel);
-
-      // Add the new relationship to this event
-      Add_relationship_id(new_rel->Get_entity_relationship_id());
-      return true;
-    }
-  }
-
-  // Nothing changed, return false
-  return false;
+  return true;
 }
 
 ///////////////////////////////////////////////////////////////////////

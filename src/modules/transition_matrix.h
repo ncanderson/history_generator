@@ -5,6 +5,8 @@
 #ifndef TRANSITION_MATRIX_UTILS_H
 #define TRANSITION_MATRIX_UTILS_H
 
+#include <optional>
+
 #include <modules/personality.h>
 #include <utils/dice_rolls.h>
 
@@ -72,6 +74,8 @@ class Transition_matrix
 
 public:
   // Attributes
+  using Matrix_row = std::map<Enum_key, double>;
+  using Matrix = std::map<Enum_key, Matrix_row>;
 
   // Implementation
   /**
@@ -86,23 +90,26 @@ public:
    * @brief Destructor
    */
   ~Transition_matrix() = default;
-  /**
-   * @brief The point of all this; the actual matrix to be constructed by this
-   * templated wrapper
-   */
-  std::map<Enum_key, std::map<Enum_key, double>> m_transition_matrix;
 
-  // Implementation
   /**
    * @brief Define a transition matrix using a Personality
+   * @details To support the usage of this function, a Personality is accessible through
+   * Entity_base. However, because not all children of Entity_base will have a personality,
+   * the default `Get_personality()` will return a `nullptr` in Event_base. An assertion
+   * is used here to ensure this function is only used for a valid Personality, ensuring
+   * that any invalid uses are flagged during development.
    * @param Pattern The pattern for the transition matrix, which will contain the
    * positive and negative personality drivers for the transitions
    * @param entity_personality The personality of this entity which will determine
    * the probabilities in the transition matrix
    */
   void Define_transition_matrix(const Pattern& transition_pattern,
-                                const Personality& entity_personality)
+                                const Personality* entity_personality)
   {
+    // Guard against improper usage
+    assert(entity_personality != nullptr &&
+           "Define_transition_matrix requires a Personality!");
+
     // Iterate over the transition pattern, and discard the values (for now);
     // this will act on each possible next Enum_key in the transition matrix
     for(const auto& [current_state, _] : transition_pattern)
@@ -125,13 +132,13 @@ public:
         // Add positive influence, checking the entity for all relevant personality traits
         for (auto attr : drivers.m_positive_drivers)
         {
-          weight += static_cast<double>(entity_personality.Get_entity_attribute_value(attr)) / 100.0;
+          weight += static_cast<double>(entity_personality->Get_entity_attribute_value(attr)) / 100.0;
         }
 
         // Subtract negative influence, checking the entity for all relevant personality traits
         for (auto attr : drivers.m_negative_drivers)
         {
-          weight -= static_cast<double>(entity_personality.Get_entity_attribute_value(attr)) / 100.0;
+          weight -= static_cast<double>(entity_personality->Get_entity_attribute_value(attr)) / 100.0;
         }
 
         // Enforce bounds
@@ -152,6 +159,55 @@ public:
     }
   }
 
+  /**
+   * @brief Get a matrix row by Enum_key
+   * @param enum_key The Enum_key to get the row of
+   * @return The matrix row corresponding to enum_key
+   * @throws std::runtime_error Thrown if the requested row is not present
+   */
+  const std::map<Enum_key, double>& Get_matrix_row(Enum_key enum_key) const
+  {
+    const auto row_it = m_transition_matrix.find(enum_key);
+
+    // Throw if the row is empty
+    if(row_it == m_transition_matrix.end())
+    {
+      throw std::runtime_error("No transition data for requested enum value");
+    }
+
+    return row_it->second;
+  }
+
+  /**
+   * @brief Rolls for a transition from the supplied current type.
+   * @return The selected next type, or std::nullopt when the roll does
+   * not fall within the cumulative transition probabilities.
+   * @throws std::out_of_range Thrown if enum_key has no matrix row
+   */
+  std::optional<Enum_key> Roll_transition(Enum_key enum_key) const
+  {
+    // Throws std::out_of_range if the expected row is missing.
+    const Matrix_row& transitions = m_transition_matrix.at(enum_key);
+
+    const double roll = his_gen::dice::Make_a_roll<double>(1.0, 0.0);
+
+    double cumulative_probability = 0.0;
+
+    for(const auto& [next_type, probability] : transitions)
+    {
+      cumulative_probability += probability;
+
+      if(roll <= cumulative_probability)
+      {
+        return next_type;
+      }
+    }
+
+    // Made it here? The row's probabilities totaled less than the generated roll;
+    // this represents no transition
+    return std::nullopt;
+  }
+
 protected:
   // Attributes
 
@@ -163,6 +219,12 @@ private:
    * @brief Enforcer of min/max values for the transition matrix rows
    */
   Bounds m_trans_matrix_bounds;
+
+  /**
+   * @brief The point of all this; the actual matrix to be constructed by this
+   * templated wrapper
+   */
+  std::map<Enum_key, std::map<Enum_key, double>> m_transition_matrix;
 
 };
 }

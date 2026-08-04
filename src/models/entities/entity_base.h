@@ -26,6 +26,11 @@ namespace his_gen
  * itself providing events access to entity-specific behaviors.
  */
 class Event_visitor;
+/**
+ * Forward declaration of Personality, allowing non-entities to attempt to access
+ * an entity Personality through the base class pointer
+ */
+class Personality;
 
 /**
  * @brief Base class for generated entities
@@ -36,8 +41,6 @@ public:
   // Attributes
 
   // Implementation
-  //Entity_base() = default;
-
   /**
    * @brief Entity_base
    * @param name
@@ -163,6 +166,18 @@ public:
 
   const uint64_t Get_last_event_triggered() const { return m_last_event_triggered; }
   void Set_last_event_triggered(const uint64_t tick) { m_last_event_triggered = tick; }
+
+  /**
+   * @brief Get personality.
+   * @details When called on a derived class that doesn't overrride this function, a nullptr will be returned.
+   * Derived classes that want to expose their Personality through a base class pointer will override this function.
+   * This was created primarily to support the usage of the templated Transition_matrix class, which uses an
+   * entity's personality to determine how a transition matrix should be built. Since that class is templated and
+   * expects to be able to handle and entity types derived from Entity_base, this function will allow those derived
+   * classes to expose their Personality through the base class pointer.
+   * @return
+   */
+  virtual const Personality* Get_personality() const noexcept { return nullptr; }
 
 protected:
   // Attributes

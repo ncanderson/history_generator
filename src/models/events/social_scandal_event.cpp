@@ -10,9 +10,6 @@
 
 REGISTER_POLYMORPHIC_TYPE(his_gen::Event_base, his_gen::Social_scandal_event)
 
-// Definition of possible next events
-const std::unordered_set<his_gen::EEvent_type> his_gen::Social_scandal_event::m_possible_next_events = {};
-
 ///////////////////////////////////////////////////////////////////////
 
 his_gen::Social_scandal_event::Social_scandal_event(std::shared_ptr<Entity_base>& triggering_entity,
@@ -20,7 +17,7 @@ his_gen::Social_scandal_event::Social_scandal_event(std::shared_ptr<Entity_base>
                                                     his_gen::Generated_history& history_of_the_world,
                                                     const boost::uuids::uuid triggering_event_id)
   :
-  Event_base(his_gen::EEvent_type::EEVENT_TYPE_Reproduce,
+  Event_base(his_gen::EEvent_type::EEVENT_TYPE_Social_scandal,
              triggering_entity->Get_entity_id(),
              current_tick,
              history_of_the_world,

@@ -38,7 +38,7 @@ public:
   /**
    * @brief Destructor
    */
-  ~Seek_partner_event(){}
+  ~Seek_partner_event() = default;
 
   /**
    * @brief Run

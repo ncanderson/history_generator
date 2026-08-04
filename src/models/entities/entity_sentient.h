@@ -94,7 +94,7 @@ public:
   /**
    * Getters and Setters
    */
-  Personality Get_personality() const { return m_personality; }
+  const Personality* Get_personality() const noexcept override { return &m_personality; }
   void Set_personality(const Personality& personality) { m_personality = personality; }
 
   Personality_attraction Get_personality_attraction() const { return m_personality_attraction; }
@@ -151,9 +151,6 @@ protected:
    * by type
    */
   void initialize_max_events_by_type() override;
-
-  // each entity class will call the initialize max events function. that function will loop through
-  // the entity_event_type list,
 
 private:
   // Attributes
@@ -231,12 +228,18 @@ private:
   template<typename T>
   double get_attraction_threshold() const
   {
-    if constexpr (std::is_same_v<T, Physicality>)
+    if constexpr(std::is_same_v<T, Physicality>)
+    {
       return m_physicality_attraction_thresh;
-    else if constexpr (std::is_same_v<T, Personality>)
+    }
+    else if constexpr(std::is_same_v<T, Personality>)
+    {
       return m_personality_attraction_thresh;
+    }
     else
+    {
       static_assert(std::is_same_v<T, void>, "Unsupported attribute class type");
+    }
   }
 
 }; // class Entity_sentient

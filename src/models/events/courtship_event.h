@@ -44,7 +44,7 @@ public:
   /**
    * @brief Destructor
    */
-  ~Courtship_event(){}
+  ~Courtship_event() = default;
 
   /**
    * @brief Run
@@ -67,10 +67,7 @@ public:
    * an overload, but just re-route to the Entity_sentient call
    * @param deity The deity in question
    */
-  void Visit_entity(Entity_deity& deity) override
-  {
-    Visit_entity(static_cast<Entity_sentient&>(deity));
-  }
+  void Visit_entity(Entity_deity& deity) override;
 
 protected:
   // Attributes

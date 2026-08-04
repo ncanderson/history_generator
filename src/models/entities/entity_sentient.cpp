@@ -64,16 +64,41 @@ void sentient::Initialize()
 
 bool sentient::Is_attracted(std::shared_ptr<Entity_base> other_entity)
 {
-  // Downcast to derived class from the base class pointer
-  std::shared_ptr<his_gen::Entity_sentient> other = std::dynamic_pointer_cast<his_gen::Entity_sentient>(other_entity);
+//   // Downcast to derived class from the base class pointer
+//   std::shared_ptr<sentient> other = std::dynamic_pointer_cast<sentient>(other_entity);
 
-  // Check reproduction attraction first, and ensure we're not comparing an entity to itself
-  if(other == shared_from_this() || !repro_attraction(other))
+//   // Check reproduction attraction first, and ensure we're not comparing an entity to itself
+//   if(other == shared_from_this() || !repro_attraction(other))
+//   {
+//     return false;
+//   }
+
+//   return compare_attributes<his_gen::Personality>(m_personality, *other->Get_personality()) &&
+//          compare_attributes<his_gen::Physicality>(m_physicality, other->Get_physicality());
+// }
+
+  // Downcast from the base-class pointer.
+  std::shared_ptr<sentient> other = std::dynamic_pointer_cast<sentient>(other_entity);
+
+  // The supplied entity is not sentient.
+  if(!other)
+  {
+    throw std::invalid_argument("sentient::Is_attracted() requires an Entity_sentient!");
+  }
+
+  // Ensure we're not comparing an entity to itself, then check
+  // reproductive attraction.
+  if(other.get() == this || !repro_attraction(other))
   {
     return false;
   }
-  return compare_attributes<his_gen::Personality>(Get_personality(), other->Get_personality()) &&
-         compare_attributes<his_gen::Physicality>(Get_physicality(), other->Get_physicality());
+
+  //
+  const Personality* self_personality = Get_personality();
+  const Personality* other_personality = other->Get_personality();
+
+  return compare_attributes<Personality>(*self_personality, *other_personality) &&
+         compare_attributes<Physicality>(Get_physicality(), other->Get_physicality());
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -84,7 +109,7 @@ bool sentient::Is_attracted(std::shared_ptr<Entity_base> other_entity,
   if(Is_attracted(other_entity))
   {
     // Downcast to derived class from the base class pointer
-    std::shared_ptr<his_gen::Entity_sentient> other = std::dynamic_pointer_cast<his_gen::Entity_sentient>(other_entity);
+    std::shared_ptr<sentient> other = std::dynamic_pointer_cast<sentient>(other_entity);
     attracted_to.push_back(other);
     return true;
   }
@@ -165,7 +190,7 @@ void sentient::initialize_max_events_by_type()
 
 ///////////////////////////////////////////////////////////////////////
 
-bool sentient::repro_attraction(std::shared_ptr<his_gen::Entity_sentient> other_entity)
+bool sentient::repro_attraction(std::shared_ptr<sentient> other_entity)
 {
   // Attributes of self
   bool attracted_to_bear = m_physicality_attraction.Attracted_to_bearing();
@@ -195,13 +220,12 @@ double sentient::derive_attraction_thresh(uint8_t entity_flexibility)
 ///////////////////////////////////////////////////////////////////////
 // JSON Helpers
 
-void his_gen::to_json(nlohmann::json& json,
-                      const his_gen::Entity_sentient& entity_sentient)
+void his_gen::to_json(nlohmann::json& json, const sentient& entity_sentient)
 {
   nlohmann::to_json(json, static_cast<const Entity_base&>(entity_sentient));
   json.update(
   {
-    {"personality", entity_sentient.Get_personality()},
+    {"personality", *entity_sentient.Get_personality()},
     {"attraction", entity_sentient.Get_personality_attraction()},
     {"physicality", entity_sentient.Get_physicality()},
     {"physical_attraction", entity_sentient.Get_physicality_attraction()}
@@ -210,8 +234,7 @@ void his_gen::to_json(nlohmann::json& json,
 
 ///////////////////////////////////////////////////////////////////////
 
-void his_gen::from_json(const nlohmann::json& json,
-                        his_gen::Entity_sentient& entity_sentient)
+void his_gen::from_json(const nlohmann::json& json, sentient& entity_sentient)
 {
   entity_sentient.Set_name(json.at("name"));
   entity_sentient.Set_title(json.at("title"));
