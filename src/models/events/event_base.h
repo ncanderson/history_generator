@@ -26,7 +26,8 @@
 
 #include <utils/history_generator_utils.h>
 #include <utils/dice_rolls.h>
-#include <utils/transition_matrix.h>
+
+#include <modules/transition_matrix.h>
 
 namespace his_gen
 {
@@ -46,6 +47,14 @@ class Event_base : public Event_visitor
 {
 public:
   // Attributes
+  /**
+   * These using statements make it easier for derived classes to handle their specific
+   * transition matrices, without having to re-declare any 'using' statements.
+   */
+  using Relationship_transition_pattern = his_gen::Transition_pattern<ERelationship_type,
+                                                                      Attribute_enums::EPersonality>;
+  using Event_transition_pattern = his_gen::Transition_pattern<EEvent_type,
+                                                               Attribute_enums::EPersonality>;
 
   // Implementation
   /**
@@ -188,16 +197,6 @@ protected:
    * @brief If true, this event has created meaningful change and should be saved
    */
   bool m_event_changes_state;
-
-  // Types for defining transition matrices.
-  /**
-   * These using statements make it easier for derived classes to handle their specific
-   * transition matrices, without having to re-declare any 'using' statements.
-   */
-  using Relationship_transition_pattern = his_gen::Transition_pattern<ERelationship_type,
-                                                                      Attribute_enums::EPersonality>;
-  using Event_transition_pattern = his_gen::Transition_pattern<EEvent_type,
-                                                               Attribute_enums::EPersonality>;
 
   // Implementation
   /**

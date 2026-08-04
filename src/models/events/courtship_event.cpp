@@ -16,185 +16,175 @@
 ///////////////////////////////////////////////////////////////////////
 
 using attrs = his_gen::Attribute_enums::EPersonality;
+using court = his_gen::Courtship_event;
 
 REGISTER_POLYMORPHIC_TYPE(his_gen::Event_base, his_gen::Courtship_event)
 
+///////////////////////////////////////////////////////////////////////
+
 // Definition of possible next events
-const his_gen::Courtship_event::Event_transition_pattern his_gen::Courtship_event::m_event_transition_pattern {
-  // Courtship
+const court::Event_transition_pattern court::m_event_transition_pattern {
   {
-    his_gen::EEvent_type::EEVENT_TYPE_Courtship,
-    his_gen::dice::Transition_drivers<attrs>({attrs::EPERSONALITY_Romantic,
-                                              attrs::EPERSONALITY_Flirtatious,
-                                              attrs::EPERSONALITY_Sociable,
-                                              attrs::EPERSONALITY_Amiable,
-                                              attrs::EPERSONALITY_Brave},
-                                             {attrs::EPERSONALITY_Avoidant,
-                                              attrs::EPERSONALITY_Reserved,
-                                              attrs::EPERSONALITY_Chaste,
-                                              attrs::EPERSONALITY_Cowardly})
+    EEVENT_TYPE_Courtship,
+    his_gen::Transition_drivers<attrs>({attrs::EPERSONALITY_Romantic,
+                                        attrs::EPERSONALITY_Flirtatious,
+                                        attrs::EPERSONALITY_Sociable,
+                                        attrs::EPERSONALITY_Amiable,
+                                        attrs::EPERSONALITY_Brave},
+                                       {attrs::EPERSONALITY_Avoidant,
+                                        attrs::EPERSONALITY_Reserved,
+                                        attrs::EPERSONALITY_Chaste,
+                                        attrs::EPERSONALITY_Cowardly})
   },
-  // Elopement
   {
-    his_gen::EEvent_type::EEVENT_TYPE_Elopement,
-    his_gen::dice::Transition_drivers<attrs>({attrs::EPERSONALITY_Romantic,
-                                              attrs::EPERSONALITY_Rash,
-                                              attrs::EPERSONALITY_Brave,
-                                              attrs::EPERSONALITY_Decisive,
-                                              attrs::EPERSONALITY_Progressive},
-                                             {attrs::EPERSONALITY_Cowardly,
-                                              attrs::EPERSONALITY_Indecisive,
-                                              attrs::EPERSONALITY_Pragmatic,
-                                              attrs::EPERSONALITY_Conservative,
-                                              attrs::EPERSONALITY_Reserved})
+    EEVENT_TYPE_Elopement,
+    his_gen::Transition_drivers<attrs>({attrs::EPERSONALITY_Romantic,
+                                        attrs::EPERSONALITY_Rash,
+                                        attrs::EPERSONALITY_Brave,
+                                        attrs::EPERSONALITY_Decisive,
+                                        attrs::EPERSONALITY_Progressive},
+                                       {attrs::EPERSONALITY_Cowardly,
+                                        attrs::EPERSONALITY_Indecisive,
+                                        attrs::EPERSONALITY_Pragmatic,
+                                        attrs::EPERSONALITY_Conservative,
+                                        attrs::EPERSONALITY_Reserved})
   },
-  // Marriage
   {
-    his_gen::EEvent_type::EEVENT_TYPE_Marriage,
-    his_gen::dice::Transition_drivers<attrs>({attrs::EPERSONALITY_Romantic,
-                                              attrs::EPERSONALITY_Cooperative,
-                                              attrs::EPERSONALITY_Decisive,
-                                              attrs::EPERSONALITY_Diligent,
-                                              attrs::EPERSONALITY_Compassionate,
-                                              attrs::EPERSONALITY_Pragmatic},
-                                             {attrs::EPERSONALITY_Avoidant,
-                                              attrs::EPERSONALITY_Indecisive,
-                                              attrs::EPERSONALITY_Selfish,
-                                              attrs::EPERSONALITY_Deceitful,
-                                              attrs::EPERSONALITY_Difficult})
+    EEVENT_TYPE_Marriage,
+    his_gen::Transition_drivers<attrs>({attrs::EPERSONALITY_Romantic,
+                                        attrs::EPERSONALITY_Cooperative,
+                                        attrs::EPERSONALITY_Decisive,
+                                        attrs::EPERSONALITY_Diligent,
+                                        attrs::EPERSONALITY_Compassionate,
+                                        attrs::EPERSONALITY_Pragmatic},
+                                       {attrs::EPERSONALITY_Avoidant,
+                                        attrs::EPERSONALITY_Indecisive,
+                                        attrs::EPERSONALITY_Selfish,
+                                        attrs::EPERSONALITY_Deceitful,
+                                        attrs::EPERSONALITY_Difficult})
   },
-  // Reproduce
   {
-      his_gen::EEvent_type::EEVENT_TYPE_Reproduce,
-      his_gen::dice::Transition_drivers<attrs>({attrs::EPERSONALITY_Lustful,
-                                                attrs::EPERSONALITY_Romantic,
-                                                attrs::EPERSONALITY_Compassionate,
-                                                attrs::EPERSONALITY_Content,
-                                                attrs::EPERSONALITY_Conservative},
-                                               {attrs::EPERSONALITY_Chaste,
-                                                attrs::EPERSONALITY_Avoidant,
-                                                attrs::EPERSONALITY_Selfish,
-                                                attrs::EPERSONALITY_Pragmatic})
+      EEVENT_TYPE_Reproduce,
+      his_gen::Transition_drivers<attrs>({attrs::EPERSONALITY_Lustful,
+                                          attrs::EPERSONALITY_Romantic,
+                                          attrs::EPERSONALITY_Compassionate,
+                                          attrs::EPERSONALITY_Content,
+                                          attrs::EPERSONALITY_Conservative},
+                                         {attrs::EPERSONALITY_Chaste,
+                                          attrs::EPERSONALITY_Avoidant,
+                                          attrs::EPERSONALITY_Selfish,
+                                          attrs::EPERSONALITY_Pragmatic})
   },
-  // Secret affair
   {
-    his_gen::EEvent_type::EEVENT_TYPE_Secret_affair,
-    his_gen::dice::Transition_drivers<attrs>({attrs::EPERSONALITY_Lustful,
-                                              attrs::EPERSONALITY_Flirtatious,
-                                              attrs::EPERSONALITY_Deceitful,
-                                              attrs::EPERSONALITY_Evasive,
-                                              attrs::EPERSONALITY_Rash,
-                                              attrs::EPERSONALITY_Selfish},
-                                             {attrs::EPERSONALITY_Chaste,
-                                              attrs::EPERSONALITY_Honest,
-                                              attrs::EPERSONALITY_Frank,
-                                              attrs::EPERSONALITY_Thoughtful,
-                                              attrs::EPERSONALITY_Compassionate})
+    EEVENT_TYPE_Secret_affair,
+    his_gen::Transition_drivers<attrs>({attrs::EPERSONALITY_Lustful,
+                                        attrs::EPERSONALITY_Flirtatious,
+                                        attrs::EPERSONALITY_Deceitful,
+                                        attrs::EPERSONALITY_Evasive,
+                                        attrs::EPERSONALITY_Rash,
+                                        attrs::EPERSONALITY_Selfish},
+                                       {attrs::EPERSONALITY_Chaste,
+                                        attrs::EPERSONALITY_Honest,
+                                        attrs::EPERSONALITY_Frank,
+                                        attrs::EPERSONALITY_Thoughtful,
+                                        attrs::EPERSONALITY_Compassionate})
   },
-  // Social scandal
   {
-    his_gen::EEvent_type::EEVENT_TYPE_Social_scandal,
-    his_gen::dice::Transition_drivers<attrs>({attrs::EPERSONALITY_Extravagant,
-                                              attrs::EPERSONALITY_Extremist,
-                                              attrs::EPERSONALITY_Rash,
-                                              attrs::EPERSONALITY_Lustful,
-                                              attrs::EPERSONALITY_Proud},
-                                             {attrs::EPERSONALITY_Reserved,
-                                              attrs::EPERSONALITY_Thoughtful,
-                                              attrs::EPERSONALITY_Thrifty,
-                                              attrs::EPERSONALITY_Humble,
-                                              attrs::EPERSONALITY_Placid})
+    EEVENT_TYPE_Social_scandal,
+    his_gen::Transition_drivers<attrs>({attrs::EPERSONALITY_Extravagant,
+                                        attrs::EPERSONALITY_Extremist,
+                                        attrs::EPERSONALITY_Rash,
+                                        attrs::EPERSONALITY_Lustful,
+                                        attrs::EPERSONALITY_Proud},
+                                       {attrs::EPERSONALITY_Reserved,
+                                        attrs::EPERSONALITY_Thoughtful,
+                                        attrs::EPERSONALITY_Thrifty,
+                                        attrs::EPERSONALITY_Humble,
+                                        attrs::EPERSONALITY_Placid})
   },
-  // Toxic relationship
   {
-      his_gen::EEvent_type::EEVENT_TYPE_Toxic_relationship,
-      his_gen::dice::Transition_drivers<attrs>({attrs::EPERSONALITY_Aggressive,
-                                                attrs::EPERSONALITY_Argumentative,
-                                                attrs::EPERSONALITY_Cruel,
-                                                attrs::EPERSONALITY_Jealous,
-                                                attrs::EPERSONALITY_Resentful,
-                                                attrs::EPERSONALITY_Difficult},
-                                               {attrs::EPERSONALITY_Cooperative,
-                                                attrs::EPERSONALITY_Amiable,
-                                                attrs::EPERSONALITY_Compassionate,
-                                                attrs::EPERSONALITY_Forgiving,
-                                                attrs::EPERSONALITY_Flexible,
-                                                attrs::EPERSONALITY_Placid})
+    EEVENT_TYPE_Toxic_relationship,
+    his_gen::Transition_drivers<attrs>({attrs::EPERSONALITY_Aggressive,
+                                        attrs::EPERSONALITY_Argumentative,
+                                        attrs::EPERSONALITY_Cruel,
+                                        attrs::EPERSONALITY_Jealous,
+                                        attrs::EPERSONALITY_Resentful,
+                                        attrs::EPERSONALITY_Difficult},
+                                       {attrs::EPERSONALITY_Cooperative,
+                                        attrs::EPERSONALITY_Amiable,
+                                        attrs::EPERSONALITY_Compassionate,
+                                        attrs::EPERSONALITY_Forgiving,
+                                        attrs::EPERSONALITY_Flexible,
+                                        attrs::EPERSONALITY_Placid})
   }
 };
 
 // Definition of possible relationship changes
-const his_gen::Courtship_event::Relationship_transition_pattern his_gen::Courtship_event::m_relationship_transition_pattern {
-  // Lover
+const court::Relationship_transition_pattern court::m_relationship_transition_pattern {
   {
-    his_gen::ERelationship_type::ERELATIONSHIP_TYPE_Lover,
-    his_gen::dice::Transition_drivers<attrs>({attrs::EPERSONALITY_Romantic,
-                                              attrs::EPERSONALITY_Flirtatious,
-                                              attrs::EPERSONALITY_Amiable,
-                                              attrs::EPERSONALITY_Sociable,
-                                              attrs::EPERSONALITY_Compassionate},
-                                             {attrs::EPERSONALITY_Avoidant,
-                                              attrs::EPERSONALITY_Reserved,
-                                              attrs::EPERSONALITY_Chaste})
+    ERELATIONSHIP_TYPE_Lover,
+    his_gen::Transition_drivers<attrs>({attrs::EPERSONALITY_Romantic,
+                                        attrs::EPERSONALITY_Flirtatious,
+                                        attrs::EPERSONALITY_Amiable,
+                                        attrs::EPERSONALITY_Sociable,
+                                        attrs::EPERSONALITY_Compassionate},
+                                       {attrs::EPERSONALITY_Avoidant,
+                                        attrs::EPERSONALITY_Reserved,
+                                        attrs::EPERSONALITY_Chaste})
   },
-  // Breakup
   {
-    his_gen::ERelationship_type::ERELATIONSHIP_TYPE_Breakup,
-    his_gen::dice::Transition_drivers<attrs>({attrs::EPERSONALITY_Aggressive,
-                                              attrs::EPERSONALITY_Argumentative,
-                                              attrs::EPERSONALITY_Cruel,
-                                              attrs::EPERSONALITY_Resentful,
-                                              attrs::EPERSONALITY_Avoidant},
-                                             {attrs::EPERSONALITY_Forgiving,
-                                              attrs::EPERSONALITY_Compassionate,
-                                              attrs::EPERSONALITY_Amiable})
+    ERELATIONSHIP_TYPE_Breakup,
+    his_gen::Transition_drivers<attrs>({attrs::EPERSONALITY_Aggressive,
+                                        attrs::EPERSONALITY_Argumentative,
+                                        attrs::EPERSONALITY_Cruel,
+                                        attrs::EPERSONALITY_Resentful,
+                                        attrs::EPERSONALITY_Avoidant},
+                                       {attrs::EPERSONALITY_Forgiving,
+                                        attrs::EPERSONALITY_Compassionate,
+                                        attrs::EPERSONALITY_Amiable})
   },
-  // Platonic / Close friend
   {
-    his_gen::ERelationship_type::ERELATIONSHIP_TYPE_Friendship,
-    his_gen::dice::Transition_drivers<attrs>({attrs::EPERSONALITY_Amiable,
-                                              attrs::EPERSONALITY_Sociable,
-                                              attrs::EPERSONALITY_Compassionate,
-                                              attrs::EPERSONALITY_Kind,
-                                              attrs::EPERSONALITY_Witty},
-                                             {attrs::EPERSONALITY_Cruel,
-                                              attrs::EPERSONALITY_Aggressive,
-                                              attrs::EPERSONALITY_Selfish})
+    ERELATIONSHIP_TYPE_Friendship,
+    his_gen::Transition_drivers<attrs>({attrs::EPERSONALITY_Amiable,
+                                        attrs::EPERSONALITY_Sociable,
+                                        attrs::EPERSONALITY_Compassionate,
+                                        attrs::EPERSONALITY_Kind,
+                                        attrs::EPERSONALITY_Witty},
+                                       {attrs::EPERSONALITY_Cruel,
+                                        attrs::EPERSONALITY_Aggressive,
+                                        attrs::EPERSONALITY_Selfish})
   },
-  // Rivalry / Jealousy
   {
-    his_gen::ERelationship_type::ERELATIONSHIP_TYPE_Rivalry,
-    his_gen::dice::Transition_drivers<attrs>({attrs::EPERSONALITY_Jealous,
-                                              attrs::EPERSONALITY_Ambitious,
-                                              attrs::EPERSONALITY_Proud,
-                                              attrs::EPERSONALITY_Argumentative,
-                                              attrs::EPERSONALITY_Aggressive},
-                                             {attrs::EPERSONALITY_Humble,
-                                              attrs::EPERSONALITY_Cooperative,
-                                              attrs::EPERSONALITY_Forgiving})
+    ERELATIONSHIP_TYPE_Rivalry,
+    his_gen::Transition_drivers<attrs>({attrs::EPERSONALITY_Jealous,
+                                        attrs::EPERSONALITY_Ambitious,
+                                        attrs::EPERSONALITY_Proud,
+                                        attrs::EPERSONALITY_Argumentative,
+                                        attrs::EPERSONALITY_Aggressive},
+                                       {attrs::EPERSONALITY_Humble,
+                                        attrs::EPERSONALITY_Cooperative,
+                                        attrs::EPERSONALITY_Forgiving})
   },
-  // Unrequited love / Longing
   {
-    his_gen::ERelationship_type::ERELATIONSHIP_TYPE_Unrequited,
-    his_gen::dice::Transition_drivers<attrs>({attrs::EPERSONALITY_Romantic,
-                                              attrs::EPERSONALITY_Reserved,
-                                              attrs::EPERSONALITY_Avoidant,
-                                              attrs::EPERSONALITY_Pragmatic},
-                                             {attrs::EPERSONALITY_Frank,
-                                              attrs::EPERSONALITY_Aggressive,
-                                              attrs::EPERSONALITY_Flirtatious})
+    ERELATIONSHIP_TYPE_Unrequited,
+    his_gen::Transition_drivers<attrs>({attrs::EPERSONALITY_Romantic,
+                                        attrs::EPERSONALITY_Reserved,
+                                        attrs::EPERSONALITY_Avoidant,
+                                        attrs::EPERSONALITY_Pragmatic},
+                                       {attrs::EPERSONALITY_Frank,
+                                        attrs::EPERSONALITY_Aggressive,
+                                        attrs::EPERSONALITY_Flirtatious})
   },
-  // Abandonment / Ghosting
   {
-    his_gen::ERelationship_type::ERELATIONSHIP_TYPE_Abandonment,
-    his_gen::dice::Transition_drivers<attrs>({attrs::EPERSONALITY_Avoidant,
-                                              attrs::EPERSONALITY_Evasive,
-                                              attrs::EPERSONALITY_Selfish,
-                                              attrs::EPERSONALITY_Cruel,
-                                              attrs::EPERSONALITY_Pragmatic},
-                                             {attrs::EPERSONALITY_Compassionate,
-                                              attrs::EPERSONALITY_Forgiving,
-                                              attrs::EPERSONALITY_Cooperative})
+    ERELATIONSHIP_TYPE_Abandonment,
+    his_gen::Transition_drivers<attrs>({attrs::EPERSONALITY_Avoidant,
+                                        attrs::EPERSONALITY_Evasive,
+                                        attrs::EPERSONALITY_Selfish,
+                                        attrs::EPERSONALITY_Cruel,
+                                        attrs::EPERSONALITY_Pragmatic},
+                                       {attrs::EPERSONALITY_Compassionate,
+                                        attrs::EPERSONALITY_Forgiving,
+                                        attrs::EPERSONALITY_Cooperative})
   }
 };
 
@@ -209,8 +199,7 @@ his_gen::Courtship_event::Courtship_event(std::shared_ptr<Entity_base>& triggeri
              triggering_entity->Get_entity_id(),
              current_tick,
              history_of_the_world,
-             triggering_event_id),
-  m_trans_matrix_bounds(0, 1)
+             triggering_event_id)
 { }
 
 //////////////////////////////////////////////////////////////////////

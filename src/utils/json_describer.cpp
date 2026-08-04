@@ -14,14 +14,14 @@
 
 ///////////////////////////////////////////////////////////////////////
 
-using attrs = his_gen::Attribute_enums::EPhysicality;
+using Personality = his_gen::Attribute_enums::EPhysicality;
 
 ///////////////////////////////////////////////////////////////////////
 
 std::string his_gen::Json_describer::Describe_physicality(const nlohmann::json &entity,
                                                           const bool output_genitals)
 {
-  if (!entity.contains("physicality") || !entity["physicality"].contains("physicality"))
+  if(!entity.contains("physicality") || !entity["physicality"].contains("physicality"))
   {
     return "No physicality data found for this entity";
   }
@@ -34,7 +34,7 @@ std::string his_gen::Json_describer::Describe_physicality(const nlohmann::json &
                + entity["entity_type"].get<std::string>() + " "
                + entity["name"].get<std::string>();
 
-  if (entity.contains("title"))
+  if(entity.contains("title"))
   {
     paragraph += ", " + entity["title"].get<std::string>();
   }
@@ -49,18 +49,18 @@ std::string his_gen::Json_describer::Describe_physicality(const nlohmann::json &
   const auto& physicality_map = entity["physicality"]["physicality"];
 
   // Attrs to exclude
-  static const std::vector<attrs> excluded_attrs = {
-      attrs::EPHYSICALITY_Breast_cleavage_depth,
-      attrs::EPHYSICALITY_Breast_shape_roundness,
-      attrs::EPHYSICALITY_Breast_size,
-      attrs::EPHYSICALITY_Butt_roundness,
-      attrs::EPHYSICALITY_Clitoris_size,
-      attrs::EPHYSICALITY_Testicle_size,
-      attrs::EPHYSICALITY_Penis_length,
-      attrs::EPHYSICALITY_Penis_width,
-      attrs::EPHYSICALITY_Labia_major_size,
-      attrs::EPHYSICALITY_Labia_minor_size,
-      attrs::EPHYSICALITY_Nipple_size
+  static const std::vector<Personality> excluded_attrs = {
+      Personality::EPHYSICALITY_Breast_cleavage_depth,
+      Personality::EPHYSICALITY_Breast_shape_roundness,
+      Personality::EPHYSICALITY_Breast_size,
+      Personality::EPHYSICALITY_Butt_roundness,
+      Personality::EPHYSICALITY_Clitoris_size,
+      Personality::EPHYSICALITY_Testicle_size,
+      Personality::EPHYSICALITY_Penis_length,
+      Personality::EPHYSICALITY_Penis_width,
+      Personality::EPHYSICALITY_Labia_major_size,
+      Personality::EPHYSICALITY_Labia_minor_size,
+      Personality::EPHYSICALITY_Nipple_size
   };
 
   for (auto it = physicality_map.begin(); it != physicality_map.end(); ++it)
@@ -76,7 +76,7 @@ std::string his_gen::Json_describer::Describe_physicality(const nlohmann::json &
     }
 
     // Lookup the enum corresponding to this attribute key
-    attrs attr_enum = Attribute_enums::Get_entity_attribute(it.key());
+    Personality attr_enum = Attribute_enums::Get_entity_attribute(it.key());
 
     Attribute_enums::EValue_type value_type = Attribute_enums::EValue_type::EVALUE_TYPE_Other;
     auto map_it = Attribute_enums::physicality_value_type.find(attr_enum);
