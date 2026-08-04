@@ -96,7 +96,8 @@ private:
    * has a vector positive and negative drivers, which are used to construct
    * the likelihood that the ERelationship_type will be the next type selected.
    */
-  using Relationship_transition_pattern = his_gen::dice::Transition_pattern<ERelationship_type, Attribute_enums::EPersonality>;
+  using Relationship_transition_pattern = his_gen::dice::Transition_pattern<ERelationship_type,
+                                                                            Attribute_enums::EPersonality>;
 
   // Attributes
   /**
