@@ -81,7 +81,9 @@ public:
     m_relationship_ids(),
     m_is_complete(false),
     m_event_changes_state(false)
-  { }
+  {
+    his_gen::Print_to_cout("New event: " + m_name);
+  }
 
   /**
    * @brief Destructor
