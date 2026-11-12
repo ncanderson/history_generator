@@ -132,6 +132,8 @@ int main(int argc, char *argv[])
   {
     try
     {
+      his_gen::Print_to_cout("Error loading config from: " + app_cfg_path);
+
       std::ifstream app_cfg_file(app_cfg_path);
       json data = json::parse(app_cfg_file);
       app_cfg = his_gen::History_generator_root_config(data);
